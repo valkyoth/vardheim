@@ -36,8 +36,8 @@ challenge presentation, persistent storage, and certificate deployment.
 
 ## Current Status
 
-Status: `v0.1.0` release candidate; pentest and retest passed, awaiting GitHub
-checks.
+Status: `v0.2.0` release-discipline implementation complete; pending pentest
+and retest.
 
 Vardheim does not issue, validate, renew, revoke, or deploy certificates yet.
 The current release establishes the crate boundaries and enforcement needed
@@ -56,6 +56,7 @@ Implemented now:
 - GitHub CodeQL Default setup policy.
 - cargo-deny, cargo-audit, package, documentation, and SPDX SBOM gates.
 - Mandatory exact-commit pentest stop before every release tag.
+- Independent crate versions and dependency-ordered publication enforcement.
 - Complete implementation and version plan through `1.0.0`.
 - Tracked, byte-locked reference copies of all required RFC texts, excluded
   from published crates.
@@ -96,7 +97,7 @@ There is no unversioned post-1.0 backlog for known requirements.
 
 ## Install
 
-The crate is not published yet. After the first release:
+The latest published foundation release is:
 
 ```toml
 [dependencies]
@@ -166,6 +167,7 @@ Read:
 - [Security controls](https://github.com/valkyoth/vardheim/blob/main/docs/security-controls.md)
 - [Compatibility](https://github.com/valkyoth/vardheim/blob/main/docs/compatibility.md)
 - [Release process](https://github.com/valkyoth/vardheim/blob/main/docs/release-process.md)
+- [Crate release policy](https://github.com/valkyoth/vardheim/blob/main/docs/CRATE_RELEASES.md)
 
 ## Development
 
@@ -175,6 +177,7 @@ scripts/check-rust-version-matrix.sh
 cargo deny check
 cargo audit
 scripts/generate-sbom.sh
+scripts/release_crates.py --check
 ```
 
 The networked freshness check verifies pinned Cargo tools and GitHub Actions:

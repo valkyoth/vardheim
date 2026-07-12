@@ -1,6 +1,6 @@
 # Protocol Conformance
 
-No RFC conformance is claimed in version 0.1.0.
+No RFC conformance is claimed through version 0.2.0.
 
 Each later claim requires:
 

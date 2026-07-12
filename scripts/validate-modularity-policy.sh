@@ -2,10 +2,11 @@
 set -eu
 
 failed=0
-find crates -type f -name '*.rs' -print | while IFS= read -r file; do
+find crates scripts -type f \( -name '*.rs' -o -name '*.py' -o -name '*.sh' \) \
+    -print | while IFS= read -r file; do
     lines="$(wc -l < "$file")"
     if [ "$lines" -gt 500 ]; then
-        echo "Rust source exceeds 500 lines: $file ($lines)" >&2
+        echo "code source exceeds 500 lines: $file ($lines)" >&2
         exit 1
     fi
 done || failed=1

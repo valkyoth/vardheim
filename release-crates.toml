@@ -1,0 +1,38 @@
+[release]
+version = "0.2.0"
+policy = "independent"
+
+[crates.vardheim-core]
+previous_version = "0.1.0"
+version = "0.1.0"
+change = "unchanged"
+publish = false
+reason = "No package-content change for the v0.2.0 release-discipline milestone."
+
+[crates.vardheim-challenge-http]
+previous_version = "0.1.0"
+version = "0.1.0"
+change = "unchanged"
+publish = false
+reason = "No package-content change for the v0.2.0 release-discipline milestone."
+
+[crates.vardheim-challenge-dns]
+previous_version = "0.1.0"
+version = "0.1.0"
+change = "unchanged"
+publish = false
+reason = "No package-content change for the v0.2.0 release-discipline milestone."
+
+[crates.vardheim-challenge-tls]
+previous_version = "0.1.0"
+version = "0.1.0"
+change = "unchanged"
+publish = false
+reason = "No package-content change for the v0.2.0 release-discipline milestone."
+
+[crates.vardheim]
+previous_version = "0.1.0"
+version = "0.2.0"
+change = "code"
+publish = true
+reason = "Publishes the v0.2.0 facade version marker, release-discipline documentation, and version regression test."

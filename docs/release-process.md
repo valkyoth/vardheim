@@ -16,3 +16,9 @@
 
 The GitHub release workflow is manual and metadata-only. Readiness is checked
 before tag creation because a post-tag tag-existence guard necessarily fails.
+
+Before each release, update `release-crates.toml` with every workspace crate's
+independent version, change kind, publication decision, and reason. After the
+signed tag points at the clean release commit, `scripts/release_crates.py`
+validates the Cargo dependency graph, reruns preflight checks, and publishes in
+the order documented in [CRATE_RELEASES.md](CRATE_RELEASES.md).

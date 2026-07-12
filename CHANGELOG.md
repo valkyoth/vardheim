@@ -5,7 +5,18 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ## Unreleased
 
-## 0.1.0 - Unreleased
+## 0.2.0 - Unreleased
+
+### Added
+
+- Dependency-ordered workspace publication helper, independently versioned
+  per-crate release plan, regression tests, and operator documentation.
+- Structured release metadata and pentest-readiness validators with exhaustive
+  missing, malformed, failed, stale, wrong-commit, and tag refusal tests.
+- Verified package archives, matching SPDX SBOM enforcement, and the dedicated
+  `v0.2.0` release gate.
+
+## 0.1.0 - 2026-07-12
 
 ### Added
 

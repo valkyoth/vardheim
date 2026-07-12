@@ -1,0 +1,74 @@
+# Crate Release Policy
+
+Vardheim crates use independent versions and are published in validated Cargo
+dependency order. The facade is always last.
+
+## Publish Order
+
+1. `vardheim-core`
+2. `vardheim-challenge-http`
+3. `vardheim-challenge-dns`
+4. `vardheim-challenge-tls`
+5. `vardheim`
+
+The first four crates are currently independent of one another. The order is
+kept stable for reproducible release evidence. `vardheim` depends on all four
+and therefore must be published only after crates.io resolves their versions.
+
+## Version Rules
+
+| Change | Version rule | Publish |
+| --- | --- | --- |
+| `code` | The facade follows the Vardheim milestone; a support crate advances to its next independent minor version. | Yes |
+| `dependency` | Patch-bump the support crate's current minor line. | Yes |
+| `metadata` | Use the milestone version for corrected immutable package metadata. | Yes |
+| `unchanged` | Retain the published version. | No |
+
+`release-crates.toml` records the exact plan. Package versions in Cargo metadata
+must match it, and its crate set must exactly match the workspace.
+
+## Commands
+
+Validate the plan without network access or publishing:
+
+```bash
+scripts/release_crates.py --check
+python3 scripts/test-release-crates.py
+```
+
+Preview the exact preflight and publish sequence without executing commands:
+
+```bash
+scripts/release_crates.py --dry-run --yes
+```
+
+Publish only from a clean worktree whose `vX.Y.Z` tag points at `HEAD`:
+
+```bash
+scripts/release_crates.py
+```
+
+After a partial crates.io release, resume at the first package that did not
+publish:
+
+```bash
+scripts/release_crates.py --start-at vardheim-challenge-dns
+```
+
+The script deliberately has no `--no-verify`, dirty-tree, untagged, or
+skip-preflight escape hatch. It pauses between packages so the operator can
+confirm crates.io index propagation before publishing a dependent crate.
+
+## Current `v0.2.0` Plan
+
+| Crate | Published | Planned | Change | Publish |
+| --- | --- | --- | --- | --- |
+| `vardheim-core` | `0.1.0` | `0.1.0` | unchanged | No |
+| `vardheim-challenge-http` | `0.1.0` | `0.1.0` | unchanged | No |
+| `vardheim-challenge-dns` | `0.1.0` | `0.1.0` | unchanged | No |
+| `vardheim-challenge-tls` | `0.1.0` | `0.1.0` | unchanged | No |
+| `vardheim` | `0.1.0` | `0.2.0` | code | Yes |
+
+All five crates were first published manually at `0.1.0`. The rolling
+`release-crates.toml` now captures the next release decision and must be updated
+with this table before every later milestone.

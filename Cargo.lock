@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "vardheim"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "vardheim-challenge-dns",
  "vardheim-challenge-http",
