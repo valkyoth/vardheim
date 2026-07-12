@@ -38,4 +38,6 @@ arrives at the separately reviewed `v0.3.3` milestone.
 ## crates.io Exclusion
 
 This directory is repository evidence, not crate payload. Publishable crates
-live below `crates/`, and package checks reject leaked registry or image assets.
+live below `crates/`, and package checks allow only Cargo metadata, the crate
+README, and Rust source. Registry snapshots and generated evidence remain on
+GitHub.

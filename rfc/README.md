@@ -44,5 +44,6 @@ immutable publications; later corrections are tracked as errata or new RFCs.
 
 The repository root is a virtual Cargo workspace and is not published. Every
 publishable package lives below `crates/`, outside this directory.
-`scripts/check-packages.sh` inspects each generated `.crate` archive and fails
-if RFC text or repository image assets are included.
+`scripts/check-packages.sh` inspects each generated `.crate` archive with a
+strict allowlist and fails unless it contains only Cargo metadata, its crate
+README, and Rust source files.

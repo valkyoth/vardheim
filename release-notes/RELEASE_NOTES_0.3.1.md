@@ -52,6 +52,19 @@ before ElementTree receives the document. Permanent tests cover the same
 entity-expansion payload in UTF-8, UTF-16, and UTF-32, plus benign UTF-16 input.
 Remediation retest is pending.
 
+## crates.io Package Boundary
+
+Every workspace `.crate` archive is now validated against an exact content
+allowlist. Cargo-generated metadata, the crate README, and regular Rust source
+files below `src/` are the only permitted entries. RFC and registry snapshots,
+project documentation, release evidence, scripts, GitHub files, images,
+downloads, vectors, and unrelated source formats remain repository-only.
+
+Permanent negative tests cover repository evidence, download archives,
+unexpected files below `src`, path traversal, wrong package roots, links,
+duplicate paths, missing required metadata, excessive file counts, oversized
+members, and excessive unpacked size.
+
 ## Publishing
 
 Only `vardheim` advances from `0.3.0` to `0.3.1`. The four unchanged support

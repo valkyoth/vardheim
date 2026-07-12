@@ -9,6 +9,25 @@ crates retain independent versions and publish only when their own package
 contents require it. This prevents facade versions from drifting behind the
 repository release sequence.
 
+## crates.io Content Boundary
+
+Published archives contain only Cargo-generated package metadata,
+`README.md`, and regular `.rs` files below `src/`. RFC and registry snapshots,
+project-wide documentation, release notes, pentest evidence, scripts, GitHub
+configuration, images, downloads, vectors, and other repository evidence stay
+on GitHub.
+
+`scripts/validate-package-contents.py` applies this as an allowlist to the
+actual `.crate` archives after `cargo package`. It also rejects absolute or
+parent-traversal paths, unexpected package roots, links and special entries,
+duplicate paths, missing Cargo metadata or Rust sources, more than 512 files,
+individual files above 1 MiB, and archives above 5 MiB unpacked. Adding a new
+publishable content class therefore requires an explicit reviewed policy
+change; placing a file in a crate directory cannot silently publish it.
+
+The adversarial package suite exercises repository evidence, downloads,
+path traversal, wrong roots, symlinks, duplicates, omissions, and size limits.
+
 ## Publish Order
 
 1. `vardheim-core`
@@ -40,6 +59,8 @@ Validate the plan without network access or publishing:
 ```bash
 scripts/release_crates.py --check
 python3 scripts/test-release-crates.py
+scripts/validate-package-contents.py
+python3 scripts/test-package-contents.py
 ```
 
 Preview the exact preflight and publish sequence without executing commands:

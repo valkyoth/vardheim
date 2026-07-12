@@ -143,6 +143,8 @@ def validate_metadata(root: Path = ROOT) -> str:
         "docs/RELEASE_PLAN.md",
         "docs/VERSION_PLAN.md",
         "scripts/check-packages.sh",
+        "scripts/validate-package-contents.py",
+        "scripts/test-package-contents.py",
         "scripts/release_crates.py",
         "scripts/rfc_errata.py",
         "scripts/rfc_inventory.py",

@@ -20,6 +20,8 @@ Keep a Changelog and the project follows Semantic Versioning.
   the published ACME family.
 - Encoding-independent XML declaration rejection backed by UTF-8, UTF-16, and
   UTF-32 entity-expansion regression tests.
+- Exact crates.io archive allowlisting with traversal, entry-type, duplication,
+  omission, file-count, and unpacked-size regression tests.
 
 ## 0.3.0 - 2026-07-12
 

@@ -99,6 +99,7 @@ There is no unversioned post-1.0 backlog for known requirements.
 | Default cryptographic backend | none |
 | Maximum Rust source size | 500 physical lines |
 | Release evidence | checks, deny, audit, SBOM, exact-commit pentest |
+| crates.io payload | Cargo metadata, crate README, and Rust source only |
 | Panic policy | application-owned; expected failures use typed errors |
 | Current RFC conformance | none claimed |
 | 1.0 target | complete production-ready ACME lifecycle framework |
@@ -188,6 +189,8 @@ cargo deny check
 cargo audit
 scripts/generate-sbom.sh
 scripts/release_crates.py --check
+scripts/validate-package-contents.py
+python3 scripts/test-package-contents.py
 scripts/rfc_inventory.py
 scripts/rfc_errata.py
 scripts/registry_baseline.py

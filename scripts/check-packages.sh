@@ -11,9 +11,5 @@ cargo package -p vardheim --allow-dirty --offline \
     --config 'patch.crates-io.vardheim-challenge-dns.path="crates/vardheim-challenge-dns"' \
     --config 'patch.crates-io.vardheim-challenge-tls.path="crates/vardheim-challenge-tls"'
 
-for archive in target/package/vardheim-*.crate; do
-    if tar -tf "$archive" | grep -Eq '(^|/)(rfc/|registry/|\.github/)|\.(webp|png|jpe?g|gif|svg)$'; then
-        echo "repository-only source or image asset leaked into $archive" >&2
-        exit 1
-    fi
-done
+scripts/validate-package-contents.py
+python3 scripts/test-package-contents.py
