@@ -22,6 +22,7 @@ Keep a Changelog and the project follows Semantic Versioning.
   UTF-32 entity-expansion regression tests.
 - Exact crates.io archive allowlisting with traversal, entry-type, duplication,
   omission, file-count, and unpacked-size regression tests.
+- Passing maintainer-supplied pentest and clean remediation retest evidence.
 
 ## 0.3.0 - 2026-07-12
 

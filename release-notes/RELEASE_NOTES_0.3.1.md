@@ -1,6 +1,6 @@
 # Vardheim 0.3.1 Release Notes
 
-Status: implementation complete; pending pentest and retest
+Status: release candidate; pentest and remediation retest passed, awaiting GitHub checks
 
 ## Scope
 
@@ -50,7 +50,8 @@ uses the parser. XML is now pre-parsed with encoding-aware Expat handlers that
 reject DOCTYPE, entity, unparsed-entity, and external-entity declarations
 before ElementTree receives the document. Permanent tests cover the same
 entity-expansion payload in UTF-8, UTF-16, and UTF-32, plus benign UTF-16 input.
-Remediation retest is pending.
+The maintainer-supplied remediation retest passed, and no blocking findings
+remain.
 
 ## crates.io Package Boundary
 
