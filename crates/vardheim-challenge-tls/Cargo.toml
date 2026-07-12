@@ -1,0 +1,15 @@
+[package]
+name = "vardheim-challenge-tls"
+description = "Runtime-independent TLS ACME challenge primitives for Vardheim"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["acme", "tls-alpn-01", "certificate", "no-std", "security"]
+categories = ["cryptography", "no-std", "network-programming"]
+
+[lints]
+workspace = true

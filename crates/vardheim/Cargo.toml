@@ -1,0 +1,21 @@
+[package]
+name = "vardheim"
+description = "Security-first ACME and certificate lifecycle framework for Rust"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["acme", "certificate", "pki", "no-std", "security"]
+categories = ["cryptography", "no-std", "web-programming"]
+
+[dependencies]
+vardheim-core = { path = "../vardheim-core", version = "0.1.0" }
+vardheim-challenge-dns = { path = "../vardheim-challenge-dns", version = "0.1.0" }
+vardheim-challenge-http = { path = "../vardheim-challenge-http", version = "0.1.0" }
+vardheim-challenge-tls = { path = "../vardheim-challenge-tls", version = "0.1.0" }
+
+[lints]
+workspace = true

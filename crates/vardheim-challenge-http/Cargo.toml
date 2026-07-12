@@ -1,0 +1,15 @@
+[package]
+name = "vardheim-challenge-http"
+description = "Runtime-independent HTTP ACME challenge primitives for Vardheim"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["acme", "http-01", "certificate", "no-std", "security"]
+categories = ["cryptography", "no-std", "web-programming"]
+
+[lints]
+workspace = true
