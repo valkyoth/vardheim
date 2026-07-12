@@ -15,6 +15,7 @@ for number in "${rfcs[@]}"; do
         continue
     fi
     curl --fail --location --silent --show-error --proto '=https' --tlsv1.2 \
+        --connect-timeout 10 --max-time 60 \
         "https://www.rfc-editor.org/rfc/rfc${number}.txt" \
         --output "rfc/rfc${number}.txt"
     test -s "rfc/rfc${number}.txt"

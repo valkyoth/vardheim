@@ -4,6 +4,12 @@
 from __future__ import annotations
 
 import copy
+import hashlib
+import os
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
 
 import rfc_errata
 import rfc_inventory
@@ -109,6 +115,58 @@ def test_errata_snapshot_refuses_set_status_and_id_drift() -> None:
     assert_fails("duplicate or invalid", rfc_errata.validate, duplicate)
 
 
+def test_rfc_fetch_is_time_bounded_and_hash_verified() -> None:
+    content = b"fixture RFC text\n"
+    digest = hashlib.sha256(content).hexdigest()
+    with tempfile.TemporaryDirectory(prefix="vardheim-rfc-fetch-") as directory:
+        root = Path(directory)
+        scripts = root / "scripts"
+        rfc = root / "rfc"
+        binary = root / "bin"
+        scripts.mkdir()
+        rfc.mkdir()
+        binary.mkdir()
+        shutil.copy2(rfc_inventory.ROOT / "scripts/fetch-rfcs.sh", scripts)
+        shutil.copy2(rfc_inventory.ROOT / "scripts/verify-rfcs.sh", scripts)
+        (rfc / "README.md").write_text("fixture\n", encoding="utf-8")
+        (rfc / "SHA256SUMS").write_text(
+            f"{digest}  rfc99999.txt\n", encoding="ascii"
+        )
+
+        fake_curl = binary / "curl"
+        fake_curl.write_text(
+            """#!/usr/bin/env python3
+import os
+import sys
+from pathlib import Path
+
+arguments = sys.argv[1:]
+Path(os.environ["FAKE_CURL_LOG"]).write_text("\\n".join(arguments), encoding="utf-8")
+output = arguments[arguments.index("--output") + 1]
+Path(output).write_bytes(b"fixture RFC text\\n")
+""",
+            encoding="utf-8",
+        )
+        fake_curl.chmod(0o755)
+        log = root / "curl-arguments.txt"
+        environment = os.environ.copy()
+        environment["PATH"] = f"{binary}{os.pathsep}{environment['PATH']}"
+        environment["FAKE_CURL_LOG"] = str(log)
+        subprocess.run(
+            ["bash", "scripts/fetch-rfcs.sh"],
+            cwd=root,
+            env=environment,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        arguments = log.read_text(encoding="utf-8").splitlines()
+        assert arguments[arguments.index("--connect-timeout") + 1] == "10"
+        assert arguments[arguments.index("--max-time") + 1] == "60"
+        assert (rfc / "rfc99999.txt").read_bytes() == content
+
+
 def run_tests() -> None:
     tests = (
         test_current_generated_sources,
@@ -116,6 +174,7 @@ def run_tests() -> None:
         test_old_and_modern_section_formats,
         test_errata_parser_tracks_all_status_groups,
         test_errata_snapshot_refuses_set_status_and_id_drift,
+        test_rfc_fetch_is_time_bounded_and_hash_verified,
     )
     for test in tests:
         test()

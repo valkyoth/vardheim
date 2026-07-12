@@ -44,6 +44,17 @@ is always selected for publication.
 - Live network state never affects normal offline builds or CI.
 - Reported, Held, and Rejected errata cannot silently weaken or alter protocol
   requirements.
+- RFC downloads have a 10-second connection timeout and 60-second total
+  transfer timeout while retaining strict post-download SHA-256 verification.
+
+## Pentest Remediation
+
+The initial review found one low-severity availability issue: a stalled RFC
+Editor connection could leave the opt-in fetch command waiting indefinitely.
+The fetch now has explicit connect and total time bounds. A permanent
+integration test executes the real script with a fake downloader, proves both
+timeout arguments are present, and verifies the downloaded bytes through the
+strict checksum gate. Remediation retest is pending.
 
 ## Compatibility
 

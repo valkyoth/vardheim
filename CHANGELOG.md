@@ -13,6 +13,8 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Reviewed all-status RFC Editor errata snapshot for all 13 published ACME
   RFCs, with offline validation and explicit live drift checks.
 - Permanent facade/tag version equality and publication enforcement.
+- Bounded RFC Editor connection and transfer timeouts with an end-to-end
+  fetch-and-hash regression test.
 
 ## 0.2.0 - 2026-07-12
 
