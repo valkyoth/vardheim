@@ -1,6 +1,6 @@
 # Vardheim 0.3.0 Release Notes
 
-Status: implementation complete; pending pentest and retest
+Status: release candidate; pentest and remediation retest passed, awaiting GitHub checks
 
 ## Scope
 
@@ -54,7 +54,8 @@ Editor connection could leave the opt-in fetch command waiting indefinitely.
 The fetch now has explicit connect and total time bounds. A permanent
 integration test executes the real script with a fake downloader, proves both
 timeout arguments are present, and verifies the downloaded bytes through the
-strict checksum gate. Remediation retest is pending.
+strict checksum gate. The maintainer-supplied remediation retest passed, and
+no blocking findings remain.
 
 ## Compatibility
 

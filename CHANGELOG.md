@@ -15,6 +15,7 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Permanent facade/tag version equality and publication enforcement.
 - Bounded RFC Editor connection and transfer timeouts with an end-to-end
   fetch-and-hash regression test.
+- Passing maintainer-supplied pentest and clean remediation retest evidence.
 
 ## 0.2.0 - 2026-07-12
 
