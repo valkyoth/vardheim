@@ -6,6 +6,13 @@ changes, and Cargo package inspection prevents the documents from entering
 published crates. Normative implementation claims cite RFC number, section,
 errata status, and conformance fixtures.
 
+[`rfc/SECTION_INDEX.json`](../rfc/SECTION_INDEX.json) is the complete
+machine-generated section-level inventory for all 65 tracked RFCs. Each entry
+binds the RFC number, implementation role, official RFC Editor TXT URL,
+SHA-256, and every detected numbered section title to the immutable local
+bytes. `scripts/rfc_inventory.py` regenerates the same canonical JSON and CI
+rejects any difference.
+
 ## ACME Standards
 
 RFC 8555, 8657, 8737, 8738, 8739, 8823, 9115, 9444, 9447, 9448, 9773, 9799,
@@ -41,3 +48,22 @@ device enrollment integrations. Selected related work includes quantum-ready
 profiles, public-key challenges, and identity-controlled validation. The exact
 draft revisions are intentionally fetched and pinned only at their `0.100.x`
 implementation milestones because Internet-Drafts can change or expire.
+
+## Errata
+
+All-status errata for the 13 published ACME-family RFCs are pinned separately
+from immutable RFC text. See [RFC_ERRATA.md](RFC_ERRATA.md) for the Verified,
+Reported, Held, and Rejected interpretation policy and reviewed 2026-07-12
+snapshot summary.
+
+## Verification
+
+```bash
+scripts/verify-rfcs.sh
+scripts/rfc_inventory.py
+scripts/rfc_errata.py
+python3 scripts/test-rfc-sources.py
+```
+
+The first four commands are offline and run in normal CI. Live errata drift is
+checked deliberately with `scripts/rfc_errata.py --live` during source review.

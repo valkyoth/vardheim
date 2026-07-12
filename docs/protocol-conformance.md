@@ -1,6 +1,7 @@
 # Protocol Conformance
 
-No RFC conformance is claimed through version 0.2.0.
+No RFC conformance is claimed through version 0.3.0. Version `0.3.0` establishes
+normative source evidence only; it implements no protocol behavior.
 
 Each later claim requires:
 

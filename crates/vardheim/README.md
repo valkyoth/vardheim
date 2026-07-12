@@ -36,8 +36,7 @@ challenge presentation, persistent storage, and certificate deployment.
 
 ## Current Status
 
-Status: `v0.2.0` release candidate; pentest and remediation retest passed,
-awaiting GitHub checks.
+Status: `v0.3.0` normative-source baseline complete; pending pentest and retest.
 
 Vardheim does not issue, validate, renew, revoke, or deploy certificates yet.
 The current release establishes the crate boundaries and enforcement needed
@@ -60,6 +59,8 @@ Implemented now:
 - Complete implementation and version plan through `1.0.0`.
 - Tracked, byte-locked reference copies of all required RFC texts, excluded
   from published crates.
+- Complete generated section index for all tracked RFCs and reviewed
+  all-status errata evidence for every published ACME RFC.
 - Linux, Windows, BSD, macOS, Android, iOS, and future custom-target
   architecture requirements.
 
@@ -101,7 +102,7 @@ The latest published foundation release is:
 
 ```toml
 [dependencies]
-vardheim = "0.1.0"
+vardheim = "0.2.0"
 ```
 
 Most users should depend only on `vardheim`. Lower-level crates exist for
@@ -163,6 +164,7 @@ Read:
 - [Longitudinal regression strategy](https://github.com/valkyoth/vardheim/blob/main/docs/REGRESSION_STRATEGY.md)
 - [ACME completeness contract](https://github.com/valkyoth/vardheim/blob/main/docs/COMPLETENESS.md)
 - [RFC inventory](https://github.com/valkyoth/vardheim/blob/main/docs/RFC_INVENTORY.md)
+- [RFC errata baseline](https://github.com/valkyoth/vardheim/blob/main/docs/RFC_ERRATA.md)
 - [Threat model](https://github.com/valkyoth/vardheim/blob/main/docs/threat-model.md)
 - [Security controls](https://github.com/valkyoth/vardheim/blob/main/docs/security-controls.md)
 - [Compatibility](https://github.com/valkyoth/vardheim/blob/main/docs/compatibility.md)
@@ -178,6 +180,8 @@ cargo deny check
 cargo audit
 scripts/generate-sbom.sh
 scripts/release_crates.py --check
+scripts/rfc_inventory.py
+scripts/rfc_errata.py
 ```
 
 The networked freshness check verifies pinned Cargo tools and GitHub Actions:

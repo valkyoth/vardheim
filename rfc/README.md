@@ -21,6 +21,10 @@ documentation, never inside an RFC text file.
 - `SHA256SUMS` pins the exact bytes of every `rfc*.txt` file.
 - `scripts/verify-rfcs.sh` rejects changed, missing, extra, or corrupted RFC
   text and runs in the normal check gate.
+- `SECTION_INDEX.json` binds all 65 RFC hashes and roles to a generated
+  section-level inventory; it is checked offline and is not an RFC itself.
+- `ACME_ERRATA.json` records the reviewed all-status RFC Editor errata snapshot
+  without modifying RFC text; it is project evidence, not an RFC itself.
 - `.gitattributes` disables text/line-ending normalization for RFC text.
 - `scripts/lock-rfcs.sh` makes local working copies read-only as an additional
   guard. Git cannot preserve portable read-only file permissions, so checksums

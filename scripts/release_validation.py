@@ -97,6 +97,14 @@ def planned_versions(root: Path) -> tuple[str, dict[str, str]]:
         crate_version = crates[crate].get("version")
         require(isinstance(crate_version, str), f"{crate} has no planned version")
         versions[crate] = crate_version
+    require(
+        versions["vardheim"] == version,
+        "vardheim must always match the release/tag version",
+    )
+    require(
+        crates["vardheim"].get("publish") is True,
+        "vardheim must be published for every release tag",
+    )
     return version, versions
 
 
@@ -130,10 +138,15 @@ def validate_metadata(root: Path = ROOT) -> str:
         "SECURITY.md",
         "docs/CRATE_RELEASES.md",
         "docs/IMPLEMENTATION_PLAN.md",
+        "docs/RFC_ERRATA.md",
         "docs/RELEASE_PLAN.md",
         "docs/VERSION_PLAN.md",
         "scripts/check-packages.sh",
         "scripts/release_crates.py",
+        "scripts/rfc_errata.py",
+        "scripts/rfc_inventory.py",
+        "rfc/ACME_ERRATA.json",
+        "rfc/SECTION_INDEX.json",
     )
     for relative in required_files:
         require((root / relative).is_file(), f"required release file is missing: {relative}")

@@ -5,7 +5,16 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ## Unreleased
 
-## 0.2.0 - Unreleased
+## 0.3.0 - Unreleased
+
+### Added
+
+- Complete checksum-bound section inventory for all 65 tracked RFCs.
+- Reviewed all-status RFC Editor errata snapshot for all 13 published ACME
+  RFCs, with offline validation and explicit live drift checks.
+- Permanent facade/tag version equality and publication enforcement.
+
+## 0.2.0 - 2026-07-12
 
 ### Added
 

@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import importlib.util
+import io
 from argparse import Namespace
+from contextlib import redirect_stdout
 from pathlib import Path
 
 
@@ -225,6 +227,37 @@ def test_invalid_plan_entry_kinds_refuse() -> None:
         )
 
 
+def test_facade_always_matches_and_publishes_tag_version() -> None:
+    mismatched = {
+        "previous_version": "0.2.0",
+        "version": "0.2.0",
+        "change": "unchanged",
+        "publish": False,
+        "reason": "test",
+    }
+    assert_fails(
+        "must always match",
+        release_crates.validate_plan_entry,
+        "vardheim",
+        mismatched,
+        "0.3.0",
+    )
+    unpublished = {
+        "previous_version": "0.2.0",
+        "version": "0.3.0",
+        "change": "metadata",
+        "publish": False,
+        "reason": "test",
+    }
+    assert_fails(
+        "must be published",
+        release_crates.validate_plan_entry,
+        "vardheim",
+        unpublished,
+        "0.3.0",
+    )
+
+
 def test_closed_stdin_refuses_cleanly() -> None:
     original_input = release_crates.builtins.input
     try:
@@ -244,13 +277,14 @@ def test_closed_stdin_during_index_wait_refuses_cleanly() -> None:
     try:
         release_crates.builtins.input = lambda _prompt: (_ for _ in ()).throw(EOFError())
         release_crates.time.sleep = lambda _seconds: None
-        assert_fails(
-            "stdin closed",
-            release_crates.wait_for_index,
-            "vardheim-core",
-            "0.1.0",
-            dry_run=False,
-        )
+        with redirect_stdout(io.StringIO()):
+            assert_fails(
+                "stdin closed",
+                release_crates.wait_for_index,
+                "vardheim-core",
+                "0.1.0",
+                dry_run=False,
+            )
     finally:
         release_crates.builtins.input = original_input
         release_crates.time.sleep = original_sleep
@@ -328,6 +362,7 @@ def run_tests() -> None:
         test_tag_must_point_at_head,
         test_publish_plan_preserves_dependency_order,
         test_invalid_plan_entry_kinds_refuse,
+        test_facade_always_matches_and_publishes_tag_version,
         test_closed_stdin_refuses_cleanly,
         test_closed_stdin_during_index_wait_refuses_cleanly,
         test_non_tty_multi_publish_refuses_before_publish,

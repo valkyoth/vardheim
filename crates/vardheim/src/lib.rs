@@ -23,7 +23,7 @@ mod tests {
 
     #[test]
     fn facade_exposes_every_foundation_boundary() {
-        assert_eq!(VERSION, "0.2.0");
+        assert_eq!(VERSION, "0.3.0");
         assert_eq!(core::CRATE_ROLE, "protocol");
         assert_eq!(challenge::http::HTTP_01, "http-01");
         assert_eq!(challenge::dns::DNS_01, "dns-01");

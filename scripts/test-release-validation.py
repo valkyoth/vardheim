@@ -74,17 +74,26 @@ def make_fixture(root: Path) -> None:
     plan = '[release]\nversion = "0.2.0"\npolicy = "independent"\n'
     for crate in CRATES:
         version = "0.2.0" if crate == "vardheim" else "0.1.0"
-        plan += f'\n[crates."{crate}"]\nversion = "{version}"\n'
+        publish = "true" if crate == "vardheim" else "false"
+        plan += (
+            f'\n[crates."{crate}"]\nversion = "{version}"\n'
+            f"publish = {publish}\n"
+        )
     write(root, "release-crates.toml", plan)
 
     for relative in (
         "SECURITY.md",
         "docs/CRATE_RELEASES.md",
         "docs/IMPLEMENTATION_PLAN.md",
+        "docs/RFC_ERRATA.md",
         "docs/RELEASE_PLAN.md",
         "docs/VERSION_PLAN.md",
         "scripts/check-packages.sh",
         "scripts/release_crates.py",
+        "scripts/rfc_errata.py",
+        "scripts/rfc_inventory.py",
+        "rfc/ACME_ERRATA.json",
+        "rfc/SECTION_INDEX.json",
     ):
         write(root, relative, "fixture\n")
     write(root, "README.md", "same\n")
@@ -167,7 +176,7 @@ def test_metadata_mismatches_refuse() -> None:
     def version(root: Path) -> None:
         path = root / "release-crates.toml"
         path.write_text(path.read_text().replace('version = "0.2.0"', 'version = "0.3.0"', 1))
-        assert_fails("versions differ", validate_metadata, root)
+        assert_fails("must always match", validate_metadata, root)
 
     def readme(root: Path) -> None:
         write(root, "crates/vardheim/README.md", "different\n")
@@ -198,6 +207,12 @@ def test_metadata_mismatches_refuse() -> None:
         path.chmod(stat.S_IRUSR | stat.S_IWUSR)
         assert_fails("release gate is missing", validate_metadata, root)
 
+    def facade_not_selected(root: Path) -> None:
+        path = root / "release-crates.toml"
+        before, after = path.read_text().rsplit("publish = true", maxsplit=1)
+        path.write_text(before + "publish = false" + after)
+        assert_fails("must be published", validate_metadata, root)
+
     for action in (
         pentest_scratch,
         version,
@@ -207,6 +222,7 @@ def test_metadata_mismatches_refuse() -> None:
         policy,
         crate_set,
         non_executable_gate,
+        facade_not_selected,
     ):
         with_fixture(action)
 

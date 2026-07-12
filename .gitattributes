@@ -1,3 +1,5 @@
 * text=auto eol=lf
 rfc/*.txt -text whitespace=-blank-at-eol,-blank-at-eof linguist-vendored=true
 rfc/SHA256SUMS -text linguist-generated=true
+rfc/SECTION_INDEX.json linguist-generated=true
+rfc/ACME_ERRATA.json linguist-generated=true

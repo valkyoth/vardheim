@@ -102,12 +102,17 @@ def validate_plan_entry(package_name: str, entry: dict, release: str) -> None:
     planned_parts = parse_version(version)
     parse_version(release)
 
+    if package_name == "vardheim":
+        if version != release:
+            raise RuntimeError(
+                f"vardheim must always match the release/tag version {release}"
+            )
+        if not publish:
+            raise RuntimeError("vardheim must be published for every release tag")
+
     if change == "code":
         if package_name == "vardheim":
-            if version != release:
-                raise RuntimeError(
-                    f"{package_name} has code changes, so version must be {release}"
-                )
+            pass
         else:
             expected = (previous_parts[0], previous_parts[1] + 1, 0)
             if planned_parts != expected or "-" in version:
