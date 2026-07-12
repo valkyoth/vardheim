@@ -32,3 +32,12 @@ Vardheim cannot make a compromised operating system, CA, HSM, DNS provider, or
 deployment target trustworthy. FIPS claims depend on a validated module and
 deployment profile, not on a Cargo feature name. Availability against an
 unbounded adversary is not guaranteed.
+
+## Availability And Panic Policy
+
+Vardheim libraries return typed errors for expected input, protocol, resource,
+and operational failures and do not use panic catching as a recovery boundary.
+Published libraries do not prescribe an application's panic strategy: the
+final binary, target, and operator choose unwind or abort behavior and any
+supervision policy. Security-sensitive arithmetic must use checked operations;
+release-profile overflow checks are defense in depth, not the primary control.

@@ -1,6 +1,6 @@
 # Vardheim 0.1.0 Release Notes
 
-Status: implementation complete; pending exact-commit pentest
+Status: release candidate; pentest and retest passed, awaiting GitHub checks
 
 ## Scope
 
@@ -16,6 +16,10 @@ It intentionally implements no ACME wire behavior.
 - GitHub Actions dependencies are pinned to full commit SHAs.
 - RFC reference texts retain their original notices and are integrity-locked,
   owner-reviewed, and excluded from published crate archives.
+- Expected failures use typed errors; published libraries leave panic strategy
+  and process supervision to the consuming application.
+- Potentially truncating and sign-losing cast lints are non-overridable within
+  the workspace, while checked arithmetic remains the primary parser control.
 
 ## Compatibility
 
@@ -29,3 +33,11 @@ answer a challenge, retrieve a certificate, or deploy a certificate.
 
 The release plan has been tactically split through `0.120.0-rc.5`; each
 milestone introduces one reviewable boundary and stops for pentest.
+
+## Pentest
+
+The foundation review raised two low-severity hardening observations covering
+release-profile panic blast radius and locally overridable lossy-cast lints.
+The panic policy is now application-owned and documented, the cast lints are
+forbidden workspace-wide, and the maintainer-supplied retest passed. Permanent
+evidence is recorded in `security/pentest/v0.1.0.md`.

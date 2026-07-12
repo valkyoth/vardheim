@@ -36,7 +36,8 @@ challenge presentation, persistent storage, and certificate deployment.
 
 ## Current Status
 
-Status: `v0.1.0` repository foundation.
+Status: `v0.1.0` release candidate; pentest and retest passed, awaiting GitHub
+checks.
 
 Vardheim does not issue, validate, renew, revoke, or deploy certificates yet.
 The current release establishes the crate boundaries and enforcement needed
@@ -89,6 +90,7 @@ There is no unversioned post-1.0 backlog for known requirements.
 | Default cryptographic backend | none |
 | Maximum Rust source size | 500 physical lines |
 | Release evidence | checks, deny, audit, SBOM, exact-commit pentest |
+| Panic policy | application-owned; expected failures use typed errors |
 | Current RFC conformance | none claimed |
 | 1.0 target | complete production-ready ACME lifecycle framework |
 

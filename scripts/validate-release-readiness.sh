@@ -11,6 +11,11 @@ version="${tag#v}"
 report="security/pentest/${tag}.md"
 notes="release-notes/RELEASE_NOTES_${version}.md"
 
+if [ -f PENTEST.md ]; then
+    echo "root PENTEST.md is temporary scratch input and must be removed" >&2
+    exit 1
+fi
+
 test -f "$report"
 test -f "$notes"
 rg -q '^Status: PASS$' "$report"

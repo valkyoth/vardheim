@@ -15,8 +15,10 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Dual MIT and Apache-2.0 licensing.
 - Initial security, RFC, implementation, release, and compatibility documents.
 - Local checks, supply-chain policy, SBOM tooling, and pentest release gate.
+- Application-owned panic policy and non-overridable lossy-cast lint policy.
 - Tactical one-boundary release sizing with split parser, PKIX, workflow,
   persistence, deployment, operations, platform, and qualification milestones.
 - ACME completeness and production web-server replacement acceptance contract.
 - Sixty-five exact RFC reference copies with SHA-256 integrity enforcement,
   read-only local locking, owner review, and Cargo package exclusion.
+- Passing maintainer-supplied external pentest and clean retest evidence.

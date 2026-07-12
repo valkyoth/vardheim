@@ -30,12 +30,11 @@ expect_used = "forbid"
 undocumented_unsafe_blocks = "forbid"
 indexing_slicing = "forbid"
 arithmetic_side_effects = "forbid"
-cast_possible_truncation = "deny"
-cast_sign_loss = "deny"
+cast_possible_truncation = "forbid"
+cast_sign_loss = "forbid"
 
 [profile.release]
 overflow-checks = true
-panic = "abort"
 codegen-units = 1
 lto = "thin"
 strip = "symbols"
