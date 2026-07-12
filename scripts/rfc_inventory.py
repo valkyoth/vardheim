@@ -19,13 +19,17 @@ CHECKED_AT = "2026-07-12"
 
 ROLE_GROUPS = {
     "acme": (8555, 8657, 8737, 8738, 8739, 8823, 9115, 9444, 9447, 9448, 9773, 9799, 9891),
-    "normative-foundation": (2119, 3339, 4086, 8174),
-    "encoding-jose": (4648, 7515, 7516, 7517, 7518, 7519, 7638, 8037, 8725),
-    "http-uri": (3986, 7807, 8288, 9110, 9111, 9112, 9457),
-    "pkix-keys": (2986, 5280, 5480, 5958, 6125, 6960, 7468, 8017, 8018, 8032, 8410, 9162),
-    "tls": (6066, 7301, 8446),
-    "email-smime": (5321, 5322, 6531, 8551),
-    "dns-names": (1034, 1035, 3596, 4033, 4034, 4035, 5890, 5891, 5892, 5893, 5894, 5895, 8659),
+    "normative-foundation": (2119, 3339, 3552, 3629, 4086, 5234, 8126, 8174),
+    "encoding-jose": (4648, 7515, 7516, 7517, 7518, 7519, 7638, 7797, 8037, 8259, 8725),
+    "cbor-cose": (8610, 9054),
+    "http-uri": (2818, 3986, 6570, 7230, 7231, 7234, 7807, 8288, 9110, 9111, 9112, 9457),
+    "pkix-keys": (2585, 2985, 2986, 5280, 5480, 5751, 5958, 6125, 6960, 7468, 8017, 8018, 8032, 8410, 9162),
+    "tls": (5246, 6066, 7301, 8446, 9525),
+    "email-smime": (2046, 2231, 3834, 5321, 5322, 6068, 6234, 6376, 6531, 8398, 8550, 8551, 8616),
+    "dns-names": (1034, 1035, 1123, 3492, 3596, 4033, 4034, 4035, 4343, 5890, 5891, 5892, 5893, 5894, 5895, 5952, 6844, 8499, 8659),
+    "onion": (7686,),
+    "stir": (8226, 9060),
+    "dtn": (4838, 9171, 9172, 9174),
 }
 
 TOC_SECTION_PATTERNS = (
@@ -48,6 +52,44 @@ BODY_SECTION_PATTERNS = (
 
 class InventoryError(RuntimeError):
     """A malformed or drifting RFC inventory."""
+
+
+def normative_reference_labels(text: str, number: int) -> list[str]:
+    heading = re.compile(
+        r"^\s*(?:[0-9]+(?:\.[0-9]+)*\.\s+)?Normative References\s*$",
+        re.MULTILINE,
+    )
+    matches = list(heading.finditer(text))
+    if not matches:
+        raise InventoryError(f"RFC {number} has no normative references section")
+    start = matches[-1].end()
+    following = text[start:]
+    end_match = re.search(
+        r"^\s*(?:[0-9]+(?:\.[0-9]+)*\.\s+)?Informative References\s*$",
+        following,
+        re.MULTILINE,
+    )
+    section = following if end_match is None else following[: end_match.start()]
+    references = sorted(set(re.findall(r"^\s*\[([^\]]+)\]", section, re.MULTILINE)))
+    if not references:
+        raise InventoryError(f"RFC {number} has no detected normative references")
+    return references
+
+
+def normative_rfc_references(text: str, number: int) -> list[int]:
+    return sorted(
+        int(match.group(1))
+        for label in normative_reference_labels(text, number)
+        if (match := re.fullmatch(r"RFC([0-9]+)", label)) is not None
+    )
+
+
+def normative_external_references(text: str, number: int) -> list[str]:
+    return [
+        label
+        for label in normative_reference_labels(text, number)
+        if re.fullmatch(r"RFC[0-9]+", label) is None
+    ]
 
 
 def role_map() -> dict[int, str]:
@@ -111,6 +153,8 @@ def build_inventory() -> dict:
         )
 
     documents = []
+    normative_references: set[int] = set()
+    normative_external: set[str] = set()
     for number in sorted(checksums):
         path = RFC_DIR / f"rfc{number}.txt"
         if not path.is_file():
@@ -120,19 +164,30 @@ def build_inventory() -> dict:
         if actual_hash != checksums[number]:
             raise InventoryError(f"RFC {number} differs from SHA256SUMS")
         text = content.decode("utf-8", errors="strict")
-        documents.append(
-            {
+        document = {
                 "rfc": number,
                 "role": roles[number],
                 "source": f"{SOURCE_BASE}rfc{number}.txt",
                 "sha256": actual_hash,
                 "sections": extract_sections(text, number),
             }
-        )
+        if roles[number] == "acme":
+            references = normative_rfc_references(text, number)
+            external = normative_external_references(text, number)
+            document["normative_rfc_references"] = references
+            document["normative_external_references"] = external
+            normative_references.update(references)
+            normative_external.update(external)
+        documents.append(document)
+    missing_normative = sorted(normative_references - set(roles))
+    if missing_normative:
+        raise InventoryError(f"untracked normative ACME RFC references: {missing_normative}")
     return {
         "schema": 1,
         "checked_at": CHECKED_AT,
         "source_authority": "RFC Editor",
+        "normative_acme_rfc_references": sorted(normative_references),
+        "normative_acme_external_references": sorted(normative_external),
         "documents": documents,
     }
 

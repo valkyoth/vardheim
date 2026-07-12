@@ -2,6 +2,95 @@
   "schema": 1,
   "checked_at": "2026-07-12",
   "source_authority": "RFC Editor",
+  "normative_acme_rfc_references": [
+    1034,
+    1123,
+    2046,
+    2119,
+    2231,
+    2585,
+    2818,
+    2985,
+    2986,
+    3339,
+    3492,
+    3552,
+    3596,
+    3629,
+    3834,
+    3986,
+    4086,
+    4343,
+    4648,
+    4838,
+    5234,
+    5246,
+    5280,
+    5321,
+    5322,
+    5751,
+    5890,
+    5952,
+    6066,
+    6068,
+    6234,
+    6376,
+    6531,
+    6570,
+    6844,
+    7230,
+    7231,
+    7234,
+    7301,
+    7468,
+    7515,
+    7518,
+    7519,
+    7638,
+    7686,
+    7797,
+    7807,
+    8037,
+    8126,
+    8174,
+    8226,
+    8259,
+    8288,
+    8398,
+    8446,
+    8499,
+    8550,
+    8551,
+    8555,
+    8610,
+    8616,
+    8659,
+    8725,
+    8737,
+    8739,
+    9054,
+    9060,
+    9110,
+    9171,
+    9172,
+    9174,
+    9447,
+    9448,
+    9525
+  ],
+  "normative_acme_external_references": [
+    "FIPS180-4",
+    "IANA-ACME",
+    "IANA-BP",
+    "IANA-COSE",
+    "IANA-SMI",
+    "JSS15",
+    "X.680",
+    "X.690",
+    "cabf-br",
+    "tor-rend-spec-v2",
+    "tor-spec"
+  ],
   "documents": [
     {
       "rfc": 1034,
@@ -532,6 +621,766 @@
       ]
     },
     {
+      "rfc": 1123,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc1123.txt",
+      "sha256": "3d019cc4777d1ead76c212711d56768bde9361312cd209846b62d2e41dd0301d",
+      "sections": [
+        {
+          "id": "1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "1.1",
+          "title": "The Internet Architecture"
+        },
+        {
+          "id": "1.2",
+          "title": "General Considerations"
+        },
+        {
+          "id": "1.2.1",
+          "title": "Continuing Internet Evolution"
+        },
+        {
+          "id": "1.2.2",
+          "title": "Robustness Principle"
+        },
+        {
+          "id": "1.2.3",
+          "title": "Error Logging"
+        },
+        {
+          "id": "1.2.4",
+          "title": "Configuration"
+        },
+        {
+          "id": "1.3",
+          "title": "Reading this Document"
+        },
+        {
+          "id": "1.3.1",
+          "title": "Organization"
+        },
+        {
+          "id": "1.3.2",
+          "title": "Requirements"
+        },
+        {
+          "id": "1.3.3",
+          "title": "Terminology"
+        },
+        {
+          "id": "1.4",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "2",
+          "title": "GENERAL ISSUES"
+        },
+        {
+          "id": "2.1",
+          "title": "Host Names and Numbers"
+        },
+        {
+          "id": "2.2",
+          "title": "Using Domain Name Service"
+        },
+        {
+          "id": "2.3",
+          "title": "Applications on Multihomed hosts"
+        },
+        {
+          "id": "2.4",
+          "title": "Type-of-Service"
+        },
+        {
+          "id": "2.5",
+          "title": "GENERAL APPLICATION REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "3",
+          "title": "REMOTE LOGIN -- TELNET PROTOCOL"
+        },
+        {
+          "id": "3.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "3.2",
+          "title": "PROTOCOL WALK-THROUGH"
+        },
+        {
+          "id": "3.2.1",
+          "title": "Option Negotiation"
+        },
+        {
+          "id": "3.2.2",
+          "title": "Telnet Go-Ahead Function"
+        },
+        {
+          "id": "3.2.3",
+          "title": "Control Functions"
+        },
+        {
+          "id": "3.2.4",
+          "title": "Telnet \"Synch\" Signal"
+        },
+        {
+          "id": "3.2.5",
+          "title": "NVT Printer and Keyboard"
+        },
+        {
+          "id": "3.2.6",
+          "title": "Telnet Command Structure"
+        },
+        {
+          "id": "3.2.7",
+          "title": "Telnet Binary Option"
+        },
+        {
+          "id": "3.2.8",
+          "title": "Telnet Terminal-Type Option"
+        },
+        {
+          "id": "3.3",
+          "title": "SPECIFIC ISSUES"
+        },
+        {
+          "id": "3.3.1",
+          "title": "Telnet End-of-Line Convention"
+        },
+        {
+          "id": "3.3.2",
+          "title": "Data Entry Terminals"
+        },
+        {
+          "id": "3.3.3",
+          "title": "Option Requirements"
+        },
+        {
+          "id": "3.3.4",
+          "title": "Option Initiation"
+        },
+        {
+          "id": "3.3.5",
+          "title": "Telnet Linemode Option"
+        },
+        {
+          "id": "3.4",
+          "title": "TELNET/USER INTERFACE"
+        },
+        {
+          "id": "3.4.1",
+          "title": "Character Set Transparency"
+        },
+        {
+          "id": "3.4.2",
+          "title": "Telnet Commands"
+        },
+        {
+          "id": "3.4.3",
+          "title": "TCP Connection Errors"
+        },
+        {
+          "id": "3.4.4",
+          "title": "Non-Default Telnet Contact Port"
+        },
+        {
+          "id": "3.4.5",
+          "title": "Flushing Output"
+        },
+        {
+          "id": "3.5",
+          "title": "TELNET REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "4",
+          "title": "FILE TRANSFER"
+        },
+        {
+          "id": "4.1",
+          "title": "FILE TRANSFER PROTOCOL -- FTP"
+        },
+        {
+          "id": "4.1.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "4.1.2",
+          "title": "PROTOCOL WALK-THROUGH"
+        },
+        {
+          "id": "4.1.2.1",
+          "title": "LOCAL Type"
+        },
+        {
+          "id": "4.1.2.2",
+          "title": "Telnet Format Control"
+        },
+        {
+          "id": "4.1.2.3",
+          "title": "Page Structure"
+        },
+        {
+          "id": "4.1.2.4",
+          "title": "Data Structure Transformations"
+        },
+        {
+          "id": "4.1.2.5",
+          "title": "Data Connection Management"
+        },
+        {
+          "id": "4.1.2.6",
+          "title": "PASV Command"
+        },
+        {
+          "id": "4.1.2.7",
+          "title": "LIST and NLST Commands"
+        },
+        {
+          "id": "4.1.2.8",
+          "title": "SITE Command"
+        },
+        {
+          "id": "4.1.2.9",
+          "title": "STOU Command"
+        },
+        {
+          "id": "4.1.2.10",
+          "title": "Telnet End-of-line Code"
+        },
+        {
+          "id": "4.1.2.11",
+          "title": "FTP Replies"
+        },
+        {
+          "id": "4.1.2.12",
+          "title": "Connections"
+        },
+        {
+          "id": "4.1.2.13",
+          "title": "Minimum Implementation; RFC-959 Section"
+        },
+        {
+          "id": "4.1.3",
+          "title": "SPECIFIC ISSUES"
+        },
+        {
+          "id": "4.1.3.1",
+          "title": "Non-standard Command Verbs"
+        },
+        {
+          "id": "4.1.3.2",
+          "title": "Idle Timeout"
+        },
+        {
+          "id": "4.1.3.3",
+          "title": "Concurrency of Data and Control"
+        },
+        {
+          "id": "4.1.3.4",
+          "title": "FTP Restart Mechanism"
+        },
+        {
+          "id": "4.1.4",
+          "title": "FTP/USER INTERFACE"
+        },
+        {
+          "id": "4.1.4.1",
+          "title": "Pathname Specification"
+        },
+        {
+          "id": "4.1.4.2",
+          "title": "\"QUOTE\" Command"
+        },
+        {
+          "id": "4.1.4.3",
+          "title": "Displaying Replies to User"
+        },
+        {
+          "id": "4.1.4.4",
+          "title": "Maintaining Synchronization"
+        },
+        {
+          "id": "4.1.5",
+          "title": "FTP REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "4.2",
+          "title": "TRIVIAL FILE TRANSFER PROTOCOL -- TFTP"
+        },
+        {
+          "id": "4.2.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "4.2.2",
+          "title": "PROTOCOL WALK-THROUGH"
+        },
+        {
+          "id": "4.2.2.1",
+          "title": "Transfer Modes"
+        },
+        {
+          "id": "4.2.2.2",
+          "title": "UDP Header"
+        },
+        {
+          "id": "4.2.3",
+          "title": "SPECIFIC ISSUES"
+        },
+        {
+          "id": "4.2.3.1",
+          "title": "Sorcerer's Apprentice Syndrome"
+        },
+        {
+          "id": "4.2.3.2",
+          "title": "Timeout Algorithms"
+        },
+        {
+          "id": "4.2.3.3",
+          "title": "Extensions"
+        },
+        {
+          "id": "4.2.3.4",
+          "title": "Access Control"
+        },
+        {
+          "id": "4.2.3.5",
+          "title": "Broadcast Request"
+        },
+        {
+          "id": "4.2.4",
+          "title": "TFTP REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "5",
+          "title": "ELECTRONIC MAIL -- SMTP and RFC-822"
+        },
+        {
+          "id": "5.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "5.2",
+          "title": "PROTOCOL WALK-THROUGH"
+        },
+        {
+          "id": "5.2.1",
+          "title": "The SMTP Model"
+        },
+        {
+          "id": "5.2.2",
+          "title": "Canonicalization"
+        },
+        {
+          "id": "5.2.3",
+          "title": "VRFY and EXPN Commands"
+        },
+        {
+          "id": "5.2.4",
+          "title": "SEND, SOML, and SAML Commands"
+        },
+        {
+          "id": "5.2.5",
+          "title": "HELO Command"
+        },
+        {
+          "id": "5.2.6",
+          "title": "Mail Relay"
+        },
+        {
+          "id": "5.2.7",
+          "title": "RCPT Command"
+        },
+        {
+          "id": "5.2.8",
+          "title": "DATA Command"
+        },
+        {
+          "id": "5.2.9",
+          "title": "Command Syntax"
+        },
+        {
+          "id": "5.2.10",
+          "title": "SMTP Replies"
+        },
+        {
+          "id": "5.2.11",
+          "title": "Transparency"
+        },
+        {
+          "id": "5.2.12",
+          "title": "WKS Use in MX Processing"
+        },
+        {
+          "id": "5.2.13",
+          "title": "RFC-822 Message Specification"
+        },
+        {
+          "id": "5.2.14",
+          "title": "RFC-822 Date and Time Specification"
+        },
+        {
+          "id": "5.2.15",
+          "title": "RFC-822 Syntax Change"
+        },
+        {
+          "id": "5.2.16",
+          "title": "RFC-822  Local-part"
+        },
+        {
+          "id": "5.2.17",
+          "title": "Domain Literals"
+        },
+        {
+          "id": "5.2.18",
+          "title": "Common Address Formatting Errors"
+        },
+        {
+          "id": "5.2.19",
+          "title": "Explicit Source Routes"
+        },
+        {
+          "id": "5.3",
+          "title": "SPECIFIC ISSUES"
+        },
+        {
+          "id": "5.3.1",
+          "title": "SMTP Queueing Strategies"
+        },
+        {
+          "id": "5.3.1.1",
+          "title": "Sending Strategy"
+        },
+        {
+          "id": "5.3.1.2",
+          "title": "Receiving strategy"
+        },
+        {
+          "id": "5.3.2",
+          "title": "Timeouts in SMTP"
+        },
+        {
+          "id": "5.3.3",
+          "title": "Reliable Mail Receipt"
+        },
+        {
+          "id": "5.3.4",
+          "title": "Reliable Mail Transmission"
+        },
+        {
+          "id": "5.3.5",
+          "title": "Domain Name Support"
+        },
+        {
+          "id": "5.3.6",
+          "title": "Mailing Lists and Aliases"
+        },
+        {
+          "id": "5.3.7",
+          "title": "Mail Gatewaying"
+        },
+        {
+          "id": "5.3.8",
+          "title": "Maximum Message Size"
+        },
+        {
+          "id": "5.4",
+          "title": "SMTP REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "6",
+          "title": "SUPPORT SERVICES"
+        },
+        {
+          "id": "6.1",
+          "title": "DOMAIN NAME TRANSLATION"
+        },
+        {
+          "id": "6.1.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "6.1.2",
+          "title": "PROTOCOL WALK-THROUGH"
+        },
+        {
+          "id": "6.1.2.1",
+          "title": "Resource Records with Zero TTL"
+        },
+        {
+          "id": "6.1.2.2",
+          "title": "QCLASS Values"
+        },
+        {
+          "id": "6.1.2.3",
+          "title": "Unused Fields"
+        },
+        {
+          "id": "6.1.2.4",
+          "title": "Compression"
+        },
+        {
+          "id": "6.1.2.5",
+          "title": "Misusing Configuration Info"
+        },
+        {
+          "id": "6.1.3",
+          "title": "SPECIFIC ISSUES"
+        },
+        {
+          "id": "6.1.3.1",
+          "title": "Resolver Implementation"
+        },
+        {
+          "id": "6.1.3.2",
+          "title": "Transport Protocols"
+        },
+        {
+          "id": "6.1.3.3",
+          "title": "Efficient Resource Usage"
+        },
+        {
+          "id": "6.1.3.4",
+          "title": "Multihomed Hosts"
+        },
+        {
+          "id": "6.1.3.5",
+          "title": "Extensibility"
+        },
+        {
+          "id": "6.1.3.6",
+          "title": "Status of RR Types"
+        },
+        {
+          "id": "6.1.3.7",
+          "title": "Robustness"
+        },
+        {
+          "id": "6.1.3.8",
+          "title": "Local Host Table"
+        },
+        {
+          "id": "6.1.4",
+          "title": "DNS USER INTERFACE"
+        },
+        {
+          "id": "6.1.4.1",
+          "title": "DNS Administration"
+        },
+        {
+          "id": "6.1.4.2",
+          "title": "DNS User Interface"
+        },
+        {
+          "id": "6.1.4.3",
+          "title": "Interface Abbreviation Facilities"
+        },
+        {
+          "id": "6.1.5",
+          "title": "DOMAIN NAME SYSTEM REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "6.2",
+          "title": "HOST INITIALIZATION"
+        },
+        {
+          "id": "6.2.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "6.2.2",
+          "title": "REQUIREMENTS"
+        },
+        {
+          "id": "6.2.2.1",
+          "title": "Dynamic Configuration"
+        },
+        {
+          "id": "6.2.2.2",
+          "title": "Loading Phase"
+        },
+        {
+          "id": "6.3",
+          "title": "REMOTE MANAGEMENT"
+        },
+        {
+          "id": "6.3.1",
+          "title": "INTRODUCTION"
+        },
+        {
+          "id": "6.3.2",
+          "title": "PROTOCOL WALK-THROUGH"
+        },
+        {
+          "id": "6.3.3",
+          "title": "MANAGEMENT REQUIREMENTS SUMMARY"
+        },
+        {
+          "id": "7",
+          "title": "REFERENCES"
+        }
+      ]
+    },
+    {
+      "rfc": 2046,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc2046.txt",
+      "sha256": "7ac4096b9263e11a704f06892638258ac1ddc0394dd75ffdc171e7b5ba0123e0",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Definition of a Top-Level Media Type"
+        },
+        {
+          "id": "3",
+          "title": "Overview Of The Initial Top-Level Media Types"
+        },
+        {
+          "id": "4",
+          "title": "Discrete Media Type Values"
+        },
+        {
+          "id": "4.1",
+          "title": "Text Media Type"
+        },
+        {
+          "id": "4.1.1",
+          "title": "Representation of Line Breaks"
+        },
+        {
+          "id": "4.1.2",
+          "title": "Charset Parameter"
+        },
+        {
+          "id": "4.1.3",
+          "title": "Plain Subtype"
+        },
+        {
+          "id": "4.1.4",
+          "title": "Unrecognized Subtypes"
+        },
+        {
+          "id": "4.2",
+          "title": "Image Media Type"
+        },
+        {
+          "id": "4.3",
+          "title": "Audio Media Type"
+        },
+        {
+          "id": "4.4",
+          "title": "Video Media Type"
+        },
+        {
+          "id": "4.5",
+          "title": "Application Media Type"
+        },
+        {
+          "id": "4.5.1",
+          "title": "Octet-Stream Subtype"
+        },
+        {
+          "id": "4.5.2",
+          "title": "PostScript Subtype"
+        },
+        {
+          "id": "4.5.3",
+          "title": "Other Application Subtypes"
+        },
+        {
+          "id": "5",
+          "title": "Composite Media Type Values"
+        },
+        {
+          "id": "5.1",
+          "title": "Multipart Media Type"
+        },
+        {
+          "id": "5.1.1",
+          "title": "Common Syntax"
+        },
+        {
+          "id": "5.1.2",
+          "title": "Handling Nested Messages and Multiparts"
+        },
+        {
+          "id": "5.1.3",
+          "title": "Mixed Subtype"
+        },
+        {
+          "id": "5.1.4",
+          "title": "Alternative Subtype"
+        },
+        {
+          "id": "5.1.5",
+          "title": "Digest Subtype"
+        },
+        {
+          "id": "5.1.6",
+          "title": "Parallel Subtype"
+        },
+        {
+          "id": "5.1.7",
+          "title": "Other Multipart Subtypes"
+        },
+        {
+          "id": "5.2",
+          "title": "Message Media Type"
+        },
+        {
+          "id": "5.2.1",
+          "title": "RFC822 Subtype"
+        },
+        {
+          "id": "5.2.2",
+          "title": "Partial Subtype"
+        },
+        {
+          "id": "5.2.2.1",
+          "title": "Message Fragmentation and Reassembly"
+        },
+        {
+          "id": "5.2.2.2",
+          "title": "Fragmentation and Reassembly Example"
+        },
+        {
+          "id": "5.2.3",
+          "title": "External-Body Subtype"
+        },
+        {
+          "id": "5.2.4",
+          "title": "Other Message Subtypes"
+        },
+        {
+          "id": "6",
+          "title": "Experimental Media Type Values"
+        },
+        {
+          "id": "7",
+          "title": "Summary"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "Authors' Addresses"
+        },
+        {
+          "id": "A",
+          "title": "Collected Grammar"
+        }
+      ]
+    },
+    {
       "rfc": 2119,
       "role": "normative-foundation",
       "source": "https://www.rfc-editor.org/rfc/rfc2119.txt",
@@ -572,6 +1421,266 @@
         {
           "id": "9",
           "title": "Author's Address"
+        }
+      ]
+    },
+    {
+      "rfc": 2231,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc2231.txt",
+      "sha256": "e69cbc8c05097736c5296575e7a2e0cb2a2a09c522640eb40ecc4a9dca56076d",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Abstract"
+        },
+        {
+          "id": "2",
+          "title": "Introduction"
+        },
+        {
+          "id": "2.1",
+          "title": "Requirements notation"
+        },
+        {
+          "id": "3",
+          "title": "Parameter Value Continuations"
+        },
+        {
+          "id": "4",
+          "title": "Parameter Value Character Set and Language Information"
+        },
+        {
+          "id": "4.1",
+          "title": "Combining Character Set, Language, and Parameter Continuations"
+        },
+        {
+          "id": "5",
+          "title": "Language specification in Encoded Words"
+        },
+        {
+          "id": "6",
+          "title": "IMAP4 Handling of Parameter Values"
+        },
+        {
+          "id": "7",
+          "title": "Modifications to MIME ABNF"
+        },
+        {
+          "id": "8",
+          "title": "Character sets which allow specification of language"
+        },
+        {
+          "id": "9",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "10",
+          "title": "References"
+        },
+        {
+          "id": "11",
+          "title": "Authors' Addresses"
+        },
+        {
+          "id": "12",
+          "title": "Full Copyright Statement"
+        }
+      ]
+    },
+    {
+      "rfc": 2585,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc2585.txt",
+      "sha256": "98d316b4b32dcba6478c30135f1c7e26fcca1d44e6c207270622110eaa7949d4",
+      "sections": [
+        {
+          "id": "1.1",
+          "title": "Model"
+        },
+        {
+          "id": "1.2",
+          "title": "Certificate and CRL Repository"
+        },
+        {
+          "id": "4.1",
+          "title": "application/pkix-cert"
+        },
+        {
+          "id": "4.2",
+          "title": "application/pkix-crl"
+        }
+      ]
+    },
+    {
+      "rfc": 2818,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc2818.txt",
+      "sha256": "4ef02c2b9185fe7b0af4c8777be460f1e156bc57313b1290c9097f83b9f43916",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements Terminology"
+        },
+        {
+          "id": "2",
+          "title": "HTTP Over TLS"
+        },
+        {
+          "id": "2.1",
+          "title": "Connection Initiation"
+        },
+        {
+          "id": "2.2",
+          "title": "Connection Closure"
+        },
+        {
+          "id": "2.2.1",
+          "title": "Client Behavior"
+        },
+        {
+          "id": "2.2.2",
+          "title": "Server Behavior"
+        },
+        {
+          "id": "2.3",
+          "title": "Port Number"
+        },
+        {
+          "id": "2.4",
+          "title": "URI Format"
+        },
+        {
+          "id": "3",
+          "title": "Endpoint Identification"
+        },
+        {
+          "id": "3.1",
+          "title": "Server Identity"
+        },
+        {
+          "id": "3.2",
+          "title": "Client Identity"
+        }
+      ]
+    },
+    {
+      "rfc": 2985,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc2985.txt",
+      "sha256": "0a7a760f5becd036f11a17d5a4b4ba831ef76b29d6f74922c320139bead580f1",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Definitions, notation and document convention"
+        },
+        {
+          "id": "2.1",
+          "title": "Definitions"
+        },
+        {
+          "id": "2.2",
+          "title": "Notation and document convention"
+        },
+        {
+          "id": "3",
+          "title": "Overview"
+        },
+        {
+          "id": "4",
+          "title": "Auxiliary object classes"
+        },
+        {
+          "id": "4.1",
+          "title": "The \"pkcsEntity\" auxiliary object class"
+        },
+        {
+          "id": "4.2",
+          "title": "The \"naturalPerson\" auxiliary object class"
+        },
+        {
+          "id": "5",
+          "title": "Selected attribute types"
+        },
+        {
+          "id": "5.3",
+          "title": "Attribute types for use in PKCS #7 data"
+        },
+        {
+          "id": "5.4",
+          "title": "Attribute types for use in PKCS #10 certificate requests"
+        },
+        {
+          "id": "5.6",
+          "title": "Attributes defined in S/MIMIE"
+        },
+        {
+          "id": "6",
+          "title": "Matching rules"
+        },
+        {
+          "id": "6.1",
+          "title": "Case ignore match"
+        },
+        {
+          "id": "6.2",
+          "title": "Signing time match"
+        },
+        {
+          "id": "7",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "8",
+          "title": "Authors' Addresses"
+        },
+        {
+          "id": "A",
+          "title": "ASN.1 module"
+        },
+        {
+          "id": "B",
+          "title": "BNF schema summary"
+        },
+        {
+          "id": "B.1",
+          "title": "Syntaxes"
+        },
+        {
+          "id": "B.2",
+          "title": "Object classes"
+        },
+        {
+          "id": "B.3",
+          "title": "Attribute types"
+        },
+        {
+          "id": "B.4",
+          "title": "Matching rules"
+        },
+        {
+          "id": "C",
+          "title": "Intellectual property considerations"
+        },
+        {
+          "id": "D",
+          "title": "Revision history"
+        },
+        {
+          "id": "E",
+          "title": "References"
+        },
+        {
+          "id": "F",
+          "title": "Contact information & About PKCS"
         }
       ]
     },
@@ -740,6 +1849,410 @@
       ]
     },
     {
+      "rfc": 3492,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc3492.txt",
+      "sha256": "d1848b1b4f01e20708a64f42394e5f4b840141935bed7f09ad7baeb6693b8772",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Terminology"
+        },
+        {
+          "id": "3",
+          "title": "Bootstring description"
+        },
+        {
+          "id": "4",
+          "title": "Bootstring parameters"
+        },
+        {
+          "id": "5",
+          "title": "Parameter values for Punycode"
+        },
+        {
+          "id": "6",
+          "title": "Bootstring algorithms"
+        },
+        {
+          "id": "7",
+          "title": "Punycode examples"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "References"
+        },
+        {
+          "id": "A",
+          "title": "Mixed-case annotation"
+        },
+        {
+          "id": "B",
+          "title": "Disclaimer and license"
+        },
+        {
+          "id": "C",
+          "title": "Punycode sample implementation"
+        }
+      ]
+    },
+    {
+      "rfc": 3552,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc3552.txt",
+      "sha256": "ba07e18bdffd18893e8607398bef42dbdb5f1c5aa0c7dd6891d43ca8a0b19e4f",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements"
+        },
+        {
+          "id": "2",
+          "title": "The Goals of Security"
+        },
+        {
+          "id": "2.1",
+          "title": "Communication Security"
+        },
+        {
+          "id": "2.1.1",
+          "title": "Confidentiality"
+        },
+        {
+          "id": "2.1.2",
+          "title": "Data Integrity"
+        },
+        {
+          "id": "2.1.3",
+          "title": "Peer Entity authentication"
+        },
+        {
+          "id": "2.2",
+          "title": "Non-Repudiation"
+        },
+        {
+          "id": "2.3",
+          "title": "Systems Security"
+        },
+        {
+          "id": "2.3.1",
+          "title": "Unauthorized Usage"
+        },
+        {
+          "id": "2.3.2",
+          "title": "Inappropriate Usage"
+        },
+        {
+          "id": "2.3.3",
+          "title": "Denial of Service"
+        },
+        {
+          "id": "3",
+          "title": "The Internet Threat Model"
+        },
+        {
+          "id": "3.1",
+          "title": "Limited Threat Models"
+        },
+        {
+          "id": "3.2",
+          "title": "Passive Attacks"
+        },
+        {
+          "id": "3.2.1",
+          "title": "Confidentiality Violations"
+        },
+        {
+          "id": "3.2.2",
+          "title": "Password Sniffing"
+        },
+        {
+          "id": "3.2.3",
+          "title": "Offline Cryptographic Attacks"
+        },
+        {
+          "id": "3.3",
+          "title": "Active Attacks"
+        },
+        {
+          "id": "3.3.1",
+          "title": "Replay Attacks"
+        },
+        {
+          "id": "3.3.2",
+          "title": "Message Insertion"
+        },
+        {
+          "id": "3.3.3",
+          "title": "Message Deletion"
+        },
+        {
+          "id": "3.3.4",
+          "title": "Message Modification"
+        },
+        {
+          "id": "3.3.5",
+          "title": "Man-In-The-Middle"
+        },
+        {
+          "id": "3.4",
+          "title": "Topological Issues"
+        },
+        {
+          "id": "3.5",
+          "title": "On-path versus off-path"
+        },
+        {
+          "id": "3.6",
+          "title": "Link-local"
+        },
+        {
+          "id": "4",
+          "title": "Common Issues"
+        },
+        {
+          "id": "4.1",
+          "title": "User Authentication"
+        },
+        {
+          "id": "4.1.1",
+          "title": "Username/Password"
+        },
+        {
+          "id": "4.1.2",
+          "title": "Challenge Response and One Time Passwords"
+        },
+        {
+          "id": "4.1.3",
+          "title": "Shared Keys"
+        },
+        {
+          "id": "4.1.4",
+          "title": "Key Distribution Centers"
+        },
+        {
+          "id": "4.1.5",
+          "title": "Certificates"
+        },
+        {
+          "id": "4.1.6",
+          "title": "Some Uncommon Systems"
+        },
+        {
+          "id": "4.1.7",
+          "title": "Host Authentication"
+        },
+        {
+          "id": "4.2",
+          "title": "Generic Security Frameworks"
+        },
+        {
+          "id": "4.3",
+          "title": "Non-repudiation"
+        },
+        {
+          "id": "4.4",
+          "title": "Authorization vs. Authentication"
+        },
+        {
+          "id": "4.4.1",
+          "title": "Access Control Lists"
+        },
+        {
+          "id": "4.4.2",
+          "title": "Certificate Based Systems"
+        },
+        {
+          "id": "4.5",
+          "title": "Providing Traffic Security"
+        },
+        {
+          "id": "4.5.1",
+          "title": "IPsec"
+        },
+        {
+          "id": "4.5.2",
+          "title": "SSL/TLS"
+        },
+        {
+          "id": "4.5.2.1",
+          "title": "Virtual Hosts"
+        },
+        {
+          "id": "4.5.2.2",
+          "title": "Remote Authentication and TLS"
+        },
+        {
+          "id": "4.5.3",
+          "title": "Remote Login"
+        },
+        {
+          "id": "4.6",
+          "title": "Denial of Service Attacks and Countermeasures"
+        },
+        {
+          "id": "4.6.1",
+          "title": "Blind Denial of Service"
+        },
+        {
+          "id": "4.6.2",
+          "title": "Distributed Denial of Service"
+        },
+        {
+          "id": "4.6.3",
+          "title": "Avoiding Denial of Service"
+        },
+        {
+          "id": "4.6.3.1",
+          "title": "Make your attacker do more work than you do"
+        },
+        {
+          "id": "4.6.3.2",
+          "title": "Make your attacker prove they can receive data from you"
+        },
+        {
+          "id": "4.6.4",
+          "title": "Example: TCP SYN Floods"
+        },
+        {
+          "id": "4.6.5",
+          "title": "Example: Photuris"
+        },
+        {
+          "id": "4.7",
+          "title": "Object vs. Channel Security"
+        },
+        {
+          "id": "4.8",
+          "title": "Firewalls and Network Topology"
+        },
+        {
+          "id": "5",
+          "title": "Writing Security Considerations Sections"
+        },
+        {
+          "id": "6",
+          "title": "Examples"
+        },
+        {
+          "id": "6.1",
+          "title": "SMTP"
+        },
+        {
+          "id": "6.1.1",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "6.1.1.1",
+          "title": "Mail Security and Spoofing"
+        },
+        {
+          "id": "6.1.1.2",
+          "title": "Blind Copies"
+        },
+        {
+          "id": "6.1.1.3",
+          "title": "VRFY, EXPN, and Security"
+        },
+        {
+          "id": "6.1.1.4",
+          "title": "Information Disclosure in Announcements"
+        },
+        {
+          "id": "6.1.1.5",
+          "title": "Information Disclosure in Trace Fields"
+        },
+        {
+          "id": "6.1.1.6",
+          "title": "Information Disclosure in Message Forwarding"
+        },
+        {
+          "id": "6.1.1.7",
+          "title": "Scope of Operation of SMTP Servers"
+        },
+        {
+          "id": "6.1.1.8",
+          "title": "Inappropriate Usage [NEW]"
+        },
+        {
+          "id": "6.1.1.8.1",
+          "title": "Closed Relaying [NEW]"
+        },
+        {
+          "id": "6.1.1.8.2",
+          "title": "Endpoints [NEW]"
+        },
+        {
+          "id": "6.1.2",
+          "title": "Communications security issues [NEW]"
+        },
+        {
+          "id": "6.1.2.1",
+          "title": "SMTP over IPSEC [NEW]"
+        },
+        {
+          "id": "6.1.2.2",
+          "title": "SMTP/TLS [NEW]"
+        },
+        {
+          "id": "6.1.2.3",
+          "title": "S/MIME and PGP/MIME [NEW]"
+        },
+        {
+          "id": "6.1.3",
+          "title": "Denial of Service [NEW]"
+        },
+        {
+          "id": "6.2",
+          "title": "VRRP"
+        },
+        {
+          "id": "6.2.1",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "6.2.1.1",
+          "title": "No Authentication"
+        },
+        {
+          "id": "6.2.1.2",
+          "title": "Simple Text Password"
+        },
+        {
+          "id": "6.2.1.3",
+          "title": "IP Authentication Header"
+        },
+        {
+          "id": "7",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "8",
+          "title": "Normative References"
+        },
+        {
+          "id": "9",
+          "title": "Informative References"
+        },
+        {
+          "id": "10",
+          "title": "Security Considerations"
+        }
+      ]
+    },
+    {
       "rfc": 3596,
       "role": "dns-names",
       "source": "https://www.rfc-editor.org/rfc/rfc3596.txt",
@@ -768,6 +2281,206 @@
         {
           "id": "6",
           "title": "Intellectual Property Statement"
+        }
+      ]
+    },
+    {
+      "rfc": 3629,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc3629.txt",
+      "sha256": "a2a3a39457d30420c812f87a38cc2b9194832f6982ef17e619de7d816879d6a6",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Notational conventions"
+        },
+        {
+          "id": "3",
+          "title": "UTF-8 definition"
+        },
+        {
+          "id": "4",
+          "title": "Syntax of UTF-8 Byte Sequences"
+        },
+        {
+          "id": "5",
+          "title": "Versions of the standards"
+        },
+        {
+          "id": "6",
+          "title": "Byte order mark (BOM)"
+        },
+        {
+          "id": "7",
+          "title": "Examples"
+        },
+        {
+          "id": "8",
+          "title": "MIME registration"
+        },
+        {
+          "id": "9",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "10",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "11",
+          "title": "Acknowledgements"
+        },
+        {
+          "id": "12",
+          "title": "Changes from RFC 2279"
+        },
+        {
+          "id": "13",
+          "title": "Normative References"
+        },
+        {
+          "id": "14",
+          "title": "Informative References"
+        },
+        {
+          "id": "15",
+          "title": "URIs"
+        },
+        {
+          "id": "16",
+          "title": "Intellectual Property Statement"
+        },
+        {
+          "id": "17",
+          "title": "Author's Address"
+        },
+        {
+          "id": "18",
+          "title": "Full Copyright Statement"
+        }
+      ]
+    },
+    {
+      "rfc": 3834,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc3834.txt",
+      "sha256": "e8ac97cceb6205dd2a722b05fb6b1c1dd1dff0996287af2f513a2d90bb643820",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Types of automatic responses"
+        },
+        {
+          "id": "1.2",
+          "title": "Notation and Definitions"
+        },
+        {
+          "id": "2",
+          "title": "When (not) to send automatic responses"
+        },
+        {
+          "id": "3",
+          "title": "Format of automatic responses"
+        },
+        {
+          "id": "3.1",
+          "title": "Message header"
+        },
+        {
+          "id": "3.1.1",
+          "title": "From field"
+        },
+        {
+          "id": "3.1.2",
+          "title": "Reply-To field"
+        },
+        {
+          "id": "3.1.3",
+          "title": "To field"
+        },
+        {
+          "id": "3.1.4",
+          "title": "Date field"
+        },
+        {
+          "id": "3.1.5",
+          "title": "Subject field"
+        },
+        {
+          "id": "3.1.6",
+          "title": "In-Reply-To and References fields"
+        },
+        {
+          "id": "3.1.7",
+          "title": "Auto-Submitted field"
+        },
+        {
+          "id": "3.1.8",
+          "title": "Precedence field"
+        },
+        {
+          "id": "3.2",
+          "title": "Message content"
+        },
+        {
+          "id": "3.2.1",
+          "title": "Use of DSNs and MDNs instead of this specification"
+        },
+        {
+          "id": "3.3",
+          "title": "Message envelope"
+        },
+        {
+          "id": "4",
+          "title": "Where to send automatic responses (and where not to send them)"
+        },
+        {
+          "id": "5",
+          "title": "The Auto-Submitted header field"
+        },
+        {
+          "id": "5.1",
+          "title": "Syntax"
+        },
+        {
+          "id": "5.2",
+          "title": "Semantics"
+        },
+        {
+          "id": "6",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "7",
+          "title": "Example: vacation program"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "9",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "10",
+          "title": "References"
+        },
+        {
+          "id": "10.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "10.2",
+          "title": "Informative References"
         }
       ]
     },
@@ -1948,6 +3661,70 @@
       ]
     },
     {
+      "rfc": 4343,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc4343.txt",
+      "sha256": "bebb8037e4bc6da9ad6691cf2aa2eb955852684c839d8f7dae311683292c1100",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Case Insensitivity of DNS Labels"
+        },
+        {
+          "id": "2.1",
+          "title": "Escaping Unusual DNS Label Octets"
+        },
+        {
+          "id": "2.2",
+          "title": "Example Labels with Escapes"
+        },
+        {
+          "id": "3",
+          "title": "Name Lookup, Label Types, and CLASS"
+        },
+        {
+          "id": "3.1",
+          "title": "Original DNS Label Types"
+        },
+        {
+          "id": "3.2",
+          "title": "Extended Label Type Case Insensitivity Considerations"
+        },
+        {
+          "id": "3.3",
+          "title": "CLASS Case Insensitivity Considerations"
+        },
+        {
+          "id": "4",
+          "title": "Case on Input and Output"
+        },
+        {
+          "id": "4.1",
+          "title": "DNS Output Case Preservation"
+        },
+        {
+          "id": "4.2",
+          "title": "DNS Input Case Preservation"
+        },
+        {
+          "id": "5",
+          "title": "Internationalized Domain Names"
+        },
+        {
+          "id": "6",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "7",
+          "title": "Acknowledgements"
+        }
+      ]
+    },
+    {
       "rfc": 4648,
       "role": "encoding-jose",
       "source": "https://www.rfc-editor.org/rfc/rfc4648.txt",
@@ -2044,6 +3821,654 @@
         {
           "id": "16.2",
           "title": "Informative References"
+        }
+      ]
+    },
+    {
+      "rfc": 4838,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Why an Architecture for Delay-Tolerant Networking?"
+        },
+        {
+          "id": "3",
+          "title": "DTN Architectural Description"
+        },
+        {
+          "id": "3.1",
+          "title": "Virtual Message Switching Using Store-and-Forward Operation"
+        },
+        {
+          "id": "3.2",
+          "title": "Nodes and Endpoints"
+        },
+        {
+          "id": "3.3",
+          "title": "Endpoint Identifiers (EIDs) and Registrations"
+        },
+        {
+          "id": "3.3.1",
+          "title": "URI Schemes"
+        },
+        {
+          "id": "3.3.2",
+          "title": "Late Binding"
+        },
+        {
+          "id": "3.4",
+          "title": "Anycast and Multicast"
+        },
+        {
+          "id": "3.5",
+          "title": "Priority Classes"
+        },
+        {
+          "id": "3.6",
+          "title": "Postal-Style Delivery Options and Administrative Records"
+        },
+        {
+          "id": "3.6.1",
+          "title": "Delivery Options"
+        },
+        {
+          "id": "3.6.2",
+          "title": "Administrative Records: Bundle Status Reports and Custody"
+        },
+        {
+          "id": "3.7",
+          "title": "Primary Bundle Fields"
+        },
+        {
+          "id": "3.8",
+          "title": "Routing and Forwarding"
+        },
+        {
+          "id": "3.8.1",
+          "title": "Types of Contacts"
+        },
+        {
+          "id": "3.9",
+          "title": "Fragmentation and Reassembly"
+        },
+        {
+          "id": "3.10",
+          "title": "Reliability and Custody Transfer"
+        },
+        {
+          "id": "3.11",
+          "title": "DTN Support for Proxies and Application Layer Gateways"
+        },
+        {
+          "id": "3.12",
+          "title": "Timestamps and Time Synchronization"
+        },
+        {
+          "id": "3.13",
+          "title": "Congestion and Flow Control at the Bundle Layer"
+        },
+        {
+          "id": "3.14",
+          "title": "Security"
+        },
+        {
+          "id": "4",
+          "title": "State Management Considerations"
+        },
+        {
+          "id": "4.1",
+          "title": "Application Registration State"
+        },
+        {
+          "id": "4.2",
+          "title": "Custody Transfer State"
+        },
+        {
+          "id": "4.3",
+          "title": "Bundle Routing and Forwarding State"
+        },
+        {
+          "id": "4.4",
+          "title": "Security-Related State"
+        },
+        {
+          "id": "4.5",
+          "title": "Policy and Configuration State"
+        },
+        {
+          "id": "5",
+          "title": "Application Structuring Issues"
+        },
+        {
+          "id": "6",
+          "title": "Convergence Layer Considerations for Use of Underlying Protocols"
+        },
+        {
+          "id": "7",
+          "title": "Summary"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "10",
+          "title": "Normative References"
+        },
+        {
+          "id": "11",
+          "title": "Informative References"
+        },
+        {
+          "id": "12",
+          "title": "Acknowledgments"
+        }
+      ]
+    },
+    {
+      "rfc": 5234,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc5234.txt",
+      "sha256": "fc871020f53baa6b60fc6835c557b433f38d53c5cc41ab56d03622b084f53a12",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Rule Definition"
+        },
+        {
+          "id": "2.1",
+          "title": "Rule Naming"
+        },
+        {
+          "id": "2.2",
+          "title": "Rule Form"
+        },
+        {
+          "id": "2.3",
+          "title": "Terminal Values"
+        },
+        {
+          "id": "2.4",
+          "title": "External Encodings"
+        },
+        {
+          "id": "3",
+          "title": "Operators"
+        },
+        {
+          "id": "3.1",
+          "title": "Concatenation:  Rule1 Rule2"
+        },
+        {
+          "id": "3.2",
+          "title": "Alternatives:  Rule1 / Rule2"
+        },
+        {
+          "id": "3.3",
+          "title": "Incremental Alternatives: Rule1 =/ Rule2"
+        },
+        {
+          "id": "3.4",
+          "title": "Value Range Alternatives:  %c##-##"
+        },
+        {
+          "id": "3.5",
+          "title": "Sequence Group:  (Rule1 Rule2)"
+        },
+        {
+          "id": "3.6",
+          "title": "Variable Repetition:  *Rule"
+        },
+        {
+          "id": "3.7",
+          "title": "Specific Repetition:  nRule"
+        },
+        {
+          "id": "3.8",
+          "title": "Optional Sequence:  [RULE]"
+        },
+        {
+          "id": "3.9",
+          "title": "Comment:  ; Comment"
+        },
+        {
+          "id": "3.10",
+          "title": "Operator Precedence"
+        },
+        {
+          "id": "4",
+          "title": "ABNF Definition of ABNF"
+        },
+        {
+          "id": "5",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "6",
+          "title": "References"
+        },
+        {
+          "id": "6.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "6.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Acknowledgements"
+        },
+        {
+          "id": "B",
+          "title": "Core ABNF of ABNF"
+        },
+        {
+          "id": "B.1",
+          "title": "Core Rules"
+        },
+        {
+          "id": "B.2",
+          "title": "Common Encoding"
+        }
+      ]
+    },
+    {
+      "rfc": 5246,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc5246.txt",
+      "sha256": "2ebe1b8e651696aeacc8ab3848bedb465505737901ea3b691acf40c392958feb",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements Terminology"
+        },
+        {
+          "id": "1.2",
+          "title": "Major Differences from TLS 1.1"
+        },
+        {
+          "id": "2",
+          "title": "Goals"
+        },
+        {
+          "id": "3",
+          "title": "Goals of This Document"
+        },
+        {
+          "id": "4",
+          "title": "Presentation Language"
+        },
+        {
+          "id": "4.1",
+          "title": "Basic Block Size"
+        },
+        {
+          "id": "4.2",
+          "title": "Miscellaneous"
+        },
+        {
+          "id": "4.3",
+          "title": "Vectors"
+        },
+        {
+          "id": "4.4",
+          "title": "Numbers"
+        },
+        {
+          "id": "4.5",
+          "title": "Enumerateds"
+        },
+        {
+          "id": "4.6",
+          "title": "Constructed Types"
+        },
+        {
+          "id": "4.6.1",
+          "title": "Variants"
+        },
+        {
+          "id": "4.7",
+          "title": "Cryptographic Attributes"
+        },
+        {
+          "id": "4.8",
+          "title": "Constants"
+        },
+        {
+          "id": "5",
+          "title": "HMAC and the Pseudorandom Function"
+        },
+        {
+          "id": "6",
+          "title": "The TLS Record Protocol"
+        },
+        {
+          "id": "6.1",
+          "title": "Connection States"
+        },
+        {
+          "id": "6.2",
+          "title": "Record Layer"
+        },
+        {
+          "id": "6.2.1",
+          "title": "Fragmentation"
+        },
+        {
+          "id": "6.2.2",
+          "title": "Record Compression and Decompression"
+        },
+        {
+          "id": "6.2.3",
+          "title": "Record Payload Protection"
+        },
+        {
+          "id": "6.2.3.1",
+          "title": "Null or Standard Stream Cipher"
+        },
+        {
+          "id": "6.2.3.2",
+          "title": "CBC Block Cipher"
+        },
+        {
+          "id": "6.2.3.3",
+          "title": "AEAD Ciphers"
+        },
+        {
+          "id": "6.3",
+          "title": "Key Calculation"
+        },
+        {
+          "id": "7",
+          "title": "The TLS Handshaking Protocols"
+        },
+        {
+          "id": "7.1",
+          "title": "Change Cipher Spec Protocol"
+        },
+        {
+          "id": "7.2",
+          "title": "Alert Protocol"
+        },
+        {
+          "id": "7.2.1",
+          "title": "Closure Alerts"
+        },
+        {
+          "id": "7.2.2",
+          "title": "Error Alerts"
+        },
+        {
+          "id": "7.3",
+          "title": "Handshake Protocol Overview"
+        },
+        {
+          "id": "7.4",
+          "title": "Handshake Protocol"
+        },
+        {
+          "id": "7.4.1",
+          "title": "Hello Messages"
+        },
+        {
+          "id": "7.4.1.1",
+          "title": "Hello Request"
+        },
+        {
+          "id": "7.4.1.2",
+          "title": "Client Hello"
+        },
+        {
+          "id": "7.4.1.3",
+          "title": "Server Hello"
+        },
+        {
+          "id": "7.4.1.4",
+          "title": "Hello Extensions"
+        },
+        {
+          "id": "7.4.1.4.1",
+          "title": "Signature Algorithms"
+        },
+        {
+          "id": "7.4.2",
+          "title": "Server Certificate"
+        },
+        {
+          "id": "7.4.3",
+          "title": "Server Key Exchange Message"
+        },
+        {
+          "id": "7.4.4",
+          "title": "Certificate Request"
+        },
+        {
+          "id": "7.4.5",
+          "title": "Server Hello Done"
+        },
+        {
+          "id": "7.4.6",
+          "title": "Client Certificate"
+        },
+        {
+          "id": "7.4.7",
+          "title": "Client Key Exchange Message"
+        },
+        {
+          "id": "7.4.7.1",
+          "title": "RSA-Encrypted Premaster Secret Message"
+        },
+        {
+          "id": "7.4.7.2",
+          "title": "Client Diffie-Hellman Public Value"
+        },
+        {
+          "id": "7.4.8",
+          "title": "Certificate Verify"
+        },
+        {
+          "id": "7.4.9",
+          "title": "Finished"
+        },
+        {
+          "id": "8",
+          "title": "Cryptographic Computations"
+        },
+        {
+          "id": "8.1",
+          "title": "Computing the Master Secret"
+        },
+        {
+          "id": "8.1.1",
+          "title": "RSA"
+        },
+        {
+          "id": "8.1.2",
+          "title": "Diffie-Hellman"
+        },
+        {
+          "id": "9",
+          "title": "Mandatory Cipher Suites"
+        },
+        {
+          "id": "10",
+          "title": "Application Data Protocol"
+        },
+        {
+          "id": "11",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "12",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "A",
+          "title": "Protocol Data Structures and Constant Values"
+        },
+        {
+          "id": "A.1",
+          "title": "Record Layer"
+        },
+        {
+          "id": "A.2",
+          "title": "Change Cipher Specs Message"
+        },
+        {
+          "id": "A.3",
+          "title": "Alert Messages"
+        },
+        {
+          "id": "A.4",
+          "title": "Handshake Protocol"
+        },
+        {
+          "id": "A.4.1",
+          "title": "Hello Messages"
+        },
+        {
+          "id": "A.4.2",
+          "title": "Server Authentication and Key Exchange Messages"
+        },
+        {
+          "id": "A.4.3",
+          "title": "Client Authentication and Key Exchange Messages"
+        },
+        {
+          "id": "A.4.4",
+          "title": "Handshake Finalization Message"
+        },
+        {
+          "id": "A.5",
+          "title": "The Cipher Suite"
+        },
+        {
+          "id": "A.6",
+          "title": "The Security Parameters"
+        },
+        {
+          "id": "A.7",
+          "title": "Changes to RFC 4492"
+        },
+        {
+          "id": "B",
+          "title": "Glossary"
+        },
+        {
+          "id": "C",
+          "title": "Cipher Suite Definitions"
+        },
+        {
+          "id": "D",
+          "title": "Implementation Notes"
+        },
+        {
+          "id": "D.1",
+          "title": "Random Number Generation and Seeding"
+        },
+        {
+          "id": "D.2",
+          "title": "Certificates and Authentication"
+        },
+        {
+          "id": "D.3",
+          "title": "Cipher Suites"
+        },
+        {
+          "id": "D.4",
+          "title": "Implementation Pitfalls"
+        },
+        {
+          "id": "E",
+          "title": "Backward Compatibility"
+        },
+        {
+          "id": "E.1",
+          "title": "Compatibility with TLS 1.0/1.1 and SSL 3.0"
+        },
+        {
+          "id": "E.2",
+          "title": "Compatibility with SSL 2.0"
+        },
+        {
+          "id": "E.3",
+          "title": "Avoiding Man-in-the-Middle Version Rollback"
+        },
+        {
+          "id": "F",
+          "title": "Security Analysis"
+        },
+        {
+          "id": "F.1",
+          "title": "Handshake Protocol"
+        },
+        {
+          "id": "F.1.1",
+          "title": "Authentication and Key Exchange"
+        },
+        {
+          "id": "F.1.1.1",
+          "title": "Anonymous Key Exchange"
+        },
+        {
+          "id": "F.1.1.2",
+          "title": "RSA Key Exchange and Authentication"
+        },
+        {
+          "id": "F.1.1.3",
+          "title": "Diffie-Hellman Key Exchange with Authentication"
+        },
+        {
+          "id": "F.1.2",
+          "title": "Version Rollback Attacks"
+        },
+        {
+          "id": "F.1.3",
+          "title": "Detecting Attacks Against the Handshake Protocol"
+        },
+        {
+          "id": "F.1.4",
+          "title": "Resuming Sessions"
+        },
+        {
+          "id": "F.2",
+          "title": "Protecting Application Data"
+        },
+        {
+          "id": "F.3",
+          "title": "Explicit IVs"
+        },
+        {
+          "id": "F.4",
+          "title": "Security of Composite Cipher Modes"
+        },
+        {
+          "id": "F.5",
+          "title": "Denial of Service"
+        },
+        {
+          "id": "F.6",
+          "title": "Final Notes"
         }
       ]
     },
@@ -3380,6 +5805,282 @@
       ]
     },
     {
+      "rfc": 5751,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc5751.txt",
+      "sha256": "86d5e52ba3618a8326a7b8d4eda9038071a0e90d1d58ef35136429b402ff8998",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Specification Overview"
+        },
+        {
+          "id": "1.2",
+          "title": "Definitions"
+        },
+        {
+          "id": "1.3",
+          "title": "Conventions Used in This Document"
+        },
+        {
+          "id": "1.4",
+          "title": "Compatibility with Prior Practice of S/MIME"
+        },
+        {
+          "id": "1.5",
+          "title": "Changes from S/MIME v3 to S/MIME v3.1"
+        },
+        {
+          "id": "1.6",
+          "title": "Changes since S/MIME v3.1"
+        },
+        {
+          "id": "2",
+          "title": "CMS Options"
+        },
+        {
+          "id": "2.1",
+          "title": "DigestAlgorithmIdentifier"
+        },
+        {
+          "id": "2.2",
+          "title": "SignatureAlgorithmIdentifier"
+        },
+        {
+          "id": "2.3",
+          "title": "KeyEncryptionAlgorithmIdentifier"
+        },
+        {
+          "id": "2.4",
+          "title": "General Syntax"
+        },
+        {
+          "id": "2.4.1",
+          "title": "Data Content Type"
+        },
+        {
+          "id": "2.4.2",
+          "title": "SignedData Content Type"
+        },
+        {
+          "id": "2.4.3",
+          "title": "EnvelopedData Content Type"
+        },
+        {
+          "id": "2.4.4",
+          "title": "CompressedData Content Type"
+        },
+        {
+          "id": "2.5",
+          "title": "Attributes and the SignerInfo Type"
+        },
+        {
+          "id": "2.5.1",
+          "title": "Signing Time Attribute"
+        },
+        {
+          "id": "2.5.2",
+          "title": "SMIME Capabilities Attribute"
+        },
+        {
+          "id": "2.5.3",
+          "title": "Encryption Key Preference Attribute"
+        },
+        {
+          "id": "2.5.3.1",
+          "title": "Selection of Recipient Key Management Certificate"
+        },
+        {
+          "id": "2.6",
+          "title": "SignerIdentifier SignerInfo Type"
+        },
+        {
+          "id": "2.7",
+          "title": "ContentEncryptionAlgorithmIdentifier"
+        },
+        {
+          "id": "2.7.1",
+          "title": "Deciding Which Encryption Method to Use"
+        },
+        {
+          "id": "2.7.1.1",
+          "title": "Rule 1: Known Capabilities"
+        },
+        {
+          "id": "2.7.1.2",
+          "title": "Rule 2: Unknown Capabilities, Unknown Version of S/MIME"
+        },
+        {
+          "id": "2.7.2",
+          "title": "Choosing Weak Encryption"
+        },
+        {
+          "id": "2.7.3",
+          "title": "Multiple Recipients"
+        },
+        {
+          "id": "3",
+          "title": "Creating S/MIME Messages"
+        },
+        {
+          "id": "3.1",
+          "title": "Preparing the MIME Entity for Signing, Enveloping, or Compressing"
+        },
+        {
+          "id": "3.1.1",
+          "title": "Canonicalization"
+        },
+        {
+          "id": "3.1.2",
+          "title": "Transfer Encoding"
+        },
+        {
+          "id": "3.1.3",
+          "title": "Transfer Encoding for Signing Using multipart/signed"
+        },
+        {
+          "id": "3.1.4",
+          "title": "Sample Canonical MIME Entity"
+        },
+        {
+          "id": "3.2",
+          "title": "The application/pkcs7-mime Media Type"
+        },
+        {
+          "id": "3.2.1",
+          "title": "The name and filename Parameters"
+        },
+        {
+          "id": "3.2.2",
+          "title": "The smime-type Parameter"
+        },
+        {
+          "id": "3.3",
+          "title": "Creating an Enveloped-Only Message"
+        },
+        {
+          "id": "3.4",
+          "title": "Creating a Signed-Only Message"
+        },
+        {
+          "id": "3.4.1",
+          "title": "Choosing a Format for Signed-Only Messages"
+        },
+        {
+          "id": "3.4.2",
+          "title": "Signing Using application/pkcs7-mime with SignedData"
+        },
+        {
+          "id": "3.4.3",
+          "title": "Signing Using the multipart/signed Format"
+        },
+        {
+          "id": "3.4.3.1",
+          "title": "The application/pkcs7-signature Media Type"
+        },
+        {
+          "id": "3.4.3.2",
+          "title": "Creating a multipart/signed Message"
+        },
+        {
+          "id": "3.4.3.3",
+          "title": "Sample multipart/signed Message"
+        },
+        {
+          "id": "3.5",
+          "title": "Creating a Compressed-Only Message"
+        },
+        {
+          "id": "3.6",
+          "title": "Multiple Operations"
+        },
+        {
+          "id": "3.7",
+          "title": "Creating a Certificate Management Message"
+        },
+        {
+          "id": "3.8",
+          "title": "Registration Requests"
+        },
+        {
+          "id": "3.9",
+          "title": "Identifying an S/MIME Message"
+        },
+        {
+          "id": "4",
+          "title": "Certificate Processing"
+        },
+        {
+          "id": "4.1",
+          "title": "Key Pair Generation"
+        },
+        {
+          "id": "4.2",
+          "title": "Signature Generation"
+        },
+        {
+          "id": "4.3",
+          "title": "Signature Verification"
+        },
+        {
+          "id": "4.4",
+          "title": "Encryption"
+        },
+        {
+          "id": "4.5",
+          "title": "Decryption"
+        },
+        {
+          "id": "5",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "5.1",
+          "title": "Media Type for application/pkcs7-mime"
+        },
+        {
+          "id": "5.2",
+          "title": "Media Type for application/pkcs7-signature"
+        },
+        {
+          "id": "6",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "7",
+          "title": "References"
+        },
+        {
+          "id": "7.1",
+          "title": "Reference Conventions"
+        },
+        {
+          "id": "7.2",
+          "title": "Normative References"
+        },
+        {
+          "id": "7.3",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "ASN.1 Module"
+        },
+        {
+          "id": "B",
+          "title": "Moving S/MIME v2 Message Specification to Historic Status"
+        },
+        {
+          "id": "C",
+          "title": "Acknowledgments"
+        }
+      ]
+    },
+    {
       "rfc": 5890,
       "role": "dns-names",
       "source": "https://www.rfc-editor.org/rfc/rfc5890.txt",
@@ -4164,6 +6865,186 @@
       ]
     },
     {
+      "rfc": 5952,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5952.txt",
+      "sha256": "c75e82c5f53bcec8148820fadf0d65935336ee2031fa6ce10504797ed4c1979d",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements Language"
+        },
+        {
+          "id": "2",
+          "title": "Text Representation Flexibility of RFC 4291"
+        },
+        {
+          "id": "2.1",
+          "title": "Leading Zeros in a 16-Bit Field"
+        },
+        {
+          "id": "2.2",
+          "title": "Zero Compression"
+        },
+        {
+          "id": "2.3",
+          "title": "Uppercase or Lowercase"
+        },
+        {
+          "id": "3",
+          "title": "Problems Encountered with the Flexible Model"
+        },
+        {
+          "id": "3.1",
+          "title": "Searching"
+        },
+        {
+          "id": "3.1.1",
+          "title": "General Summary"
+        },
+        {
+          "id": "3.1.2",
+          "title": "Searching Spreadsheets and Text Files"
+        },
+        {
+          "id": "3.1.3",
+          "title": "Searching with Whois"
+        },
+        {
+          "id": "3.1.4",
+          "title": "Searching for an Address in a Network Diagram"
+        },
+        {
+          "id": "3.2",
+          "title": "Parsing and Modifying"
+        },
+        {
+          "id": "3.2.1",
+          "title": "General Summary"
+        },
+        {
+          "id": "3.2.2",
+          "title": "Logging"
+        },
+        {
+          "id": "3.2.3",
+          "title": "Auditing: Case 1"
+        },
+        {
+          "id": "3.2.4",
+          "title": "Auditing: Case 2"
+        },
+        {
+          "id": "3.2.5",
+          "title": "Verification"
+        },
+        {
+          "id": "3.2.6",
+          "title": "Unexpected Modifying"
+        },
+        {
+          "id": "3.3",
+          "title": "Operating"
+        },
+        {
+          "id": "3.3.1",
+          "title": "General Summary"
+        },
+        {
+          "id": "3.3.2",
+          "title": "Customer Calls"
+        },
+        {
+          "id": "3.3.3",
+          "title": "Abuse"
+        },
+        {
+          "id": "3.4",
+          "title": "Other Minor Problems"
+        },
+        {
+          "id": "3.4.1",
+          "title": "Changing Platforms"
+        },
+        {
+          "id": "3.4.2",
+          "title": "Preference in Documentation"
+        },
+        {
+          "id": "3.4.3",
+          "title": "Legibility"
+        },
+        {
+          "id": "4",
+          "title": "A Recommendation for IPv6 Text Representation"
+        },
+        {
+          "id": "4.1",
+          "title": "Handling Leading Zeros in a 16-Bit Field"
+        },
+        {
+          "id": "4.2",
+          "title": "\"::\" Usage"
+        },
+        {
+          "id": "4.2.1",
+          "title": "Shorten as Much as Possible"
+        },
+        {
+          "id": "4.2.2",
+          "title": "Handling One 16-Bit 0 Field"
+        },
+        {
+          "id": "4.2.3",
+          "title": "Choice in Placement of \"::\""
+        },
+        {
+          "id": "4.3",
+          "title": "Lowercase"
+        },
+        {
+          "id": "5",
+          "title": "Text Representation of Special Addresses"
+        },
+        {
+          "id": "6",
+          "title": "Notes on Combining IPv6 Addresses with Port Numbers"
+        },
+        {
+          "id": "7",
+          "title": "Prefix Representation"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "Acknowledgements"
+        },
+        {
+          "id": "10",
+          "title": "References"
+        },
+        {
+          "id": "10.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "10.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "For Developers"
+        }
+      ]
+    },
+    {
       "rfc": 5958,
       "role": "pkix-keys",
       "source": "https://www.rfc-editor.org/rfc/rfc5958.txt",
@@ -4336,6 +7217,86 @@
         {
           "id": "B",
           "title": "Acknowledgements"
+        }
+      ]
+    },
+    {
+      "rfc": 6068,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6068.txt",
+      "sha256": "a450492a89d30689c0a73e26e1a1d7bccf761405b23c15567f0cf9db575984af",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Syntax of a 'mailto' URI"
+        },
+        {
+          "id": "3",
+          "title": "Semantics and Operations"
+        },
+        {
+          "id": "4",
+          "title": "Unsafe Header Fields"
+        },
+        {
+          "id": "5",
+          "title": "Encoding"
+        },
+        {
+          "id": "6",
+          "title": "Examples"
+        },
+        {
+          "id": "6.1",
+          "title": "Basic Examples"
+        },
+        {
+          "id": "6.2",
+          "title": "Examples of Complicated Email Addresses"
+        },
+        {
+          "id": "6.3",
+          "title": "Examples Using UTF-8-Based Percent-Encoding"
+        },
+        {
+          "id": "7",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "8.1",
+          "title": "Update of the Registration of the 'mailto' URI Scheme"
+        },
+        {
+          "id": "8.2",
+          "title": "Registration of the Body Header Field"
+        },
+        {
+          "id": "9",
+          "title": "Main Changes from RFC 2368"
+        },
+        {
+          "id": "10",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "11",
+          "title": "References"
+        },
+        {
+          "id": "11.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "11.2",
+          "title": "Informative References"
         }
       ]
     },
@@ -4600,6 +7561,614 @@
       ]
     },
     {
+      "rfc": 6234,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6234.txt",
+      "sha256": "8f39f02a57bfd1da15634706724a585766e6223f77ecdaf243cad16cd3a1aa1b",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Overview of Contents"
+        },
+        {
+          "id": "2",
+          "title": "Notation for Bit Strings and Integers"
+        },
+        {
+          "id": "3",
+          "title": "Operations on Words"
+        },
+        {
+          "id": "4",
+          "title": "Message Padding and Parsing"
+        },
+        {
+          "id": "4.1",
+          "title": "SHA-224 and SHA-256"
+        },
+        {
+          "id": "4.2",
+          "title": "SHA-384 and SHA-512"
+        },
+        {
+          "id": "5",
+          "title": "Functions and Constants Used"
+        },
+        {
+          "id": "5.1",
+          "title": "SHA-224 and SHA-256"
+        },
+        {
+          "id": "5.2",
+          "title": "SHA-384 and SHA-512"
+        },
+        {
+          "id": "6",
+          "title": "Computing the Message Digest"
+        },
+        {
+          "id": "6.1",
+          "title": "SHA-224 and SHA-256 Initialization"
+        },
+        {
+          "id": "6.2",
+          "title": "SHA-224 and SHA-256 Processing"
+        },
+        {
+          "id": "6.3",
+          "title": "SHA-384 and SHA-512 Initialization"
+        },
+        {
+          "id": "6.4",
+          "title": "SHA-384 and SHA-512 Processing"
+        },
+        {
+          "id": "7",
+          "title": "HKDF- and SHA-Based HMACs"
+        },
+        {
+          "id": "7.1",
+          "title": "SHA-Based HMACs"
+        },
+        {
+          "id": "7.2",
+          "title": "HKDF"
+        },
+        {
+          "id": "8",
+          "title": "C Code for SHAs, HMAC, and HKDF"
+        },
+        {
+          "id": "8.1",
+          "title": "The Header Files"
+        },
+        {
+          "id": "8.1.1",
+          "title": "The .h file"
+        },
+        {
+          "id": "8.1.2",
+          "title": "stdint-example.h"
+        },
+        {
+          "id": "8.1.3",
+          "title": "sha-private.h"
+        },
+        {
+          "id": "8.2",
+          "title": "The SHA Code"
+        },
+        {
+          "id": "8.2.1",
+          "title": "sha1.c"
+        },
+        {
+          "id": "8.2.2",
+          "title": "sha224-256.c"
+        },
+        {
+          "id": "8.2.3",
+          "title": "sha384-512.c"
+        },
+        {
+          "id": "8.2.4",
+          "title": "usha.c"
+        },
+        {
+          "id": "8.3",
+          "title": "The HMAC Code"
+        },
+        {
+          "id": "8.4",
+          "title": "The HKDF Code"
+        },
+        {
+          "id": "8.5",
+          "title": "The Test Driver"
+        },
+        {
+          "id": "9",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "10",
+          "title": "Acknowledgements"
+        },
+        {
+          "id": "11",
+          "title": "References"
+        },
+        {
+          "id": "11.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "11.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
+      "rfc": 6376,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6376.txt",
+      "sha256": "00ae1e26aa19e0b8a6087435a524d23e824e2c31ebd62544dd714923bf8553f0",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "DKIM Architecture Documents"
+        },
+        {
+          "id": "1.2",
+          "title": "Signing Identity"
+        },
+        {
+          "id": "1.3",
+          "title": "Scalability"
+        },
+        {
+          "id": "1.4",
+          "title": "Simple Key Management"
+        },
+        {
+          "id": "1.5",
+          "title": "Data Integrity"
+        },
+        {
+          "id": "2",
+          "title": "Terminology and Definitions"
+        },
+        {
+          "id": "2.1",
+          "title": "Signers"
+        },
+        {
+          "id": "2.2",
+          "title": "Verifiers"
+        },
+        {
+          "id": "2.3",
+          "title": "Identity"
+        },
+        {
+          "id": "2.4",
+          "title": "Identifier"
+        },
+        {
+          "id": "2.5",
+          "title": "Signing Domain Identifier (SDID)"
+        },
+        {
+          "id": "2.6",
+          "title": "Agent or User Identifier (AUID)"
+        },
+        {
+          "id": "2.7",
+          "title": "Identity Assessor"
+        },
+        {
+          "id": "2.8",
+          "title": "Whitespace"
+        },
+        {
+          "id": "2.9",
+          "title": "Imported ABNF Tokens"
+        },
+        {
+          "id": "2.10",
+          "title": "Common ABNF Tokens"
+        },
+        {
+          "id": "2.11",
+          "title": "DKIM-Quoted-Printable"
+        },
+        {
+          "id": "3",
+          "title": "Protocol Elements"
+        },
+        {
+          "id": "3.1",
+          "title": "Selectors"
+        },
+        {
+          "id": "3.2",
+          "title": "Tag=Value Lists"
+        },
+        {
+          "id": "3.3",
+          "title": "Signing and Verification Algorithms"
+        },
+        {
+          "id": "3.3.1",
+          "title": "The rsa-sha1 Signing Algorithm"
+        },
+        {
+          "id": "3.3.2",
+          "title": "The rsa-sha256 Signing Algorithm"
+        },
+        {
+          "id": "3.3.3",
+          "title": "Key Sizes"
+        },
+        {
+          "id": "3.3.4",
+          "title": "Other Algorithms"
+        },
+        {
+          "id": "3.4",
+          "title": "Canonicalization"
+        },
+        {
+          "id": "3.4.1",
+          "title": "The \"simple\" Header Canonicalization Algorithm"
+        },
+        {
+          "id": "3.4.2",
+          "title": "The \"relaxed\" Header Canonicalization Algorithm"
+        },
+        {
+          "id": "3.4.3",
+          "title": "The \"simple\" Body Canonicalization Algorithm"
+        },
+        {
+          "id": "3.4.4",
+          "title": "The \"relaxed\" Body Canonicalization Algorithm"
+        },
+        {
+          "id": "3.4.5",
+          "title": "Canonicalization Examples (INFORMATIVE)"
+        },
+        {
+          "id": "3.5",
+          "title": "The DKIM-Signature Header Field"
+        },
+        {
+          "id": "3.6",
+          "title": "Key Management and Representation"
+        },
+        {
+          "id": "3.6.1",
+          "title": "Textual Representation"
+        },
+        {
+          "id": "3.6.2",
+          "title": "DNS Binding"
+        },
+        {
+          "id": "3.6.2.1",
+          "title": "Namespace"
+        },
+        {
+          "id": "3.6.2.2",
+          "title": "Resource Record Types for Key Storage"
+        },
+        {
+          "id": "3.7",
+          "title": "Computing the Message Hashes"
+        },
+        {
+          "id": "3.8",
+          "title": "Input Requirements"
+        },
+        {
+          "id": "3.9",
+          "title": "Output Requirements"
+        },
+        {
+          "id": "3.10",
+          "title": "Signing by Parent Domains"
+        },
+        {
+          "id": "3.11",
+          "title": "Relationship between SDID and AUID"
+        },
+        {
+          "id": "4",
+          "title": "Semantics of Multiple Signatures"
+        },
+        {
+          "id": "4.1",
+          "title": "Example Scenarios"
+        },
+        {
+          "id": "4.2",
+          "title": "Interpretation"
+        },
+        {
+          "id": "5",
+          "title": "Signer Actions"
+        },
+        {
+          "id": "5.1",
+          "title": "Determine Whether the Email Should Be Signed and by Whom"
+        },
+        {
+          "id": "5.2",
+          "title": "Select a Private Key and Corresponding Selector Information"
+        },
+        {
+          "id": "5.3",
+          "title": "Normalize the Message to Prevent Transport Conversions"
+        },
+        {
+          "id": "5.3.1",
+          "title": "Body Length Limits"
+        },
+        {
+          "id": "5.4",
+          "title": "Determine the Header Fields to Sign"
+        },
+        {
+          "id": "5.4.1",
+          "title": "Recommended Signature Content"
+        },
+        {
+          "id": "5.4.2",
+          "title": "Signatures Involving Multiple Instances of a Field"
+        },
+        {
+          "id": "5.5",
+          "title": "Compute the Message Hash and Signature"
+        },
+        {
+          "id": "5.6",
+          "title": "Insert the DKIM-Signature Header Field"
+        },
+        {
+          "id": "6",
+          "title": "Verifier Actions"
+        },
+        {
+          "id": "6.1",
+          "title": "Extract Signatures from the Message"
+        },
+        {
+          "id": "6.1.1",
+          "title": "Validate the Signature Header Field"
+        },
+        {
+          "id": "6.1.2",
+          "title": "Get the Public Key"
+        },
+        {
+          "id": "6.1.3",
+          "title": "Compute the Verification"
+        },
+        {
+          "id": "6.2",
+          "title": "Communicate Verification Results"
+        },
+        {
+          "id": "6.3",
+          "title": "Interpret Results/Apply Local Policy"
+        },
+        {
+          "id": "7",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "7.1",
+          "title": "Email Authentication Methods Registry"
+        },
+        {
+          "id": "7.2",
+          "title": "DKIM-Signature Tag Specifications"
+        },
+        {
+          "id": "7.3",
+          "title": "DKIM-Signature Query Method Registry"
+        },
+        {
+          "id": "7.4",
+          "title": "DKIM-Signature Canonicalization Registry"
+        },
+        {
+          "id": "7.5",
+          "title": "_domainkey DNS TXT Resource Record Tag Specifications"
+        },
+        {
+          "id": "7.6",
+          "title": "DKIM Key Type Registry"
+        },
+        {
+          "id": "7.7",
+          "title": "DKIM Hash Algorithms Registry"
+        },
+        {
+          "id": "7.8",
+          "title": "DKIM Service Types Registry"
+        },
+        {
+          "id": "7.9",
+          "title": "DKIM Selector Flags Registry"
+        },
+        {
+          "id": "7.10",
+          "title": "DKIM-Signature Header Field"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "8.1",
+          "title": "ASCII Art Attacks"
+        },
+        {
+          "id": "8.2",
+          "title": "Misuse of Body Length Limits (\"l=\" Tag)"
+        },
+        {
+          "id": "8.3",
+          "title": "Misappropriated Private Key"
+        },
+        {
+          "id": "8.4",
+          "title": "Key Server Denial-of-Service Attacks"
+        },
+        {
+          "id": "8.5",
+          "title": "Attacks against the DNS"
+        },
+        {
+          "id": "8.6",
+          "title": "Replay/Spam Attacks"
+        },
+        {
+          "id": "8.7",
+          "title": "Limits on Revoking Keys"
+        },
+        {
+          "id": "8.8",
+          "title": "Intentionally Malformed Key Records"
+        },
+        {
+          "id": "8.9",
+          "title": "Intentionally Malformed DKIM-Signature Header Fields"
+        },
+        {
+          "id": "8.10",
+          "title": "Information Leakage"
+        },
+        {
+          "id": "8.11",
+          "title": "Remote Timing Attacks"
+        },
+        {
+          "id": "8.12",
+          "title": "Reordered Header Fields"
+        },
+        {
+          "id": "8.13",
+          "title": "RSA Attacks"
+        },
+        {
+          "id": "8.14",
+          "title": "Inappropriate Signing by Parent Domains"
+        },
+        {
+          "id": "8.15",
+          "title": "Attacks Involving Extra Header Fields"
+        },
+        {
+          "id": "9",
+          "title": "References"
+        },
+        {
+          "id": "9.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "9.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Example of Use (INFORMATIVE)"
+        },
+        {
+          "id": "A.1",
+          "title": "The User Composes an Email"
+        },
+        {
+          "id": "A.2",
+          "title": "The Email is Signed"
+        },
+        {
+          "id": "A.3",
+          "title": "The Email Signature is Verified"
+        },
+        {
+          "id": "B",
+          "title": "Usage Examples (INFORMATIVE)"
+        },
+        {
+          "id": "B.1",
+          "title": "Alternate Submission Scenarios"
+        },
+        {
+          "id": "B.1.1",
+          "title": "Delegated Business Functions"
+        },
+        {
+          "id": "B.1.2",
+          "title": "PDAs and Similar Devices"
+        },
+        {
+          "id": "B.1.3",
+          "title": "Roaming Users"
+        },
+        {
+          "id": "B.1.4",
+          "title": "Independent (Kiosk) Message Submission"
+        },
+        {
+          "id": "B.2",
+          "title": "Alternate Delivery Scenarios"
+        },
+        {
+          "id": "B.2.1",
+          "title": "Affinity Addresses"
+        },
+        {
+          "id": "B.2.2",
+          "title": "Simple Address Aliasing (.forward)"
+        },
+        {
+          "id": "B.2.3",
+          "title": "Mailing Lists and Re-Posters"
+        },
+        {
+          "id": "C",
+          "title": "Creating a Public Key (INFORMATIVE)"
+        },
+        {
+          "id": "C.1",
+          "title": "Compatibility with DomainKeys Key Records"
+        },
+        {
+          "id": "C.2",
+          "title": "RFC 4871 Compatibility"
+        },
+        {
+          "id": "D",
+          "title": "MUA Considerations (INFORMATIVE)"
+        },
+        {
+          "id": "E",
+          "title": "Changes since RFC 4871"
+        },
+        {
+          "id": "F",
+          "title": "Acknowledgments"
+        }
+      ]
+    },
+    {
       "rfc": 6531,
       "role": "email-smime",
       "source": "https://www.rfc-editor.org/rfc/rfc6531.txt",
@@ -4711,6 +8280,258 @@
         },
         {
           "id": "7.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
+      "rfc": 6570,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc6570.txt",
+      "sha256": "c7b8c79f432821e867fafb1127080545202994c156405ae89cbae42ec0c66810",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Overview"
+        },
+        {
+          "id": "1.2",
+          "title": "Levels and Expression Types"
+        },
+        {
+          "id": "1.3",
+          "title": "Design Considerations"
+        },
+        {
+          "id": "1.4",
+          "title": "Limitations"
+        },
+        {
+          "id": "1.5",
+          "title": "Notational Conventions"
+        },
+        {
+          "id": "1.6",
+          "title": "Character Encoding and Unicode Normalization"
+        },
+        {
+          "id": "2",
+          "title": "Syntax"
+        },
+        {
+          "id": "2.1",
+          "title": "Literals"
+        },
+        {
+          "id": "2.2",
+          "title": "Expressions"
+        },
+        {
+          "id": "2.3",
+          "title": "Variables"
+        },
+        {
+          "id": "2.4",
+          "title": "Value Modifiers"
+        },
+        {
+          "id": "2.4.1",
+          "title": "Prefix Values"
+        },
+        {
+          "id": "2.4.2",
+          "title": "Composite Values"
+        },
+        {
+          "id": "3",
+          "title": "Expansion"
+        },
+        {
+          "id": "3.1",
+          "title": "Literal Expansion"
+        },
+        {
+          "id": "3.2",
+          "title": "Expression Expansion"
+        },
+        {
+          "id": "3.2.1",
+          "title": "Variable Expansion"
+        },
+        {
+          "id": "3.2.2",
+          "title": "Simple String Expansion: {var}"
+        },
+        {
+          "id": "3.2.3",
+          "title": "Reserved Expansion: {+var}"
+        },
+        {
+          "id": "3.2.4",
+          "title": "Fragment Expansion: {#var}"
+        },
+        {
+          "id": "3.2.5",
+          "title": "Label Expansion with Dot-Prefix: {.var}"
+        },
+        {
+          "id": "3.2.6",
+          "title": "Path Segment Expansion: {/var}"
+        },
+        {
+          "id": "3.2.7",
+          "title": "Path-Style Parameter Expansion: {;var}"
+        },
+        {
+          "id": "3.2.8",
+          "title": "Form-Style Query Expansion: {?var}"
+        },
+        {
+          "id": "3.2.9",
+          "title": "Form-Style Query Continuation: {&var}"
+        },
+        {
+          "id": "4",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "5",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "6",
+          "title": "References"
+        },
+        {
+          "id": "6.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "6.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Implementation Hints"
+        }
+      ]
+    },
+    {
+      "rfc": 6844,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc6844.txt",
+      "sha256": "e46e6205f5a6a0fec4e80e6b47066246db9c17badc66d42f5fb327a61ab7a6c3",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Definitions"
+        },
+        {
+          "id": "2.1",
+          "title": "Requirements Language"
+        },
+        {
+          "id": "2.2",
+          "title": "Defined Terms"
+        },
+        {
+          "id": "3",
+          "title": "The CAA RR Type"
+        },
+        {
+          "id": "4",
+          "title": "Certification Authority Processing"
+        },
+        {
+          "id": "4.1",
+          "title": "Use of DNS Security"
+        },
+        {
+          "id": "5",
+          "title": "Mechanism"
+        },
+        {
+          "id": "5.1",
+          "title": "Syntax"
+        },
+        {
+          "id": "5.1.1",
+          "title": "Canonical Presentation Format"
+        },
+        {
+          "id": "5.2",
+          "title": "CAA issue Property"
+        },
+        {
+          "id": "5.3",
+          "title": "CAA issuewild Property"
+        },
+        {
+          "id": "5.4",
+          "title": "CAA iodef Property"
+        },
+        {
+          "id": "6",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "6.1",
+          "title": "Non-Compliance by Certification Authority"
+        },
+        {
+          "id": "6.2",
+          "title": "Mis-Issue by Authorized Certification Authority"
+        },
+        {
+          "id": "6.3",
+          "title": "Suppression or Spoofing of CAA Records"
+        },
+        {
+          "id": "6.4",
+          "title": "Denial of Service"
+        },
+        {
+          "id": "6.5",
+          "title": "Abuse of the Critical Flag"
+        },
+        {
+          "id": "7",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "7.1",
+          "title": "Registration of the CAA Resource Record Type"
+        },
+        {
+          "id": "7.2",
+          "title": "Certification Authority Restriction Properties"
+        },
+        {
+          "id": "7.3",
+          "title": "Certification Authority Restriction Flags"
+        },
+        {
+          "id": "8",
+          "title": "Acknowledgements"
+        },
+        {
+          "id": "9",
+          "title": "References"
+        },
+        {
+          "id": "9.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "9.2",
           "title": "Informative References"
         }
       ]
@@ -4948,6 +8769,1322 @@
         {
           "id": "C.2",
           "title": "application/ocsp-response"
+        }
+      ]
+    },
+    {
+      "rfc": 7230,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7230.txt",
+      "sha256": "c7fdc8bebdf1f8195f731592c47f5ea822b489436fd905b01b55ef531fca4120",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements Notation"
+        },
+        {
+          "id": "1.2",
+          "title": "Syntax Notation"
+        },
+        {
+          "id": "2",
+          "title": "Architecture"
+        },
+        {
+          "id": "2.1",
+          "title": "Client/Server Messaging"
+        },
+        {
+          "id": "2.2",
+          "title": "Implementation Diversity"
+        },
+        {
+          "id": "2.3",
+          "title": "Intermediaries"
+        },
+        {
+          "id": "2.4",
+          "title": "Caches"
+        },
+        {
+          "id": "2.5",
+          "title": "Conformance and Error Handling"
+        },
+        {
+          "id": "2.6",
+          "title": "Protocol Versioning"
+        },
+        {
+          "id": "2.7",
+          "title": "Uniform Resource Identifiers"
+        },
+        {
+          "id": "2.7.1",
+          "title": "http URI Scheme"
+        },
+        {
+          "id": "2.7.2",
+          "title": "https URI Scheme"
+        },
+        {
+          "id": "2.7.3",
+          "title": "http and https URI Normalization and Comparison"
+        },
+        {
+          "id": "3",
+          "title": "Message Format"
+        },
+        {
+          "id": "3.1",
+          "title": "Start Line"
+        },
+        {
+          "id": "3.1.1",
+          "title": "Request Line"
+        },
+        {
+          "id": "3.1.2",
+          "title": "Status Line"
+        },
+        {
+          "id": "3.2",
+          "title": "Header Fields"
+        },
+        {
+          "id": "3.2.1",
+          "title": "Field Extensibility"
+        },
+        {
+          "id": "3.2.2",
+          "title": "Field Order"
+        },
+        {
+          "id": "3.2.3",
+          "title": "Whitespace"
+        },
+        {
+          "id": "3.2.4",
+          "title": "Field Parsing"
+        },
+        {
+          "id": "3.2.5",
+          "title": "Field Limits"
+        },
+        {
+          "id": "3.2.6",
+          "title": "Field Value Components"
+        },
+        {
+          "id": "3.3",
+          "title": "Message Body"
+        },
+        {
+          "id": "3.3.1",
+          "title": "Transfer-Encoding"
+        },
+        {
+          "id": "3.3.2",
+          "title": "Content-Length"
+        },
+        {
+          "id": "3.3.3",
+          "title": "Message Body Length"
+        },
+        {
+          "id": "3.4",
+          "title": "Handling Incomplete Messages"
+        },
+        {
+          "id": "3.5",
+          "title": "Message Parsing Robustness"
+        },
+        {
+          "id": "4",
+          "title": "Transfer Codings"
+        },
+        {
+          "id": "4.1",
+          "title": "Chunked Transfer Coding"
+        },
+        {
+          "id": "4.1.1",
+          "title": "Chunk Extensions"
+        },
+        {
+          "id": "4.1.2",
+          "title": "Chunked Trailer Part"
+        },
+        {
+          "id": "4.1.3",
+          "title": "Decoding Chunked"
+        },
+        {
+          "id": "4.2",
+          "title": "Compression Codings"
+        },
+        {
+          "id": "4.2.1",
+          "title": "Compress Coding"
+        },
+        {
+          "id": "4.2.2",
+          "title": "Deflate Coding"
+        },
+        {
+          "id": "4.2.3",
+          "title": "Gzip Coding"
+        },
+        {
+          "id": "4.3",
+          "title": "TE"
+        },
+        {
+          "id": "4.4",
+          "title": "Trailer"
+        },
+        {
+          "id": "5",
+          "title": "Message Routing"
+        },
+        {
+          "id": "5.1",
+          "title": "Identifying a Target Resource"
+        },
+        {
+          "id": "5.2",
+          "title": "Connecting Inbound"
+        },
+        {
+          "id": "5.3",
+          "title": "Request Target"
+        },
+        {
+          "id": "5.3.1",
+          "title": "origin-form"
+        },
+        {
+          "id": "5.3.2",
+          "title": "absolute-form"
+        },
+        {
+          "id": "5.3.3",
+          "title": "authority-form"
+        },
+        {
+          "id": "5.3.4",
+          "title": "asterisk-form"
+        },
+        {
+          "id": "5.4",
+          "title": "Host"
+        },
+        {
+          "id": "5.5",
+          "title": "Effective Request URI"
+        },
+        {
+          "id": "5.6",
+          "title": "Associating a Response to a Request"
+        },
+        {
+          "id": "5.7",
+          "title": "Message Forwarding"
+        },
+        {
+          "id": "5.7.1",
+          "title": "Via"
+        },
+        {
+          "id": "5.7.2",
+          "title": "Transformations"
+        },
+        {
+          "id": "6",
+          "title": "Connection Management"
+        },
+        {
+          "id": "6.1",
+          "title": "Connection"
+        },
+        {
+          "id": "6.2",
+          "title": "Establishment"
+        },
+        {
+          "id": "6.3",
+          "title": "Persistence"
+        },
+        {
+          "id": "6.3.1",
+          "title": "Retrying Requests"
+        },
+        {
+          "id": "6.3.2",
+          "title": "Pipelining"
+        },
+        {
+          "id": "6.4",
+          "title": "Concurrency"
+        },
+        {
+          "id": "6.5",
+          "title": "Failures and Timeouts"
+        },
+        {
+          "id": "6.6",
+          "title": "Tear-down"
+        },
+        {
+          "id": "6.7",
+          "title": "Upgrade"
+        },
+        {
+          "id": "7",
+          "title": "ABNF List Extension: #rule"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "8.1",
+          "title": "Header Field Registration"
+        },
+        {
+          "id": "8.2",
+          "title": "URI Scheme Registration"
+        },
+        {
+          "id": "8.3",
+          "title": "Internet Media Type Registration"
+        },
+        {
+          "id": "8.3.1",
+          "title": "Internet Media Type message/http"
+        },
+        {
+          "id": "8.3.2",
+          "title": "Internet Media Type application/http"
+        },
+        {
+          "id": "8.4",
+          "title": "Transfer Coding Registry"
+        },
+        {
+          "id": "8.4.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "8.4.2",
+          "title": "Registration"
+        },
+        {
+          "id": "8.5",
+          "title": "Content Coding Registration"
+        },
+        {
+          "id": "8.6",
+          "title": "Upgrade Token Registry"
+        },
+        {
+          "id": "8.6.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "8.6.2",
+          "title": "Upgrade Token Registration"
+        },
+        {
+          "id": "9",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9.1",
+          "title": "Establishing Authority"
+        },
+        {
+          "id": "9.2",
+          "title": "Risks of Intermediaries"
+        },
+        {
+          "id": "9.3",
+          "title": "Attacks via Protocol Element Length"
+        },
+        {
+          "id": "9.4",
+          "title": "Response Splitting"
+        },
+        {
+          "id": "9.5",
+          "title": "Request Smuggling"
+        },
+        {
+          "id": "9.6",
+          "title": "Message Integrity"
+        },
+        {
+          "id": "9.7",
+          "title": "Message Confidentiality"
+        },
+        {
+          "id": "9.8",
+          "title": "Privacy of Server Log Information"
+        },
+        {
+          "id": "10",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "11",
+          "title": "References"
+        },
+        {
+          "id": "11.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "11.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "HTTP Version History"
+        },
+        {
+          "id": "A.1",
+          "title": "Changes from HTTP/1.0"
+        },
+        {
+          "id": "A.1.1",
+          "title": "Multihomed Web Servers"
+        },
+        {
+          "id": "A.1.2",
+          "title": "Keep-Alive Connections"
+        },
+        {
+          "id": "A.1.3",
+          "title": "Introduction of Transfer-Encoding"
+        },
+        {
+          "id": "A.2",
+          "title": "Changes from RFC 2616"
+        },
+        {
+          "id": "B",
+          "title": "Collected ABNF"
+        }
+      ]
+    },
+    {
+      "rfc": 7231,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7231.txt",
+      "sha256": "a83d026937f6f7929a0e53f8a9bfec4104285f0f89d6dbabd3927c4208a715b2",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Conformance and Error Handling"
+        },
+        {
+          "id": "1.2",
+          "title": "Syntax Notation"
+        },
+        {
+          "id": "2",
+          "title": "Resources"
+        },
+        {
+          "id": "3",
+          "title": "Representations"
+        },
+        {
+          "id": "3.1",
+          "title": "Representation Metadata"
+        },
+        {
+          "id": "3.1.1",
+          "title": "Processing Representation Data"
+        },
+        {
+          "id": "3.1.1.1",
+          "title": "Media Type"
+        },
+        {
+          "id": "3.1.1.2",
+          "title": "Charset"
+        },
+        {
+          "id": "3.1.1.3",
+          "title": "Canonicalization and Text Defaults"
+        },
+        {
+          "id": "3.1.1.4",
+          "title": "Multipart Types"
+        },
+        {
+          "id": "3.1.1.5",
+          "title": "Content-Type"
+        },
+        {
+          "id": "3.1.2",
+          "title": "Encoding for Compression or Integrity"
+        },
+        {
+          "id": "3.1.2.1",
+          "title": "Content Codings"
+        },
+        {
+          "id": "3.1.2.2",
+          "title": "Content-Encoding"
+        },
+        {
+          "id": "3.1.3",
+          "title": "Audience Language"
+        },
+        {
+          "id": "3.1.3.1",
+          "title": "Language Tags"
+        },
+        {
+          "id": "3.1.3.2",
+          "title": "Content-Language"
+        },
+        {
+          "id": "3.1.4",
+          "title": "Identification"
+        },
+        {
+          "id": "3.1.4.1",
+          "title": "Identifying a Representation"
+        },
+        {
+          "id": "3.1.4.2",
+          "title": "Content-Location"
+        },
+        {
+          "id": "3.2",
+          "title": "Representation Data"
+        },
+        {
+          "id": "3.3",
+          "title": "Payload Semantics"
+        },
+        {
+          "id": "3.4",
+          "title": "Content Negotiation"
+        },
+        {
+          "id": "3.4.1",
+          "title": "Proactive Negotiation"
+        },
+        {
+          "id": "3.4.2",
+          "title": "Reactive Negotiation"
+        },
+        {
+          "id": "4",
+          "title": "Request Methods"
+        },
+        {
+          "id": "4.1",
+          "title": "Overview"
+        },
+        {
+          "id": "4.2",
+          "title": "Common Method Properties"
+        },
+        {
+          "id": "4.2.1",
+          "title": "Safe Methods"
+        },
+        {
+          "id": "4.2.2",
+          "title": "Idempotent Methods"
+        },
+        {
+          "id": "4.2.3",
+          "title": "Cacheable Methods"
+        },
+        {
+          "id": "4.3",
+          "title": "Method Definitions"
+        },
+        {
+          "id": "4.3.1",
+          "title": "GET"
+        },
+        {
+          "id": "4.3.2",
+          "title": "HEAD"
+        },
+        {
+          "id": "4.3.3",
+          "title": "POST"
+        },
+        {
+          "id": "4.3.4",
+          "title": "PUT"
+        },
+        {
+          "id": "4.3.5",
+          "title": "DELETE"
+        },
+        {
+          "id": "4.3.6",
+          "title": "CONNECT"
+        },
+        {
+          "id": "4.3.7",
+          "title": "OPTIONS"
+        },
+        {
+          "id": "4.3.8",
+          "title": "TRACE"
+        },
+        {
+          "id": "5",
+          "title": "Request Header Fields"
+        },
+        {
+          "id": "5.1",
+          "title": "Controls"
+        },
+        {
+          "id": "5.1.1",
+          "title": "Expect"
+        },
+        {
+          "id": "5.1.2",
+          "title": "Max-Forwards"
+        },
+        {
+          "id": "5.2",
+          "title": "Conditionals"
+        },
+        {
+          "id": "5.3",
+          "title": "Content Negotiation"
+        },
+        {
+          "id": "5.3.1",
+          "title": "Quality Values"
+        },
+        {
+          "id": "5.3.2",
+          "title": "Accept"
+        },
+        {
+          "id": "5.3.3",
+          "title": "Accept-Charset"
+        },
+        {
+          "id": "5.3.4",
+          "title": "Accept-Encoding"
+        },
+        {
+          "id": "5.3.5",
+          "title": "Accept-Language"
+        },
+        {
+          "id": "5.4",
+          "title": "Authentication Credentials"
+        },
+        {
+          "id": "5.5",
+          "title": "Request Context"
+        },
+        {
+          "id": "5.5.1",
+          "title": "From"
+        },
+        {
+          "id": "5.5.2",
+          "title": "Referer"
+        },
+        {
+          "id": "5.5.3",
+          "title": "User-Agent"
+        },
+        {
+          "id": "6",
+          "title": "Response Status Codes"
+        },
+        {
+          "id": "6.1",
+          "title": "Overview of Status Codes"
+        },
+        {
+          "id": "6.2",
+          "title": "Informational 1xx"
+        },
+        {
+          "id": "6.2.1",
+          "title": "100 Continue"
+        },
+        {
+          "id": "6.2.2",
+          "title": "101 Switching Protocols"
+        },
+        {
+          "id": "6.3",
+          "title": "Successful 2xx"
+        },
+        {
+          "id": "6.3.1",
+          "title": "200 OK"
+        },
+        {
+          "id": "6.3.2",
+          "title": "201 Created"
+        },
+        {
+          "id": "6.3.3",
+          "title": "202 Accepted"
+        },
+        {
+          "id": "6.3.4",
+          "title": "203 Non-Authoritative Information"
+        },
+        {
+          "id": "6.3.5",
+          "title": "204 No Content"
+        },
+        {
+          "id": "6.3.6",
+          "title": "205 Reset Content"
+        },
+        {
+          "id": "6.4",
+          "title": "Redirection 3xx"
+        },
+        {
+          "id": "6.4.1",
+          "title": "300 Multiple Choices"
+        },
+        {
+          "id": "6.4.2",
+          "title": "301 Moved Permanently"
+        },
+        {
+          "id": "6.4.3",
+          "title": "302 Found"
+        },
+        {
+          "id": "6.4.4",
+          "title": "303 See Other"
+        },
+        {
+          "id": "6.4.5",
+          "title": "305 Use Proxy"
+        },
+        {
+          "id": "6.4.6",
+          "title": "306 (Unused)"
+        },
+        {
+          "id": "6.4.7",
+          "title": "307 Temporary Redirect"
+        },
+        {
+          "id": "6.5",
+          "title": "Client Error 4xx"
+        },
+        {
+          "id": "6.5.1",
+          "title": "400 Bad Request"
+        },
+        {
+          "id": "6.5.2",
+          "title": "402 Payment Required"
+        },
+        {
+          "id": "6.5.3",
+          "title": "403 Forbidden"
+        },
+        {
+          "id": "6.5.4",
+          "title": "404 Not Found"
+        },
+        {
+          "id": "6.5.5",
+          "title": "405 Method Not Allowed"
+        },
+        {
+          "id": "6.5.6",
+          "title": "406 Not Acceptable"
+        },
+        {
+          "id": "6.5.7",
+          "title": "408 Request Timeout"
+        },
+        {
+          "id": "6.5.8",
+          "title": "409 Conflict"
+        },
+        {
+          "id": "6.5.9",
+          "title": "410 Gone"
+        },
+        {
+          "id": "6.5.10",
+          "title": "411 Length Required"
+        },
+        {
+          "id": "6.5.11",
+          "title": "413 Payload Too Large"
+        },
+        {
+          "id": "6.5.12",
+          "title": "414 URI Too Long"
+        },
+        {
+          "id": "6.5.13",
+          "title": "415 Unsupported Media Type"
+        },
+        {
+          "id": "6.5.14",
+          "title": "417 Expectation Failed"
+        },
+        {
+          "id": "6.5.15",
+          "title": "426 Upgrade Required"
+        },
+        {
+          "id": "6.6",
+          "title": "Server Error 5xx"
+        },
+        {
+          "id": "6.6.1",
+          "title": "500 Internal Server Error"
+        },
+        {
+          "id": "6.6.2",
+          "title": "501 Not Implemented"
+        },
+        {
+          "id": "6.6.3",
+          "title": "502 Bad Gateway"
+        },
+        {
+          "id": "6.6.4",
+          "title": "503 Service Unavailable"
+        },
+        {
+          "id": "6.6.5",
+          "title": "504 Gateway Timeout"
+        },
+        {
+          "id": "6.6.6",
+          "title": "505 HTTP Version Not Supported"
+        },
+        {
+          "id": "7",
+          "title": "Response Header Fields"
+        },
+        {
+          "id": "7.1",
+          "title": "Control Data"
+        },
+        {
+          "id": "7.1.1",
+          "title": "Origination Date"
+        },
+        {
+          "id": "7.1.1.1",
+          "title": "Date/Time Formats"
+        },
+        {
+          "id": "7.1.1.2",
+          "title": "Date"
+        },
+        {
+          "id": "7.1.2",
+          "title": "Location"
+        },
+        {
+          "id": "7.1.3",
+          "title": "Retry-After"
+        },
+        {
+          "id": "7.1.4",
+          "title": "Vary"
+        },
+        {
+          "id": "7.2",
+          "title": "Validator Header Fields"
+        },
+        {
+          "id": "7.3",
+          "title": "Authentication Challenges"
+        },
+        {
+          "id": "7.4",
+          "title": "Response Context"
+        },
+        {
+          "id": "7.4.1",
+          "title": "Allow"
+        },
+        {
+          "id": "7.4.2",
+          "title": "Server"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "8.1",
+          "title": "Method Registry"
+        },
+        {
+          "id": "8.1.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "8.1.2",
+          "title": "Considerations for New Methods"
+        },
+        {
+          "id": "8.1.3",
+          "title": "Registrations"
+        },
+        {
+          "id": "8.2",
+          "title": "Status Code Registry"
+        },
+        {
+          "id": "8.2.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "8.2.2",
+          "title": "Considerations for New Status Codes"
+        },
+        {
+          "id": "8.2.3",
+          "title": "Registrations"
+        },
+        {
+          "id": "8.3",
+          "title": "Header Field Registry"
+        },
+        {
+          "id": "8.3.1",
+          "title": "Considerations for New Header Fields"
+        },
+        {
+          "id": "8.3.2",
+          "title": "Registrations"
+        },
+        {
+          "id": "8.4",
+          "title": "Content Coding Registry"
+        },
+        {
+          "id": "8.4.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "8.4.2",
+          "title": "Registrations"
+        },
+        {
+          "id": "9",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9.1",
+          "title": "Attacks Based on File and Path Names"
+        },
+        {
+          "id": "9.2",
+          "title": "Attacks Based on Command, Code, or Query Injection"
+        },
+        {
+          "id": "9.3",
+          "title": "Disclosure of Personal Information"
+        },
+        {
+          "id": "9.4",
+          "title": "Disclosure of Sensitive Information in URIs"
+        },
+        {
+          "id": "9.5",
+          "title": "Disclosure of Fragment after Redirects"
+        },
+        {
+          "id": "9.6",
+          "title": "Disclosure of Product Information"
+        },
+        {
+          "id": "9.7",
+          "title": "Browser Fingerprinting"
+        },
+        {
+          "id": "10",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "11",
+          "title": "References"
+        },
+        {
+          "id": "11.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "11.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Differences between HTTP and MIME"
+        },
+        {
+          "id": "A.1",
+          "title": "MIME-Version"
+        },
+        {
+          "id": "A.2",
+          "title": "Conversion to Canonical Form"
+        },
+        {
+          "id": "A.3",
+          "title": "Conversion of Date Formats"
+        },
+        {
+          "id": "A.4",
+          "title": "Conversion of Content-Encoding"
+        },
+        {
+          "id": "A.5",
+          "title": "Conversion of Content-Transfer-Encoding"
+        },
+        {
+          "id": "A.6",
+          "title": "MHTML and Line Length Limitations"
+        },
+        {
+          "id": "B",
+          "title": "Changes from RFC 2616"
+        },
+        {
+          "id": "C",
+          "title": "Imported ABNF"
+        },
+        {
+          "id": "D",
+          "title": "Collected ABNF"
+        }
+      ]
+    },
+    {
+      "rfc": 7234,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7234.txt",
+      "sha256": "1d084238ae6692d1e3322fa0850dbb9596812332d92b76d9a815c5ed9b600dea",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Conformance and Error Handling"
+        },
+        {
+          "id": "1.2",
+          "title": "Syntax Notation"
+        },
+        {
+          "id": "1.2.1",
+          "title": "Delta Seconds"
+        },
+        {
+          "id": "2",
+          "title": "Overview of Cache Operation"
+        },
+        {
+          "id": "3",
+          "title": "Storing Responses in Caches"
+        },
+        {
+          "id": "3.1",
+          "title": "Storing Incomplete Responses"
+        },
+        {
+          "id": "3.2",
+          "title": "Storing Responses to Authenticated Requests"
+        },
+        {
+          "id": "3.3",
+          "title": "Combining Partial Content"
+        },
+        {
+          "id": "4",
+          "title": "Constructing Responses from Caches"
+        },
+        {
+          "id": "4.1",
+          "title": "Calculating Secondary Keys with Vary"
+        },
+        {
+          "id": "4.2",
+          "title": "Freshness"
+        },
+        {
+          "id": "4.2.1",
+          "title": "Calculating Freshness Lifetime"
+        },
+        {
+          "id": "4.2.2",
+          "title": "Calculating Heuristic Freshness"
+        },
+        {
+          "id": "4.2.3",
+          "title": "Calculating Age"
+        },
+        {
+          "id": "4.2.4",
+          "title": "Serving Stale Responses"
+        },
+        {
+          "id": "4.3",
+          "title": "Validation"
+        },
+        {
+          "id": "4.3.1",
+          "title": "Sending a Validation Request"
+        },
+        {
+          "id": "4.3.2",
+          "title": "Handling a Received Validation Request"
+        },
+        {
+          "id": "4.3.3",
+          "title": "Handling a Validation Response"
+        },
+        {
+          "id": "4.3.4",
+          "title": "Freshening Stored Responses upon Validation"
+        },
+        {
+          "id": "4.3.5",
+          "title": "Freshening Responses via HEAD"
+        },
+        {
+          "id": "4.4",
+          "title": "Invalidation"
+        },
+        {
+          "id": "5",
+          "title": "Header Field Definitions"
+        },
+        {
+          "id": "5.1",
+          "title": "Age"
+        },
+        {
+          "id": "5.2",
+          "title": "Cache-Control"
+        },
+        {
+          "id": "5.2.1",
+          "title": "Request Cache-Control Directives"
+        },
+        {
+          "id": "5.2.1.1",
+          "title": "max-age"
+        },
+        {
+          "id": "5.2.1.2",
+          "title": "max-stale"
+        },
+        {
+          "id": "5.2.1.3",
+          "title": "min-fresh"
+        },
+        {
+          "id": "5.2.1.4",
+          "title": "no-cache"
+        },
+        {
+          "id": "5.2.1.5",
+          "title": "no-store"
+        },
+        {
+          "id": "5.2.1.6",
+          "title": "no-transform"
+        },
+        {
+          "id": "5.2.1.7",
+          "title": "only-if-cached"
+        },
+        {
+          "id": "5.2.2",
+          "title": "Response Cache-Control Directives"
+        },
+        {
+          "id": "5.2.2.1",
+          "title": "must-revalidate"
+        },
+        {
+          "id": "5.2.2.2",
+          "title": "no-cache"
+        },
+        {
+          "id": "5.2.2.3",
+          "title": "no-store"
+        },
+        {
+          "id": "5.2.2.4",
+          "title": "no-transform"
+        },
+        {
+          "id": "5.2.2.5",
+          "title": "public"
+        },
+        {
+          "id": "5.2.2.6",
+          "title": "private"
+        },
+        {
+          "id": "5.2.2.7",
+          "title": "proxy-revalidate"
+        },
+        {
+          "id": "5.2.2.8",
+          "title": "max-age"
+        },
+        {
+          "id": "5.2.2.9",
+          "title": "s-maxage"
+        },
+        {
+          "id": "5.2.3",
+          "title": "Cache Control Extensions"
+        },
+        {
+          "id": "5.3",
+          "title": "Expires"
+        },
+        {
+          "id": "5.4",
+          "title": "Pragma"
+        },
+        {
+          "id": "5.5",
+          "title": "Warning"
+        },
+        {
+          "id": "5.5.1",
+          "title": "Warning: 110 - \"Response is Stale\""
+        },
+        {
+          "id": "5.5.2",
+          "title": "Warning: 111 - \"Revalidation Failed\""
+        },
+        {
+          "id": "5.5.3",
+          "title": "Warning: 112 - \"Disconnected Operation\""
+        },
+        {
+          "id": "5.5.4",
+          "title": "Warning: 113 - \"Heuristic Expiration\""
+        },
+        {
+          "id": "5.5.5",
+          "title": "Warning: 199 - \"Miscellaneous Warning\""
+        },
+        {
+          "id": "5.5.6",
+          "title": "Warning: 214 - \"Transformation Applied\""
+        },
+        {
+          "id": "5.5.7",
+          "title": "Warning: 299 - \"Miscellaneous Persistent Warning\""
+        },
+        {
+          "id": "6",
+          "title": "History Lists"
+        },
+        {
+          "id": "7",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "7.1",
+          "title": "Cache Directive Registry"
+        },
+        {
+          "id": "7.1.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "7.1.2",
+          "title": "Considerations for New Cache Control Directives"
+        },
+        {
+          "id": "7.1.3",
+          "title": "Registrations"
+        },
+        {
+          "id": "7.2",
+          "title": "Warn Code Registry"
+        },
+        {
+          "id": "7.2.1",
+          "title": "Procedure"
+        },
+        {
+          "id": "7.2.2",
+          "title": "Registrations"
+        },
+        {
+          "id": "7.3",
+          "title": "Header Field Registration"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "Acknowledgments"
+        },
+        {
+          "id": "10",
+          "title": "References"
+        },
+        {
+          "id": "10.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "10.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Changes from RFC 2616"
+        },
+        {
+          "id": "B",
+          "title": "Imported ABNF"
+        },
+        {
+          "id": "C",
+          "title": "Collected ABNF"
         }
       ]
     },
@@ -6796,6 +11933,134 @@
       ]
     },
     {
+      "rfc": 7686,
+      "role": "onion",
+      "source": "https://www.rfc-editor.org/rfc/rfc7686.txt",
+      "sha256": "71fc05a7876af6adec9dd2351c44b40828c3fe4654d91223e6f470aa08e5abaa",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Notational Conventions"
+        },
+        {
+          "id": "2",
+          "title": "The \".onion\" Special-Use Domain Name"
+        },
+        {
+          "id": "3",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "4",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "5",
+          "title": "References"
+        },
+        {
+          "id": "5.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "5.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
+      "rfc": 7797,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7797.txt",
+      "sha256": "5bbed0e2df28126e147f79dde99058fd1ca18977b7f9f0e5e75626d8efa31138",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Notational Conventions"
+        },
+        {
+          "id": "2",
+          "title": "Terminology"
+        },
+        {
+          "id": "3",
+          "title": "The \"b64\" Header Parameter"
+        },
+        {
+          "id": "4",
+          "title": "Examples"
+        },
+        {
+          "id": "4.1",
+          "title": "Example with Header Parameters {\"alg\":\"HS256\"}"
+        },
+        {
+          "id": "4.2",
+          "title": "Example with Header Parameters"
+        },
+        {
+          "id": "5",
+          "title": "Unencoded Payload Content Restrictions"
+        },
+        {
+          "id": "5.1",
+          "title": "Unencoded Detached Payload"
+        },
+        {
+          "id": "5.2",
+          "title": "Unencoded JWS Compact Serialization Payload"
+        },
+        {
+          "id": "5.3",
+          "title": "Unencoded JWS JSON Serialization Payload"
+        },
+        {
+          "id": "6",
+          "title": "Using \"crit\" with \"b64\""
+        },
+        {
+          "id": "7",
+          "title": "Intended Use by Applications"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "9.1",
+          "title": "JSON Web Signature and Encryption Header Parameter Registration"
+        },
+        {
+          "id": "9.1.1",
+          "title": "Registry Contents"
+        },
+        {
+          "id": "10",
+          "title": "References"
+        },
+        {
+          "id": "10.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "10.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
       "rfc": 7807,
       "role": "http-uri",
       "source": "https://www.rfc-editor.org/rfc/rfc7807.txt",
@@ -7580,6 +12845,230 @@
       ]
     },
     {
+      "rfc": 8126,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc8126.txt",
+      "sha256": "b8b5cc1e61e78352b5a12c4a92fa0573b3400d49522a448913455a478dd87401",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Keep IANA Considerations for IANA"
+        },
+        {
+          "id": "1.2",
+          "title": "For Updated Information"
+        },
+        {
+          "id": "1.3",
+          "title": "A Quick Checklist Upfront"
+        },
+        {
+          "id": "2",
+          "title": "Creating and Revising Registries"
+        },
+        {
+          "id": "2.1",
+          "title": "Organization of Registries"
+        },
+        {
+          "id": "2.2",
+          "title": "Documentation Requirements for Registries"
+        },
+        {
+          "id": "2.3",
+          "title": "Specifying Change Control for a Registry"
+        },
+        {
+          "id": "2.4",
+          "title": "Revising Existing Registries"
+        },
+        {
+          "id": "3",
+          "title": "Registering New Values in an Existing Registry"
+        },
+        {
+          "id": "3.1",
+          "title": "Documentation Requirements for Registrations"
+        },
+        {
+          "id": "3.2",
+          "title": "Updating Existing Registrations"
+        },
+        {
+          "id": "3.3",
+          "title": "Overriding Registration Procedures"
+        },
+        {
+          "id": "3.4",
+          "title": "Early Allocations"
+        },
+        {
+          "id": "4",
+          "title": "Choosing a Registration Policy and Well-Known Policies"
+        },
+        {
+          "id": "4.1",
+          "title": "Private Use"
+        },
+        {
+          "id": "4.2",
+          "title": "Experimental Use"
+        },
+        {
+          "id": "4.3",
+          "title": "Hierarchical Allocation"
+        },
+        {
+          "id": "4.4",
+          "title": "First Come First Served"
+        },
+        {
+          "id": "4.5",
+          "title": "Expert Review"
+        },
+        {
+          "id": "4.6",
+          "title": "Specification Required"
+        },
+        {
+          "id": "4.7",
+          "title": "RFC Required"
+        },
+        {
+          "id": "4.8",
+          "title": "IETF Review"
+        },
+        {
+          "id": "4.9",
+          "title": "Standards Action"
+        },
+        {
+          "id": "4.10",
+          "title": "IESG Approval"
+        },
+        {
+          "id": "4.11",
+          "title": "Using the Well-Known Registration Policies"
+        },
+        {
+          "id": "4.12",
+          "title": "Using Multiple Policies in Combination"
+        },
+        {
+          "id": "4.13",
+          "title": "Provisional Registrations"
+        },
+        {
+          "id": "5",
+          "title": "Designated Experts"
+        },
+        {
+          "id": "5.1",
+          "title": "The Motivation for Designated Experts"
+        },
+        {
+          "id": "5.2",
+          "title": "The Role of the Designated Expert"
+        },
+        {
+          "id": "5.2.1",
+          "title": "Managing Designated Experts in the IETF"
+        },
+        {
+          "id": "5.3",
+          "title": "Designated Expert Reviews"
+        },
+        {
+          "id": "5.4",
+          "title": "Expert Reviews and the Document Lifecycle"
+        },
+        {
+          "id": "6",
+          "title": "Well-Known Registration Status Terminology"
+        },
+        {
+          "id": "7",
+          "title": "Documentation References in IANA Registries"
+        },
+        {
+          "id": "8",
+          "title": "What to Do in \"bis\" Documents"
+        },
+        {
+          "id": "9",
+          "title": "Miscellaneous Issues"
+        },
+        {
+          "id": "9.1",
+          "title": "When There Are No IANA Actions"
+        },
+        {
+          "id": "9.2",
+          "title": "Namespaces Lacking Documented Guidance"
+        },
+        {
+          "id": "9.3",
+          "title": "After-the-Fact Registrations"
+        },
+        {
+          "id": "9.4",
+          "title": "Reclaiming Assigned Values"
+        },
+        {
+          "id": "9.5",
+          "title": "Contact Person vs Assignee or Owner"
+        },
+        {
+          "id": "9.6",
+          "title": "Closing or Obsoleting a Registry/Registrations"
+        },
+        {
+          "id": "10",
+          "title": "Appeals"
+        },
+        {
+          "id": "11",
+          "title": "Mailing Lists"
+        },
+        {
+          "id": "12",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "13",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "14",
+          "title": "Changes Relative to Earlier Editions of BCP 26"
+        },
+        {
+          "id": "14.1",
+          "title": "2016: Changes in This Document Relative to RFC 5226"
+        },
+        {
+          "id": "14.2",
+          "title": "2008: Changes in RFC 5226 Relative to RFC 2434"
+        },
+        {
+          "id": "15",
+          "title": "References"
+        },
+        {
+          "id": "15.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "15.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
       "rfc": 8174,
       "role": "normative-foundation",
       "source": "https://www.rfc-editor.org/rfc/rfc8174.txt",
@@ -7604,6 +13093,198 @@
         {
           "id": "5",
           "title": "Normative References"
+        }
+      ]
+    },
+    {
+      "rfc": 8226,
+      "role": "stir",
+      "source": "https://www.rfc-editor.org/rfc/rfc8226.txt",
+      "sha256": "e8260e0c41e3ffba9076d1182538ccc5598caa2468b5669cd9b850ff83282f51",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Terminology"
+        },
+        {
+          "id": "3",
+          "title": "Authority for Telephone Numbers in Certificates"
+        },
+        {
+          "id": "4",
+          "title": "Certificate Usage with STIR"
+        },
+        {
+          "id": "5",
+          "title": "Enrollment and Authorization Using the TN Authorization List"
+        },
+        {
+          "id": "5.1",
+          "title": "Constraints on Signing PASSporTs"
+        },
+        {
+          "id": "5.2",
+          "title": "Certificate Extension Scope and Structure"
+        },
+        {
+          "id": "6",
+          "title": "Provisioning Private Keying Material"
+        },
+        {
+          "id": "7",
+          "title": "Acquiring Credentials to Verify Signatures"
+        },
+        {
+          "id": "8",
+          "title": "JWT Claim Constraints Syntax"
+        },
+        {
+          "id": "9",
+          "title": "TN Authorization List Syntax"
+        },
+        {
+          "id": "10",
+          "title": "Certificate Freshness and Revocation"
+        },
+        {
+          "id": "10.1",
+          "title": "Acquiring the TN List by Reference"
+        },
+        {
+          "id": "11",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "11.1",
+          "title": "ASN.1 Registrations"
+        },
+        {
+          "id": "11.2",
+          "title": "Media Type Registrations"
+        },
+        {
+          "id": "12",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "13",
+          "title": "References"
+        },
+        {
+          "id": "13.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "13.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "ASN.1 Module"
+        }
+      ]
+    },
+    {
+      "rfc": 8259,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc8259.txt",
+      "sha256": "61a5378f4255c720beb2a4b4a63b29540147c140f36988bf086291989b4cd2d7",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Conventions Used in This Document"
+        },
+        {
+          "id": "1.2",
+          "title": "Specifications of JSON"
+        },
+        {
+          "id": "1.3",
+          "title": "Introduction to This Revision"
+        },
+        {
+          "id": "2",
+          "title": "JSON Grammar"
+        },
+        {
+          "id": "3",
+          "title": "Values"
+        },
+        {
+          "id": "4",
+          "title": "Objects"
+        },
+        {
+          "id": "5",
+          "title": "Arrays"
+        },
+        {
+          "id": "6",
+          "title": "Numbers"
+        },
+        {
+          "id": "7",
+          "title": "Strings"
+        },
+        {
+          "id": "8",
+          "title": "String and Character Issues"
+        },
+        {
+          "id": "8.1",
+          "title": "Character Encoding"
+        },
+        {
+          "id": "8.2",
+          "title": "Unicode Characters"
+        },
+        {
+          "id": "8.3",
+          "title": "String Comparison"
+        },
+        {
+          "id": "9",
+          "title": "Parsers"
+        },
+        {
+          "id": "10",
+          "title": "Generators"
+        },
+        {
+          "id": "11",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "12",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "13",
+          "title": "Examples"
+        },
+        {
+          "id": "14",
+          "title": "References"
+        },
+        {
+          "id": "14.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "14.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Changes from RFC 7159"
         }
       ]
     },
@@ -7756,6 +13437,66 @@
         {
           "id": "C",
           "title": "Changes from RFC 5988"
+        }
+      ]
+    },
+    {
+      "rfc": 8398,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8398.txt",
+      "sha256": "2b84031c2680e1bbb0d6d86559d8eea8604cb90a8a647d8d7ad65a6e8f2bba67",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Conventions Used in This Document"
+        },
+        {
+          "id": "3",
+          "title": "Name Definitions"
+        },
+        {
+          "id": "4",
+          "title": "IDNA2008"
+        },
+        {
+          "id": "5",
+          "title": "Matching of Internationalized Email Addresses in X.509 Certificates"
+        },
+        {
+          "id": "6",
+          "title": "Name Constraints in Path Validation"
+        },
+        {
+          "id": "7",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "9",
+          "title": "References"
+        },
+        {
+          "id": "9.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "9.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "ASN.1 Module"
+        },
+        {
+          "id": "B",
+          "title": "Example of SmtpUTF8Mailbox"
         }
       ]
     },
@@ -8384,6 +14125,214 @@
       ]
     },
     {
+      "rfc": 8499,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc8499.txt",
+      "sha256": "61e542c24a23f0c982573a53c390b76ccfbd9a645d613b7f1a35c233f1154e16",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Names"
+        },
+        {
+          "id": "3",
+          "title": "DNS Response Codes"
+        },
+        {
+          "id": "4",
+          "title": "DNS Transactions"
+        },
+        {
+          "id": "5",
+          "title": "Resource Records"
+        },
+        {
+          "id": "6",
+          "title": "DNS Servers and Clients"
+        },
+        {
+          "id": "7",
+          "title": "Zones"
+        },
+        {
+          "id": "8",
+          "title": "Wildcards"
+        },
+        {
+          "id": "9",
+          "title": "Registration Model"
+        },
+        {
+          "id": "10",
+          "title": "General DNSSEC"
+        },
+        {
+          "id": "11",
+          "title": "DNSSEC States"
+        },
+        {
+          "id": "12",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "13",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "14",
+          "title": "References"
+        },
+        {
+          "id": "14.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "14.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Definitions Updated by This Document"
+        },
+        {
+          "id": "B",
+          "title": "Definitions First Defined in This Document"
+        }
+      ]
+    },
+    {
+      "rfc": 8550,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8550.txt",
+      "sha256": "adf5aa630e6fd10f75de524e4af249302548a68d6cb7254bf3bfb99b544d6c7a",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Definitions"
+        },
+        {
+          "id": "1.2",
+          "title": "Conventions Used in This Document"
+        },
+        {
+          "id": "1.3",
+          "title": "Compatibility with Prior Practice of S/MIME"
+        },
+        {
+          "id": "1.4",
+          "title": "Changes from S/MIME v3 to S/MIME v3.1"
+        },
+        {
+          "id": "1.5",
+          "title": "Changes from S/MIME v3.1 to S/MIME v3.2"
+        },
+        {
+          "id": "1.6",
+          "title": "Changes since S/MIME 3.2"
+        },
+        {
+          "id": "2",
+          "title": "CMS Options"
+        },
+        {
+          "id": "2.1",
+          "title": "Certificate Revocation Lists"
+        },
+        {
+          "id": "2.2",
+          "title": "Certificate Choices"
+        },
+        {
+          "id": "2.2.1",
+          "title": "Historical Note about CMS Certificates"
+        },
+        {
+          "id": "2.3",
+          "title": "Included Certificates"
+        },
+        {
+          "id": "3",
+          "title": "Using Distinguished Names for Internet Mail"
+        },
+        {
+          "id": "4",
+          "title": "Certificate Processing"
+        },
+        {
+          "id": "4.1",
+          "title": "Certificate Revocation Lists"
+        },
+        {
+          "id": "4.2",
+          "title": "Certificate Path Validation"
+        },
+        {
+          "id": "4.3",
+          "title": "Certificate and CRL Signing Algorithms, and Key Sizes"
+        },
+        {
+          "id": "4.4",
+          "title": "PKIX Certificate Extensions"
+        },
+        {
+          "id": "4.4.1",
+          "title": "Basic Constraints"
+        },
+        {
+          "id": "4.4.2",
+          "title": "Key Usage Extension"
+        },
+        {
+          "id": "4.4.3",
+          "title": "Subject Alternative Name"
+        },
+        {
+          "id": "4.4.4",
+          "title": "Extended Key Usage Extension"
+        },
+        {
+          "id": "5",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "6",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "7",
+          "title": "References"
+        },
+        {
+          "id": "7.1",
+          "title": "Reference Conventions"
+        },
+        {
+          "id": "7.2",
+          "title": "Normative References"
+        },
+        {
+          "id": "A",
+          "title": "Historic Considerations"
+        },
+        {
+          "id": "A.1",
+          "title": "Signature Algorithms and Key Sizes"
+        },
+        {
+          "id": "B",
+          "title": "Moving S/MIME v2 Certificate Handling to Historic Status"
+        }
+      ]
+    },
+    {
       "rfc": 8551,
       "role": "email-smime",
       "source": "https://www.rfc-editor.org/rfc/rfc8551.txt",
@@ -9005,6 +14954,342 @@
           "id": "12.2",
           "title": "Informative References"
         }
+      ],
+      "normative_rfc_references": [
+        2119,
+        2585,
+        2818,
+        2985,
+        2986,
+        3339,
+        3629,
+        3986,
+        4086,
+        4648,
+        5234,
+        5280,
+        5751,
+        5890,
+        6068,
+        6570,
+        6844,
+        7231,
+        7468,
+        7515,
+        7518,
+        7638,
+        7797,
+        7807,
+        8037,
+        8126,
+        8174,
+        8259,
+        8288,
+        8446
+      ],
+      "normative_external_references": [
+        "FIPS180-4",
+        "JSS15"
+      ]
+    },
+    {
+      "rfc": 8610,
+      "role": "cbor-cose",
+      "source": "https://www.rfc-editor.org/rfc/rfc8610.txt",
+      "sha256": "3713f2a50e23a2bea0a6147ad6c4433605a00c3d00a868bfa86a42b204997089",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements Notation"
+        },
+        {
+          "id": "1.2",
+          "title": "Terminology"
+        },
+        {
+          "id": "2",
+          "title": "The Style of Data Structure Specification"
+        },
+        {
+          "id": "2.1",
+          "title": "Groups and Composition in CDDL"
+        },
+        {
+          "id": "2.1.1",
+          "title": "Usage"
+        },
+        {
+          "id": "2.1.2",
+          "title": "Syntax"
+        },
+        {
+          "id": "2.2",
+          "title": "Types"
+        },
+        {
+          "id": "2.2.1",
+          "title": "Values"
+        },
+        {
+          "id": "2.2.2",
+          "title": "Choices"
+        },
+        {
+          "id": "2.2.2.1",
+          "title": "Ranges"
+        },
+        {
+          "id": "2.2.2.2",
+          "title": "Turning a Group into a Choice"
+        },
+        {
+          "id": "2.2.3",
+          "title": "Representation Types"
+        },
+        {
+          "id": "2.2.4",
+          "title": "Root Type"
+        },
+        {
+          "id": "3",
+          "title": "Syntax"
+        },
+        {
+          "id": "3.1",
+          "title": "General Conventions"
+        },
+        {
+          "id": "3.2",
+          "title": "Occurrence"
+        },
+        {
+          "id": "3.3",
+          "title": "Predefined Names for Types"
+        },
+        {
+          "id": "3.4",
+          "title": "Arrays"
+        },
+        {
+          "id": "3.5",
+          "title": "Maps"
+        },
+        {
+          "id": "3.5.1",
+          "title": "Structs"
+        },
+        {
+          "id": "3.5.2",
+          "title": "Tables"
+        },
+        {
+          "id": "3.5.3",
+          "title": "Non-deterministic Order"
+        },
+        {
+          "id": "3.5.4",
+          "title": "Cuts in Maps"
+        },
+        {
+          "id": "3.6",
+          "title": "Tags"
+        },
+        {
+          "id": "3.7",
+          "title": "Unwrapping"
+        },
+        {
+          "id": "3.8",
+          "title": "Controls"
+        },
+        {
+          "id": "3.8.1",
+          "title": "Control Operator .size"
+        },
+        {
+          "id": "3.8.2",
+          "title": "Control Operator .bits"
+        },
+        {
+          "id": "3.8.3",
+          "title": "Control Operator .regexp"
+        },
+        {
+          "id": "3.8.3.1",
+          "title": "Usage Considerations"
+        },
+        {
+          "id": "3.8.3.2",
+          "title": "Discussion"
+        },
+        {
+          "id": "3.8.4",
+          "title": "Control Operators .cbor and .cborseq"
+        },
+        {
+          "id": "3.8.5",
+          "title": "Control Operators .within and .and"
+        },
+        {
+          "id": "3.8.6",
+          "title": "Control Operators .lt, .le, .gt, .ge, .eq, .ne, and .default"
+        },
+        {
+          "id": "3.9",
+          "title": "Socket/Plug"
+        },
+        {
+          "id": "3.10",
+          "title": "Generics"
+        },
+        {
+          "id": "3.11",
+          "title": "Operator Precedence"
+        },
+        {
+          "id": "4",
+          "title": "Making Use of CDDL"
+        },
+        {
+          "id": "4.1",
+          "title": "As a Guide for a Human User"
+        },
+        {
+          "id": "4.2",
+          "title": "For Automated Checking of CBOR Data Structures"
+        },
+        {
+          "id": "4.3",
+          "title": "For Data Analysis Tools"
+        },
+        {
+          "id": "5",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "6",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "6.1",
+          "title": "CDDL Control Operators Registry"
+        },
+        {
+          "id": "7",
+          "title": "References"
+        },
+        {
+          "id": "7.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "7.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Parsing Expression Grammars (PEGs)"
+        },
+        {
+          "id": "B",
+          "title": "ABNF Grammar"
+        },
+        {
+          "id": "C",
+          "title": "Matching Rules"
+        },
+        {
+          "id": "D",
+          "title": "Standard Prelude"
+        },
+        {
+          "id": "E",
+          "title": "Use with JSON"
+        },
+        {
+          "id": "F",
+          "title": "A CDDL Tool"
+        },
+        {
+          "id": "G",
+          "title": "Extended Diagnostic Notation"
+        },
+        {
+          "id": "G.1",
+          "title": "Whitespace in Byte String Notation"
+        },
+        {
+          "id": "G.2",
+          "title": "Text in Byte String Notation"
+        },
+        {
+          "id": "G.3",
+          "title": "Embedded CBOR and CBOR Sequences in Byte Strings"
+        },
+        {
+          "id": "G.4",
+          "title": "Concatenated Strings"
+        },
+        {
+          "id": "G.5",
+          "title": "Hexadecimal, Octal, and Binary Numbers"
+        },
+        {
+          "id": "G.6",
+          "title": "Comments"
+        },
+        {
+          "id": "H",
+          "title": "Examples"
+        }
+      ]
+    },
+    {
+      "rfc": 8616,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8616.txt",
+      "sha256": "fa9b3e0420940b22e34e449b9810949975e44536cbc4fbac997ded5b16cc1645",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Definitions"
+        },
+        {
+          "id": "3",
+          "title": "General Principles"
+        },
+        {
+          "id": "4",
+          "title": "SPF and Internationalized Mail"
+        },
+        {
+          "id": "5",
+          "title": "DKIM and Internationalized Mail"
+        },
+        {
+          "id": "6",
+          "title": "DMARC and Internationalized Mail"
+        },
+        {
+          "id": "7",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "Normative References"
+        }
       ]
     },
     {
@@ -9089,7 +15374,16 @@
           "id": "A",
           "title": "Examples"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        3986,
+        5234,
+        8174,
+        8555,
+        8659
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 8659,
@@ -9397,6 +15691,24 @@
           "id": "A",
           "title": "Design Rationale"
         }
+      ],
+      "normative_rfc_references": [
+        2119,
+        3492,
+        4086,
+        4343,
+        4648,
+        5246,
+        5280,
+        6066,
+        7301,
+        8174,
+        8555
+      ],
+      "normative_external_references": [
+        "FIPS180-4",
+        "X.680",
+        "X.690"
       ]
     },
     {
@@ -9457,7 +15769,20 @@
           "id": "10",
           "title": "Normative References"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        1034,
+        1123,
+        2119,
+        3596,
+        5952,
+        6066,
+        7230,
+        8174,
+        8555,
+        8737
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 8739,
@@ -9609,7 +15934,18 @@
           "id": "7.2",
           "title": "Informative References"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        3339,
+        7231,
+        7234,
+        7807,
+        8126,
+        8174,
+        8555
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 8823,
@@ -9671,6 +16007,173 @@
         },
         {
           "id": "7.2",
+          "title": "Informative References"
+        }
+      ],
+      "normative_rfc_references": [
+        2046,
+        2119,
+        2231,
+        2818,
+        2985,
+        2986,
+        3834,
+        4648,
+        5321,
+        5322,
+        5890,
+        6234,
+        6376,
+        6531,
+        8174,
+        8398,
+        8550,
+        8551,
+        8555,
+        8616
+      ],
+      "normative_external_references": []
+    },
+    {
+      "rfc": 9054,
+      "role": "cbor-cose",
+      "source": "https://www.rfc-editor.org/rfc/rfc9054.txt",
+      "sha256": "75a6bf62b4226baa1e14ccdcc4c603b8a039084ad79677db029e0bbec4525e6f",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Requirements Terminology"
+        },
+        {
+          "id": "2",
+          "title": "Hash Algorithm Usage"
+        },
+        {
+          "id": "2.1",
+          "title": "Example CBOR Hash Structure"
+        },
+        {
+          "id": "3",
+          "title": "Hash Algorithm Identifiers"
+        },
+        {
+          "id": "3.1",
+          "title": "SHA-1 Hash Algorithm"
+        },
+        {
+          "id": "3.2",
+          "title": "SHA-2 Hash Algorithms"
+        },
+        {
+          "id": "3.3",
+          "title": "SHAKE Algorithms"
+        },
+        {
+          "id": "4",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "4.1",
+          "title": "COSE Algorithm Registry"
+        },
+        {
+          "id": "5",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "6",
+          "title": "References"
+        },
+        {
+          "id": "6.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "6.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
+      "rfc": 9060,
+      "role": "stir",
+      "source": "https://www.rfc-editor.org/rfc/rfc9060.txt",
+      "sha256": "dbceeccb2da418b0a163c1259be67e818f758f94fcc266f6efd22e098f57becc",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Terminology"
+        },
+        {
+          "id": "3",
+          "title": "Motivation"
+        },
+        {
+          "id": "4",
+          "title": "Delegation of STIR Certificates"
+        },
+        {
+          "id": "4.1",
+          "title": "Scope of Delegation"
+        },
+        {
+          "id": "5",
+          "title": "Authentication Service Signing with Delegate Certificates"
+        },
+        {
+          "id": "6",
+          "title": "Verification Service Behavior for Delegate Certificate Signatures"
+        },
+        {
+          "id": "7",
+          "title": "Acquiring Multiple Certificates in STIR"
+        },
+        {
+          "id": "8",
+          "title": "Certification Authorities and Service Providers"
+        },
+        {
+          "id": "8.1",
+          "title": "ACME and Delegation"
+        },
+        {
+          "id": "8.2",
+          "title": "Handling Multiple Certificates"
+        },
+        {
+          "id": "9",
+          "title": "Alternative Solutions"
+        },
+        {
+          "id": "10",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "11",
+          "title": "Privacy Considerations"
+        },
+        {
+          "id": "12",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "13",
+          "title": "References"
+        },
+        {
+          "id": "13.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "13.2",
           "title": "Informative References"
         }
       ]
@@ -11661,7 +18164,18 @@
           "id": "B",
           "title": "CSR Template: JSON Schema"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        2986,
+        5280,
+        7807,
+        8174,
+        8555,
+        8610,
+        8739
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 9162,
@@ -12028,6 +18542,818 @@
       ]
     },
     {
+      "rfc": 9171,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc9171.txt",
+      "sha256": "74e542b143793c9ce41a397fca76f68782792cd0169db9f6a37b21de8dbb9ce5",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "2",
+          "title": "Conventions Used in This Document"
+        },
+        {
+          "id": "3",
+          "title": "Service Description"
+        },
+        {
+          "id": "3.1",
+          "title": "Definitions"
+        },
+        {
+          "id": "3.2",
+          "title": "Discussion of BP Concepts"
+        },
+        {
+          "id": "3.3",
+          "title": "Services Offered by Bundle Protocol Agents"
+        },
+        {
+          "id": "4",
+          "title": "Bundle Format"
+        },
+        {
+          "id": "4.1",
+          "title": "Bundle Structure"
+        },
+        {
+          "id": "4.2",
+          "title": "BP Fundamental Data Structures"
+        },
+        {
+          "id": "4.2.1",
+          "title": "CRC Type"
+        },
+        {
+          "id": "4.2.2",
+          "title": "CRC"
+        },
+        {
+          "id": "4.2.3",
+          "title": "Bundle Processing Control Flags"
+        },
+        {
+          "id": "4.2.4",
+          "title": "Block Processing Control Flags"
+        },
+        {
+          "id": "4.2.5",
+          "title": "Identifiers"
+        },
+        {
+          "id": "4.2.5.1",
+          "title": "Endpoint ID"
+        },
+        {
+          "id": "4.2.5.1.1",
+          "title": "The dtn URI Scheme"
+        },
+        {
+          "id": "4.2.5.1.2",
+          "title": "The ipn URI Scheme"
+        },
+        {
+          "id": "4.2.5.2",
+          "title": "Node ID"
+        },
+        {
+          "id": "4.2.6",
+          "title": "DTN Time"
+        },
+        {
+          "id": "4.2.7",
+          "title": "Creation Timestamp"
+        },
+        {
+          "id": "4.2.8",
+          "title": "Block-Type-Specific Data"
+        },
+        {
+          "id": "4.3",
+          "title": "Block Structures"
+        },
+        {
+          "id": "4.3.1",
+          "title": "Primary Bundle Block"
+        },
+        {
+          "id": "4.3.2",
+          "title": "Canonical Bundle Block Format"
+        },
+        {
+          "id": "4.4",
+          "title": "Extension Blocks"
+        },
+        {
+          "id": "4.4.1",
+          "title": "Previous Node"
+        },
+        {
+          "id": "4.4.2",
+          "title": "Bundle Age"
+        },
+        {
+          "id": "4.4.3",
+          "title": "Hop Count"
+        },
+        {
+          "id": "5",
+          "title": "Bundle Processing"
+        },
+        {
+          "id": "5.1",
+          "title": "Generation of Administrative Records"
+        },
+        {
+          "id": "5.2",
+          "title": "Bundle Transmission"
+        },
+        {
+          "id": "5.3",
+          "title": "Bundle Dispatching"
+        },
+        {
+          "id": "5.4",
+          "title": "Bundle Forwarding"
+        },
+        {
+          "id": "5.4.1",
+          "title": "Forwarding Contraindicated"
+        },
+        {
+          "id": "5.4.2",
+          "title": "Forwarding Failed"
+        },
+        {
+          "id": "5.5",
+          "title": "Bundle Expiration"
+        },
+        {
+          "id": "5.6",
+          "title": "Bundle Reception"
+        },
+        {
+          "id": "5.7",
+          "title": "Local Bundle Delivery"
+        },
+        {
+          "id": "5.8",
+          "title": "Bundle Fragmentation"
+        },
+        {
+          "id": "5.9",
+          "title": "Application Data Unit Reassembly"
+        },
+        {
+          "id": "5.10",
+          "title": "Bundle Deletion"
+        },
+        {
+          "id": "5.11",
+          "title": "Discarding a Bundle"
+        },
+        {
+          "id": "5.12",
+          "title": "Canceling a Transmission"
+        },
+        {
+          "id": "6",
+          "title": "Administrative Record Processing"
+        },
+        {
+          "id": "6.1",
+          "title": "Administrative Records"
+        },
+        {
+          "id": "6.1.1",
+          "title": "Bundle Status Reports"
+        },
+        {
+          "id": "6.2",
+          "title": "Generation of Administrative Records"
+        },
+        {
+          "id": "7",
+          "title": "Services Required of the Convergence Layer"
+        },
+        {
+          "id": "7.1",
+          "title": "The Convergence Layer"
+        },
+        {
+          "id": "7.2",
+          "title": "Summary of Convergence-Layer Services"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "9",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "9.1",
+          "title": "Bundle Block Types"
+        },
+        {
+          "id": "9.2",
+          "title": "Primary Bundle Protocol Version"
+        },
+        {
+          "id": "9.3",
+          "title": "Bundle Processing Control Flags"
+        },
+        {
+          "id": "9.4",
+          "title": "Block Processing Control Flags"
+        },
+        {
+          "id": "9.5",
+          "title": "Bundle Status Report Reason Codes"
+        },
+        {
+          "id": "9.6",
+          "title": "Bundle Protocol URI Scheme Types"
+        },
+        {
+          "id": "9.7",
+          "title": "dtn URI Scheme"
+        },
+        {
+          "id": "9.8",
+          "title": "ipn URI Scheme"
+        },
+        {
+          "id": "10",
+          "title": "References"
+        },
+        {
+          "id": "10.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "10.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Significant Changes from RFC 5050"
+        },
+        {
+          "id": "B",
+          "title": "CDDL Expression"
+        }
+      ]
+    },
+    {
+      "rfc": 9172,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc9172.txt",
+      "sha256": "1cfb94bf8332b7333bf95421f193ee6d532f1613ee9e05bfa9a133b779c2de62",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Supported Security Services"
+        },
+        {
+          "id": "1.2",
+          "title": "Specification Scope"
+        },
+        {
+          "id": "1.3",
+          "title": "Related Documents"
+        },
+        {
+          "id": "1.4",
+          "title": "Terminology"
+        },
+        {
+          "id": "2",
+          "title": "Design Decisions"
+        },
+        {
+          "id": "2.1",
+          "title": "Block-Level Granularity"
+        },
+        {
+          "id": "2.2",
+          "title": "Multiple Security Sources"
+        },
+        {
+          "id": "2.3",
+          "title": "Mixed Security Policy"
+        },
+        {
+          "id": "2.4",
+          "title": "User-Defined Security Contexts"
+        },
+        {
+          "id": "2.5",
+          "title": "Deterministic Processing"
+        },
+        {
+          "id": "3",
+          "title": "Security Blocks"
+        },
+        {
+          "id": "3.1",
+          "title": "Block Definitions"
+        },
+        {
+          "id": "3.2",
+          "title": "Uniqueness"
+        },
+        {
+          "id": "3.3",
+          "title": "Target Multiplicity"
+        },
+        {
+          "id": "3.4",
+          "title": "Target Identification"
+        },
+        {
+          "id": "3.5",
+          "title": "Block Representation"
+        },
+        {
+          "id": "3.6",
+          "title": "Abstract Security Block"
+        },
+        {
+          "id": "3.7",
+          "title": "Block Integrity Block"
+        },
+        {
+          "id": "3.8",
+          "title": "Block Confidentiality Block"
+        },
+        {
+          "id": "3.9",
+          "title": "Block Interactions"
+        },
+        {
+          "id": "3.10",
+          "title": "Parameter and Result Identification"
+        },
+        {
+          "id": "3.11",
+          "title": "BPSec Block Examples"
+        },
+        {
+          "id": "3.11.1",
+          "title": "Example 1: Constructing a Bundle with Security"
+        },
+        {
+          "id": "3.11.2",
+          "title": "Example 2: Adding More Security at a New Node"
+        },
+        {
+          "id": "4",
+          "title": "Canonical Forms"
+        },
+        {
+          "id": "5",
+          "title": "Security Processing"
+        },
+        {
+          "id": "5.1",
+          "title": "Bundles Received from Other Nodes"
+        },
+        {
+          "id": "5.1.1",
+          "title": "Receiving BCBs"
+        },
+        {
+          "id": "5.1.2",
+          "title": "Receiving BIBs"
+        },
+        {
+          "id": "5.2",
+          "title": "Bundle Fragmentation and Reassembly"
+        },
+        {
+          "id": "6",
+          "title": "Key Management"
+        },
+        {
+          "id": "7",
+          "title": "Security Policy Considerations"
+        },
+        {
+          "id": "7.1",
+          "title": "Security Reason Codes"
+        },
+        {
+          "id": "8",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "8.1",
+          "title": "Attacker Capabilities and Objectives"
+        },
+        {
+          "id": "8.2",
+          "title": "Attacker Behaviors and BPSec Mitigations"
+        },
+        {
+          "id": "8.2.1",
+          "title": "Eavesdropping Attacks"
+        },
+        {
+          "id": "8.2.2",
+          "title": "Modification Attacks"
+        },
+        {
+          "id": "8.2.3",
+          "title": "Topology Attacks"
+        },
+        {
+          "id": "8.2.4",
+          "title": "Message Injection"
+        },
+        {
+          "id": "9",
+          "title": "Security Context Considerations"
+        },
+        {
+          "id": "9.1",
+          "title": "Mandating Security Contexts"
+        },
+        {
+          "id": "9.2",
+          "title": "Identification and Configuration"
+        },
+        {
+          "id": "9.3",
+          "title": "Authorship"
+        },
+        {
+          "id": "10",
+          "title": "Defining Other Security Blocks"
+        },
+        {
+          "id": "11",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "11.1",
+          "title": "Bundle Block Types"
+        },
+        {
+          "id": "11.2",
+          "title": "Bundle Status Report Reason Codes"
+        },
+        {
+          "id": "11.3",
+          "title": "Security Context Identifiers"
+        },
+        {
+          "id": "12",
+          "title": "References"
+        },
+        {
+          "id": "12.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "12.2",
+          "title": "Informative References"
+        }
+      ]
+    },
+    {
+      "rfc": 9174,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc9174.txt",
+      "sha256": "9e25dc65c8226291b7cc6fc5284838e7a31b29748ab006dadc542ac67ded2f09",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Scope"
+        },
+        {
+          "id": "2",
+          "title": "Requirements Language"
+        },
+        {
+          "id": "2.1",
+          "title": "Definitions Specific to the TCPCL Protocol"
+        },
+        {
+          "id": "3",
+          "title": "General Protocol Description"
+        },
+        {
+          "id": "3.1",
+          "title": "Convergence-Layer Services"
+        },
+        {
+          "id": "3.2",
+          "title": "TCPCL Session Overview"
+        },
+        {
+          "id": "3.3",
+          "title": "TCPCL States and Transitions"
+        },
+        {
+          "id": "3.4",
+          "title": "PKIX Environments and CA Policy"
+        },
+        {
+          "id": "3.5",
+          "title": "Session-Keeping Policies"
+        },
+        {
+          "id": "3.6",
+          "title": "Transfer Segmentation Policies"
+        },
+        {
+          "id": "3.7",
+          "title": "Example Message Exchange"
+        },
+        {
+          "id": "4",
+          "title": "Session Establishment"
+        },
+        {
+          "id": "4.1",
+          "title": "TCP Connection"
+        },
+        {
+          "id": "4.2",
+          "title": "Contact Header"
+        },
+        {
+          "id": "4.3",
+          "title": "Contact Validation and Negotiation"
+        },
+        {
+          "id": "4.4",
+          "title": "Session Security"
+        },
+        {
+          "id": "4.4.1",
+          "title": "Entity Identification"
+        },
+        {
+          "id": "4.4.2",
+          "title": "Certificate Profile for the TCPCL"
+        },
+        {
+          "id": "4.4.2.1",
+          "title": "PKIX OID Allocations"
+        },
+        {
+          "id": "4.4.3",
+          "title": "TLS Handshake"
+        },
+        {
+          "id": "4.4.4",
+          "title": "TLS Authentication"
+        },
+        {
+          "id": "4.4.4.1",
+          "title": "Certificate Path and Purpose Validation"
+        },
+        {
+          "id": "4.4.4.2",
+          "title": "Network-Level Authentication"
+        },
+        {
+          "id": "4.4.4.3",
+          "title": "Node ID Authentication"
+        },
+        {
+          "id": "4.4.5",
+          "title": "Policy Recommendations"
+        },
+        {
+          "id": "4.4.6",
+          "title": "Example TLS Initiation"
+        },
+        {
+          "id": "4.5",
+          "title": "Message Header"
+        },
+        {
+          "id": "4.6",
+          "title": "Session Initialization Message (SESS_INIT)"
+        },
+        {
+          "id": "4.7",
+          "title": "Session Parameter Negotiation"
+        },
+        {
+          "id": "4.8",
+          "title": "Session Extension Items"
+        },
+        {
+          "id": "5",
+          "title": "Established Session Operation"
+        },
+        {
+          "id": "5.1",
+          "title": "Upkeep and Status Messages"
+        },
+        {
+          "id": "5.1.1",
+          "title": "Session Upkeep (KEEPALIVE)"
+        },
+        {
+          "id": "5.1.2",
+          "title": "Message Rejection (MSG_REJECT)"
+        },
+        {
+          "id": "5.2",
+          "title": "Bundle Transfer"
+        },
+        {
+          "id": "5.2.1",
+          "title": "Bundle Transfer ID"
+        },
+        {
+          "id": "5.2.2",
+          "title": "Data Transmission (XFER_SEGMENT)"
+        },
+        {
+          "id": "5.2.3",
+          "title": "Data Acknowledgments (XFER_ACK)"
+        },
+        {
+          "id": "5.2.4",
+          "title": "Transfer Refusal (XFER_REFUSE)"
+        },
+        {
+          "id": "5.2.5",
+          "title": "Transfer Extension Items"
+        },
+        {
+          "id": "5.2.5.1",
+          "title": "Transfer Length Extension"
+        },
+        {
+          "id": "6",
+          "title": "Session Termination"
+        },
+        {
+          "id": "6.1",
+          "title": "Session Termination Message (SESS_TERM)"
+        },
+        {
+          "id": "6.2",
+          "title": "Idle Session Termination"
+        },
+        {
+          "id": "7",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "7.1",
+          "title": "Threat: Passive Leak of Node Data"
+        },
+        {
+          "id": "7.2",
+          "title": "Threat: Passive Leak of Bundle Data"
+        },
+        {
+          "id": "7.3",
+          "title": "Threat: TCPCL Version Downgrade"
+        },
+        {
+          "id": "7.4",
+          "title": "Threat: Transport Security Stripping"
+        },
+        {
+          "id": "7.5",
+          "title": "Threat: Weak TLS Configurations"
+        },
+        {
+          "id": "7.6",
+          "title": "Threat: Untrusted End-Entity Certificate"
+        },
+        {
+          "id": "7.7",
+          "title": "Threat: Certificate Validation Vulnerabilities"
+        },
+        {
+          "id": "7.8",
+          "title": "Threat: Symmetric Key Limits"
+        },
+        {
+          "id": "7.9",
+          "title": "Threat: BP Node Impersonation"
+        },
+        {
+          "id": "7.10",
+          "title": "Threat: Denial of Service"
+        },
+        {
+          "id": "7.11",
+          "title": "Mandatory-to-Implement TLS"
+        },
+        {
+          "id": "7.12",
+          "title": "Alternate Uses of TLS"
+        },
+        {
+          "id": "7.12.1",
+          "title": "TLS without Authentication"
+        },
+        {
+          "id": "7.12.2",
+          "title": "Non-certificate TLS Use"
+        },
+        {
+          "id": "7.13",
+          "title": "Predictability of Transfer IDs"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "8.1",
+          "title": "Port Number"
+        },
+        {
+          "id": "8.2",
+          "title": "Protocol Versions"
+        },
+        {
+          "id": "8.3",
+          "title": "Session Extension Types"
+        },
+        {
+          "id": "8.4",
+          "title": "Transfer Extension Types"
+        },
+        {
+          "id": "8.5",
+          "title": "Message Types"
+        },
+        {
+          "id": "8.6",
+          "title": "XFER_REFUSE Reason Codes"
+        },
+        {
+          "id": "8.7",
+          "title": "SESS_TERM Reason Codes"
+        },
+        {
+          "id": "8.8",
+          "title": "MSG_REJECT Reason Codes"
+        },
+        {
+          "id": "8.9",
+          "title": "Object Identifier for PKIX Module Identifier"
+        },
+        {
+          "id": "8.10",
+          "title": "Object Identifier for PKIX Other Name Forms"
+        },
+        {
+          "id": "8.11",
+          "title": "Object Identifier for PKIX Extended Key Usage"
+        },
+        {
+          "id": "9",
+          "title": "References"
+        },
+        {
+          "id": "9.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "9.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Significant Changes from RFC 7242"
+        },
+        {
+          "id": "B",
+          "title": "ASN.1 Module"
+        },
+        {
+          "id": "C",
+          "title": "Example of the BundleEID Other Name Form"
+        }
+      ]
+    },
+    {
       "rfc": 9444,
       "role": "acme",
       "source": "https://www.rfc-editor.org/rfc/rfc9444.txt",
@@ -12109,7 +19435,14 @@
           "id": "8.2",
           "title": "Informative References"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        8174,
+        8499,
+        8555
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 9447,
@@ -12185,7 +19518,18 @@
           "id": "8.2",
           "title": "Informative References"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        7515,
+        7519,
+        8174,
+        8555,
+        8725,
+        9110,
+        9448
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 9448,
@@ -12277,7 +19621,21 @@
           "id": "11.2",
           "title": "Informative References"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        4648,
+        7515,
+        7519,
+        8174,
+        8226,
+        8555,
+        8725,
+        9060,
+        9110,
+        9447
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 9457,
@@ -12380,6 +19738,158 @@
       ]
     },
     {
+      "rfc": 9525,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc9525.txt",
+      "sha256": "ed8116c2435376dffe37ec2ca688c3a8515e36820852b29e0b6cdfbe92abd2c5",
+      "sections": [
+        {
+          "id": "1",
+          "title": "Introduction"
+        },
+        {
+          "id": "1.1",
+          "title": "Motivation"
+        },
+        {
+          "id": "1.2",
+          "title": "Applicability"
+        },
+        {
+          "id": "1.3",
+          "title": "Overview of Recommendations"
+        },
+        {
+          "id": "1.4",
+          "title": "Scope"
+        },
+        {
+          "id": "1.4.1",
+          "title": "In Scope"
+        },
+        {
+          "id": "1.4.2",
+          "title": "Out of Scope"
+        },
+        {
+          "id": "1.5",
+          "title": "Terminology"
+        },
+        {
+          "id": "2",
+          "title": "Identifying Application Services"
+        },
+        {
+          "id": "3",
+          "title": "Designing Application Protocols"
+        },
+        {
+          "id": "4",
+          "title": "Representing Server Identity"
+        },
+        {
+          "id": "4.1",
+          "title": "Rules"
+        },
+        {
+          "id": "4.2",
+          "title": "Examples"
+        },
+        {
+          "id": "5",
+          "title": "Requesting Server Certificates"
+        },
+        {
+          "id": "6",
+          "title": "Verifying Service Identity"
+        },
+        {
+          "id": "6.1",
+          "title": "Constructing a List of Reference Identifiers"
+        },
+        {
+          "id": "6.1.1",
+          "title": "Rules"
+        },
+        {
+          "id": "6.1.2",
+          "title": "Examples"
+        },
+        {
+          "id": "6.2",
+          "title": "Preparing to Seek a Match"
+        },
+        {
+          "id": "6.3",
+          "title": "Matching the DNS Domain Name Portion"
+        },
+        {
+          "id": "6.4",
+          "title": "Matching an IP Address Portion"
+        },
+        {
+          "id": "6.5",
+          "title": "Matching the Application Service Type Portion"
+        },
+        {
+          "id": "6.6",
+          "title": "Outcome"
+        },
+        {
+          "id": "7",
+          "title": "Security Considerations"
+        },
+        {
+          "id": "7.1",
+          "title": "Wildcard Certificates"
+        },
+        {
+          "id": "7.2",
+          "title": "Uniform Resource Identifiers"
+        },
+        {
+          "id": "7.3",
+          "title": "Internationalized Domain Names"
+        },
+        {
+          "id": "7.4",
+          "title": "IP Addresses"
+        },
+        {
+          "id": "7.5",
+          "title": "Multiple Presented Identifiers"
+        },
+        {
+          "id": "7.6",
+          "title": "Multiple Reference Identifiers"
+        },
+        {
+          "id": "7.7",
+          "title": "Certificate Trust"
+        },
+        {
+          "id": "8",
+          "title": "IANA Considerations"
+        },
+        {
+          "id": "9",
+          "title": "References"
+        },
+        {
+          "id": "9.1",
+          "title": "Normative References"
+        },
+        {
+          "id": "9.2",
+          "title": "Informative References"
+        },
+        {
+          "id": "A",
+          "title": "Changes from RFC 6125"
+        }
+      ]
+    },
+    {
       "rfc": 9773,
       "role": "acme",
       "source": "https://www.rfc-editor.org/rfc/rfc9773.txt",
@@ -12469,7 +19979,17 @@
           "id": "A",
           "title": "Example Certificate"
         }
-      ]
+      ],
+      "normative_rfc_references": [
+        2119,
+        3339,
+        4648,
+        5280,
+        8174,
+        8555,
+        9110
+      ],
+      "normative_external_references": []
     },
     {
       "rfc": 9799,
@@ -12645,6 +20165,23 @@
           "id": "A",
           "title": "Discussion on the Use of the \"dns\" Identifier Type"
         }
+      ],
+      "normative_rfc_references": [
+        2119,
+        2986,
+        3629,
+        4648,
+        7686,
+        8037,
+        8174,
+        8555,
+        8659,
+        8737
+      ],
+      "normative_external_references": [
+        "cabf-br",
+        "tor-rend-spec-v2",
+        "tor-spec"
       ]
     },
     {
@@ -12805,6 +20342,30 @@
           "id": "B.2",
           "title": "Response Bundle"
         }
+      ],
+      "normative_rfc_references": [
+        2119,
+        2985,
+        3552,
+        3986,
+        4086,
+        4648,
+        4838,
+        5280,
+        8174,
+        8555,
+        8610,
+        9054,
+        9171,
+        9172,
+        9174,
+        9525
+      ],
+      "normative_external_references": [
+        "IANA-ACME",
+        "IANA-BP",
+        "IANA-COSE",
+        "IANA-SMI"
       ]
     }
   ]

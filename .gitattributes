@@ -3,3 +3,6 @@ rfc/*.txt -text whitespace=-blank-at-eol,-blank-at-eof linguist-vendored=true
 rfc/SHA256SUMS -text linguist-generated=true
 rfc/SECTION_INDEX.json linguist-generated=true
 rfc/ACME_ERRATA.json linguist-generated=true
+registry/iana-*.xml -text linguist-vendored=true
+registry/SHA256SUMS -text linguist-generated=true
+registry/REGISTRY_BASELINE.json linguist-generated=true

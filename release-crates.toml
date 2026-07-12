@@ -1,5 +1,5 @@
 [release]
-version = "0.3.0"
+version = "0.3.1"
 policy = "independent"
 
 [crates.vardheim-core]
@@ -7,32 +7,32 @@ previous_version = "0.1.0"
 version = "0.1.0"
 change = "unchanged"
 publish = false
-reason = "No package-content change for the v0.3.0 normative-source milestone."
+reason = "No package-content change for the v0.3.1 registry-baseline milestone."
 
 [crates.vardheim-challenge-http]
 previous_version = "0.1.0"
 version = "0.1.0"
 change = "unchanged"
 publish = false
-reason = "No package-content change for the v0.3.0 normative-source milestone."
+reason = "No package-content change for the v0.3.1 registry-baseline milestone."
 
 [crates.vardheim-challenge-dns]
 previous_version = "0.1.0"
 version = "0.1.0"
 change = "unchanged"
 publish = false
-reason = "No package-content change for the v0.3.0 normative-source milestone."
+reason = "No package-content change for the v0.3.1 registry-baseline milestone."
 
 [crates.vardheim-challenge-tls]
 previous_version = "0.1.0"
 version = "0.1.0"
 change = "unchanged"
 publish = false
-reason = "No package-content change for the v0.3.0 normative-source milestone."
+reason = "No package-content change for the v0.3.1 registry-baseline milestone."
 
 [crates.vardheim]
-previous_version = "0.2.0"
-version = "0.3.0"
+previous_version = "0.3.0"
+version = "0.3.1"
 change = "code"
 publish = true
-reason = "Publishes the v0.3.0 facade marker and complete RFC source, section, hash, and errata baseline documentation."
+reason = "Publishes the v0.3.1 facade marker and complete bounded IANA registry, HTTP replacement, supporting-standard, and external-profile baseline documentation."

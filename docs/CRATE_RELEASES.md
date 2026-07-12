@@ -65,7 +65,7 @@ The script deliberately has no `--no-verify`, dirty-tree, untagged, or
 skip-preflight escape hatch. It pauses between packages so the operator can
 confirm crates.io index propagation before publishing a dependent crate.
 
-## Current `v0.3.0` Plan
+## Current `v0.3.1` Plan
 
 | Crate | Published | Planned | Change | Publish |
 | --- | --- | --- | --- | --- |
@@ -73,7 +73,7 @@ confirm crates.io index propagation before publishing a dependent crate.
 | `vardheim-challenge-http` | `0.1.0` | `0.1.0` | unchanged | No |
 | `vardheim-challenge-dns` | `0.1.0` | `0.1.0` | unchanged | No |
 | `vardheim-challenge-tls` | `0.1.0` | `0.1.0` | unchanged | No |
-| `vardheim` | `0.2.0` | `0.3.0` | code | Yes |
+| `vardheim` | `0.3.0` | `0.3.1` | code | Yes |
 
 All five crates were first published manually at `0.1.0`. The rolling
 `release-crates.toml` now captures the next release decision and must be updated

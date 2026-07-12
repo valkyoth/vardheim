@@ -27,6 +27,10 @@ and ARI fields. Registry recognition is separate from semantic support: an
 unknown or not-yet-implemented value is retained within bounds and returns a
 typed capability result.
 
+The reviewed current assignments, HTTP successor mapping, supporting RFCs,
+and mutable profile revisions are pinned in the
+[registry baseline](REGISTRY_BASELINE.md).
+
 ## Draft Scope
 
 The official snapshot contains active work for profiles, persistent DNS,

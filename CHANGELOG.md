@@ -5,7 +5,21 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ## Unreleased
 
-## 0.3.0 - Unreleased
+## 0.3.1 - Unreleased
+
+### Added
+
+- Byte-pinned complete IANA ACME registry group and deterministic bounded
+  fixtures for all 107 current records across 13 registries.
+- Current HTTP successor mapping, 92-record supporting-standard inventory,
+  exact external-profile revision pins, and complete normative-reference
+  closure for all published ACME RFCs.
+- Fail-closed registry generator with adversarial integrity, XML safety,
+  omission, duplication, and resource-bound regression tests.
+- Machine-checked closure for all normative RFC and non-RFC references used by
+  the published ACME family.
+
+## 0.3.0 - 2026-07-12
 
 ### Added
 

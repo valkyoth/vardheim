@@ -8,6 +8,8 @@ scripts/verify-rfcs.sh
 scripts/rfc_inventory.py
 scripts/rfc_errata.py
 python3 scripts/test-rfc-sources.py
+scripts/registry_baseline.py
+python3 scripts/test-registry-baseline.py
 scripts/validate-plan.sh
 scripts/validate-release-metadata.sh
 scripts/validate-modularity-policy.sh

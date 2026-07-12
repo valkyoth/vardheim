@@ -36,8 +36,7 @@ challenge presentation, persistent storage, and certificate deployment.
 
 ## Current Status
 
-Status: `v0.3.0` release candidate; pentest and remediation retest passed,
-awaiting GitHub checks.
+Status: `v0.3.1` registry-baseline implementation complete; pending pentest.
 
 Vardheim does not issue, validate, renew, revoke, or deploy certificates yet.
 The current release establishes the crate boundaries and enforcement needed
@@ -60,8 +59,15 @@ Implemented now:
 - Complete implementation and version plan through `1.0.0`.
 - Tracked, byte-locked reference copies of all required RFC texts, excluded
   from published crates.
+- Generated proof that all normative RFC references from every published ACME
+  family document are present in the 105-document local source set.
 - Complete generated section index for all tracked RFCs and reviewed
   all-status errata evidence for every published ACME RFC.
+- Complete bounded fixtures for all 107 records in all 13 IANA ACME
+  registries, current HTTP replacements, supporting standards, and pinned
+  external-profile revisions.
+- Complete inventory of all normative non-RFC ACME sources, including
+  byte-pinned supporting IANA registries and exact external revisions.
 - Linux, Windows, BSD, macOS, Android, iOS, and future custom-target
   architecture requirements.
 
@@ -103,7 +109,7 @@ The latest published foundation release is:
 
 ```toml
 [dependencies]
-vardheim = "0.2.0"
+vardheim = "0.3.0"
 ```
 
 Most users should depend only on `vardheim`. Lower-level crates exist for
@@ -165,6 +171,7 @@ Read:
 - [Longitudinal regression strategy](https://github.com/valkyoth/vardheim/blob/main/docs/REGRESSION_STRATEGY.md)
 - [ACME completeness contract](https://github.com/valkyoth/vardheim/blob/main/docs/COMPLETENESS.md)
 - [RFC inventory](https://github.com/valkyoth/vardheim/blob/main/docs/RFC_INVENTORY.md)
+- [Registry baseline](https://github.com/valkyoth/vardheim/blob/main/docs/REGISTRY_BASELINE.md)
 - [RFC errata baseline](https://github.com/valkyoth/vardheim/blob/main/docs/RFC_ERRATA.md)
 - [Threat model](https://github.com/valkyoth/vardheim/blob/main/docs/threat-model.md)
 - [Security controls](https://github.com/valkyoth/vardheim/blob/main/docs/security-controls.md)
@@ -183,6 +190,8 @@ scripts/generate-sbom.sh
 scripts/release_crates.py --check
 scripts/rfc_inventory.py
 scripts/rfc_errata.py
+scripts/registry_baseline.py
+python3 scripts/test-registry-baseline.py
 ```
 
 The networked freshness check verifies pinned Cargo tools and GitHub Actions:

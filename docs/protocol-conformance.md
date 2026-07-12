@@ -1,7 +1,9 @@
 # Protocol Conformance
 
-No RFC conformance is claimed through version 0.3.0. Version `0.3.0` establishes
-normative source evidence only; it implements no protocol behavior.
+No RFC conformance is claimed through version 0.3.1. Version `0.3.0`
+establishes immutable RFC source, section, hash, and errata evidence. Version
+`0.3.1` adds bounded IANA registry, HTTP replacement, supporting-standard, and
+external-profile revision evidence. Neither implements protocol behavior.
 
 Each later claim requires:
 

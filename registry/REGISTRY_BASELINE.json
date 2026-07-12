@@ -1,0 +1,2482 @@
+{
+  "schema": 1,
+  "checked_at": "2026-07-12",
+  "limits": {
+    "source_bytes": 65536,
+    "registries": 32,
+    "records_total": 256,
+    "records_per_registry": 128,
+    "fields_per_record": 16,
+    "references_per_record": 8,
+    "text_bytes": 4096
+  },
+  "iana_acme": {
+    "authority": "IANA",
+    "source": "https://www.iana.org/assignments/acme/acme.xml",
+    "source_sha256": "75ffda9a205c08209dd39f7ab202f918c5406c3e91741dfa6ac0f2db03b75380",
+    "source_updated": "2025-11-25",
+    "record_count": 107,
+    "required_categories": {
+      "fields": [
+        "acme-account-object-fields",
+        "acme-order-object-fields",
+        "acme-authorization-object-fields",
+        "acme-directory-metadata-fields",
+        "acme-order-auto-renewal-fields",
+        "acme-directory-metadata-auto-renewal-fields",
+        "acme-renewalinfo-object-fields"
+      ],
+      "errors": [
+        "acme-error-types"
+      ],
+      "resources": [
+        "acme-resource-types"
+      ],
+      "identifiers": [
+        "acme-identifier-types"
+      ],
+      "validation_methods": [
+        "acme-validation-methods"
+      ],
+      "extensions": [
+        "acme-star-delegation-csr-template-extensions",
+        "acme-authority-token-challenge-types"
+      ]
+    },
+    "registries": [
+      {
+        "id": "acme-account-object-fields",
+        "title": "ACME Account Object Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "status",
+              "type": "string",
+              "requests": "new, account"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "contact",
+              "type": "array of string",
+              "requests": "new, account"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "externalAccountBinding",
+              "type": "object",
+              "requests": "new"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "termsOfServiceAgreed",
+              "type": "boolean",
+              "requests": "new"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "onlyReturnExisting",
+              "type": "boolean",
+              "requests": "new"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-03-04"
+          },
+          {
+            "fields": {
+              "name": "orders",
+              "type": "string",
+              "requests": "none"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "delegations",
+              "type": "string",
+              "requests": "none"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115"
+              }
+            ],
+            "date": "2021-06-21"
+          }
+        ]
+      },
+      {
+        "id": "acme-order-object-fields",
+        "title": "ACME Order Object Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "status",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "expires",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "identifiers",
+              "type": "array of object",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "notBefore",
+              "type": "string",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "notAfter",
+              "type": "string",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "error",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-03-04"
+          },
+          {
+            "fields": {
+              "name": "authorizations",
+              "type": "array of string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "finalize",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "certificate",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "auto-renewal",
+              "type": "object",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "star-certificate",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "allow-certificate-get",
+              "type": "boolean",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "name": "delegation",
+              "type": "string",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "name": "replaces",
+              "type": "string",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9773"
+              }
+            ],
+            "date": "2025-03-06"
+          }
+        ]
+      },
+      {
+        "id": "acme-authorization-object-fields",
+        "title": "ACME Authorization Object Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "identifier",
+              "type": "object",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "status",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "expires",
+              "type": "string",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "challenges",
+              "type": "array of object",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "wildcard",
+              "type": "boolean",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "subdomainAuthAllowed",
+              "type": "boolean",
+              "config": "false"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9444"
+              }
+            ],
+            "date": "2023-03-21"
+          }
+        ]
+      },
+      {
+        "id": "acme-error-types",
+        "title": "ACME Error Types",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "type"
+        ],
+        "records": [
+          {
+            "fields": {
+              "type": "accountDoesNotExist",
+              "description": "The request specified an account that does not exist"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "alreadyRevoked",
+              "description": "The request specified a certificate to be revoked that has already been revoked"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "badCSR",
+              "description": "The CSR is unacceptable (e.g., due to a short key)"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "badNonce",
+              "description": "The client sent an unacceptable anti-replay nonce"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "badPublicKey",
+              "description": "The JWS was signed by a public key the server does not support"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-03-04"
+          },
+          {
+            "fields": {
+              "type": "badRevocationReason",
+              "description": "The revocation reason provided is not allowed by the server"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "badSignatureAlgorithm",
+              "description": "The JWS was signed with an algorithm the server does not support"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "caa",
+              "description": "Certification Authority Authorization (CAA) records forbid the CA from issuing a certificate"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "compound",
+              "description": "Specific error conditions are indicated in the \"subproblems\" array"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "connection",
+              "description": "The server could not connect to validation target"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "dns",
+              "description": "There was a problem with a DNS query during identifier validation"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "externalAccountRequired",
+              "description": "The request must include a value for the \"externalAccountBinding\" field"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "incorrectResponse",
+              "description": "Response received didn't match the challenge's requirements"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "invalidContact",
+              "description": "A contact URL for an account was invalid"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "malformed",
+              "description": "The request message was malformed"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "orderNotReady",
+              "description": "The request attempted to finalize an order that is not ready to be finalized"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-03-04"
+          },
+          {
+            "fields": {
+              "type": "rateLimited",
+              "description": "The request exceeds a rate limit"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "rejectedIdentifier",
+              "description": "The server will not issue certificates for the identifier"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "serverInternal",
+              "description": "The server experienced an internal error"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "tls",
+              "description": "The server received a TLS error during validation"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "unauthorized",
+              "description": "The client lacks sufficient authorization"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "unsupportedContact",
+              "description": "A contact URL for an account used an unsupported protocol scheme"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "unsupportedIdentifier",
+              "description": "An identifier is of an unsupported type"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "userActionRequired",
+              "description": "Visit the \"instance\" URL and take actions specified there"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "type": "autoRenewalCanceled",
+              "description": "The short-term certificate is no longer available because the auto-renewal Order has been explicitly canceled by the IdO"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "type": "autoRenewalExpired",
+              "description": "The short-term certificate is no longer available because the auto-renewal Order has expired"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "type": "autoRenewalCancellationInvalid",
+              "description": "A request to cancel an auto-renewal Order that is not in state \"valid\" has been received"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "type": "autoRenewalRevocationNotSupported",
+              "description": "A request to revoke an auto-renewal Order has been received"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "type": "unknownDelegation",
+              "description": "An unknown configuration is listed in the delegation attribute of the order request"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "type": "onionCAARequired",
+              "description": "The CA only supports checking the CAA for Hidden Services in-band, but the client has not provided an in-band CAA"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9799"
+              }
+            ],
+            "date": "2023-10-24",
+            "updated": "2025-06-17"
+          },
+          {
+            "fields": {
+              "type": "alreadyReplaced",
+              "description": "The request specified a predecessor certificate that has already been marked as replaced"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9773"
+              }
+            ],
+            "date": "2025-03-06"
+          }
+        ]
+      },
+      {
+        "id": "acme-resource-types",
+        "title": "ACME Resource Types",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "newNonce",
+              "type": "New nonce"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "newAccount",
+              "type": "New account"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "newOrder",
+              "type": "New order"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "newAuthz",
+              "type": "New authorization"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "revokeCert",
+              "type": "Revoke certificate"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "keyChange",
+              "type": "Key change"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "meta",
+              "type": "Metadata object"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "renewalInfo",
+              "type": "RenewalInfo object"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9773"
+              }
+            ],
+            "date": "2025-03-06",
+            "updated": "2025-06-11"
+          }
+        ]
+      },
+      {
+        "id": "acme-directory-metadata-fields",
+        "title": "ACME Directory Metadata Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "termsOfService",
+              "type": "string"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "website",
+              "type": "string"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "caaIdentities",
+              "type": "array of string"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "externalAccountRequired",
+              "type": "boolean"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "auto-renewal",
+              "type": "object"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "delegation-enabled",
+              "type": "boolean"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "name": "allow-certificate-get",
+              "type": "boolean"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "name": "subdomainAuthAllowed",
+              "type": "boolean"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9444"
+              }
+            ],
+            "date": "2023-03-21"
+          },
+          {
+            "fields": {
+              "name": "onionCAARequired",
+              "type": "boolean"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9799"
+              }
+            ],
+            "date": "2023-10-24"
+          }
+        ]
+      },
+      {
+        "id": "acme-identifier-types",
+        "title": "ACME Identifier Types",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "dns"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "ip"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8738"
+              }
+            ],
+            "date": "2019-10-11"
+          },
+          {
+            "fields": {
+              "name": "email"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8823"
+              },
+              {
+                "type": "draft",
+                "data": "RFC-ietf-emailcore-rfc5321bis-43"
+              },
+              {
+                "type": "rfc",
+                "data": "rfc6531"
+              }
+            ],
+            "date": "2021-02-17"
+          },
+          {
+            "fields": {
+              "name": "TNAuthList"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9448"
+              }
+            ],
+            "date": "2023-02-21"
+          },
+          {
+            "fields": {
+              "name": "bundleEID"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9891"
+              }
+            ],
+            "date": "2025-06-27"
+          },
+          {
+            "fields": {
+              "name": "NfInstanceId"
+            },
+            "references": [
+              {
+                "type": "uri",
+                "data": "https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2293",
+                "label": "3GPP TS 33.310"
+              }
+            ],
+            "date": "2025-07-14"
+          }
+        ]
+      },
+      {
+        "id": "acme-validation-methods",
+        "title": "ACME Validation Methods",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8555"
+          }
+        ],
+        "key_fields": [
+          "name",
+          "type"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "http-01",
+              "type": "dns",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "dns-01",
+              "type": "dns",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "tls-sni-01",
+              "type": "RESERVED",
+              "challenge": "N"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "tls-sni-02",
+              "type": "RESERVED",
+              "challenge": "N"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8555"
+              }
+            ],
+            "date": "2019-01-02"
+          },
+          {
+            "fields": {
+              "name": "http-01",
+              "type": "ip",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8738"
+              }
+            ],
+            "date": "2019-10-11"
+          },
+          {
+            "fields": {
+              "name": "tls-alpn-01",
+              "type": "ip",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8738"
+              }
+            ],
+            "date": "2019-10-11"
+          },
+          {
+            "fields": {
+              "name": "tls-alpn-01",
+              "type": "dns",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8737"
+              }
+            ],
+            "date": "2019-10-23"
+          },
+          {
+            "fields": {
+              "name": "email-reply-00",
+              "type": "email",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8823"
+              }
+            ],
+            "date": "2021-02-17"
+          },
+          {
+            "fields": {
+              "name": "tkauth-01",
+              "type": "TNAuthList",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9447"
+              }
+            ],
+            "date": "2023-05-09"
+          },
+          {
+            "fields": {
+              "name": "onion-csr-01",
+              "type": "dns",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9799"
+              }
+            ],
+            "date": "2023-07-18"
+          },
+          {
+            "fields": {
+              "name": "bp-nodeid-00",
+              "type": "bundleEID",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9891"
+              }
+            ],
+            "date": "2025-06-27"
+          },
+          {
+            "fields": {
+              "name": "tkauth-01",
+              "type": "NfInstanceId",
+              "challenge": "Y"
+            },
+            "references": [
+              {
+                "type": "uri",
+                "data": "https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2293",
+                "label": "3GPP TS 33.310"
+              }
+            ],
+            "date": "2025-07-14"
+          }
+        ]
+      },
+      {
+        "id": "acme-order-auto-renewal-fields",
+        "title": "ACME Order Auto-Renewal Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Yaron Sheffer, Diego R. Lopez, Thomas Fossati, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8739"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "start-date",
+              "type": "string",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "end-date",
+              "type": "string",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "lifetime",
+              "type": "integer",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "lifetime-adjust",
+              "type": "integer",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "allow-certificate-get",
+              "type": "boolean",
+              "config": "true"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          }
+        ]
+      },
+      {
+        "id": "acme-directory-metadata-auto-renewal-fields",
+        "title": "ACME Directory Metadata Auto-Renewal Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Yaron Sheffer, Diego R. Lopez, Thomas Fossati, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc8739"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "min-lifetime",
+              "type": "integer"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "max-duration",
+              "type": "integer"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          },
+          {
+            "fields": {
+              "name": "allow-certificate-get",
+              "type": "boolean"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc8739"
+              }
+            ],
+            "date": "2019-10-25"
+          }
+        ]
+      },
+      {
+        "id": "acme-star-delegation-csr-template-extensions",
+        "title": "STAR Delegation CSR Template Extensions",
+        "registration_rule": "Specification Required",
+        "experts": "Yaron Sheffer, Diego R. Lopez, Thomas Fossati, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc9115"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "keyUsage",
+              "ext": "RFC9115, Appendix A",
+              "x509": "RFC5280, Section 4.2.1.3"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115",
+                "label": "RFC9115, Appendix A"
+              },
+              {
+                "type": "rfc",
+                "data": "rfc5280",
+                "label": "RFC5280, Section 4.2.1.3"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "name": "extendedKeyUsage",
+              "ext": "RFC9115, Appendix A",
+              "x509": "RFC5280, Section 4.2.1.12"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115",
+                "label": "RFC9115, Appendix A"
+              },
+              {
+                "type": "rfc",
+                "data": "rfc5280",
+                "label": "RFC5280, Section 4.2.1.12"
+              }
+            ],
+            "date": "2021-06-21"
+          },
+          {
+            "fields": {
+              "name": "subjectAltName",
+              "ext": "RFC9115, Appendix A",
+              "x509": "RFC5280, Section 4.2.1.6 (note that only specific name formats are allowed: URI, DNS name, email address)"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9115",
+                "label": "RFC9115, Appendix A"
+              },
+              {
+                "type": "rfc",
+                "data": "rfc5280",
+                "label": "RFC5280, Section 4.2.1.6"
+              }
+            ],
+            "date": "2021-06-21"
+          }
+        ]
+      },
+      {
+        "id": "acme-authority-token-challenge-types",
+        "title": "ACME Authority Token Challenge Types",
+        "registration_rule": "Specification Required",
+        "experts": "Mary Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc9447"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "atc",
+              "description": "JSON Web Token (JWT) challenge type"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9447"
+              }
+            ],
+            "date": "2023-05-09"
+          }
+        ]
+      },
+      {
+        "id": "acme-renewalinfo-object-fields",
+        "title": "ACME RenewalInfo Object Fields",
+        "registration_rule": "Specification Required",
+        "experts": "Richard Barnes, Aaron Gable",
+        "references": [
+          {
+            "type": "rfc",
+            "data": "rfc9773"
+          }
+        ],
+        "key_fields": [
+          "name"
+        ],
+        "records": [
+          {
+            "fields": {
+              "name": "suggestedWindow",
+              "description": "object"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9773"
+              }
+            ],
+            "date": "2025-03-06"
+          },
+          {
+            "fields": {
+              "name": "explanationURL",
+              "description": "string"
+            },
+            "references": [
+              {
+                "type": "rfc",
+                "data": "rfc9773"
+              }
+            ],
+            "date": "2025-03-06"
+          }
+        ]
+      }
+    ]
+  },
+  "http_replacements": [
+    {
+      "obsolete_rfc": 2818,
+      "replacement_rfcs": [
+        9110
+      ],
+      "scope": "HTTP over TLS semantics",
+      "source": "https://www.rfc-editor.org/info/rfc9110"
+    },
+    {
+      "obsolete_rfc": 7230,
+      "replacement_rfcs": [
+        9110,
+        9112
+      ],
+      "scope": "HTTP semantics and HTTP/1.1 messaging",
+      "source": "https://www.rfc-editor.org/info/rfc9110"
+    },
+    {
+      "obsolete_rfc": 7231,
+      "replacement_rfcs": [
+        9110
+      ],
+      "scope": "HTTP semantics",
+      "source": "https://www.rfc-editor.org/info/rfc9110"
+    },
+    {
+      "obsolete_rfc": 7232,
+      "replacement_rfcs": [
+        9110
+      ],
+      "scope": "conditional HTTP semantics",
+      "source": "https://www.rfc-editor.org/info/rfc9110"
+    },
+    {
+      "obsolete_rfc": 7233,
+      "replacement_rfcs": [
+        9110
+      ],
+      "scope": "range request semantics",
+      "source": "https://www.rfc-editor.org/info/rfc9110"
+    },
+    {
+      "obsolete_rfc": 7234,
+      "replacement_rfcs": [
+        9111
+      ],
+      "scope": "HTTP caching",
+      "source": "https://www.rfc-editor.org/info/rfc9111"
+    },
+    {
+      "obsolete_rfc": 7235,
+      "replacement_rfcs": [
+        9110
+      ],
+      "scope": "HTTP authentication semantics",
+      "source": "https://www.rfc-editor.org/info/rfc9110"
+    },
+    {
+      "obsolete_rfc": 7807,
+      "replacement_rfcs": [
+        9457
+      ],
+      "scope": "problem details for HTTP APIs",
+      "source": "https://www.rfc-editor.org/info/rfc9457"
+    }
+  ],
+  "supporting_standards": [
+    {
+      "rfc": 1034,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc1034.txt",
+      "sha256": "d6b10a71441df879cc2817d23f2dad120c8a5f87e74eba1e4ed4b743a76a891a"
+    },
+    {
+      "rfc": 1035,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc1035.txt",
+      "sha256": "d14ae809fc9b41bbcae26bb38c937c9515808b944f3252b00de9fe0e95f4fdfb"
+    },
+    {
+      "rfc": 1123,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc1123.txt",
+      "sha256": "3d019cc4777d1ead76c212711d56768bde9361312cd209846b62d2e41dd0301d"
+    },
+    {
+      "rfc": 2046,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc2046.txt",
+      "sha256": "7ac4096b9263e11a704f06892638258ac1ddc0394dd75ffdc171e7b5ba0123e0"
+    },
+    {
+      "rfc": 2119,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc2119.txt",
+      "sha256": "3c2ceb7bfc84cd34720f4a5271338ab9d8280d34bdd1eb250c64306202f2ed8b"
+    },
+    {
+      "rfc": 2231,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc2231.txt",
+      "sha256": "e69cbc8c05097736c5296575e7a2e0cb2a2a09c522640eb40ecc4a9dca56076d"
+    },
+    {
+      "rfc": 2585,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc2585.txt",
+      "sha256": "98d316b4b32dcba6478c30135f1c7e26fcca1d44e6c207270622110eaa7949d4"
+    },
+    {
+      "rfc": 2818,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc2818.txt",
+      "sha256": "4ef02c2b9185fe7b0af4c8777be460f1e156bc57313b1290c9097f83b9f43916"
+    },
+    {
+      "rfc": 2985,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc2985.txt",
+      "sha256": "0a7a760f5becd036f11a17d5a4b4ba831ef76b29d6f74922c320139bead580f1"
+    },
+    {
+      "rfc": 2986,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc2986.txt",
+      "sha256": "9f93627442b9fa03b24336646ffdfb3f33ed8cfd575e6b984fddab5fe88d03c0"
+    },
+    {
+      "rfc": 3339,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc3339.txt",
+      "sha256": "9ab2b8864a85dca73a88f49b0927bc7bc85f596926e4fd1890905777924e700a"
+    },
+    {
+      "rfc": 3492,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc3492.txt",
+      "sha256": "d1848b1b4f01e20708a64f42394e5f4b840141935bed7f09ad7baeb6693b8772"
+    },
+    {
+      "rfc": 3552,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc3552.txt",
+      "sha256": "ba07e18bdffd18893e8607398bef42dbdb5f1c5aa0c7dd6891d43ca8a0b19e4f"
+    },
+    {
+      "rfc": 3596,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc3596.txt",
+      "sha256": "2a3d44744086f66a7ba00e7d282dc1f740a3e0b63b4b6f7c763ffc0e61ee1dbb"
+    },
+    {
+      "rfc": 3629,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc3629.txt",
+      "sha256": "a2a3a39457d30420c812f87a38cc2b9194832f6982ef17e619de7d816879d6a6"
+    },
+    {
+      "rfc": 3834,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc3834.txt",
+      "sha256": "e8ac97cceb6205dd2a722b05fb6b1c1dd1dff0996287af2f513a2d90bb643820"
+    },
+    {
+      "rfc": 3986,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc3986.txt",
+      "sha256": "3102dae4b68cebe40337730312fcb612297b8928547267e8b3d1ee6002b2d683"
+    },
+    {
+      "rfc": 4033,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc4033.txt",
+      "sha256": "b6803149a879dff56cbaffcb8c5a1795d2a2d2facdc3400ebd9937e38724e4cd"
+    },
+    {
+      "rfc": 4034,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc4034.txt",
+      "sha256": "6c32963b76808ec4e5f1282b5e13c5216df4670d21e1590bf29af4066f49b355"
+    },
+    {
+      "rfc": 4035,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc4035.txt",
+      "sha256": "8978b120636c69b2080b12768266ec48cd4c0879583310863a62f7c409908084"
+    },
+    {
+      "rfc": 4086,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc4086.txt",
+      "sha256": "d2c111e67e7628c3de41887c79ed87d0ba69ef1310eeb6698bdfb17fb9651589"
+    },
+    {
+      "rfc": 4343,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc4343.txt",
+      "sha256": "bebb8037e4bc6da9ad6691cf2aa2eb955852684c839d8f7dae311683292c1100"
+    },
+    {
+      "rfc": 4648,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc4648.txt",
+      "sha256": "84e14418f795d503be5f34bf23ce4ebaa119e9ec7c9f667d8caeb111385b178f"
+    },
+    {
+      "rfc": 4838,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc4838.txt",
+      "sha256": "5e24f7c42d7cce46f321a2264b44fc91f7888f69d68b95ca10bd3c680e8d6790"
+    },
+    {
+      "rfc": 5234,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc5234.txt",
+      "sha256": "fc871020f53baa6b60fc6835c557b433f38d53c5cc41ab56d03622b084f53a12"
+    },
+    {
+      "rfc": 5246,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc5246.txt",
+      "sha256": "2ebe1b8e651696aeacc8ab3848bedb465505737901ea3b691acf40c392958feb"
+    },
+    {
+      "rfc": 5280,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc5280.txt",
+      "sha256": "a2f2628c0a83b873fc4786abd921f9b2c02395954b655d190bf16b831633345d"
+    },
+    {
+      "rfc": 5321,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc5321.txt",
+      "sha256": "7d560eddff1b213c17d4e1e5f95005728b2f05bc2b3947f0fcc91717c6707634"
+    },
+    {
+      "rfc": 5322,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc5322.txt",
+      "sha256": "cb459acca15a2aa895863eaeff6f1d5b9c4ca15578ae3e3706f757787a385969"
+    },
+    {
+      "rfc": 5480,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc5480.txt",
+      "sha256": "593bf29fd0da2ff8b903c3ebf1c9d189a770039159e2ba46a0c3b91355037f26"
+    },
+    {
+      "rfc": 5751,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc5751.txt",
+      "sha256": "86d5e52ba3618a8326a7b8d4eda9038071a0e90d1d58ef35136429b402ff8998"
+    },
+    {
+      "rfc": 5890,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5890.txt",
+      "sha256": "24d27002e26fedaec6c9f6479547e9d0855d952bc47d6ce1000851efd70b7430"
+    },
+    {
+      "rfc": 5891,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5891.txt",
+      "sha256": "c9b898f6214c2241b25e4697d6b928ea805099bb136f0e92c48a531490672cda"
+    },
+    {
+      "rfc": 5892,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5892.txt",
+      "sha256": "606dd3619e1d17b3625ef323ac44b0aad272712d067692185d1e417416b66c70"
+    },
+    {
+      "rfc": 5893,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5893.txt",
+      "sha256": "d7daca034781d7f43c24f28c229aaba5aecbb76a68a6a59b70a5505adc23f42d"
+    },
+    {
+      "rfc": 5894,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5894.txt",
+      "sha256": "79ada485351cdbe29e3f0f9cb2de89a2b74566f16cbe9aae619a1d88020e7632"
+    },
+    {
+      "rfc": 5895,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5895.txt",
+      "sha256": "528227c96a5c331547f527b708602330261550f0b6e18cdd8ad2cd08e90396da"
+    },
+    {
+      "rfc": 5952,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc5952.txt",
+      "sha256": "c75e82c5f53bcec8148820fadf0d65935336ee2031fa6ce10504797ed4c1979d"
+    },
+    {
+      "rfc": 5958,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc5958.txt",
+      "sha256": "82778b9ce7b34f02b5ae9777bfb9e42579744aebd2e1479f476513864525af67"
+    },
+    {
+      "rfc": 6066,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc6066.txt",
+      "sha256": "6a33cceaa5e1b6518923d9d04ffaa738bad0417806b3c94a995484e140f5cbc0"
+    },
+    {
+      "rfc": 6068,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6068.txt",
+      "sha256": "a450492a89d30689c0a73e26e1a1d7bccf761405b23c15567f0cf9db575984af"
+    },
+    {
+      "rfc": 6125,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc6125.txt",
+      "sha256": "ee1f413f420bfa6199302b1a85669243f27076c803a120d55c15198e300d7cf1"
+    },
+    {
+      "rfc": 6234,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6234.txt",
+      "sha256": "8f39f02a57bfd1da15634706724a585766e6223f77ecdaf243cad16cd3a1aa1b"
+    },
+    {
+      "rfc": 6376,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6376.txt",
+      "sha256": "00ae1e26aa19e0b8a6087435a524d23e824e2c31ebd62544dd714923bf8553f0"
+    },
+    {
+      "rfc": 6531,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc6531.txt",
+      "sha256": "4f48303f7b7659d0b3149730b51a03d59799a95b4d2ca7d913533f97b9db4b40"
+    },
+    {
+      "rfc": 6570,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc6570.txt",
+      "sha256": "c7b8c79f432821e867fafb1127080545202994c156405ae89cbae42ec0c66810"
+    },
+    {
+      "rfc": 6844,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc6844.txt",
+      "sha256": "e46e6205f5a6a0fec4e80e6b47066246db9c17badc66d42f5fb327a61ab7a6c3"
+    },
+    {
+      "rfc": 6960,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc6960.txt",
+      "sha256": "7e63ffa1ea2ce2737d9aaf895a63776e9105ddbdfc97b8ae4029e3e825b4cdea"
+    },
+    {
+      "rfc": 7230,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7230.txt",
+      "sha256": "c7fdc8bebdf1f8195f731592c47f5ea822b489436fd905b01b55ef531fca4120"
+    },
+    {
+      "rfc": 7231,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7231.txt",
+      "sha256": "a83d026937f6f7929a0e53f8a9bfec4104285f0f89d6dbabd3927c4208a715b2"
+    },
+    {
+      "rfc": 7234,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7234.txt",
+      "sha256": "1d084238ae6692d1e3322fa0850dbb9596812332d92b76d9a815c5ed9b600dea"
+    },
+    {
+      "rfc": 7301,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc7301.txt",
+      "sha256": "ba122aee58871c604c9e98e2c9f81d5042e4056bd497cd41e23ad80fe3123222"
+    },
+    {
+      "rfc": 7468,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc7468.txt",
+      "sha256": "0b2c3c2087cc0b099789c90e61c0208e87b25793f0ce40090979e8c734b3d989"
+    },
+    {
+      "rfc": 7515,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7515.txt",
+      "sha256": "ecbf84674118e62526511c1237e1deaa86aada86d25b247623a2a7e04ae62e40"
+    },
+    {
+      "rfc": 7516,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7516.txt",
+      "sha256": "722cfcddc15f58e746891ba4b846853d3711153a774e4dd55ad6db100474a21f"
+    },
+    {
+      "rfc": 7517,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7517.txt",
+      "sha256": "681c19b92a85068716b7e89c5815aa821bd3f11c755ff1c641b40ae9851bb33c"
+    },
+    {
+      "rfc": 7518,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7518.txt",
+      "sha256": "9a9ae524b09ea700ad3f189bac115df95ba69af84b26ffdbe3cdfb8d2152b1fc"
+    },
+    {
+      "rfc": 7519,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7519.txt",
+      "sha256": "fecd930e9ccf2276b95c0017c6c4ff5d09352e4bc3c7629946447894e0f97248"
+    },
+    {
+      "rfc": 7638,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7638.txt",
+      "sha256": "98b29ab9652070e6a5fec748d43e221bbedc66b6b22e05903fb5366c04ef3110"
+    },
+    {
+      "rfc": 7686,
+      "role": "onion",
+      "source": "https://www.rfc-editor.org/rfc/rfc7686.txt",
+      "sha256": "71fc05a7876af6adec9dd2351c44b40828c3fe4654d91223e6f470aa08e5abaa"
+    },
+    {
+      "rfc": 7797,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc7797.txt",
+      "sha256": "5bbed0e2df28126e147f79dde99058fd1ca18977b7f9f0e5e75626d8efa31138"
+    },
+    {
+      "rfc": 7807,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc7807.txt",
+      "sha256": "c6ee12b7109d42ed3e68659da5f67397bd573226d86492fecf7d954f5f6ca03e"
+    },
+    {
+      "rfc": 8017,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc8017.txt",
+      "sha256": "1e72dc473d18df3fc5598cdc12795a9f18f36f1aef15abc23a55eb0d58151d11"
+    },
+    {
+      "rfc": 8018,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc8018.txt",
+      "sha256": "cf96b02e68216f618ea33b20b49d476edba9d70f2333597ec516629d22971cda"
+    },
+    {
+      "rfc": 8032,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc8032.txt",
+      "sha256": "ed63657ff389301282b169b0abde9b5dd2c7e4d524fdfa5da6ff3094fc93c4c3"
+    },
+    {
+      "rfc": 8037,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc8037.txt",
+      "sha256": "f14347f9d8eead78ef6e7a1ea3d795d35d664033095a76a80fcd567904aaedaa"
+    },
+    {
+      "rfc": 8126,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc8126.txt",
+      "sha256": "b8b5cc1e61e78352b5a12c4a92fa0573b3400d49522a448913455a478dd87401"
+    },
+    {
+      "rfc": 8174,
+      "role": "normative-foundation",
+      "source": "https://www.rfc-editor.org/rfc/rfc8174.txt",
+      "sha256": "5ca0e2f90be0bc5928ee465f76518fee316dfa775aed885658a29a419cc293b7"
+    },
+    {
+      "rfc": 8226,
+      "role": "stir",
+      "source": "https://www.rfc-editor.org/rfc/rfc8226.txt",
+      "sha256": "e8260e0c41e3ffba9076d1182538ccc5598caa2468b5669cd9b850ff83282f51"
+    },
+    {
+      "rfc": 8259,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc8259.txt",
+      "sha256": "61a5378f4255c720beb2a4b4a63b29540147c140f36988bf086291989b4cd2d7"
+    },
+    {
+      "rfc": 8288,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc8288.txt",
+      "sha256": "820f624e0b0884af5c732e8087a65182452e49f2f49cd784ad7c30e16a4fc35d"
+    },
+    {
+      "rfc": 8398,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8398.txt",
+      "sha256": "2b84031c2680e1bbb0d6d86559d8eea8604cb90a8a647d8d7ad65a6e8f2bba67"
+    },
+    {
+      "rfc": 8410,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc8410.txt",
+      "sha256": "90a0ff0b3dd661d3e26e1873f40f2ca8b41709a7bbd755a1ed3599c4746313d2"
+    },
+    {
+      "rfc": 8446,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc8446.txt",
+      "sha256": "47871bc8820a2c3b6ea89f061055577058862cf543686b82d10131239702b3bd"
+    },
+    {
+      "rfc": 8499,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc8499.txt",
+      "sha256": "61e542c24a23f0c982573a53c390b76ccfbd9a645d613b7f1a35c233f1154e16"
+    },
+    {
+      "rfc": 8550,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8550.txt",
+      "sha256": "adf5aa630e6fd10f75de524e4af249302548a68d6cb7254bf3bfb99b544d6c7a"
+    },
+    {
+      "rfc": 8551,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8551.txt",
+      "sha256": "dac39f749a08d3422bd78d4e492195067e7bc03f5fc2d0dac515f0d7ed884ae2"
+    },
+    {
+      "rfc": 8610,
+      "role": "cbor-cose",
+      "source": "https://www.rfc-editor.org/rfc/rfc8610.txt",
+      "sha256": "3713f2a50e23a2bea0a6147ad6c4433605a00c3d00a868bfa86a42b204997089"
+    },
+    {
+      "rfc": 8616,
+      "role": "email-smime",
+      "source": "https://www.rfc-editor.org/rfc/rfc8616.txt",
+      "sha256": "fa9b3e0420940b22e34e449b9810949975e44536cbc4fbac997ded5b16cc1645"
+    },
+    {
+      "rfc": 8659,
+      "role": "dns-names",
+      "source": "https://www.rfc-editor.org/rfc/rfc8659.txt",
+      "sha256": "5f0e193e3bfad5273fe8dd1086d060bdec951505d61bfd0111ae832c1f3e293d"
+    },
+    {
+      "rfc": 8725,
+      "role": "encoding-jose",
+      "source": "https://www.rfc-editor.org/rfc/rfc8725.txt",
+      "sha256": "737b7013a2495dcfd5481cf4c57c87e2455d537c4cec1140c9096a71fcef0812"
+    },
+    {
+      "rfc": 9054,
+      "role": "cbor-cose",
+      "source": "https://www.rfc-editor.org/rfc/rfc9054.txt",
+      "sha256": "75a6bf62b4226baa1e14ccdcc4c603b8a039084ad79677db029e0bbec4525e6f"
+    },
+    {
+      "rfc": 9060,
+      "role": "stir",
+      "source": "https://www.rfc-editor.org/rfc/rfc9060.txt",
+      "sha256": "dbceeccb2da418b0a163c1259be67e818f758f94fcc266f6efd22e098f57becc"
+    },
+    {
+      "rfc": 9110,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a"
+    },
+    {
+      "rfc": 9111,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc9111.txt",
+      "sha256": "aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e"
+    },
+    {
+      "rfc": 9112,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc9112.txt",
+      "sha256": "e4f426bac6206b67fdf9e0da826154f70588db2133a0a86b15cde4ff725d8937"
+    },
+    {
+      "rfc": 9162,
+      "role": "pkix-keys",
+      "source": "https://www.rfc-editor.org/rfc/rfc9162.txt",
+      "sha256": "a0e432ce7580c99fcc8faf0cf3f6191f9ce6b4864f949158e020d4ecb295081f"
+    },
+    {
+      "rfc": 9171,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc9171.txt",
+      "sha256": "74e542b143793c9ce41a397fca76f68782792cd0169db9f6a37b21de8dbb9ce5"
+    },
+    {
+      "rfc": 9172,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc9172.txt",
+      "sha256": "1cfb94bf8332b7333bf95421f193ee6d532f1613ee9e05bfa9a133b779c2de62"
+    },
+    {
+      "rfc": 9174,
+      "role": "dtn",
+      "source": "https://www.rfc-editor.org/rfc/rfc9174.txt",
+      "sha256": "9e25dc65c8226291b7cc6fc5284838e7a31b29748ab006dadc542ac67ded2f09"
+    },
+    {
+      "rfc": 9457,
+      "role": "http-uri",
+      "source": "https://www.rfc-editor.org/rfc/rfc9457.txt",
+      "sha256": "f2b3db92fb0bf3489cb3841a0da0c0d88dff40797b64d40b6123085183886c7b"
+    },
+    {
+      "rfc": 9525,
+      "role": "tls",
+      "source": "https://www.rfc-editor.org/rfc/rfc9525.txt",
+      "sha256": "ed8116c2435376dffe37ec2ca688c3a8515e36820852b29e0b6cdfbe92abd2c5"
+    }
+  ],
+  "external_normative_sources": [
+    {
+      "reference": "FIPS180-4",
+      "authority": "NIST",
+      "title": "Secure Hash Standard",
+      "revision": "FIPS 180-4, August 2015",
+      "status": "published-revision",
+      "source": "https://csrc.nist.gov/pubs/fips/180-4/upd1/final"
+    },
+    {
+      "reference": "JSS15",
+      "authority": "ACM",
+      "title": "On the Security of TLS 1.3 and QUIC Against Weaknesses in PKCS#1 v1.5 Encryption",
+      "revision": "DOI 10.1145/2810103.2813657",
+      "status": "published-paper",
+      "source": "https://doi.org/10.1145/2810103.2813657"
+    },
+    {
+      "reference": "X.680",
+      "authority": "ITU-T",
+      "title": "ASN.1 specification of basic notation",
+      "revision": "X.680 (08/2015)",
+      "status": "normative-revision-superseded",
+      "source": "https://www.itu.int/rec/T-REC-X.680-201508-I/en"
+    },
+    {
+      "reference": "X.690",
+      "authority": "ITU-T",
+      "title": "ASN.1 BER, CER, and DER encoding rules",
+      "revision": "X.690 (08/2015)",
+      "status": "normative-revision-superseded",
+      "source": "https://www.itu.int/rec/T-REC-X.690-201508-I/en"
+    },
+    {
+      "reference": "tor-spec",
+      "authority": "The Tor Project",
+      "title": "Tor Specifications",
+      "revision": "a6c90f44013f47d1c2dae8b4a5d25302e3b6e256",
+      "status": "living-specification-pinned",
+      "source": "https://gitlab.torproject.org/tpo/core/torspec/-/commit/a6c90f44013f47d1c2dae8b4a5d25302e3b6e256"
+    },
+    {
+      "reference": "tor-rend-spec-v2",
+      "authority": "The Tor Project",
+      "title": "Tor Rendezvous Specification - Version 2",
+      "revision": "2437d19c",
+      "status": "normative-historical-revision",
+      "source": "https://gitlab.torproject.org/tpo/core/torspec/-/commit/2437d19c"
+    },
+    {
+      "reference": "cabf-br",
+      "authority": "CA/Browser Forum",
+      "title": "Baseline Requirements for TLS Server Certificates",
+      "revision": "2.0.6",
+      "status": "normative-revision-superseded",
+      "source": "https://cabforum.org/working-groups/server/baseline-requirements/documents/CA-Browser-Forum-TLS-BR-2.0.6.pdf"
+    },
+    {
+      "reference": "IANA-ACME",
+      "authority": "IANA",
+      "title": "Automated Certificate Management Environment Protocol",
+      "revision": "sha256:75ffda9a205c08209dd39f7ab202f918c5406c3e91741dfa6ac0f2db03b75380",
+      "status": "local-byte-pinned",
+      "source": "registry/iana-acme.xml"
+    },
+    {
+      "reference": "IANA-BP",
+      "authority": "IANA",
+      "title": "Bundle Protocol",
+      "revision": "sha256:3d8e12cd3b1449306ff16a3abdbc4837e6b1ac0a440c119a1dd08b7eb6d6659d",
+      "status": "local-byte-pinned",
+      "source": "registry/iana-bundle.xml"
+    },
+    {
+      "reference": "IANA-COSE",
+      "authority": "IANA",
+      "title": "CBOR Object Signing and Encryption",
+      "revision": "sha256:771be6bc3eb6693e43756566d903c0caefa85c9d926688012037b399bd6a7d47",
+      "status": "local-byte-pinned",
+      "source": "registry/iana-cose.xml"
+    },
+    {
+      "reference": "IANA-SMI",
+      "authority": "IANA",
+      "title": "Structure of Management Information Numbers",
+      "revision": "sha256:909986767250f608ff7c37599129c033c0ba7a601f6404cbec31be9c7abefdd8",
+      "status": "local-byte-pinned",
+      "source": "registry/iana-smi-numbers.xml"
+    }
+  ],
+  "external_profiles": [
+    {
+      "id": "cabf-tls-br",
+      "authority": "CA/Browser Forum Server Certificate Working Group",
+      "title": "Baseline Requirements for TLS Server Certificates",
+      "revision": "2.2.8",
+      "status": "current",
+      "source": "https://cabforum.org/working-groups/server/baseline-requirements/documents/",
+      "revision_source": "https://github.com/cabforum/servercert/releases/tag/BRs/v2.2.8"
+    },
+    {
+      "id": "cabf-smime-br",
+      "authority": "CA/Browser Forum S/MIME Certificate Working Group",
+      "title": "S/MIME Baseline Requirements",
+      "revision": "1.0.14",
+      "status": "current",
+      "source": "https://cabforum.org/working-groups/smime/requirements/",
+      "revision_source": "https://github.com/cabforum/smime/releases/tag/Ballot_SMC016"
+    },
+    {
+      "id": "cabf-network-security",
+      "authority": "CA/Browser Forum Network Security Working Group",
+      "title": "Network and Certificate System Security Requirements",
+      "revision": "2.0.5",
+      "status": "current",
+      "source": "https://cabforum.org/working-groups/netsec/requirements/",
+      "revision_source": "https://github.com/cabforum/netsec/releases/tag/v2.0.5"
+    },
+    {
+      "id": "3gpp-ts-33.310",
+      "authority": "3GPP",
+      "title": "Network Domain Security; Authentication Framework",
+      "revision": "19.5.0",
+      "status": "under-change-control",
+      "source": "https://portal.3gpp.org/desktopmodules/Specifications/SpecificationDetails.aspx?specificationId=2293",
+      "revision_source": "https://www.3gpp.org/ftp/Specs/archive/33_series/33.310/33310-j50.zip"
+    }
+  ]
+}

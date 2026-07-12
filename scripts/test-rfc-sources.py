@@ -45,9 +45,47 @@ def test_current_generated_sources() -> None:
 def test_every_checksum_has_exactly_one_role() -> None:
     roles = rfc_inventory.role_map()
     checksums = rfc_inventory.checksum_manifest()
-    assert len(roles) == 65
+    assert len(roles) == 105
     assert set(roles) == set(checksums)
     assert set(rfc_inventory.ROLE_GROUPS["acme"]) == set(rfc_errata.ACME_RFCS)
+
+
+def test_every_normative_acme_rfc_reference_is_tracked() -> None:
+    inventory = rfc_inventory.build_inventory()
+    references = set(inventory["normative_acme_rfc_references"])
+    external = set(inventory["normative_acme_external_references"])
+    documents = {item["rfc"]: item for item in inventory["documents"]}
+    assert len(references) == 74
+    assert external == {
+        "FIPS180-4",
+        "IANA-ACME",
+        "IANA-BP",
+        "IANA-COSE",
+        "IANA-SMI",
+        "JSS15",
+        "X.680",
+        "X.690",
+        "cabf-br",
+        "tor-rend-spec-v2",
+        "tor-spec",
+    }
+    assert references <= set(documents)
+    for number in rfc_errata.ACME_RFCS:
+        assert documents[number]["normative_rfc_references"]
+    fixture = """
+      Normative References
+      [RFC1234] first
+      Informative References
+      [RFC9999] not normative
+    """
+    assert rfc_inventory.normative_rfc_references(fixture, 1) == [1234]
+    assert rfc_inventory.normative_external_references(fixture, 1) == []
+    assert_fails(
+        "no normative references section",
+        rfc_inventory.normative_rfc_references,
+        "plain text",
+        2,
+    )
 
 
 def test_old_and_modern_section_formats() -> None:
@@ -171,6 +209,7 @@ def run_tests() -> None:
     tests = (
         test_current_generated_sources,
         test_every_checksum_has_exactly_one_role,
+        test_every_normative_acme_rfc_reference_is_tracked,
         test_old_and_modern_section_formats,
         test_errata_parser_tracks_all_status_groups,
         test_errata_snapshot_refuses_set_status_and_id_drift,
