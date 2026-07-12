@@ -15,6 +15,8 @@ Keep a Changelog and the project follows Semantic Versioning.
   missing, malformed, failed, stale, wrong-commit, and tag refusal tests.
 - Verified package archives, matching SPDX SBOM enforcement, and the dedicated
   `v0.2.0` release gate.
+- Fail-closed EOF and non-TTY publication handling plus release-state
+  revalidation immediately before every irreversible crate publish.
 
 ## 0.1.0 - 2026-07-12
 

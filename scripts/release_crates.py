@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import builtins
 import json
 import re
 import subprocess
@@ -228,14 +229,47 @@ def publish(package: str, *, dry_run: bool) -> None:
     run(["cargo", "publish", "-p", package], dry_run=dry_run)
 
 
+def require_interactive_multi_publish(
+    steps: tuple[str, ...],
+    *,
+    dry_run: bool,
+    stdin=None,
+) -> None:
+    stream = sys.stdin if stdin is None else stdin
+    if not dry_run and len(steps) > 1 and not stream.isatty():
+        raise RuntimeError(
+            "refusing unattended multi-package publish: stdin is not a TTY"
+        )
+
+
+def read_confirmation(prompt: str) -> str:
+    try:
+        return builtins.input(prompt).strip()
+    except EOFError as error:
+        raise RuntimeError("stdin closed; refusing to continue publishing") from error
+
+
 def wait_for_index(package: str, version: str, *, dry_run: bool) -> None:
     print(f"Published {package} {version}.")
     print(f"Confirm https://crates.io/crates/{package}/{version} before continuing.")
     if dry_run:
         print("[dry-run] skipping registry wait")
         return
-    input("Press Enter after crates.io resolves this version: ")
+    read_confirmation("Press Enter after crates.io resolves this version: ")
     time.sleep(5)
+
+
+def publish_steps(steps: tuple[str, ...], plan: dict, args: argparse.Namespace) -> None:
+    for index, package in enumerate(steps):
+        if not args.dry_run:
+            require_clean_tagged_tree(args.version)
+        publish(package, dry_run=args.dry_run)
+        if index != len(steps) - 1:
+            wait_for_index(
+                package,
+                plan["crates"][package]["version"],
+                dry_run=args.dry_run,
+            )
 
 
 def main() -> int:
@@ -271,26 +305,20 @@ def main() -> int:
         require_clean_tagged_tree(args.version)
 
     steps = selected_steps(args.start_at, publish_plan(plan))
+    require_interactive_multi_publish(steps, dry_run=args.dry_run)
     print(f"Release version: {args.version}")
     print("Publish sequence:")
     for package in steps:
         print(f"  - {package} {plan['crates'][package]['version']}")
 
     if not args.yes:
-        answer = input("Type the release version to continue: ").strip()
+        answer = read_confirmation("Type the release version to continue: ")
         if answer != args.version:
             print("Version confirmation did not match; aborting.", file=sys.stderr)
             return 1
 
     run_preflight(dry_run=args.dry_run)
-    for index, package in enumerate(steps):
-        publish(package, dry_run=args.dry_run)
-        if index != len(steps) - 1:
-            wait_for_index(
-                package,
-                plan["crates"][package]["version"],
-                dry_run=args.dry_run,
-            )
+    publish_steps(steps, plan, args)
 
     print("Release publish sequence completed.")
     print(f"Verify with: cargo info vardheim@{args.version}")
@@ -298,4 +326,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except RuntimeError as error:
+        print(f"Release refused: {error}", file=sys.stderr)
+        raise SystemExit(1) from None

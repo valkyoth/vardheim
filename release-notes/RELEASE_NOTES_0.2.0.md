@@ -36,6 +36,18 @@ to depend on those compatible `0.1.0` support releases.
 - An existing release tag prevents accidental reuse.
 - Real publication has no dirty-tree, untagged, skipped-check, or
   `--no-verify` bypass.
+- Multi-package publication refuses non-interactive stdin before the first
+  irreversible operation and handles unexpected EOF as a clean failure.
+- Clean-tree, tag, and passing review evidence are revalidated immediately
+  before every individual crate publication, closing operator-wait TOCTOU
+  windows.
+
+## Pentest Remediation
+
+The initial review found one low-severity unattended-EOF failure mode and one
+medium TOCTOU window between crate publications. Both are remediated. Permanent
+regression tests prove EOF/non-TTY refusal and the exact check/publish/wait/check
+ordering for multi-crate releases. A remediation retest is pending.
 
 ## Compatibility
 

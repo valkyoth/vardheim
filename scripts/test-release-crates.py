@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import importlib.util
+from argparse import Namespace
 from pathlib import Path
 
 
@@ -57,9 +58,9 @@ def base_packages() -> dict[str, dict]:
     return packages
 
 
-def assert_fails(expected: str, function, *args) -> None:
+def assert_fails(expected: str, function, *args, **kwargs) -> None:
     try:
-        function(*args)
+        function(*args, **kwargs)
     except RuntimeError as error:
         if expected not in str(error):
             raise AssertionError(f"expected {expected!r} in {error!r}") from error
@@ -224,6 +225,96 @@ def test_invalid_plan_entry_kinds_refuse() -> None:
         )
 
 
+def test_closed_stdin_refuses_cleanly() -> None:
+    original_input = release_crates.builtins.input
+    try:
+        release_crates.builtins.input = lambda _prompt: (_ for _ in ()).throw(EOFError())
+        assert_fails(
+            "stdin closed",
+            release_crates.read_confirmation,
+            "continue: ",
+        )
+    finally:
+        release_crates.builtins.input = original_input
+
+
+def test_closed_stdin_during_index_wait_refuses_cleanly() -> None:
+    original_input = release_crates.builtins.input
+    original_sleep = release_crates.time.sleep
+    try:
+        release_crates.builtins.input = lambda _prompt: (_ for _ in ()).throw(EOFError())
+        release_crates.time.sleep = lambda _seconds: None
+        assert_fails(
+            "stdin closed",
+            release_crates.wait_for_index,
+            "vardheim-core",
+            "0.1.0",
+            dry_run=False,
+        )
+    finally:
+        release_crates.builtins.input = original_input
+        release_crates.time.sleep = original_sleep
+
+
+def test_non_tty_multi_publish_refuses_before_publish() -> None:
+    class ClosedStdin:
+        @staticmethod
+        def isatty() -> bool:
+            return False
+
+    assert_fails(
+        "stdin is not a TTY",
+        release_crates.require_interactive_multi_publish,
+        ("vardheim-core", "vardheim"),
+        dry_run=False,
+        stdin=ClosedStdin(),
+    )
+    release_crates.require_interactive_multi_publish(
+        ("vardheim",),
+        dry_run=False,
+        stdin=ClosedStdin(),
+    )
+
+
+def test_every_publish_rechecks_release_state() -> None:
+    original_require = release_crates.require_clean_tagged_tree
+    original_publish = release_crates.publish
+    original_wait = release_crates.wait_for_index
+    events: list[str] = []
+    args = Namespace(dry_run=False, version="0.2.0")
+    plan = {
+        "crates": {
+            "vardheim-core": {"version": "0.1.0"},
+            "vardheim": {"version": "0.2.0"},
+        }
+    }
+    try:
+        release_crates.require_clean_tagged_tree = (
+            lambda version: events.append(f"check:{version}")
+        )
+        release_crates.publish = (
+            lambda package, *, dry_run: events.append(f"publish:{package}:{dry_run}")
+        )
+        release_crates.wait_for_index = (
+            lambda package, version, *, dry_run: events.append(
+                f"wait:{package}:{version}:{dry_run}"
+            )
+        )
+        release_crates.publish_steps(("vardheim-core", "vardheim"), plan, args)
+    finally:
+        release_crates.require_clean_tagged_tree = original_require
+        release_crates.publish = original_publish
+        release_crates.wait_for_index = original_wait
+
+    assert events == [
+        "check:0.2.0",
+        "publish:vardheim-core:False",
+        "wait:vardheim-core:0.1.0:False",
+        "check:0.2.0",
+        "publish:vardheim:False",
+    ]
+
+
 def run_tests() -> None:
     tests = (
         test_current_plan_and_order,
@@ -237,6 +328,10 @@ def run_tests() -> None:
         test_tag_must_point_at_head,
         test_publish_plan_preserves_dependency_order,
         test_invalid_plan_entry_kinds_refuse,
+        test_closed_stdin_refuses_cleanly,
+        test_closed_stdin_during_index_wait_refuses_cleanly,
+        test_non_tty_multi_publish_refuses_before_publish,
+        test_every_publish_rechecks_release_state,
     )
     for test in tests:
         test()
