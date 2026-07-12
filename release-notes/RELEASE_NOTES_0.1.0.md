@@ -41,3 +41,9 @@ release-profile panic blast radius and locally overridable lossy-cast lints.
 The panic policy is now application-owned and documented, the cast lints are
 forbidden workspace-wide, and the maintainer-supplied retest passed. Permanent
 evidence is recorded in `security/pentest/v0.1.0.md`.
+
+The first GitHub run exposed two CI portability defects: Bash scripts were
+syntax-checked as POSIX `sh`, and release scripts assumed `rg` was installed.
+The syntax gate now selects the interpreter declared by each shebang and fails
+if any check fails. Release scripts now use baseline `grep` and `find`, so the
+local gate has no undeclared ripgrep dependency.

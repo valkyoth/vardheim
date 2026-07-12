@@ -53,9 +53,9 @@ for version in "${required[@]}"; do
     fi
 done
 
-rg -q '^## Tactical Milestone Size Rule$' "$plan"
-rg -q 'Fluxheim integration fixture' "$plan"
-rg -q 'every mandatory client requirement implemented' "$plan"
-rg -q 'Longitudinal replay runner' "$plan"
-rg -q 'Previous-release compatibility gate' "$plan"
-rg -q 'No command may automatically bless current output' docs/REGRESSION_STRATEGY.md
+grep -q '^## Tactical Milestone Size Rule$' "$plan"
+grep -q 'Fluxheim integration fixture' "$plan"
+grep -q 'every mandatory client requirement implemented' "$plan"
+grep -q 'Longitudinal replay runner' "$plan"
+grep -q 'Previous-release compatibility gate' "$plan"
+grep -q 'No command may automatically bless current output' docs/REGRESSION_STRATEGY.md

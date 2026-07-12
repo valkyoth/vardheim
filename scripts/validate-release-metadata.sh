@@ -14,8 +14,8 @@ report="security/pentest/v${version}.md"
 
 test -f "$notes"
 test -f "$report"
-rg -q "^## ${version} -" CHANGELOG.md
-rg -q '^Status: (PENDING|PASS|FAIL)$' "$report"
+grep -Eq "^## ${version} -" CHANGELOG.md
+grep -Eq '^Status: (PENDING|PASS|FAIL)$' "$report"
 test -f docs/IMPLEMENTATION_PLAN.md
 test -f docs/RELEASE_PLAN.md
 test -f docs/VERSION_PLAN.md

@@ -1,13 +1,13 @@
 {
   "SPDXID": "SPDXRef-DOCUMENT",
   "creationInfo": {
-    "created": "2026-07-12T17:22:17Z",
+    "created": "2026-07-12T17:31:46Z",
     "creators": [
       "Tool: cargo-sbom-v0.10.0"
     ]
   },
   "dataLicense": "CC0-1.0",
-  "documentNamespace": "https://spdx.org/spdxdocs/vardheim-2610a7aa-0e03-4bdf-85d9-64cf942cd2a0",
+  "documentNamespace": "https://spdx.org/spdxdocs/vardheim-daf9d3cd-70f5-4e1e-b00b-859f7263c68a",
   "files": [
     {
       "SPDXID": "SPDXRef-File-vardheim",
@@ -83,16 +83,6 @@
   "name": "vardheim",
   "packages": [
     {
-      "SPDXID": "SPDXRef-Package-vardheim-challenge-http-0.1.0",
-      "description": "Runtime-independent HTTP ACME challenge primitives for Vardheim",
-      "downloadLocation": "NONE",
-      "homepage": "https://github.com/valkyoth/vardheim",
-      "licenseConcluded": "MIT OR Apache-2.0",
-      "licenseDeclared": "MIT OR Apache-2.0",
-      "name": "vardheim-challenge-http",
-      "versionInfo": "0.1.0"
-    },
-    {
       "SPDXID": "SPDXRef-Package-vardheim-0.1.0",
       "description": "Security-first ACME and certificate lifecycle framework for Rust",
       "downloadLocation": "NONE",
@@ -100,6 +90,16 @@
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
       "name": "vardheim",
+      "versionInfo": "0.1.0"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-vardheim-challenge-dns-0.1.0",
+      "description": "Runtime-independent DNS ACME challenge primitives for Vardheim",
+      "downloadLocation": "NONE",
+      "homepage": "https://github.com/valkyoth/vardheim",
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "licenseDeclared": "MIT OR Apache-2.0",
+      "name": "vardheim-challenge-dns",
       "versionInfo": "0.1.0"
     },
     {
@@ -123,26 +123,51 @@
       "versionInfo": "0.1.0"
     },
     {
-      "SPDXID": "SPDXRef-Package-vardheim-challenge-dns-0.1.0",
-      "description": "Runtime-independent DNS ACME challenge primitives for Vardheim",
+      "SPDXID": "SPDXRef-Package-vardheim-challenge-http-0.1.0",
+      "description": "Runtime-independent HTTP ACME challenge primitives for Vardheim",
       "downloadLocation": "NONE",
       "homepage": "https://github.com/valkyoth/vardheim",
       "licenseConcluded": "MIT OR Apache-2.0",
       "licenseDeclared": "MIT OR Apache-2.0",
-      "name": "vardheim-challenge-dns",
+      "name": "vardheim-challenge-http",
       "versionInfo": "0.1.0"
     }
   ],
   "relationships": [
+    {
+      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-tls-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-vardheim-0.1.0"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-dns-0.1.0",
+      "relationshipType": "GENERATED_FROM",
+      "spdxElementId": "SPDXRef-File-vardheim_challenge_dns"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-http-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-vardheim-0.1.0"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-dns-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "spdxElementId": "SPDXRef-Package-vardheim-0.1.0"
+    },
     {
       "relatedSpdxElement": "SPDXRef-Package-vardheim-0.1.0",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-vardheim"
     },
     {
-      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-tls-0.1.0",
-      "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-vardheim-0.1.0"
+      "relatedSpdxElement": "SPDXRef-File-vardheim",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-File-vardheim_challenge_dns",
+      "relationshipType": "DESCRIBES",
+      "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-http-0.1.0",
@@ -155,29 +180,9 @@
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
-      "relatedSpdxElement": "SPDXRef-File-vardheim_challenge_dns",
-      "relationshipType": "DESCRIBES",
-      "spdxElementId": "SPDXRef-DOCUMENT"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-File-vardheim_core",
-      "relationshipType": "DESCRIBES",
-      "spdxElementId": "SPDXRef-DOCUMENT"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-http-0.1.0",
-      "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-vardheim-0.1.0"
-    },
-    {
       "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-tls-0.1.0",
       "relationshipType": "GENERATED_FROM",
       "spdxElementId": "SPDXRef-File-vardheim_challenge_tls"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-Package-vardheim-core-0.1.0",
-      "relationshipType": "GENERATED_FROM",
-      "spdxElementId": "SPDXRef-File-vardheim_core"
     },
     {
       "relatedSpdxElement": "SPDXRef-File-vardheim_challenge_tls",
@@ -185,19 +190,14 @@
       "spdxElementId": "SPDXRef-DOCUMENT"
     },
     {
-      "relatedSpdxElement": "SPDXRef-File-vardheim",
+      "relatedSpdxElement": "SPDXRef-Package-vardheim-core-0.1.0",
+      "relationshipType": "GENERATED_FROM",
+      "spdxElementId": "SPDXRef-File-vardheim_core"
+    },
+    {
+      "relatedSpdxElement": "SPDXRef-File-vardheim_core",
       "relationshipType": "DESCRIBES",
       "spdxElementId": "SPDXRef-DOCUMENT"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-dns-0.1.0",
-      "relationshipType": "GENERATED_FROM",
-      "spdxElementId": "SPDXRef-File-vardheim_challenge_dns"
-    },
-    {
-      "relatedSpdxElement": "SPDXRef-Package-vardheim-challenge-dns-0.1.0",
-      "relationshipType": "DEPENDS_ON",
-      "spdxElementId": "SPDXRef-Package-vardheim-0.1.0"
     },
     {
       "relatedSpdxElement": "SPDXRef-Package-vardheim-core-0.1.0",

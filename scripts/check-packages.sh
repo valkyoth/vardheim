@@ -12,7 +12,7 @@ cargo package -p vardheim --allow-dirty --no-verify --offline \
     --config 'patch.crates-io.vardheim-challenge-tls.path="crates/vardheim-challenge-tls"'
 
 for archive in target/package/vardheim-*.crate; do
-    if tar -tf "$archive" | rg -q '(^|/)(rfc/|\.github/)|\.(webp|png|jpe?g|gif|svg)$'; then
+    if tar -tf "$archive" | grep -Eq '(^|/)(rfc/|\.github/)|\.(webp|png|jpe?g|gif|svg)$'; then
         echo "repository-only RFC or image asset leaked into $archive" >&2
         exit 1
     fi

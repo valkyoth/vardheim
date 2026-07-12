@@ -11,8 +11,12 @@ find crates -type f -name '*.rs' -print | while IFS= read -r file; do
 done || failed=1
 
 obsolete_pattern='acme''-ng|acme''_ng'
-if rg -n --glob '!IDEA.md' --glob '!target/**' --glob '!rfc/**' \
-    "$obsolete_pattern" .; then
+if find . -type f \
+    ! -path './.git/*' \
+    ! -path './target/*' \
+    ! -path './rfc/*' \
+    ! -name IDEA.md \
+    -exec grep -nHE "$obsolete_pattern" {} +; then
     echo "obsolete design placeholder name found; use vardheim naming" >&2
     failed=1
 fi

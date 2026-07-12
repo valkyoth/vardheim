@@ -22,3 +22,5 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Sixty-five exact RFC reference copies with SHA-256 integrity enforcement,
   read-only local locking, owner review, and Cargo package exclusion.
 - Passing maintainer-supplied external pentest and clean retest evidence.
+- CI-portable shell syntax validation and release scripts with no undeclared
+  ripgrep dependency.
