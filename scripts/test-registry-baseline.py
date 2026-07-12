@@ -93,10 +93,30 @@ def test_source_integrity_and_xml_safety_fail_closed() -> None:
         registry_baseline.REGISTRY_SOURCE_FILES
     )
     assert_fails("source hash differs", registry_baseline.parse_iana, source + b"\n")
+    for encoding, declaration in (
+        ("utf-8", "UTF-8"),
+        ("utf-16", "UTF-16"),
+        ("utf-32", "UTF-32"),
+    ):
+        malicious = (
+            f'<?xml version="1.0" encoding="{declaration}"?>'
+            '<!DOCTYPE x [<!ENTITY y "expanded">]><x>&y;</x>'
+        ).encode(encoding)
+        try:
+            registry_baseline.parse_iana(malicious, verify_hash=False)
+        except registry_baseline.RegistryError as error:
+            assert "unsafe XML DOCTYPE declaration" in str(error) or (
+                "malformed IANA XML" in str(error)
+            )
+        else:
+            raise AssertionError(f"{encoding} entity declaration was accepted")
+    benign_utf16 = '<?xml version="1.0" encoding="UTF-16"?><x>safe</x>'.encode(
+        "utf-16"
+    )
     assert_fails(
-        "unsafe XML declaration",
+        "unexpected IANA registry root",
         registry_baseline.parse_iana,
-        b'<!DOCTYPE x [<!ENTITY y "z">]><x>&y;</x>',
+        benign_utf16,
         verify_hash=False,
     )
     assert_fails(

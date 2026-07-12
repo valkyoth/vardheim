@@ -18,6 +18,8 @@ Keep a Changelog and the project follows Semantic Versioning.
   omission, duplication, and resource-bound regression tests.
 - Machine-checked closure for all normative RFC and non-RFC references used by
   the published ACME family.
+- Encoding-independent XML declaration rejection backed by UTF-8, UTF-16, and
+  UTF-32 entity-expansion regression tests.
 
 ## 0.3.0 - 2026-07-12
 

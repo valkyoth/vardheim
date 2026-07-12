@@ -42,6 +42,16 @@ wire behavior.
 - Mutable external profiles are pinned by exact revision without activating
   them or claiming current conformance.
 
+## Pentest Remediation
+
+The initial review found that the raw-byte XML declaration guard could be
+bypassed by UTF-16 or UTF-32 encoded input before a future live-source path
+uses the parser. XML is now pre-parsed with encoding-aware Expat handlers that
+reject DOCTYPE, entity, unparsed-entity, and external-entity declarations
+before ElementTree receives the document. Permanent tests cover the same
+entity-expansion payload in UTF-8, UTF-16, and UTF-32, plus benign UTF-16 input.
+Remediation retest is pending.
+
 ## Publishing
 
 Only `vardheim` advances from `0.3.0` to `0.3.1`. The four unchanged support

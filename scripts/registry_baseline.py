@@ -9,6 +9,7 @@ import json
 import re
 import sys
 import xml.etree.ElementTree as ET
+import xml.parsers.expat as expat
 from pathlib import Path
 
 
@@ -192,6 +193,28 @@ def reference(element: ET.Element) -> dict[str, str]:
     return result
 
 
+def reject_unsafe_xml(content: bytes) -> None:
+    parser = expat.ParserCreate()
+
+    def reject_doctype(*_arguments) -> None:
+        raise RegistryError("unsafe XML DOCTYPE declaration")
+
+    def reject_entity(*_arguments) -> None:
+        raise RegistryError("unsafe XML entity declaration")
+
+    parser.StartDoctypeDeclHandler = reject_doctype
+    parser.EntityDeclHandler = reject_entity
+    parser.UnparsedEntityDeclHandler = reject_entity
+    parser.ExternalEntityRefHandler = reject_entity
+    parser.SetParamEntityParsing(expat.XML_PARAM_ENTITY_PARSING_NEVER)
+    try:
+        parser.Parse(content, True)
+    except RegistryError:
+        raise
+    except expat.ExpatError as error:
+        raise RegistryError(f"malformed IANA XML: {error}") from error
+
+
 def registry_key_fields(registry_id: str) -> tuple[str, ...]:
     if registry_id == "acme-error-types":
         return ("type",)
@@ -268,8 +291,7 @@ def parse_registry(element: ET.Element) -> dict:
 
 def parse_iana(content: bytes, *, verify_hash: bool = True) -> dict:
     require(len(content) <= LIMITS["source_bytes"], "IANA registry source is oversized")
-    upper = content.upper()
-    require(b"<!DOCTYPE" not in upper and b"<!ENTITY" not in upper, "unsafe XML declaration")
+    reject_unsafe_xml(content)
     digest = hashlib.sha256(content).hexdigest()
     if verify_hash:
         require(digest == source_hashes()[SOURCE.name], "IANA registry source hash differs")
