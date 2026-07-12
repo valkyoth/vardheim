@@ -1,6 +1,6 @@
 # Vardheim 0.2.0 Release Notes
 
-Status: implementation complete; pending pentest and retest
+Status: release candidate; pentest and remediation retest passed, awaiting GitHub checks
 
 ## Scope
 
@@ -47,7 +47,8 @@ to depend on those compatible `0.1.0` support releases.
 The initial review found one low-severity unattended-EOF failure mode and one
 medium TOCTOU window between crate publications. Both are remediated. Permanent
 regression tests prove EOF/non-TTY refusal and the exact check/publish/wait/check
-ordering for multi-crate releases. A remediation retest is pending.
+ordering for multi-crate releases. The maintainer-supplied remediation retest
+passed with no remaining findings.
 
 ## Compatibility
 

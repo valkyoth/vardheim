@@ -17,6 +17,7 @@ Keep a Changelog and the project follows Semantic Versioning.
   `v0.2.0` release gate.
 - Fail-closed EOF and non-TTY publication handling plus release-state
   revalidation immediately before every irreversible crate publish.
+- Passing maintainer-supplied pentest and clean remediation retest evidence.
 
 ## 0.1.0 - 2026-07-12
 

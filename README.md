@@ -36,8 +36,8 @@ challenge presentation, persistent storage, and certificate deployment.
 
 ## Current Status
 
-Status: `v0.2.0` release-discipline implementation complete; pending pentest
-and retest.
+Status: `v0.2.0` release candidate; pentest and remediation retest passed,
+awaiting GitHub checks.
 
 Vardheim does not issue, validate, renew, revoke, or deploy certificates yet.
 The current release establishes the crate boundaries and enforcement needed
