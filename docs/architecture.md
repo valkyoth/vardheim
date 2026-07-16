@@ -203,21 +203,59 @@ content-binding mode succeeds:
 
 - `LocallyCompared` uses a fresh domain-separated transcript, computes through
   both the local source and provider object, and compares in constant time.
-- `PeerConfirmed` accepts only an authenticated exact CA or DNS peer result.
+- `PeerConfirmed` accepts only an authenticated exact CA or DNS peer result
+  produced by the narrow bootstrap and durable peer-effect boundary below.
 - `CryptographicallyAttested` verifies a genuine signed/native receipt over
   the complete binding transcript and freshness.
 - `ProviderAsserted` is only an opaque provider claim and is rejected by
   default.
 - `Unverified` never permits activation.
 
-Source material cannot be destroyed before binding and its durable receipt are
-committed. Durable active eligibility and historical binding receipts are not
-MAC authority. Every process/provider session freshly resolves and rebinds the
-current immutable object before constructing `BoundMacKey`.
+The quarantine/bootstrap cycle is broken only by a private non-serializable
+single-use `SecretBindingAttempt`, constructed from mutable state of the exact
+quarantined onboarding transaction. It pins the provider/session, immutable
+secret identity/version, tenant, directory or zone, peer, external-account or
+TSIG identity, algorithm, purpose, policy, fresh transcript, onboarding
+request, mode, and stable attempt identity. Its local form can MAC only the
+domain-separated binding transcript. Its peer form can populate only the exact
+typed confirmation-effect envelope chosen for that onboarding request. It
+cannot create ordinary `BoundMacKey` or `MacConsumerAdmission`, MAC arbitrary
+bytes, or service unrelated EAB/TSIG traffic. It is consumed before immutable
+provider dispatch and is never cloned, serialized, restored, or reused.
+
+Peer confirmation is an external effect, not necessarily a harmless check.
+Every typed peer effect has a stable effect identity and exact request digest,
+peer/security profile, mutation class, reconciliation key, authenticated
+success/rejection evidence contract, and affected account or DNS resource.
+Results distinguish `DefinitelyUnsent`, `Succeeded`, `Rejected`, `Ambiguous`,
+and `Unavailable`. Only authenticated request-bound peer evidence proves
+success or rejection; unauthenticated errors do not. Any sent-or-maybe-sent
+request without conclusive evidence is ambiguous and is never blindly retried.
+EAB account creation may jointly establish peer binding and durable account
+state. TSIG prefers an authenticated non-mutating probe; a mutating DNS UPDATE
+must carry ownership, rollback/cleanup, duplicate, and reconciliation rules.
+
+Durable execution commits the binding-attempt intent before privileged
+provider MAC dispatch and commits the exact peer-effect envelope to the outbox
+before network dispatch. Account/DNS mutation, binding evidence, lifecycle
+activation, source retention/destruction, and obligations use explicit fenced
+ordering. Source material cannot be destroyed before the remote result is
+durably resolved and binding/account or DNS state is committed.
+
+Durable active eligibility and historical binding receipts are not MAC
+authority. Every process/provider session freshly resolves the current
+immutable object and, for reusable secrets, performs a safe non-mutating local
+comparison, current admitted attestation/assertion, or authenticated
+non-mutating peer probe before constructing `BoundMacKey`. Restart never
+automatically repeats mutating EAB account creation or DNS UPDATE. A
+mutating-only peer profile requires explicit reconciliation/operator policy.
+One-time EAB material proceeds to disposition after durable account success
+and is not reconstructed.
 
 Snapshots may retain lifecycle state, obligations, binding-mode/profile
-identifiers, and redacted receipt digests. They never contain or restore
-`BoundMacKey`, `MacConsumerAdmission`, `VerifiedMac`,
+identifiers, redacted receipt digests, and durable peer-effect/reconciliation
+facts. They never contain or restore `SecretBindingAttempt`, `BoundMacKey`,
+`MacConsumerAdmission`, `VerifiedMac`,
 `ProviderAssertedMac`, `CryptographicallyAttestedMac`, or any other MAC effect
 capability. Restart, provider/session/policy/health change, object
 restore/recreation, alias/version retargeting, peer-trust change, or assurance

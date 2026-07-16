@@ -101,6 +101,15 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Added `v0.56.11` shared conformance plus tactical RustCrypto, ring,
   aws-lc/FIPS, PKCS#11, TPM, AWS KMS, Azure, OpenBao, and remote-agent
   symmetric-secret onboarding milestones through `v0.66.5`.
+- Added `v0.10.19`-`v0.10.20` to break the `PeerConfirmed` quarantine cycle
+  with private single-use `SecretBindingAttempt`, exact local/peer ceremony
+  confinement, stable peer-effect identities, authenticated result classes,
+  and explicit non-mutating-versus-mutating semantics.
+- Added `v0.33.5` durable peer-binding outbox/reconciliation and `v0.56.12`
+  provider conformance, including lost EAB account success, duplicate-account
+  prevention, ambiguous TSIG DNS UPDATE ownership/rollback, source-secret
+  retention, and restart rules that never automatically repeat a mutating peer
+  ceremony.
 - Renamed ordinary opaque MAC verification evidence to
   `ProviderAssertedMac`; reserved `CryptographicallyAttestedMac` for verified
   signed/native replay-protected receipts bound to the complete operation

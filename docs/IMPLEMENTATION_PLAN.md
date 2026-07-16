@@ -140,10 +140,12 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - provider-neutral digest, signing, verification, entropy, key-generation,
   public-key-validation, domain-separated `BoundSigner`, and local
   exact-request admission, separate transactional asymmetric-key and symmetric-
-  secret onboarding/content binding, live signer/MAC-authority reconstruction,
-  immutable dispatch, and verified signature/MAC evidence semantics precede
-  their first JOSE, scheduling, account-adoption, CSR, PKIX, DNS update, or
-  challenge consumer while concrete cryptographic implementations remain later;
+  secret onboarding/content binding, narrow quarantined secret-binding
+  bootstrap, peer-effect classification/reconciliation, safe live signer/MAC-
+  authority reconstruction, immutable dispatch, and verified signature/MAC
+  evidence semantics precede their first JOSE, scheduling, account-adoption,
+  CSR, PKIX, DNS update, or challenge consumer while concrete cryptographic
+  implementations remain later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
@@ -239,13 +241,46 @@ assurance; provider assertion is rejected by default and unverified is never
 usable. Source material remains retained until binding and its durable receipt
 commit.
 
-Every process/provider session reconstructs MAC authority by resolving the
-exact immutable secret identity/version and repeating the currently required
-binding. Persisted lifecycle state, binding modes, peer/attestation receipts,
-and audit history cannot become `BoundMacKey`, `MacConsumerAdmission`,
-`VerifiedMac`, `ProviderAssertedMac`, or `CryptographicallyAttestedMac`.
-Restart, object restore/recreation, alias retargeting, or provider/policy/peer/
-assurance change leaves the secret eligible but unusable until reconstruction.
+A private single-use non-serializable `SecretBindingAttempt`, minted only from
+the exact mutable quarantined onboarding transaction, breaks the binding cycle.
+It pins provider/session, immutable secret identity/version, tenant, peer and
+directory/zone scope, external-account or TSIG identity, algorithm, purpose,
+policy, fresh transcript, onboarding request, binding mode, and stable attempt
+identity. Its local variant permits only the domain-separated binding
+transcript. Its peer variant permits only the exact typed confirmation effect.
+It cannot create normal `BoundMacKey`/`MacConsumerAdmission`, MAC arbitrary
+bytes, or service unrelated EAB/TSIG requests, and it is consumed before
+provider dispatch without restoration after any outcome.
+
+Peer confirmation uses a stable external-effect identity and exact immutable
+request digest, peer/security profile, mutation class, reconciliation key,
+affected account or DNS resource, and authenticated evidence contract. Results
+are `DefinitelyUnsent`, `Succeeded`, `Rejected`, `Ambiguous`, or `Unavailable`.
+Unauthenticated errors never prove rejection, sent-or-maybe-sent effects
+without conclusive evidence remain ambiguous, and ambiguous effects are never
+blindly retried. EAB account success can jointly commit peer binding and
+durable account state. TSIG prefers authenticated non-mutating probes; a
+mutating UPDATE must define ownership, duplicate behavior, rollback/cleanup,
+and reconciliation.
+
+Durable orchestration commits binding-attempt intent before privileged provider
+MAC dispatch and the exact peer-effect envelope before network dispatch.
+Attempt consumption, outbox/transmission state, account or DNS mutation,
+binding evidence, source-secret retention/destruction, lifecycle, and
+obligations are ordered and fenced.
+
+Every process/provider session reconstructs reusable MAC authority by resolving
+the exact immutable secret identity/version and performing a fresh safe
+non-mutating comparison, admitted current attestation/assertion, or
+authenticated non-mutating peer probe. Persisted lifecycle state, historical
+peer/attestation receipts, and audit history cannot become `BoundMacKey`,
+`MacConsumerAdmission`, `VerifiedMac`, `ProviderAssertedMac`, or
+`CryptographicallyAttestedMac`. Restart never automatically repeats mutating
+EAB account creation or DNS UPDATE. Mutating-only peer profiles require
+explicit reconciliation/operator policy; one-time EAB material proceeds to
+disposition after durable account success. Object restore/recreation, alias
+retargeting, or provider/policy/peer/assurance change leaves a reusable secret
+eligible but unusable until safe reconstruction.
 
 Key creation, import, migration, and platform adoption are transactions, not
 handle-returning shortcuts. A stable request ID and provider idempotency token
@@ -412,19 +447,22 @@ implicitly after restart or retry.
 Versions `0.32.0` through `0.39.5` add the pure
 command/state/policy/event reducer, typed effects and positive evidence,
 snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
-transactional deployment, public APIs, reusable adapter conformance, a
-deterministic hostile CA, a test-only loopback transport, a production
-wall/monotonic clock adapter, Pebble integration, historical differential
-replay, existing-certificate adoption, renewal bootstrap, and durable
-multi-issuer migration policy.
+durable peer-binding effect/reconciliation orchestration, transactional
+deployment, public APIs, reusable adapter conformance, a deterministic hostile
+CA, a test-only loopback transport, a production wall/monotonic clock adapter,
+Pebble integration, historical differential replay, existing-certificate
+adoption, renewal bootstrap, and durable multi-issuer migration policy.
 
 Snapshots contain lifecycle/inventory facts, orthogonal obligation sets, audit
-records, and invalidation inputs, never live validation, signer-binding,
-request-admission, verification, or effect-authority capabilities. Restart,
-migration, process/provider-session change, issued-trust/policy/status/CT/
-algorithm/key-health change, handle/public-key or alias/version replacement,
-and renewed verification time create mandatory reconstruction obligations
-before deployment or signing. Durable `Active` is lifecycle eligibility only.
+records, durable peer-effect state, and invalidation inputs, never live
+validation, signer/secret binding, `SecretBindingAttempt`, request-admission,
+verification, or effect-authority capabilities. Restart, migration,
+process/provider-session change, issued-trust/policy/status/CT/algorithm/key-
+or-secret-health change, handle/public-key or alias/version replacement, and
+renewed verification time create mandatory safe reconstruction obligations
+before deployment, signing, EAB, or TSIG use. Reconstruction never
+automatically repeats a mutating peer effect. Durable `Active` is lifecycle
+eligibility only.
 
 Audit records retain stable invalidation reasons so operators and future
 regression replay can distinguish trust removal, explicit distrust, policy
@@ -571,10 +609,13 @@ assurance publication, and no-secret-export/no-fallback conformance boundary;
 providers without those semantics publish typed unsupported capability cells.
 Every symmetric-secret create/import/adopt path additionally implements stable
 idempotency, quarantine, typed content binding, lifecycle/obligation
-separation, source-secret disposition, reconciliation/fencing, capability-free
-snapshots, and fresh per-session reconstruction. A provider that supports MAC
-operations but no admitted onboarding/binding mode remains unusable for new or
-adopted secrets rather than accepting a bare handle.
+separation, narrow single-use binding attempts, peer mutation/result
+classification, persist-before-effect and operation-specific reconciliation,
+source-secret disposition, fencing, capability-free snapshots, and safe per-
+session reconstruction without mutating-effect replay. A provider that
+supports MAC operations but no admitted onboarding/binding/bootstrap mode
+remains unusable for new or adopted secrets rather than accepting a bare
+handle.
 Native pairwise consistency or the narrow canonical `bind_signer` operation
 establishes binding; all request admissions are then minted locally and
 consumed before immutable-identity signer dispatch and local output

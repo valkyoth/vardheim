@@ -58,6 +58,14 @@ its returned bytes are still structurally and semantically verified.
   destruction before durable binding; restored provider objects or snapshots
   recreating MAC authority; or a lifecycle failure dropping reconciliation,
   revalidation, source-destruction, disposition, or operator obligations;
+- breaking secret-binding quarantine by granting ordinary MAC authority to a
+  bootstrap ceremony; a binding attempt accepting arbitrary bytes, another
+  onboarding request, peer, account, zone, secret version, or protocol purpose;
+  treating EAB account creation or TSIG DNS UPDATE as a harmless check;
+  unauthenticated peer errors proving rejection; lost success being blindly
+  retried; ambiguous DNS ownership or rollback; source destruction before
+  durable reconciliation; or restart automatically repeating a mutating peer
+  ceremony or reconstructing live authority from historical confirmation;
 - generated, imported, migrated, or adopted keys becoming active before
   reconciliation, public-key validation, and signer binding; duplicate keys
   after lost responses or restart; or cleanup/lookup ambiguity being treated

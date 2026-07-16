@@ -53,6 +53,8 @@ required=(
     v0.10.16
     v0.10.17
     v0.10.18
+    v0.10.19
+    v0.10.20
     v0.13.1
     v0.14.2
     v0.15.2
@@ -104,6 +106,7 @@ required=(
     v0.31.3
     v0.33.3
     v0.33.4
+    v0.33.5
     v0.36.3
     v0.37.4
     v0.38.3
@@ -168,6 +171,7 @@ required=(
     v0.56.9
     v0.56.10
     v0.56.11
+    v0.56.12
     v0.57.5
     v0.57.6
     v0.57.7
@@ -243,6 +247,9 @@ grep -q 'Provider-neutral immutable-dispatch and verified-signature commit bound
 grep -q 'Provider-neutral handle-backed MAC authority and positive-evidence boundary' "$plan"
 grep -q 'Provider-neutral transactional symmetric-secret onboarding and content-binding state model' "$plan"
 grep -q 'Live symmetric-secret authority reconstruction boundary' "$plan"
+grep -q 'Narrow symmetric-secret content-binding bootstrap authority' "$plan"
+grep -q 'Provider-neutral peer-binding external-effect and result contract' "$plan"
+grep -q 'Durable peer-binding effect orchestration and recovery' "$plan"
 grep -q 'KeyLifecycleState × KeyObligationSet' "$plan"
 grep -q 'Account creation with contacts.*v0.10.12' "$plan"
 grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
@@ -331,6 +338,7 @@ grep -q 'Reusable transactional key-onboarding and live-authority-reconstruction
 grep -q 'Reusable immutable-dispatch and returned-signature verification conformance framework' "$plan"
 grep -q 'Reusable handle-backed MAC authority/evidence conformance framework' "$plan"
 grep -q 'Reusable transactional symmetric-secret onboarding, content-binding, and live-authority reconstruction conformance' "$plan"
+grep -q 'Reusable secret-binding bootstrap and peer-effect conformance' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
@@ -357,8 +365,8 @@ grep -q 'Android Keystore key-provider adapter with transactional generation/imp
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
 grep -q 'RustCrypto `DnsUpdateMac` operation backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
-grep -q 'EAB nested JWS construction through `v0.10.16`-`v0.10.18`' "$plan"
-grep -q 'TSIG record and canonical MAC-input construction.*v0.10.16.*v0.10.18' "$plan"
+grep -q 'EAB nested JWS construction through `v0.10.16`-`v0.10.20`' "$plan"
+grep -q 'TSIG record and canonical MAC-input construction.*v0.10.16.*v0.10.20' "$plan"
 grep -q 'RustCrypto/software symmetric-secret create/import/adopt onboarding.*v0.56.11' "$plan"
 grep -q 'ring symmetric-secret onboarding/content-binding profile.*v0.56.11' "$plan"
 grep -q 'aws-lc-rs non-FIPS symmetric-secret onboarding/content-binding profile.*v0.56.11' "$plan"
