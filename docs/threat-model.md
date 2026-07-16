@@ -33,7 +33,11 @@ its returned bytes are still structurally and semantically verified.
   constraints deferred until path validation;
 - invalid or substituted RSA/EC/EdDSA public material accepted because parsing,
   signature verification, or a provider handle was mistaken for current
-  provider-bound key validation and proof of possession;
+  provider-bound key validation and exact-role signer-consumer admission;
+- account, rollover, CSR, certificate-key revocation, TLS-ALPN, or a future
+  handle-backed signing effect accepting cached, unrelated, cross-protocol,
+  replayed, expired, ambiguously produced, or incompletely bound native
+  signatures instead of fresh exact-role signer-consumer admission;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;

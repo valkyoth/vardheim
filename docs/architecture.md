@@ -95,10 +95,20 @@ checks RSA modulus/exponent policy, Weierstrass curve/point validity, and
 Ed25519/Ed448 encoding plus algorithm-specific weak/small-order policy, with
 exact algorithm and parameter binding. The private-constructor evidence binds
 the material hash, provider/session, tenant, purpose, and policy and is
-transient. Signer-handle binding additionally requires proof of possession or a
-provider-native pairwise-consistency result; material-only evidence cannot be
-promoted. Unsupported or unavailable validation never falls back, and issued
-leaf public keys are validated even when not used for signature verification.
+transient. It never authorizes use of a signer handle.
+
+Every handle-backed signature effect additionally consumes a private,
+non-serializable, single-use `SignerConsumerAdmission` for its exact role. A
+provider-native pairwise-consistency result is accepted only when it binds the
+provider/session, tenant, handle, validated material hash, algorithm and
+parameters, policy version, intended role, request identity, and expiry.
+Otherwise the provider signs a fresh entropy-backed canonical `SignerBinding`
+transcript under a dedicated purpose unavailable to JWS, CSR, revocation,
+TLS-challenge, or audit signing, and Vardheim verifies the exact signature
+locally against the current validated key. Failure, ambiguity, expiry, replay,
+session change, or incomplete native evidence yields no admission. Unsupported
+or unavailable validation/binding never falls back, and issued leaf public keys
+are validated even when not used for signature verification.
 
 ## Public PKI Fetch Boundary
 
@@ -229,8 +239,10 @@ workspaces without changing validation rules or capacity accounting.
   path validation.
 - Parsed JWK/SPKI material cannot become an account, CSR, certificate, or
   deployment key without current provider-bound public-key validation evidence.
-- Public-key validation evidence cannot prove a signer handle is bound without
-  separate proof of possession or provider-native pairwise consistency.
+- No handle-backed signature effect can be constructed without current
+  public-key validation and exact-role, single-use signer-consumer admission.
+- Cached, unrelated, cross-protocol, ambiguous, expired, replayed, or
+  incompletely bound native signatures cannot prove a signer handle is bound.
 - An imported account cannot become active without fresh signer-proven CA
   ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or

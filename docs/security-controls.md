@@ -16,7 +16,7 @@
 | Workflow | valid transitions only, persisted effects, reconciliation |
 | Challenges | ownership receipts, self-check, durable cleanup |
 | DER/X.509 structure | canonical primitive/length encoding and version-gated certificate fields rejected before path validation |
-| Public keys | provider/session-bound RSA/EC/EdDSA mathematical and policy validation; signer handles require proof of possession/native consistency; no fallback |
+| Public keys and signer handles | provider/session-bound RSA/EC/EdDSA mathematical and policy validation; every handle-backed signature effect consumes exact-role, fresh, locally verified, single-use signer admission from a domain-separated transcript or equivalently bound native consistency result; no fallback |
 | Certificates | key/SAN/profile/chain checks and explicit durable renewal key-rotation mode before deployment |
 | PKIX evidence | private, context-bound, non-serializable capabilities; facade-only reducer translation |
 | Certificate Transparency | distinct RFC 6962 v1 and RFC 9162 v2 types, log lists, signatures, STH/Merkle evidence and MMD monitoring; no conversion/fallback |

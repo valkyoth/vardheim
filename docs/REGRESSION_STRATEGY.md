@@ -84,8 +84,10 @@ The release comparison gate covers:
 - DER primitive canonicality, certificate-envelope structural rejection, and
   durable certificate renewal key-rotation decisions;
 - provider/session-bound RSA/EC/EdDSA public-key validation, JWK/SPKI/algorithm
-  consistency, signer-handle binding, unsupported/unavailable, and issued-leaf
-  decisions;
+  consistency, domain-separated signer-binding transcripts, native
+  pairwise-consistency equivalence, exact-role single-use signer-consumer
+  admission for every handle-backed signature effect, unsupported/unavailable/
+  ambiguous outcomes, and issued-leaf decisions;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and

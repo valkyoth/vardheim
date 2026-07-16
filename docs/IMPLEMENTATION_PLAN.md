@@ -137,10 +137,11 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   policies keep the strict core usable without `alloc`;
 - base64url, JWK, JWA, thumbprints, JWS, EAB, and rollover use typed purpose-
   specific construction rather than arbitrary JSON values;
-- provider-neutral digest, signing, verification, entropy, key-generation, and
-  public-key-validation/signer-binding semantics precede their first JOSE,
-  scheduling, account-adoption, CSR, PKIX, or challenge consumer while concrete
-  cryptographic implementations remain later;
+- provider-neutral digest, signing, verification, entropy, key-generation,
+  public-key-validation, and domain-separated signer-consumer-admission
+  semantics precede their first JOSE, scheduling, account-adoption, CSR, PKIX,
+  or challenge consumer while concrete cryptographic implementations remain
+  later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
@@ -158,6 +159,19 @@ Crypto implementations do not enter this phase. Golden tests use deterministic
 test signers and verify exact signing inputs. Real providers arrive only after
 the provider-neutral key roles are stable.
 
+Public-material validation and authority to use a signer handle are separate
+capabilities. A handle-backed signature effect consumes both current
+`ValidatedPublicKey` evidence and a private, transient, role-specific
+`SignerConsumerAdmission`. Providers without an equivalently bound native
+pairwise-consistency operation create admission by signing a fresh,
+entropy-backed canonical `SignerBinding` transcript. The transcript binds the
+provider/session, tenant, handle, public-material hash, algorithm and
+parameters, policy version, intended role, request identity, and expiry. It is
+locally verified, single-use, non-serializable, unavailable to JWS, CSR,
+revocation, TLS-challenge, or audit purposes, and never issued after a failed or
+ambiguous signing outcome. Every present and future handle-backed signature
+effect enters through this shared admission boundary.
+
 ## RFC 8555 Sequence
 
 Versions `0.14.0` through `0.25.2` implement the entire client side of RFC 8555
@@ -169,18 +183,22 @@ pagination.
 
 Existing-account adoption accepts a directory URL, account URL, and signer/key
 handle only as inputs. Ownership is established by local signer/public-key
-validation plus signer-bound proof and a fresh authenticated POST-as-GET whose
-effective URL and account object bind to the same directory. Operator
-assertions, parsed public material, or possession of an account URL are never
-proof. Imported, created, and recovered provenance remain distinct and
-non-exportable HSM/KMS signers are first-class.
+validation plus role-specific signer-consumer admission and a fresh
+authenticated POST-as-GET whose effective URL and account object bind to the
+same directory. Account creation and recovery require the same current
+validation and admission before their first signed effect. Operator assertions,
+parsed public material, cached or unrelated signatures, and possession of an
+account URL are never proof. Imported, created, and recovered provenance remain
+distinct and non-exportable HSM/KMS signers are first-class.
 
 Account rollover does not end at a successful response parser. Both old and new
-keys remain protected until a fresh authenticated account observation proves
-which signer controls the account and that evidence is durable. Ambiguous
-rollover or deactivation keeps disposition pending; disablement, retention,
-scheduled deletion, destruction, legal hold, and provider unavailability use
-the shared disposition/reconciliation contract.
+signers require their own current validation and role-specific admission before
+the nested rollover signatures are constructed, and both keys remain protected
+until a fresh authenticated account observation proves which signer controls
+the account and that evidence is durable. Ambiguous rollover or deactivation
+keeps disposition pending; disablement, retention, scheduled deletion,
+destruction, legal hold, and provider unavailability use the shared
+disposition/reconciliation contract.
 
 Each operation has:
 
@@ -234,7 +252,10 @@ Ed25519/Ed448 encoding plus algorithm-specific weak/small-order policy.
 Algorithm/parameter identities must agree across JWK, SPKI, CSR, certificate,
 and provider capability. `ValidatedPublicKey` evidence is transient and cannot
 be restored, crossed between providers/policies, or promoted into signer-handle
-binding without proof of possession or provider-native pairwise consistency.
+authority. Handle-backed account, rollover, CSR, certificate-key revocation,
+and TLS-ALPN certificate-signing consumers separately require current
+single-use `SignerConsumerAdmission` created through the domain-separated
+ceremony or an equivalently bound native pairwise-consistency operation.
 Issued leaf keys are validated even when no signature is verified with them.
 
 Certificate verification compares:
@@ -365,7 +386,10 @@ unauthenticated or incorrectly chained TSIG response can never confirm success.
 
 TLS-ALPN-01 identity construction remains independent from rustls. The rustls
 resolver activates only for matching identifier, exact `acme-tls/1`, and an
-active unexpired owned presentation.
+active unexpired owned presentation. Its ephemeral certificate signature is
+constructed only after current validation and TLS-challenge-role signer
+admission; an account, CSR, revocation, normal-certificate, or cached signature
+cannot satisfy that admission.
 
 Certificates requiring `status_request` are not activated without fresh locally
 verified OCSP evidence. Certificate, key, chain, and staple form one fenced
@@ -419,13 +443,17 @@ aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
 CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
 public-key validation, signer binding, legacy verification hashes, and key
 disposition. Every software, HSM, TPM, KMS, remote, and platform key provider
-implements the shared validation conformance boundary and maps native states
-through the shared disposition contract. Invalid keys, wrong handles, stale
-provider sessions, unsupported validation, or provider unavailability cannot
-fall back to another backend. Scheduled deletion, disablement, object absence,
-handle loss, unlink, or zeroization is never inflated into physical
-destruction. Unsupported purposes, validations, bindings, or dispositions are
-typed and never inferred from an algorithm name. Provider negotiation is:
+implements the shared validation and signer-binding-ceremony conformance
+boundary and maps native states through the shared disposition contract.
+Native pairwise-consistency results must bind every field required by
+`SignerConsumerAdmission`; otherwise the provider uses the fresh canonical
+transcript ceremony and local verification. Invalid keys, wrong handles, stale
+provider sessions, unsupported validation, failed or ambiguous binding, or
+provider unavailability cannot fall back to another backend. Scheduled
+deletion, disablement, object absence, handle loss, unlink, or zeroization is
+never inflated into physical destruction. Unsupported purposes, validations,
+bindings, or dispositions are typed and never inferred from an algorithm name.
+Provider negotiation is:
 
 ```text
 local key capabilities

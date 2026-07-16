@@ -43,6 +43,11 @@ Keep a Changelog and the project follows Semantic Versioning.
   clarified normalized certificate signature-algorithm equivalence, and added
   provider/session-bound public-key validation and signer-binding milestones
   across PKIX, software crypto, HSM/KMS, remote, and platform providers.
+- Added a dedicated domain-separated, entropy-backed, single-use
+  signer-binding ceremony and universal signer-consumer admission milestone,
+  with explicit enforcement for account creation/recovery/adoption, both
+  rollover signers, CSR construction, certificate-key revocation, TLS-ALPN
+  ephemeral signing, future handle-backed effects, and every concrete provider.
 
 ## 0.3.1 - Unreleased
 
