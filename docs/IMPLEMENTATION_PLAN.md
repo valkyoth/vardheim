@@ -139,9 +139,9 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
   public-key-validation, domain-separated `BoundSigner`, and local
-  exact-request admission semantics precede their first JOSE, scheduling,
-  account-adoption, CSR, PKIX, or challenge consumer while concrete
-  cryptographic implementations remain later;
+  exact-request admission plus transactional key-onboarding semantics precede
+  their first JOSE, scheduling, account-adoption, CSR, PKIX, or challenge
+  consumer while concrete cryptographic implementations remain later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
@@ -179,6 +179,26 @@ consumed immediately before signer dispatch, and are never restored after
 success, failure, cancellation, ambiguity, `badNonce`, or ambiguous network
 transmission. Provider/session/policy/key-health change or expiry invalidates
 the signer and every derived admission.
+
+Invalidation has an explicit dispatch boundary. If observed before signer
+dispatch, the operation is prevented. If it races with or follows dispatch,
+the outcome is ambiguous unless positive provider evidence proves a narrower
+result. The admission stays consumed. A replacement attempt revalidates the
+key, establishes a new `BoundSigner`, constructs a new request identity, and
+mints a new admission; it never retries under the old identity.
+
+Key creation, import, migration, and platform adoption are transactions, not
+handle-returning shortcuts. A stable request ID and provider idempotency token
+drive `Requested -> CreationUnknown -> CreatedQuarantined ->
+PublicKeyValidated -> SignerBound -> Active`, with direct typed observations
+for definitely-not-created, created, ambiguous, and unavailable outcomes.
+Tenant, role, algorithm/parameters, provider, intended key version, origin,
+exportability, persistence, attestation, and policy remain bound throughout.
+Created or imported keys are unusable while quarantined. Lost responses,
+eventual provider visibility, unreadable attributes, validation/binding
+failure, restart, and duplicate requests retain durable reconciliation or
+key-disposition obligations. Lookup failure or object absence never proves
+destruction.
 
 ## RFC 8555 Sequence
 
@@ -446,7 +466,10 @@ Platform issued-trust adapters preserve platform constraints, distrust, and
 scope or return typed unsupported; flattening roots into DER never implies
 native-equivalent trust. Optional migration import accepts bounded PKCS#1 RSA
 and SEC1 EC keys only to validate and convert them into PKCS#8 or an opaque
-provider lifecycle, and never exports legacy formats.
+provider lifecycle through transactional quarantined onboarding, and never
+exports legacy formats. PKCS#8, PKCS#12, software generation/import, hardware
+creation, KMS creation/import, and platform-key adoption use the same staged
+activation contract.
 
 Each provider implements capabilities and is explicitly selected. ring,
 aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
@@ -457,9 +480,12 @@ implements the shared validation, `BoundSigner`, and request-admission
 conformance boundary and maps native states through the shared disposition
 contract. Native pairwise consistency or the narrow canonical `bind_signer`
 operation establishes binding; all request admissions are then minted locally
-and consumed before ordinary signer dispatch. Invalid keys, wrong handles,
-stale provider sessions, unsupported validation, failed or ambiguous binding,
-or provider unavailability cannot fall back to another backend. Scheduled
+and consumed before ordinary signer dispatch. Every key creation/import path
+also implements transactional onboarding, idempotent reconciliation,
+quarantine, and cleanup obligations. Invalid keys, wrong handles, stale
+provider sessions, unsupported validation, failed or ambiguous binding,
+ambiguous creation/import, or provider unavailability cannot fall back to
+another backend. Scheduled
 deletion, disablement, object absence, handle loss, unlink, or zeroization is
 never inflated into physical destruction. Unsupported purposes, validations,
 bindings, or dispositions are typed and never inferred from an algorithm name.

@@ -54,6 +54,15 @@ Keep a Changelog and the project follows Semantic Versioning.
   `bind_signer`, and specifying destructive admission handling across signer
   outcomes, `badNonce`, network ambiguity, invalidation, concurrency, HSM/KMS,
   and user-presence signers.
+- Added `v0.10.13` transactional key onboarding and `v0.56.8` provider/import
+  conformance for generation, PKCS#8/legacy/PKCS#12 import, hardware/KMS
+  creation, remote signers, and platform adoption, with quarantine,
+  idempotency, lost-response/eventual-visibility reconciliation, activation
+  gates, durable cleanup obligations, and no absence-as-destruction claim.
+- Clarified in-flight signer invalidation: pre-dispatch invalidation blocks the
+  operation, racing or post-dispatch invalidation remains ambiguous without
+  positive provider evidence, admission stays consumed, and replacement uses a
+  revalidated key, new binding, request identity, and admission.
 
 ## 0.3.1 - Unreleased
 

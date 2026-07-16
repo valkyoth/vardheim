@@ -87,9 +87,15 @@ The release comparison gate covers:
   consistency, domain-separated `BoundSigner` transcripts, narrow binding-
   operation exemption, native pairwise-consistency equivalence, locally minted
   exact-request admission, bounded concurrent identities, destructive
-  consumption across signer/network/retry outcomes, invalidation after
-  provider/session/policy/key-health change, unsupported/unavailable/ambiguous
-  outcomes, and issued-leaf decisions;
+  consumption across signer/network/retry outcomes, pre/in/post-dispatch
+  invalidation classification and positive-provider-evidence requirements,
+  invalidation after provider/session/policy/key-health change, unsupported/
+  unavailable/ambiguous outcomes, and issued-leaf decisions;
+- transactional generation/import/migration/platform-adoption states, stable
+  request/idempotency identities, quarantine, validation/binding activation
+  gates, lost-response and eventual-visibility reconciliation, duplicate
+  prevention, cleanup/disposition obligations, and no absence-as-destruction
+  decisions;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and

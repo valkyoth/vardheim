@@ -119,6 +119,34 @@ bounded. Provider/session/policy/key-health change or signer expiry invalidates
 validation/binding never falls back, and issued leaf public keys are validated
 even when not used for signature verification.
 
+Invalidation before dispatch prevents signing. Invalidation racing with or
+following dispatch makes the signing result ambiguous unless positive provider
+evidence proves otherwise; the admission remains consumed. Replacement uses a
+revalidated key, new `BoundSigner`, new request identity, and new admission.
+
+## Transactional Key Onboarding
+
+Generation, PKCS#8 or PKCS#12 import, legacy-key migration, and provider or
+platform key adoption share one state machine:
+
+```text
+Requested
+    -> CreationUnknown
+    -> CreatedQuarantined
+    -> PublicKeyValidated
+    -> SignerBound
+    -> Active
+```
+
+Stable request and provider idempotency identities bind tenant, role,
+algorithm/parameters, provider, intended key version, origin, exportability,
+persistence, attestation, and policy. Provider observations distinguish
+definitely not created, created, ambiguous, and unavailable. No newly created
+or imported key is signable while quarantined. Lost responses, eventual
+visibility, unreadable attributes, failed validation/binding, restart, and
+duplicate requests retain reconciliation or disposition obligations. Object
+absence and failed lookup never prove destruction.
+
 ## Public PKI Fetch Boundary
 
 OCSP, CRL, AIA, CT-list, and related public PKI downloads use a dedicated
@@ -248,6 +276,8 @@ workspaces without changing validation rules or capacity accounting.
   path validation.
 - Parsed JWK/SPKI material cannot become an account, CSR, certificate, or
   deployment key without current provider-bound public-key validation evidence.
+- A generated, imported, migrated, or adopted key cannot become active before
+  transactional reconciliation, public-key validation, and signer binding.
 - No handle-backed signature effect can be constructed without current
   public-key validation, a role-permitted `BoundSigner`, and exact-request
   single-use signer-consumer admission, except the canonical `bind_signer`
@@ -256,6 +286,9 @@ workspaces without changing validation rules or capacity accounting.
   incompletely bound native signatures cannot prove a signer handle is bound.
 - Signer success, failure, cancellation, ambiguity, `badNonce`, and ambiguous
   network transmission never restore or reuse a consumed request admission.
+- Invalidation before dispatch blocks signing; a racing or post-dispatch
+  invalidation stays ambiguous without positive provider evidence and requires
+  an entirely new validated/bound/request-admitted attempt.
 - An imported account cannot become active without fresh signer-proven CA
   ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or
