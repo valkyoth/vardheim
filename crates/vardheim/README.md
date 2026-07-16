@@ -36,8 +36,8 @@ challenge presentation, persistent storage, and certificate deployment.
 
 ## Current Status
 
-Status: `v0.3.1` release candidate; pentest and remediation retest passed,
-awaiting GitHub checks.
+Status: `v0.3.1` released; pentest, remediation retest, and GitHub checks
+passed.
 
 Vardheim does not issue, validate, renew, revoke, or deploy certificates yet.
 The current release establishes the crate boundaries and enforcement needed
@@ -55,7 +55,7 @@ Implemented now:
 - GitHub CI, CODEOWNERS, funding, Dependabot, and SHA-pinned Actions.
 - GitHub CodeQL Default setup policy.
 - cargo-deny, cargo-audit, package, documentation, and SPDX SBOM gates.
-- Mandatory exact-commit pentest stop before every release tag.
+- Mandatory pentest bound to the reviewed implementation before every tag.
 - Independent crate versions and dependency-ordered publication enforcement.
 - Complete implementation and version plan through `1.0.0`.
 - Tracked, byte-locked reference copies of all required RFC texts, excluded
@@ -99,7 +99,7 @@ There is no unversioned post-1.0 backlog for known requirements.
 | Default networking | none |
 | Default cryptographic backend | none |
 | Maximum Rust source size | 500 physical lines |
-| Release evidence | checks, deny, audit, SBOM, exact-commit pentest |
+| Release evidence | checks, deny, audit, SBOM, reviewed-implementation pentest |
 | crates.io payload | Cargo metadata, crate README, and Rust source only |
 | Panic policy | application-owned; expected failures use typed errors |
 | Current RFC conformance | none claimed |
@@ -111,7 +111,7 @@ The latest published foundation release is:
 
 ```toml
 [dependencies]
-vardheim = "0.3.0"
+vardheim = "0.3.1"
 ```
 
 Most users should depend only on `vardheim`. Lower-level crates exist for
@@ -132,7 +132,11 @@ numbers. For example, `dns-01` and a future `dns-02` belong to versioned
 modules inside `vardheim-challenge-dns`, not separate packages.
 
 `vardheim-rustls` is assigned to version `0.51.0`, after the generic TLS
-challenge identity boundary is complete.
+challenge identity boundary is complete. `vardheim-pkix` is assigned to
+`0.28.1` as the dependency-light certificate parsing and verification
+boundary. Heavy crypto, DNS SDK, runtime, database, HTTP framework, and TLS
+integrations remain separate explicitly selected adapter packages rather than
+features of the portable core or challenge crates.
 
 ## Rust Version Support
 

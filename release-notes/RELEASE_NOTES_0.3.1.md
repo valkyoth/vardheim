@@ -1,6 +1,6 @@
 # Vardheim 0.3.1 Release Notes
 
-Status: release candidate; pentest and remediation retest passed, awaiting GitHub checks
+Status: released 2026-07-12; pentest, remediation retest, and GitHub checks passed
 
 ## Scope
 
@@ -79,6 +79,8 @@ and dependency-free.
 
 ## Known Limitations
 
-No RFC or external-profile conformance is claimed. Machine-readable
-requirements and future test slots arrive at `v0.3.2`; advisory live drift
-reporting arrives at `v0.3.3`.
+No RFC or external-profile conformance is claimed. Full offline errata evidence
+arrives at `v0.3.2`, release-evidence binding at `v0.3.3`, registry-reference
+closure at `v0.3.4`, reproducible SBOMs at `v0.3.5`, cross-target CI at
+`v0.3.6`, machine-readable conformance requirements at `v0.3.7`, and advisory
+live drift reporting at `v0.3.8`.

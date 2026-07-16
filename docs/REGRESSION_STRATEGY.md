@@ -39,7 +39,7 @@ of the following in the same version:
 - a migration or compatibility decision when externally visible behavior moves;
 - a new regression case preserving the defect and the corrected expectation;
 - release notes and an updated support or conformance claim; and
-- the normal exact-commit pentest stop.
+- the normal reviewed-implementation pentest stop and finalization-diff check.
 
 No command may automatically bless current output as the new baseline. Baseline
 updates are explicit reviewed changes. Historical evidence remains retained
@@ -73,7 +73,8 @@ candidate sequence.
 
 ## Assigned Milestones
 
-The implementation is deliberately split across `0.3.3`, `0.4.3`, `0.4.4`,
+The implementation is deliberately split across `0.3.8`, `0.4.3`, `0.4.4`,
 `0.33.3`, `0.39.2`, `0.69.3`, `0.92.6`, `0.97.3`, `0.119.0`, and `0.119.1` in
-[the release plan](RELEASE_PLAN.md). Each boundary receives its own complete test
-suite and mandatory pentest stop.
+[the release plan](RELEASE_PLAN.md). Release binding itself is assigned to
+`0.3.3`. Each boundary receives its own complete test suite and mandatory
+pentest stop.

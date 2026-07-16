@@ -5,6 +5,15 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ## Unreleased
 
+### Changed
+
+- Expanded the complete pre-1.0 roadmap with explicit release boundaries for
+  full errata/reference evidence, reviewed-implementation release binding,
+  reproducible SBOMs, cross-target and feature-power-set gates, provider-neutral
+  crypto/transport/DNS interfaces, `newNonce`, `newAuthz`, dedicated PKIX
+  packaging, status/CT acquisition, certificate adoption, multi-issuer
+  migration, compromise response, and early formal/fuzz/concurrency assurance.
+
 ## 0.3.1 - Unreleased
 
 ### Added

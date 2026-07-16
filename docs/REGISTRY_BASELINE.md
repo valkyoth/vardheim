@@ -113,5 +113,6 @@ scripts/lock-registries.sh
 ```
 
 Both commands are offline and run in normal CI. Accepted baselines are never
-updated from live network state. Advisory addition/removal/status/revision
-drift reporting is the separate `v0.3.3` boundary.
+updated from live network state. Complete reference closure is the `v0.3.4`
+boundary; advisory addition/removal/status/reference/revision drift reporting
+is the separate `v0.3.8` boundary.

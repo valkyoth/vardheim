@@ -39,6 +39,10 @@ path traversal, wrong roots, symlinks, duplicates, omissions, and size limits.
 The first four crates are currently independent of one another. The order is
 kept stable for reproducible release evidence. `vardheim` depends on all four
 and therefore must be published only after crates.io resolves their versions.
+When roadmap versions introduce `vardheim-pkix` or outward adapter packages,
+the release manifest and dependency-derived publish order must add them in the
+same milestone; this current five-crate list is not permission to hide heavy
+ecosystem dependencies inside an existing portable crate.
 
 ## Version Rules
 

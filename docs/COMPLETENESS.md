@@ -50,23 +50,36 @@ the published phase and rerun the standards/security review.
 
 At `1.0.0`, all of these must work without placeholder success paths:
 
-- strict directory discovery, refresh, origin policy, and ToS changes;
+- strict directory discovery, refresh, origin policy, ToS changes, complete
+  `newNonce` acquisition/harvesting, and directory-scoped nonce ownership;
 - account create/recover/update/orders/rollover/deactivate and EAB;
-- order, authorization, challenge, polling, finalization, retrieval, alternate
-  chains, revocation, and structured problems;
+- order, optional `newAuthz` pre-authorization, authorization, challenge,
+  polling, finalization, retrieval, alternate chains, revocation, and
+  structured problems;
 - HTTP, DNS, TLS, IP, email, authority-token, onion, DTN, and external-profile
   identifier/challenge families assigned by published standards;
 - ARI and conservative fallback renewal scheduling;
 - key/CSR generation or external/HSM/KMS signing without private-key export;
+- provider-neutral digest/sign/verify/entropy/key-generation contracts and
+  explicit concrete-provider construction;
 - bounded certificate parsing, CSR/key/SAN/profile binding, PKIX path policy,
-  optional status/CT evidence policy, and server private-key injection refusal;
+  optional OCSP/CRL/CT acquisition and evidence policy, and server private-key
+  injection refusal;
+- existing-certificate/key/chain adoption, renewal bootstrap, issuer/account
+  association, and managed/replacement-required/unmanaged classification;
+- multi-issuer isolation and migration without silent CA failover or
+  cross-directory credential/nonce reuse;
+- account-key and certificate-key compromise response, emergency replacement,
+  safe revocation ordering, and honest lost-key failure modes;
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
   fencing, cleanup, deployment activation, health verification, and rollback;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends;
+- bounded provider-neutral transport and DNS-query interfaces before concrete
+  integrations;
 - memory/filesystem/SQLite/PostgreSQL storage and local/remote deployment;
 - manual, library, CLI, daemon, agent, and web-server integration surfaces;
 - redacted observability, audit evidence, target compatibility, formal methods,
-  fuzzing, security audits, and exact-commit pentests.
+  fuzzing, security audits, and reviewed-implementation-bound pentests.
 
 ## Web-Server Acceptance Contract
 
@@ -118,6 +131,12 @@ The 2026-07-12 plan audit found and corrected these weaknesses:
 - account-key persistence/import, OCSP/CRL evidence policy, CT evidence policy,
   OpenSSL TLS challenge presentation, and web-server migration acceptance were
   added explicitly;
+- full errata text, release binding, reproducible SBOM, cross-target CI,
+  provider-neutral crypto/transport/DNS semantics, `newNonce`, `newAuthz`,
+  dedicated PKIX packaging, OCSP/CRL/CT acquisition, certificate adoption,
+  renewal bootstrap, multi-issuer migration, compromise response, feature
+  powersets, and early formal/fuzz/concurrency assurance were assigned to
+  tactical pre-1.0 versions;
 - Pebble DNS/TLS integrations were moved after their primitives exist;
 - active device-enrollment integrations and identity-controlled validation work
   received versions;

@@ -9,6 +9,7 @@ private keys, system clocks, or certificate installation.
 application
     -> vardheim orchestration, policy, verification, and durable workflow
         -> vardheim-core typed ACME, JOSE, and deterministic state machines
+        -> vardheim-pkix bounded certificate and policy verification
         -> signer and certificate-key provider chosen explicitly by caller
         -> transport, challenge, storage, and deployment adapters
 ```
@@ -18,7 +19,11 @@ application
 - `vardheim-core` is the strict dependency-light `no_std` protocol boundary.
 - `vardheim` is the complete public SDK facade and high-level orchestration.
 - challenge crates isolate independently useful challenge behavior and heavy
-  provider or runtime dependencies from the facade's core graph.
+  provider or runtime dependencies from the facade's core graph; provider SDKs,
+  web frameworks, Redis, and TLS stacks live in separate adapter packages.
+- `vardheim-pkix` is introduced before certificate parsing as an independently
+  auditable dependency-light `no_std` boundary; `vardheim-core` does not depend
+  on it.
 - `vardheim-rustls` is admitted only when the generic TLS-ALPN boundary exists.
 
 Internal account, order, authorization, renewal, policy, storage, deployment,
@@ -38,3 +43,9 @@ requires a meaningful portability, dependency, ecosystem, or security boundary.
 - Challenge cleanup removes only the presentation owned by that workflow.
 - External effects use persist-before-effect and reconciliation semantics.
 - Feature unification never silently chooses a cryptographic or TLS backend.
+- Account keys, nonces, trust, ToS, EAB, rate state, and issuer policy cannot
+  cross directory identities without an explicit reviewed sharing/migration
+  decision; alternate CAs are never silent retries.
+- An adopted certificate is not considered managed until its key, identifiers,
+  chain, profile, issuer/account association, deployment target, and provenance
+  have been validated and durably recorded.
