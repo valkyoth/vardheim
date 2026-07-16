@@ -83,8 +83,8 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Added `v0.10.16` and `v0.56.10` for handle-backed EAB/TSIG MAC authority:
   immutable secret-version binding, exact-input single-use admission,
   `UnverifiedMac`, constant-time independent `VerifiedMac`, distinctly typed
-  provider-attested evidence, explicit weaker-assurance policy, and no secret
-  export or provider fallback.
+  provider assertions and genuine cryptographic attestations, explicit weaker-
+  assurance policy, and no secret export or provider fallback.
 - Added tactical MAC conformance milestones for PKCS#11, TPM, AWS KMS, Azure
   capability closure, OpenBao, and the remote protocol/agent, and propagated
   the boundary through EAB, TSIG rotation, RustCrypto, ring, aws-lc/FIPS, and
@@ -93,6 +93,18 @@ Keep a Changelog and the project follows Semantic Versioning.
   CSR, TLS-ALPN, locally signed authority-token effects, draft authority-token
   constraints, and signed audit checkpoints, with wrong-key, replacement,
   malformed-output, and verifier-unavailable regressions.
+- Added `v0.10.17`-`v0.10.18` for transactional symmetric-secret onboarding,
+  typed content binding, quarantine, source-secret destruction obligations,
+  capability-free snapshots, and fresh per-session MAC authority
+  reconstruction; immutable provider identity alone no longer proves intended
+  EAB or TSIG secret content.
+- Added `v0.56.11` shared conformance plus tactical RustCrypto, ring,
+  aws-lc/FIPS, PKCS#11, TPM, AWS KMS, Azure, OpenBao, and remote-agent
+  symmetric-secret onboarding milestones through `v0.66.5`.
+- Renamed ordinary opaque MAC verification evidence to
+  `ProviderAssertedMac`; reserved `CryptographicallyAttestedMac` for verified
+  signed/native replay-protected receipts bound to the complete operation
+  transcript, and retained `VerifiedMac` for independent verification.
 
 ## 0.3.1 - Unreleased
 

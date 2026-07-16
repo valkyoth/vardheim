@@ -156,18 +156,73 @@ change, or invalidation. Provider output remains private `UnverifiedMac`.
 For local or exportable secrets, Vardheim independently recomputes and compares
 the MAC in constant time before constructing purpose-specific `VerifiedMac`.
 An opaque HSM, KMS, or secret manager that cannot support independent
-verification may produce only separately typed `ProviderAttestedMac` evidence
-bound to the admitted transcript and a declared assurance profile. That
-evidence never becomes `VerifiedMac`; EAB and TSIG reject it by default unless
-policy explicitly admits that exact provider and weaker assurance profile.
-Unavailable verification never exports a secret, selects another provider, or
-makes raw MAC bytes usable.
+verification may produce only separately typed `ProviderAssertedMac`.
+`CryptographicallyAttestedMac` is reserved for a verified signed or native
+receipt binding provider/session, immutable secret identity/version, input and
+output digests, algorithm, purpose, request/admission identity, freshness or
+replay protection, and assurance-profile identity. Neither weaker type becomes
+`VerifiedMac`; EAB and TSIG reject both by default unless policy explicitly
+admits that exact provider, evidence class, and profile. Unavailable
+verification never exports a secret, selects another provider, or makes raw
+MAC bytes usable.
 
 Secret retargeting or version replacement before admission prevents authority.
 A race during or after dispatch remains ambiguous unless matching positive
 evidence proves the exact outcome, while the admission stays consumed. A new
 attempt resolves and binds the current immutable secret version and creates a
 new request identity and admission.
+
+## Transactional Symmetric-Secret Onboarding
+
+An immutable provider object identity does not prove that an imported or
+adopted object contains the intended EAB or TSIG secret. Symmetric-secret
+create, import, and adoption therefore use their own durable transaction model
+rather than asymmetric public-key validation:
+
+```text
+SecretLifecycleState × SecretObligationSet
+
+Requested -> CreationUnknown -> CreatedQuarantined -> ActiveEligible
+                                            \-> RetainedQuarantined
+
+Obligations = {
+    ReconciliationPending,
+    ContentBindingRequired,
+    RevalidationRequired,
+    SourceDestructionPending,
+    DispositionPending,
+    OperatorDecisionRequired,
+}
+```
+
+Stable request and provider idempotency identities bind tenant, directory or
+zone, external-account or TSIG key identity, algorithm, purposes, provider,
+intended immutable version, origin, exportability, persistence, policy, and
+source-secret disposition. New objects remain quarantined until a typed
+content-binding mode succeeds:
+
+- `LocallyCompared` uses a fresh domain-separated transcript, computes through
+  both the local source and provider object, and compares in constant time.
+- `PeerConfirmed` accepts only an authenticated exact CA or DNS peer result.
+- `CryptographicallyAttested` verifies a genuine signed/native receipt over
+  the complete binding transcript and freshness.
+- `ProviderAsserted` is only an opaque provider claim and is rejected by
+  default.
+- `Unverified` never permits activation.
+
+Source material cannot be destroyed before binding and its durable receipt are
+committed. Durable active eligibility and historical binding receipts are not
+MAC authority. Every process/provider session freshly resolves and rebinds the
+current immutable object before constructing `BoundMacKey`.
+
+Snapshots may retain lifecycle state, obligations, binding-mode/profile
+identifiers, and redacted receipt digests. They never contain or restore
+`BoundMacKey`, `MacConsumerAdmission`, `VerifiedMac`,
+`ProviderAssertedMac`, `CryptographicallyAttestedMac`, or any other MAC effect
+capability. Restart, provider/session/policy/health change, object
+restore/recreation, alias/version retargeting, peer-trust change, or assurance
+profile change requires fresh reconstruction; unavailable reconstruction
+leaves the secret eligible but unusable.
 
 ## Transactional Key Onboarding
 

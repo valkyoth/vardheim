@@ -46,10 +46,18 @@ its returned bytes are still structurally and semantically verified.
 - an EAB or TSIG secret alias/version being retargeted after discovery; a valid
   MAC from another tenant, directory, external account, zone, secret version,
   purpose, or TSIG chain entering a protocol object; raw `UnverifiedMac` being
-  accepted; provider attestation being inflated into independent verification;
+  accepted; ordinary provider assertion being labeled cryptographic attestation
+  or inflated into independent verification;
   or failure, cancellation, ambiguity, session change, or verifier
   unavailability restoring MAC admission, exporting the secret, or selecting a
   fallback provider;
+- a generated, imported, or adopted symmetric provider object becoming usable
+  before its content is bound to the intended EAB/TSIG secret; wrong-secret or
+  cross-directory/zone import after a lost/duplicate operation; forged/replayed
+  local, peer, assertion, or attestation binding evidence; source-secret
+  destruction before durable binding; restored provider objects or snapshots
+  recreating MAC authority; or a lifecycle failure dropping reconciliation,
+  revalidation, source-destruction, disposition, or operator obligations;
 - generated, imported, migrated, or adopted keys becoming active before
   reconciliation, public-key validation, and signer binding; duplicate keys
   after lost responses or restart; or cleanup/lookup ambiguity being treated
@@ -88,7 +96,8 @@ its returned bytes are still structurally and semantically verified.
   shared algorithm name, accepting stale/cross-session public-key validation
   evidence, silently falling back when validation is unavailable, or platform-
   trust overclaim after constraint loss; including an opaque MAC provider
-  claiming independent verification without a separate admitted verifier;
+  claiming independent verification or cryptographic attestation without a
+  separate admitted verifier or genuine full-transcript signed/native receipt;
 - false key destruction claims caused by confusing disablement, scheduled
   deletion, object absence, handle loss, unlink, zeroization, retention, or
   provider unavailability with evidenced physical destruction;

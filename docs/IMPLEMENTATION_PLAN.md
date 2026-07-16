@@ -139,14 +139,16 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
   public-key-validation, domain-separated `BoundSigner`, and local
-  exact-request admission, transactional key-onboarding, live-authority
-  reconstruction, immutable dispatch, and verified-signature commit semantics
-  precede their first JOSE, scheduling, account-adoption, CSR, PKIX, or
+  exact-request admission, separate transactional asymmetric-key and symmetric-
+  secret onboarding/content binding, live signer/MAC-authority reconstruction,
+  immutable dispatch, and verified signature/MAC evidence semantics precede
+  their first JOSE, scheduling, account-adoption, CSR, PKIX, DNS update, or
   challenge consumer while concrete cryptographic implementations remain later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
-  secret domain that cannot be reused for EAB;
+  secret domain that cannot be reused for EAB, and neither a bare secret handle
+  nor immutable provider identity proves intended secret content;
 - key disposition uses a shared typed request/receipt/reconciliation contract
   that distinguishes destruction from disablement, scheduled deletion,
   retention, absence, ambiguity, and provider unavailability;
@@ -214,12 +216,36 @@ consumed before immutable-identity dispatch. Provider bytes remain
 Software or exportable-secret backends independently recompute and compare the
 MAC in constant time before constructing purpose-specific `VerifiedMac`.
 Opaque HSM, KMS, secret-manager, remote, and platform adapters may instead
-return only separately typed `ProviderAttestedMac` evidence with an explicit
-assurance profile when independent verification is impossible. That evidence
-cannot be promoted to `VerifiedMac`; EAB and TSIG reject it by default unless
-policy explicitly admits the exact provider and weaker profile. No unavailable
-verification path exports the secret, changes providers, exposes raw usable
-MAC bytes, or restores a consumed admission.
+return only separately typed `ProviderAssertedMac` evidence with an explicit
+assurance profile when independent verification is impossible.
+`CryptographicallyAttestedMac` requires a verified signed/native replay-
+protected receipt over the complete provider/session/secret/input/output/
+algorithm/purpose/request/profile transcript. Neither type can be promoted to
+`VerifiedMac`; EAB and TSIG reject both by default unless policy explicitly
+admits the exact provider, evidence class, and profile. No unavailable
+verification path exports the secret, changes providers, exposes raw usable MAC
+bytes, or restores a consumed admission.
+
+Symmetric-secret creation, import, and adoption has a separate transactional
+model because public-key validation cannot prove secret content. Stable request
+and provider idempotency identities drive a
+`SecretLifecycleState × SecretObligationSet` product with typed
+definitely-not-created, created, ambiguous, and unavailable observations.
+Created objects stay quarantined while reconciliation, content binding,
+revalidation, source destruction, disposition, or operator obligations remain.
+Binding is explicitly `LocallyCompared`, `PeerConfirmed`,
+`CryptographicallyAttested`, `ProviderAsserted`, or `Unverified`, in descending
+assurance; provider assertion is rejected by default and unverified is never
+usable. Source material remains retained until binding and its durable receipt
+commit.
+
+Every process/provider session reconstructs MAC authority by resolving the
+exact immutable secret identity/version and repeating the currently required
+binding. Persisted lifecycle state, binding modes, peer/attestation receipts,
+and audit history cannot become `BoundMacKey`, `MacConsumerAdmission`,
+`VerifiedMac`, `ProviderAssertedMac`, or `CryptographicallyAttestedMac`.
+Restart, object restore/recreation, alias retargeting, or provider/policy/peer/
+assurance change leaves the secret eligible but unusable until reconstruction.
 
 Key creation, import, migration, and platform adoption are transactions, not
 handle-returning shortcuts. A stable request ID and provider idempotency token
@@ -492,7 +518,7 @@ views but cannot construct SCT, STH, inclusion, or consistency evidence.
 
 ## Transport And Crypto Sequence
 
-Versions `0.52.0` through `0.66.4` introduce strict ACME transports, a separate
+Versions `0.52.0` through `0.66.5` introduce strict ACME transports, a separate
 credential-free `PublicPkiFetch` implementation, async/blocking/embedded
 profiles, purpose-specific key/MAC/sign/verify/generation capabilities,
 RustCrypto including EAB HMAC and RSA-PSS, ring, aws-lc-rs, separate AWS-LC
@@ -533,8 +559,9 @@ Each provider implements capabilities and is explicitly selected. ring,
 aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
 CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
 public-key validation, signer binding, immutable signature/MAC dispatch,
-returned-signature verification, independent or provider-attested MAC evidence,
-legacy verification hashes, and key disposition. Every software, HSM, TPM,
+returned-signature verification, independent, provider-asserted, or
+cryptographically attested MAC evidence, legacy verification hashes, and key
+disposition. Every software, HSM, TPM,
 KMS, remote, and platform key provider implements the shared validation,
 `BoundSigner`, request-admission, and verified-signature conformance boundaries
 and maps native states through the shared disposition contract. Every provider
@@ -542,6 +569,12 @@ offering EAB or TSIG MAC operations also implements the shared `BoundMacKey`,
 exact-input admission, immutable secret dispatch, purpose-specific evidence,
 assurance publication, and no-secret-export/no-fallback conformance boundary;
 providers without those semantics publish typed unsupported capability cells.
+Every symmetric-secret create/import/adopt path additionally implements stable
+idempotency, quarantine, typed content binding, lifecycle/obligation
+separation, source-secret disposition, reconciliation/fencing, capability-free
+snapshots, and fresh per-session reconstruction. A provider that supports MAC
+operations but no admitted onboarding/binding mode remains unusable for new or
+adopted secrets rather than accepting a bare handle.
 Native pairwise consistency or the narrow canonical `bind_signer` operation
 establishes binding; all request admissions are then minted locally and
 consumed before immutable-identity signer dispatch and local output
@@ -557,8 +590,9 @@ another backend. Scheduled
 deletion, disablement, object absence, handle loss, unlink, or zeroization is
 never inflated into physical destruction. Unsupported purposes, validations,
 bindings, or dispositions are typed and never inferred from an algorithm name.
-Unsupported MAC verification or a weaker provider-attested assurance profile
-is likewise typed and cannot be upgraded into independent verification.
+Unsupported MAC verification, a provider assertion, or a cryptographic
+attestation profile is likewise typed and cannot be upgraded into independent
+verification or a stronger content-binding mode.
 Provider negotiation is:
 
 ```text

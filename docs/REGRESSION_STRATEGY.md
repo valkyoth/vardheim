@@ -22,10 +22,12 @@ expectation, applicability range, content hash, and first/last release metadata.
 Secrets, account identifiers, private keys, tokens, and uncontrolled personal
 or provider data must never enter retained evidence.
 
-Validation, signer-binding, signer/MAC request-admission, signature/MAC
-verification, and effect-authority capabilities are not evidence artifacts and
-must never be serialized into a retained snapshot. A snapshot may retain
-lifecycle/inventory facts,
+Validation, signer/secret binding, signer/MAC request-admission, signature/MAC
+verification, provider assertion/attestation, and effect-authority capabilities
+are not evidence artifacts and must never be serialized into a retained
+snapshot. `BoundMacKey`, `MacConsumerAdmission`, `VerifiedMac`,
+`ProviderAssertedMac`, and `CryptographicallyAttestedMac` are explicitly
+forbidden. A snapshot may retain lifecycle/inventory facts,
 orthogonal obligation sets, redacted audit records, and the hashes/versions
 needed to decide that reconstruction is required. Durable `Active` means
 lifecycle eligibility, not present authority. Replay after restart or a
@@ -105,9 +107,20 @@ The release comparison gate covers:
   admission, destructive consumption across success/failure/cancellation/
   ambiguity/session change, alias/version replacement at every barrier,
   `UnverifiedMac` rejection, constant-time independent `VerifiedMac`, separately
-  typed provider-attested assurance, default weaker-evidence rejection,
+  typed provider assertion versus genuine cryptographic attestation, complete
+  signed/native attestation transcript and replay validation, default weaker-
+  evidence rejection,
   wrong-valid-key/malformed/truncated/verifier-unavailable outcomes, no secret
   export, no fallback, and provider capability/assurance publication;
+- transactional symmetric-secret create/import/adopt request and idempotency
+  identities, definitely-not-created/created/ambiguous/unavailable outcomes,
+  quarantine, `SecretLifecycleState × SecretObligationSet`, local-comparison/
+  authenticated-peer/cryptographic-attestation/provider-assertion/unverified
+  content-binding modes, source-secret retention/destruction ordering,
+  wrong-secret and cross-directory/zone import, lost/duplicate onboarding,
+  restored/recreated provider objects, fresh per-session binding
+  reconstruction, capability-free snapshots, fencing, cleanup/disposition
+  ambiguity, no absence-as-destruction, and no bare-handle activation;
 - transactional generation/import/migration/platform-adoption states, stable
   request/idempotency identities, lifecycle-state/obligation-set products,
   quarantine, active-as-eligibility semantics, fresh-session authority
@@ -129,8 +142,9 @@ The release comparison gate covers:
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
 - per-purpose crypto-provider capability, public-key validation/signer-binding,
-  immutable signature/MAC dispatch, returned-signature verification, MAC
-  evidence/assurance, and legacy-key migration decisions;
+  asymmetric/symmetric onboarding and reconstruction, immutable signature/MAC
+  dispatch, returned-signature verification, MAC evidence/assurance, and
+  legacy-key migration decisions;
 - provider-native key disposition, receipt binding, and reconciliation decisions
   without destruction-state inflation;
 - target/profile compile and runtime evidence;

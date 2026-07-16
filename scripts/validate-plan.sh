@@ -51,6 +51,8 @@ required=(
     v0.10.14
     v0.10.15
     v0.10.16
+    v0.10.17
+    v0.10.18
     v0.13.1
     v0.14.2
     v0.15.2
@@ -165,6 +167,7 @@ required=(
     v0.56.8
     v0.56.9
     v0.56.10
+    v0.56.11
     v0.57.5
     v0.57.6
     v0.57.7
@@ -173,16 +176,26 @@ required=(
     v0.57.10
     v0.57.11
     v0.57.12
+    v0.57.13
     v0.58.1
+    v0.58.2
     v0.59.1
+    v0.59.2
     v0.60.0
+    v0.60.1
     v0.61.2
+    v0.61.3
     v0.62.2
+    v0.62.3
     v0.63.1
+    v0.63.2
     v0.64.1
+    v0.64.2
     v0.65.1
+    v0.65.2
     v0.66.3
     v0.66.4
+    v0.66.5
     v0.69.3
     v0.71.1
     v0.71.2
@@ -228,6 +241,8 @@ grep -q 'Invalidation observed before dispatch prevents signing' "$plan"
 grep -q 'Live key-authority reconstruction boundary' "$plan"
 grep -q 'Provider-neutral immutable-dispatch and verified-signature commit boundary' "$plan"
 grep -q 'Provider-neutral handle-backed MAC authority and positive-evidence boundary' "$plan"
+grep -q 'Provider-neutral transactional symmetric-secret onboarding and content-binding state model' "$plan"
+grep -q 'Live symmetric-secret authority reconstruction boundary' "$plan"
 grep -q 'KeyLifecycleState × KeyObligationSet' "$plan"
 grep -q 'Account creation with contacts.*v0.10.12' "$plan"
 grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
@@ -275,6 +290,7 @@ grep -q 'RFC 9162 CT v2 Merkle audit primitives' "$plan"
 grep -q 'Provider-neutral version-aware CT audit acquisition contract' "$plan"
 grep -q 'Provider-neutral `PublicPkiFetch` contract' "$plan"
 grep -q 'Snapshot restoration and capability-reconstruction boundary' "$plan"
+grep -q 'BoundMacKey.*MacConsumerAdmission.*VerifiedMac.*ProviderAssertedMac.*CryptographicallyAttestedMac' "$plan"
 grep -q 'Optional OCSP-staple deployment artifact contract' "$plan"
 grep -q 'Existing certificate adoption' "$plan"
 grep -q 'Certificate-key compromise response' "$plan"
@@ -314,34 +330,45 @@ grep -q 'Reusable public-key validation, `BoundSigner`, request-admission, and p
 grep -q 'Reusable transactional key-onboarding and live-authority-reconstruction provider/import conformance framework' "$plan"
 grep -q 'Reusable immutable-dispatch and returned-signature verification conformance framework' "$plan"
 grep -q 'Reusable handle-backed MAC authority/evidence conformance framework' "$plan"
+grep -q 'Reusable transactional symmetric-secret onboarding, content-binding, and live-authority reconstruction conformance' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
-grep -q 'AWS KMS HMAC provider.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'AWS KMS HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'AWS KMS HMAC key create/import/adopt onboarding and reconstruction.*v0.56.11' "$plan"
 grep -q 'TPM reset/recovery, transactional persistent/transient key onboarding, fresh-session authority reconstruction' "$plan"
-grep -q 'TPM 2.0 keyed-hash/HMAC provider.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'TPM 2.0 keyed-hash/HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'TPM keyed-hash secret creation/import/adoption onboarding and reconstruction.*v0.56.11' "$plan"
 grep -q 'Azure Key Vault signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
-grep -q 'Azure Key Vault/Managed HSM handle-backed MAC capability closure.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'Azure Key Vault/Managed HSM handle-backed MAC operation capability closure.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'Azure Key Vault/Managed HSM symmetric-secret onboarding capability closure.*v0.56.11' "$plan"
 grep -q 'OpenBao-compatible remote signer/key provider with authenticated transport, transactional onboarding, fresh-session authority reconstruction' "$plan"
-grep -q 'OpenBao-compatible transit HMAC provider.*v0.10.16.*v0.56.10' "$plan"
-grep -q 'PKCS#11 handle-backed EAB/TSIG HMAC provider.*v0.10.16.*v0.56.10' "$plan"
-grep -q 'Generic authenticated remote MAC protocol' "$plan"
-grep -q 'Reference remote MAC agent' "$plan"
+grep -q 'OpenBao-compatible transit HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'OpenBao-compatible transit HMAC create/import/adopt onboarding and reconstruction.*v0.56.11' "$plan"
+grep -q 'PKCS#11 handle-backed EAB/TSIG HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
+grep -q 'PKCS#11 symmetric-secret create/import/adopt onboarding and fresh binding reconstruction.*v0.56.11' "$plan"
+grep -q 'Generic authenticated remote MAC operation protocol' "$plan"
+grep -q 'Reference remote MAC operation agent' "$plan"
+grep -q 'Generic remote MAC protocol/agent transactional secret onboarding and fresh authority reconstruction.*v0.56.11' "$plan"
 grep -q 'Android Keystore key-provider adapter with transactional generation/import/adoption, fresh-session authority reconstruction' "$plan"
 grep -q 'Bounded SPKI/PKCS#8 import/export policy.*v0.10.13' "$plan"
 grep -q 'Optional default-off migration import.*v0.10.13' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding' "$plan"
 grep -q 'Android Keystore key-provider adapter with transactional generation/import/adoption, fresh-session authority reconstruction' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
-grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
+grep -q 'RustCrypto `DnsUpdateMac` operation backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
-grep -q 'EAB nested JWS construction through `v0.10.16`' "$plan"
-grep -q 'TSIG record and canonical MAC-input construction.*v0.10.16' "$plan"
+grep -q 'EAB nested JWS construction through `v0.10.16`-`v0.10.18`' "$plan"
+grep -q 'TSIG record and canonical MAC-input construction.*v0.10.16.*v0.10.18' "$plan"
+grep -q 'RustCrypto/software symmetric-secret create/import/adopt onboarding.*v0.56.11' "$plan"
+grep -q 'ring symmetric-secret onboarding/content-binding profile.*v0.56.11' "$plan"
+grep -q 'aws-lc-rs non-FIPS symmetric-secret onboarding/content-binding profile.*v0.56.11' "$plan"
+grep -q 'AWS-LC FIPS symmetric-secret onboarding/content-binding qualification.*v0.56.11' "$plan"
 grep -q 'Signed hash-linked audit log.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'authority-token challenge framework.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'RustCrypto/software-key disposition implementation' "$plan"
 grep -q 'RustCrypto public-key validation, software-signer binding, immutable dispatch, and returned-signature verification implementation' "$plan"
-grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, transactional-onboarding, immutable signature dispatch/verification, handle-backed MAC authority/evidence, and key-disposition table' "$plan"
-grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, transactional-onboarding, immutable signature dispatch/verification, handle-backed MAC authority/evidence, and key-disposition table' "$plan"
+grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
+grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"
@@ -350,4 +377,4 @@ grep -q 'every mandatory client requirement implemented' "$plan"
 grep -q 'Longitudinal replay runner' "$plan"
 grep -q 'Previous-release compatibility gate' "$plan"
 grep -q 'No command may automatically bless current output' docs/REGRESSION_STRATEGY.md
-grep -q 'authority capabilities are not evidence artifacts' docs/REGRESSION_STRATEGY.md
+grep -q 'provider assertion/attestation, and effect-authority capabilities' docs/REGRESSION_STRATEGY.md

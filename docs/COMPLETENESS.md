@@ -57,8 +57,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
   every handle-backed account effect, signer-proven ownership proof for
   imported accounts, and durable old/new key disposition after rollover or
   deactivation; EAB additionally requires immutable secret-version binding,
-  exact-input single-use MAC admission, and purpose-specific positive evidence
-  with independently verified and provider-attested assurance kept distinct;
+  transactional secret onboarding/content binding, fresh authority
+  reconstruction, exact-input single-use MAC admission, and purpose-specific
+  positive evidence with independently verified, provider-asserted, and
+  genuinely cryptographically attested assurance kept distinct;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
   structured problems;
@@ -75,12 +77,15 @@ At `1.0.0`, all of these must work without placeholder success paths:
   validation, domain-separated transient `BoundSigner`, locally minted
   single-use exact-request signer admission, handle-backed `BoundMacKey`,
   exact-input MAC admission, immutable signer/secret dispatch, purpose-specific
-  `VerifiedMac` versus provider-attested evidence, transactional key onboarding,
-  and honest key-disposition/reconciliation contracts with explicit concrete-
-  provider construction and per-purpose capability/validation/binding/
-  onboarding/immutable-dispatch/signature-verification/MAC-evidence/disposition
-  tables, including narrowly purpose-bound legacy verification hashes where
-  standards still require them;
+  `VerifiedMac` versus `ProviderAssertedMac` versus
+  `CryptographicallyAttestedMac`, separate transactional asymmetric-key and
+  symmetric-secret onboarding, typed secret-content binding, capability-free
+  snapshots, fresh signer/MAC authority reconstruction, and honest disposition/
+  reconciliation contracts with explicit concrete-provider construction and
+  per-purpose capability/validation/binding/onboarding/reconstruction/
+  immutable-dispatch/signature-verification/MAC-evidence/disposition tables,
+  including narrowly purpose-bound legacy verification hashes where standards
+  still require them;
 - bounded strict DER primitive parsing and X.509 structural prevalidation,
   shared ASN.1/PKIX time handling and RFC 5280 DN equality, CSR/key/SAN/profile
   binding, provider/session-bound RSA/EC/EdDSA public-key validation including
@@ -233,10 +238,13 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   before any protocol effect; an equivalent handle-backed MAC authority
   boundary for EAB and TSIG with immutable secret-version dispatch, exact-input
   admission, constant-time independent verification where possible, distinctly
-  typed provider attestation, explicit weaker-assurance policy, and no secret
-  export or fallback across software, HSM, KMS, secret-manager, and remote
-  providers; explicit verified-signature propagation into CSR, TLS-ALPN,
-  authority-token, and signed-audit effects;
+  typed provider assertion and genuine cryptographic attestation, explicit
+  weaker-assurance policy, and no secret export or fallback across software,
+  HSM, KMS, secret-manager, and remote providers; transactional symmetric-
+  secret onboarding/content binding, quarantine, source-secret destruction
+  obligations, capability-free snapshots, and fresh restart reconstruction;
+  explicit verified-signature propagation into CSR, TLS-ALPN, authority-token,
+  and signed-audit effects;
   transactional generation/import/migration/platform adoption with quarantine,
   lifecycle-state/obligation separation, active-as-eligibility semantics,
   fresh-session authority reconstruction, idempotent fenced reconciliation,
