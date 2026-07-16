@@ -66,15 +66,17 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - transactional key/CSR generation, import, migration, or platform adoption
   with lifecycle-state/obligation separation, quarantine, fenced
   reconciliation, active-as-eligibility semantics, fresh per-session
-  validation/binding authority reconstruction, and external/HSM/KMS signing
-  without private-key export;
+  validation/binding authority reconstruction, immutable provider identity
+  dispatch, mandatory local verification of returned signatures, and external/
+  HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated transient `BoundSigner`, locally minted
   single-use exact-request admission, transactional key onboarding, and honest
   key-disposition/reconciliation contracts with explicit concrete-provider
   construction and per-purpose capability/validation/binding/onboarding/
-  disposition tables, including narrowly purpose-bound legacy verification
-  hashes where standards still require them;
+  immutable-dispatch/output-verification/disposition tables, including
+  narrowly purpose-bound legacy verification hashes where standards still
+  require them;
 - bounded strict DER primitive parsing and X.509 structural prevalidation,
   shared ASN.1/PKIX time handling and RFC 5280 DN equality, CSR/key/SAN/profile
   binding, provider/session-bound RSA/EC/EdDSA public-key validation including
@@ -221,7 +223,9 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   construction, certificate-key revocation, TLS-ALPN ephemeral signing, and
   future handle-backed effects; fresh domain-separated binding transcripts,
   native-consistency equivalence, bounded concurrency, and destructive
-  admission handling across retry, invalidation races, and ambiguity;
+  admission handling across retry, invalidation races, and ambiguity; immutable
+  provider identity dispatch and mandatory wrong-key/malformed-output detection
+  before any protocol effect;
   transactional generation/import/migration/platform adoption with quarantine,
   lifecycle-state/obligation separation, active-as-eligibility semantics,
   fresh-session authority reconstruction, idempotent fenced reconciliation,

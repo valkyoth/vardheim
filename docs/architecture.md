@@ -99,6 +99,10 @@ transient. It never authorizes use of a signer handle.
 
 A transient non-serializable `BoundSigner` separately establishes that a
 provider handle controls the validated public key for bounded roles and time.
+A mutable alias, label, name, or persistent reference may locate a key during
+discovery but is never an authority identity. Binding resolves it to an
+immutable provider-native key identity/version and canonical public-key digest,
+and `BoundSigner` pins those values.
 A provider-native pairwise-consistency operation may establish that
 relationship. Otherwise a narrowly privileged `bind_signer` operation signs a
 fresh entropy-backed canonical `SignerBinding` transcript and Vardheim verifies
@@ -118,6 +122,16 @@ bounded. Provider/session/policy/key-health change or signer expiry invalidates
 `BoundSigner` and all derived admissions. Unsupported or unavailable
 validation/binding never falls back, and issued leaf public keys are validated
 even when not used for signature verification.
+
+Dispatch addresses the exact immutable identity pinned by `BoundSigner`, never
+the discovery alias. Provider-returned bytes are private
+`UnverifiedSignature`, still untrusted even when the provider reports success.
+Vardheim verifies the exact admitted bytes, algorithm, parameters, encoding,
+immutable identity, and bound public key locally. Only that check constructs
+`VerifiedSignature` accepted by protocol effects. Unsupported, unavailable,
+malformed, or failed verification transmits nothing, consumes the admission,
+invalidates or quarantines the signer according to policy, and cannot select a
+fallback signer or verifier.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -147,14 +161,16 @@ Obligations = {
 
 Stable request and provider idempotency identities bind tenant, role,
 algorithm/parameters, provider, intended key version, origin, exportability,
-persistence, attestation, and policy. Provider observations distinguish
-definitely not created, created, ambiguous, and unavailable. No newly created
-or imported key is signable while quarantined. Obligations are orthogonal so a
-failure or lifecycle transition cannot discard reconciliation, revalidation,
-operator-decision, cleanup, or disposition work. `Active` is only a durable
-inventory and lifecycle-policy eligibility fact. Historical validation and
-binding audit records are not `ValidatedPublicKey` or `BoundSigner` values and
-cannot be converted into them.
+persistence, attestation, and policy. The durable key record also stores the
+observed immutable provider identity/version and canonical public-key digest;
+mutable locators remain metadata. Provider observations distinguish definitely
+not created, created, ambiguous, and unavailable. No newly created or imported
+key is signable while quarantined. Obligations are orthogonal so a failure or
+lifecycle transition cannot discard reconciliation, revalidation, operator-
+decision, cleanup, or disposition work. `Active` is only a durable inventory
+and lifecycle-policy eligibility fact. Historical validation and binding audit
+records are not `ValidatedPublicKey` or `BoundSigner` values and cannot be
+converted into them.
 
 Every process and provider session reconstructs fresh live authority before
 signing: validate the current public material, bind the exact current handle,
@@ -309,6 +325,12 @@ workspaces without changing validation rules or capacity accounting.
   public-key validation, a role-permitted `BoundSigner`, and exact-request
   single-use signer-consumer admission, except the canonical `bind_signer`
   proof operation.
+- Mutable aliases, labels, names, and persistent references cannot be used for
+  authority dispatch; the exact immutable identity/version and public-key
+  digest pinned during binding must be used.
+- Provider-returned signature bytes are untrusted and cannot enter any protocol
+  effect until locally verified against the bound key and exact admitted
+  request; unavailable verification fails closed without fallback.
 - Cached, unrelated, cross-protocol, ambiguous, expired, replayed, or
   incompletely bound native signatures cannot prove a signer handle is bound.
 - Signer success, failure, cancellation, ambiguity, `badNonce`, and ambiguous

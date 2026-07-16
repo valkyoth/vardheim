@@ -38,6 +38,11 @@ its returned bytes are still structurally and semantically verified.
   handle-backed signing effect accepting cached, unrelated, cross-protocol,
   replayed, expired, ambiguously produced, or incompletely bound native
   signatures instead of fresh exact-role signer-consumer admission;
+- a mutable alias, label, name, persistent reference, or remote mapping being
+  retargeted after binding but before signature dispatch; or provider-returned
+  wrong-key, malformed, incorrectly encoded, or unverified signature bytes
+  entering a protocol effect because local verification was optional,
+  unavailable, or silently replaced by another backend;
 - generated, imported, migrated, or adopted keys becoming active before
   reconciliation, public-key validation, and signer binding; duplicate keys
   after lost responses or restart; or cleanup/lookup ambiguity being treated

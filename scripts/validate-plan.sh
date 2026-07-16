@@ -49,6 +49,7 @@ required=(
     v0.10.12
     v0.10.13
     v0.10.14
+    v0.10.15
     v0.13.1
     v0.14.2
     v0.15.2
@@ -161,6 +162,7 @@ required=(
     v0.56.6
     v0.56.7
     v0.56.8
+    v0.56.9
     v0.57.5
     v0.57.6
     v0.57.7
@@ -215,6 +217,7 @@ grep -q 'Local request-specific signer-consumer admission contract over `&mut Bo
 grep -q 'Provider-neutral transactional key-onboarding state model' "$plan"
 grep -q 'Invalidation observed before dispatch prevents signing' "$plan"
 grep -q 'Live key-authority reconstruction boundary' "$plan"
+grep -q 'Provider-neutral immutable-dispatch and verified-signature commit boundary' "$plan"
 grep -q 'KeyLifecycleState × KeyObligationSet' "$plan"
 grep -q 'Account creation with contacts.*v0.10.12' "$plan"
 grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
@@ -297,19 +300,24 @@ grep -q 'Optional default-off migration import' "$plan"
 grep -q 'Reusable key-disposition provider conformance' "$plan"
 grep -q 'Reusable public-key validation, `BoundSigner`, request-admission, and provider conformance framework' "$plan"
 grep -q 'Reusable transactional key-onboarding and live-authority-reconstruction provider/import conformance framework' "$plan"
+grep -q 'Reusable immutable-dispatch and returned-signature verification conformance framework' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
-grep -q 'AWS KMS signer/key provider with transactional create/import onboarding and fresh-session authority reconstruction' "$plan"
+grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
+grep -q 'TPM reset/recovery, transactional persistent/transient key onboarding, fresh-session authority reconstruction' "$plan"
+grep -q 'Azure Key Vault signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
+grep -q 'OpenBao-compatible remote signer/key provider with authenticated transport, transactional onboarding, fresh-session authority reconstruction' "$plan"
+grep -q 'Android Keystore key-provider adapter with transactional generation/import/adoption, fresh-session authority reconstruction' "$plan"
 grep -q 'Bounded SPKI/PKCS#8 import/export policy.*v0.10.13' "$plan"
 grep -q 'Optional default-off migration import.*v0.10.13' "$plan"
-grep -q 'AWS KMS signer/key provider with transactional create/import onboarding' "$plan"
-grep -q 'Android Keystore key-provider adapter with transactional generation/import/adoption' "$plan"
+grep -q 'AWS KMS signer/key provider with transactional onboarding' "$plan"
+grep -q 'Android Keystore key-provider adapter with transactional generation/import/adoption, fresh-session authority reconstruction' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
 grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
 grep -q 'RustCrypto/software-key disposition implementation' "$plan"
-grep -q 'RustCrypto public-key validation and software-signer binding implementation' "$plan"
-grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, transactional-onboarding, and key-disposition table' "$plan"
-grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, transactional-onboarding, and key-disposition table' "$plan"
+grep -q 'RustCrypto public-key validation, software-signer binding, immutable dispatch, and returned-signature verification implementation' "$plan"
+grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, transactional-onboarding, immutable-dispatch/returned-signature-verification, and key-disposition table' "$plan"
+grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, transactional-onboarding, immutable-dispatch/returned-signature-verification, and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"

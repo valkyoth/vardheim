@@ -92,8 +92,13 @@ The release comparison gate covers:
   exact-request admission, bounded concurrent identities, destructive
   consumption across signer/network/retry outcomes, pre/in/post-dispatch
   invalidation classification and positive-provider-evidence requirements,
-  invalidation after provider/session/policy/key-health change, unsupported/
-  unavailable/ambiguous outcomes, and issued-leaf decisions;
+  immutable provider-native identity/version and public-key-digest pinning,
+  mutable-locator replacement at every binding/admission/dispatch/verification
+  barrier, untrusted returned-signature typing, mandatory local verification
+  over exact admitted bytes/algorithm/parameters/encoding/bound key,
+  wrong-key/malformed/verifier-unavailable outcomes, invalidation after
+  provider/session/policy/key-health change, unsupported/unavailable/ambiguous
+  outcomes, no signer/verifier fallback, and issued-leaf decisions;
 - transactional generation/import/migration/platform-adoption states, stable
   request/idempotency identities, lifecycle-state/obligation-set products,
   quarantine, active-as-eligibility semantics, fresh-session authority
@@ -115,7 +120,8 @@ The release comparison gate covers:
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
 - per-purpose crypto-provider capability, public-key validation/signer-binding,
-  and legacy-key migration decisions;
+  immutable dispatch, returned-signature verification, and legacy-key migration
+  decisions;
 - provider-native key disposition, receipt binding, and reconciliation decisions
   without destruction-state inflation;
 - target/profile compile and runtime evidence;

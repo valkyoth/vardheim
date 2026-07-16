@@ -139,9 +139,10 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
   public-key-validation, domain-separated `BoundSigner`, and local
-  exact-request admission plus transactional key-onboarding semantics precede
-  their first JOSE, scheduling, account-adoption, CSR, PKIX, or challenge
-  consumer while concrete cryptographic implementations remain later;
+  exact-request admission, transactional key-onboarding, live-authority
+  reconstruction, immutable dispatch, and verified-signature commit semantics
+  precede their first JOSE, scheduling, account-adoption, CSR, PKIX, or
+  challenge consumer while concrete cryptographic implementations remain later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
@@ -168,6 +169,11 @@ entropy-backed canonical `SignerBinding` transcript. The narrowly privileged
 accepts only that transcript, cannot sign arbitrary bytes or protocol requests,
 and yields no binding after failure or ambiguity.
 
+Mutable aliases, labels, names, and persistent references are discovery inputs,
+not authority identities. Binding resolves them to an immutable provider-native
+key identity/version and canonical public-key digest. `BoundSigner`, admission,
+and provider dispatch all pin that same identity.
+
 Each ordinary handle-backed signature effect then consumes a private,
 single-use `SignerConsumerAdmission` minted locally from `&mut BoundSigner` for
 the exact canonical signing bytes, algorithm/parameters, output format, role,
@@ -179,6 +185,15 @@ consumed immediately before signer dispatch, and are never restored after
 success, failure, cancellation, ambiguity, `badNonce`, or ambiguous network
 transmission. Provider/session/policy/key-health change or expiry invalidates
 the signer and every derived admission.
+
+Provider output is private untrusted `UnverifiedSignature`. Before any JWS,
+CSR, revocation, TLS-ALPN, audit, or other effect can use it, Vardheim locally
+verifies the exact admitted bytes, algorithm, parameters, output encoding,
+immutable provider identity/version, and bound public key. Only successful
+verification constructs `VerifiedSignature`. Unsupported, unavailable,
+malformed, wrong-key, or failed verification sends nothing, consumes the
+admission, invalidates or quarantines authority by policy, and never selects an
+implicit signer or verifier fallback.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -196,9 +211,11 @@ created-quarantined, active eligibility, retained quarantine, and retirement;
 orthogonal obligations cover reconciliation, validation, binding,
 revalidation, disposition, and operator decision. Tenant, role,
 algorithm/parameters, provider, intended key version, origin, exportability,
-persistence, attestation, and policy remain bound throughout. Created or
-imported keys are unusable while quarantined. A durable active value is only
-inventory/policy eligibility, never present signing authority.
+persistence, attestation, policy, observed immutable provider identity/version,
+and canonical public-key digest remain bound throughout. Mutable locators are
+metadata only. Created or imported keys are unusable while quarantined. A
+durable active value is only inventory/policy eligibility, never present
+signing authority.
 
 Persisted validation/binding history cannot become `ValidatedPublicKey`,
 `BoundSigner`, request admission, or an effect capability. Every process and
@@ -490,20 +507,23 @@ activation contract.
 Each provider implements capabilities and is explicitly selected. ring,
 aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
 CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
-public-key validation, signer binding, legacy verification hashes, and key
-disposition. Every software, HSM, TPM, KMS, remote, and platform key provider
-implements the shared validation, `BoundSigner`, and request-admission
-conformance boundary and maps native states through the shared disposition
-contract. Native pairwise consistency or the narrow canonical `bind_signer`
-operation establishes binding; all request admissions are then minted locally
-and consumed before ordinary signer dispatch. Every key creation/import path
+public-key validation, signer binding, immutable dispatch, returned-signature
+verification, legacy verification hashes, and key disposition. Every software,
+HSM, TPM, KMS, remote, and platform key provider implements the shared
+validation, `BoundSigner`, request-admission, and verified-signature conformance
+boundaries and maps native states through the shared disposition contract.
+Native pairwise consistency or the narrow canonical `bind_signer` operation
+establishes binding; all request admissions are then minted locally and
+consumed before immutable-identity signer dispatch and local output
+verification. Every key creation/import path
 also implements transactional onboarding, idempotent reconciliation,
 lifecycle/obligation separation, quarantine, fresh-session authority
-reconstruction, fencing, and cleanup obligations. Invalid keys, wrong handles,
-stale provider sessions, replayed history, mutable alias retargeting,
-unsupported validation, failed or ambiguous binding, ambiguous
-creation/import, or provider unavailability cannot fall back to another
-backend. Scheduled
+reconstruction, immutable dispatch, mandatory returned-signature verification,
+fencing, and cleanup obligations. Invalid keys, wrong handles, stale provider
+sessions, replayed history, mutable alias retargeting, wrong-key or malformed
+signature output, unavailable verification, failed or ambiguous binding,
+ambiguous creation/import, or provider unavailability cannot fall back to
+another backend. Scheduled
 deletion, disablement, object absence, handle loss, unlink, or zeroization is
 never inflated into physical destruction. Unsupported purposes, validations,
 bindings, or dispositions are typed and never inferred from an algorithm name.

@@ -72,6 +72,14 @@ Keep a Changelog and the project follows Semantic Versioning.
   failure and crash boundary; extended snapshot, fencing, provider, HSM, and
   KMS milestones with restart, alias/version retargeting, object replacement,
   replayed-history, and stale-worker tests.
+- Added `v0.10.15` immutable signer dispatch and verified-signature commit plus
+  `v0.56.9` provider conformance: mutable locators are discovery-only,
+  `BoundSigner` and dispatch pin an immutable native identity/version and
+  public-key digest, provider output remains untrusted, and exact local
+  verification is mandatory before any protocol effect.
+- Propagated fresh reconstruction and binding-to-signing TOCTOU race coverage
+  to software, ring, aws-lc/FIPS, PKCS#11, TPM, AWS/Azure KMS, OpenBao, remote
+  signer/agent, Android, Apple, and Windows provider milestones.
 
 ## 0.3.1 - Unreleased
 

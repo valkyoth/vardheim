@@ -16,7 +16,7 @@
 | Workflow | valid transitions only, persisted effects, reconciliation |
 | Challenges | ownership receipts, self-check, durable cleanup |
 | DER/X.509 structure | canonical primitive/length encoding and version-gated certificate fields rejected before path validation |
-| Public keys and signer handles | provider/session-bound RSA/EC/EdDSA validation; transient role-limited `BoundSigner` from native consistency or canonical `bind_signer`; ordinary signature effects consume locally minted exact-request admission before dispatch and never restore it; binding operation alone is narrowly exempt; no fallback |
+| Public keys and signer handles | provider/session-bound RSA/EC/EdDSA validation; transient role-limited `BoundSigner` pins immutable native identity/version and public-key digest, never mutable aliases; ordinary signature effects consume exact-request admission, dispatch only to that identity, treat provider output as untrusted, and locally verify exact bytes/algorithm/parameters/encoding/key before use; binding operation alone is narrowly exempt; no signer/verifier fallback |
 | Key onboarding | stable idempotent create/import identity; durable lifecycle state is separate from orthogonal obligations and live authority; `Active` means eligible, not signable; every process/provider session freshly validates and binds; ambiguous/lost/eventually visible outcomes reconcile with fencing; failures retain obligations; absence never proves destruction |
 | Certificates | key/SAN/profile/chain checks and explicit durable renewal key-rotation mode before deployment |
 | PKIX evidence | private, context-bound, non-serializable capabilities; facade-only reducer translation |
