@@ -69,10 +69,15 @@ The release comparison gate covers:
 
 - Rust public API and feature resolution against the latest published release;
 - normalized ACME wire behavior and typed error/security decisions;
+- existing-account adoption ownership, URL/directory binding, provenance, and
+  conflicting-local-account decisions;
 - normalized DNS/EDNS/source-port/TCP/Cookie/RFC 2136/TSIG behavior and
   authenticated update outcomes;
 - distinct CT v1/v2 parsing, log-list, precertificate, signature, and policy
-  decisions with no cross-version evidence conversion;
+  decisions with no cross-version evidence conversion, plus STH/Merkle/MMD/
+  checkpoint/witness split-view decisions;
+- strict ASN.1/PKIX time and distinguished-name equality decisions across
+  certificate, CRL, OCSP, and CMS/CT inputs;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and
@@ -84,6 +89,8 @@ The release comparison gate covers:
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
 - per-purpose crypto-provider capability and legacy-key migration decisions;
+- provider-native key disposition, receipt binding, and reconciliation decisions
+  without destruction-state inflation;
 - target/profile compile and runtime evidence;
 - formal-model traces and generated adversarial cases; and
 - dependency/tool manifests, where drift is reported separately from behavior.

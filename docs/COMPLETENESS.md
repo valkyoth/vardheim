@@ -52,7 +52,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
 
 - strict directory discovery, refresh, origin policy, ToS changes, complete
   `newNonce` acquisition/harvesting, and directory-scoped nonce ownership;
-- account create/recover/update/orders/rollover/deactivate and EAB;
+- account create/recover/adopt/update/orders/rollover/deactivate and EAB, with
+  signer-proven ownership proof for imported accounts;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
   structured problems;
@@ -60,15 +61,17 @@ At `1.0.0`, all of these must work without placeholder success paths:
   identifier/challenge families assigned by published standards;
 - ARI and conservative fallback renewal scheduling;
 - key/CSR generation or external/HSM/KMS signing without private-key export;
-- provider-neutral digest/sign/verify/entropy/key-generation contracts and
-  explicit concrete-provider construction with per-purpose capability tables,
-  including narrowly purpose-bound legacy verification hashes where standards
-  still require them;
-- bounded certificate parsing, CSR/key/SAN/profile binding, PKIX path policy,
-  complete RFC 5280 policy processing, chain-wide local OCSP/CRL parsing and
-  signature verification, distinct RFC 6962 CT v1 and RFC 9162 CT v2 parsing/
-  verification, hardened credential-free optional acquisition/AIA, context-
-  bound transient evidence, and server private-key injection refusal;
+- provider-neutral digest/sign/verify/entropy/key-generation and honest key-
+  disposition/reconciliation contracts with explicit concrete-provider
+  construction and per-purpose capability/disposition tables, including
+  narrowly purpose-bound legacy verification hashes where standards still
+  require them;
+- bounded certificate parsing, strict shared ASN.1/PKIX time handling and RFC
+  5280 DN equality, CSR/key/SAN/profile binding, PKIX path policy, complete RFC
+  5280 policy processing, chain-wide local OCSP/CRL parsing and signature
+  verification, distinct RFC 6962 CT v1 and RFC 9162 CT v2 parsing/signature/
+  Merkle verification, hardened credential-free optional acquisition/AIA,
+  context-bound transient evidence, and server private-key injection refusal;
 - distinct versioned issued-certificate trust providers for custom/platform
   anchors, additions/removals/distrust, constraints, tenant isolation, and
   reload failure without reusing ACME HTTPS/CT/DNSSEC trust;
@@ -79,9 +82,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - account-key and certificate-key compromise response, emergency replacement,
   safe revocation ordering, and honest lost-key failure modes;
 - certificate supersession/retirement/revocation/destruction, deployment
-  removal acknowledgement, overlap policy, inventory reconciliation/export,
-  orphan handling, high-level lifecycle APIs, and post-deployment status-driven
-  replacement;
+  removal acknowledgement, honest provider-native disposition reconciliation,
+  overlap policy, inventory reconciliation/export, orphan handling, high-level
+  lifecycle APIs, and post-deployment status-driven replacement;
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
   fencing, cleanup, deployment activation, health verification, rollback, and
   mandatory revalidation rather than restored verification capabilities;
@@ -100,6 +103,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   authenticated-resolver evidence policy;
 - optional RFC 7633 TLS Feature/Must-Staple verification, fresh OCSP activation
   gating, atomic certificate/key/staple generations, and durable refresh;
+- durable CT v1/v2 inclusion and append-only consistency monitoring after MMD,
+  log lifecycle/outage policy, and optional independent witness/gossip split-
+  view evidence;
 - bounded optional PKCS#1/SEC1 migration import into PKCS#8/opaque lifecycles,
   with no legacy export;
 - memory/filesystem/SQLite/PostgreSQL storage and local/remote deployment;
@@ -115,7 +121,9 @@ A production web server must be able to use Vardheim without reimplementing
 ACME protocol logic. The `0.71.1` acceptance fixture must prove:
 
 1. map vhost/domain policy into a normalized certificate intent;
-2. import or create an account and preserve an existing client migration path;
+2. import or create an account, prove imported-account ownership with its
+   signer and a fresh CA retrieval, and preserve an existing client migration
+   path including non-exportable keys;
 3. load EAB secrets through a redacted provider and destroy them after durable
    account creation according to policy;
 4. serve HTTP-01 through an in-memory/distributed route store;
@@ -181,6 +189,8 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   Cookies, RFC 8945 TSIG sequencing, issued-certificate trust providers,
   distinct CT v1/v2 profiles, chain-wide OCSP and acquisition privacy, hardened
   public-PKI framing/cache semantics, RFC 7633 Must-Staple deployment/refresh,
+  existing-account adoption, strict ASN.1 time and DN equality, CT Merkle/
+  inclusion/split-view monitoring, honest provider-wide key disposition,
   legacy-key migration, provider capability tables, lifecycle facade methods,
   stable invalidation reasons, OCSP freshness edges, and continuous parser/
   canonicalization fuzzing received tactical versions;

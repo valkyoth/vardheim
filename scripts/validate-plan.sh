@@ -43,9 +43,11 @@ required=(
     v0.10.6
     v0.10.7
     v0.10.8
+    v0.10.9
     v0.13.1
     v0.14.2
     v0.15.2
+    v0.16.3
     v0.19.3
     v0.20.3
     v0.25.2
@@ -58,6 +60,8 @@ required=(
     v0.28.7
     v0.28.8
     v0.28.9
+    v0.28.10
+    v0.28.11
     v0.29.3
     v0.29.4
     v0.30.7
@@ -79,6 +83,9 @@ required=(
     v0.30.23
     v0.30.24
     v0.30.25
+    v0.30.26
+    v0.30.27
+    v0.30.28
     v0.31.2
     v0.31.3
     v0.33.3
@@ -100,6 +107,8 @@ required=(
     v0.41.8
     v0.41.9
     v0.41.10
+    v0.41.11
+    v0.41.12
     v0.42.1
     v0.42.2
     v0.42.3
@@ -131,15 +140,18 @@ required=(
     v0.52.4
     v0.52.5
     v0.52.6
+    v0.52.7
     v0.56.0
     v0.56.1
     v0.56.5
+    v0.56.6
     v0.57.5
     v0.57.6
     v0.57.7
     v0.57.8
     v0.57.9
     v0.57.10
+    v0.57.11
     v0.58.1
     v0.59.1
     v0.60.0
@@ -179,7 +191,9 @@ grep -q 'Crate and feature topology contract' "$plan"
 grep -q 'Provider-neutral digest semantics' "$plan"
 grep -q 'Narrow legacy-hash compatibility capability' "$plan"
 grep -q 'Provider-neutral `DnsUpdateMac` capability' "$plan"
+grep -q 'Provider-neutral key-disposition request' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
+grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Optional RFC 8555 `newAuthz` pre-authorization' "$plan"
 grep -q 'Introduce the dependency-light `vardheim-pkix` crate' "$plan"
 grep -q 'Canonical bounded DER writer' "$plan"
@@ -187,6 +201,8 @@ grep -q 'Private test-only reference crypto primitives' "$plan"
 grep -q 'Private test-only PKIX evidence verifier extension' "$plan"
 grep -q 'Private test-only DNSSEC verifier extension' "$plan"
 grep -q 'Private test-only `DnsUpdateMac` implementation' "$plan"
+grep -q 'Strict bounded ASN.1/PKIX time parser' "$plan"
+grep -q 'RFC 5280 distinguished-name equality and normalization' "$plan"
 grep -q '`CertificateTrustProvider` load/reload contract' "$plan"
 grep -q 'Complete RFC 5280 certificate-policy processing' "$plan"
 grep -q 'Core-to-PKIX evidence bridge' "$plan"
@@ -202,6 +218,9 @@ grep -q 'OCSP acquisition privacy policy' "$plan"
 grep -q 'Public-PKI HTTP representation and framing policy' "$plan"
 grep -q 'Purpose-specific public-PKI representation and cache contract' "$plan"
 grep -q 'Optional RFC 9162 CT v2 acquisition and policy integration' "$plan"
+grep -q 'RFC 6962 CT v1 Merkle audit primitives' "$plan"
+grep -q 'RFC 9162 CT v2 Merkle audit primitives' "$plan"
+grep -q 'Provider-neutral version-aware CT audit acquisition contract' "$plan"
 grep -q 'Provider-neutral `PublicPkiFetch` contract' "$plan"
 grep -q 'Snapshot rehydration and verification-invalidation boundary' "$plan"
 grep -q 'Optional OCSP-staple deployment artifact contract' "$plan"
@@ -210,6 +229,8 @@ grep -q 'Certificate-key compromise response' "$plan"
 grep -q 'Certificate generation retirement state machine' "$plan"
 grep -q 'RFC 7633 TLS Feature/Must-Staple lifecycle policy' "$plan"
 grep -q 'High-level lifecycle facade methods' "$plan"
+grep -q 'Durable CT inclusion-monitoring state machine' "$plan"
+grep -q 'Optional independent CT witness/gossip evidence' "$plan"
 grep -q 'Provider-neutral bounded DNS query contract' "$plan"
 grep -q 'Bounded EDNS(0) OPT construction/parsing' "$plan"
 grep -q 'EDNS query-attempt policy' "$plan"
@@ -229,13 +250,16 @@ grep -q 'RFC 8945 TSIG record and canonical MAC-input construction' "$plan"
 grep -q 'TSIG secret lifecycle and rotation' "$plan"
 grep -q 'Production custom issued-certificate trust provider' "$plan"
 grep -q 'Production `PublicPkiFetch` HTTP framing' "$plan"
+grep -q 'Production version-aware CT audit HTTP adapter' "$plan"
 grep -q 'Explicit and separate capability sets' "$plan"
 grep -q 'Optional default-off migration import' "$plan"
+grep -q 'Reusable key-disposition provider conformance' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
 grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
-grep -q 'Published ring per-purpose capability table' "$plan"
-grep -q 'Published aws-lc-rs non-FIPS per-purpose capability table' "$plan"
+grep -q 'RustCrypto/software-key disposition implementation' "$plan"
+grep -q 'Published ring per-purpose capability and key-disposition table' "$plan"
+grep -q 'Published aws-lc-rs non-FIPS per-purpose capability and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"

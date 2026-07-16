@@ -58,6 +58,15 @@ types prevent accidental category/purpose misuse and validate observations at
 their boundaries, but cannot make a deliberately malicious implementation
 truthful.
 
+## Existing Account Ownership
+
+An imported directory URL, account URL, or operator assertion is not account
+ownership evidence. Existing-account adoption verifies the signer handle
+against its public key and requires a fresh authenticated POST-as-GET whose
+effective account URL, returned object, and directory identity agree. Created,
+recovered, and imported provenance remain distinct, including for non-exportable
+HSM/KMS account keys.
+
 ## Public PKI Fetch Boundary
 
 OCSP, CRL, AIA, CT-list, and related public PKI downloads use a dedicated
@@ -87,6 +96,36 @@ RFC 6962 CT v1 SCTs and RFC 9162 CT v2 `TransItem` objects use distinct types,
 log identities, signature schemes and inputs, precertificate reconstruction,
 log-list capabilities, and verified evidence. Neither version can be converted
 to or used as fallback evidence for the other.
+
+Version-specific Merkle logic verifies signed tree heads, inclusion paths, and
+append-only consistency. Durable monitoring schedules each SCT after its log's
+MMD, retains checkpoints, and classifies missing inclusion, rollback,
+inconsistency, outage, disqualification, and closure. Optional independent
+witness/gossip observations can detect conflicting views but cannot substitute
+for log signatures or Merkle proof.
+
+## PKIX Time And Name Semantics
+
+Certificates, CRLs, OCSP, and CMS/CT share one bounded ASN.1 time parser with
+RFC 5280 UTCTime/GeneralizedTime year rules, required seconds/Zulu, calendar and
+interval validation, explicit leap-second policy, and checked Vardheim wall-
+clock conversion. Locale, system parsers, offsets/fractions forbidden by the
+profile, and lossy timestamp conversions are excluded.
+
+Distinguished-name equality preserves RDN sequence and attribute OIDs, compares
+multi-valued RDNs as sets, and applies RFC 4518 StringPrep/caseIgnoreMatch plus
+domainComponent rules. Unsupported equality rules are typed rather than guessed
+or reduced to display-string comparison.
+
+## Key Disposition Evidence
+
+Every key provider implements one disposition contract with tenant/provider/
+key-version/purpose/policy/request binding. `Destroyed`, `Disabled`,
+`ScheduledForDeletion`, `RetainedByPolicy`, `ProviderCannotDestroy`, `NotFound`,
+`Ambiguous`, and `Unavailable` remain distinct through reconciliation. Unlink,
+zeroization, handle loss, disablement, scheduled deletion, or absence cannot be
+reported as physical destruction without provider evidence supporting that
+exact claim.
 
 ## DNS Query Correlation
 
@@ -130,6 +169,8 @@ workspaces without changing validation rules or capacity accounting.
 - Account, certificate, EAB, challenge, audit, and storage keys have separate
   roles and lifecycles.
 - A certificate cannot be deployed before structural and policy verification.
+- An imported account cannot become active without fresh signer-proven CA
+  ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or
   restored after restart as current proof.
 - Public PKI fetch results and unauthenticated DNS AD bits are never evidence.
@@ -138,6 +179,10 @@ workspaces without changing validation rules or capacity accounting.
 - Issued-certificate trust never falls back to ACME transport roots or an empty
   snapshot.
 - CT v1 and CT v2 log identities, inputs, and evidence are non-interchangeable.
+- CT inclusion and consistency claims require version-specific STH and Merkle
+  evidence; witness observations cannot fabricate them.
+- Key disablement, scheduled deletion, absence, unlink, or zeroization cannot be
+  recorded as physical destruction.
 - DNS responses require complete tuple/attempt correlation; TCP or Cookies do
   not reduce that requirement.
 - DNS update success requires verified request-bound TSIG response evidence.

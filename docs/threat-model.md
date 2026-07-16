@@ -22,6 +22,8 @@ its returned bytes are still structurally and semantically verified.
   public-PKI URLs;
 - issued-certificate trust confused with ACME TLS/platform/CT/DNSSEC trust or
   silently emptied during reload;
+- account takeover through an operator-supplied or cross-directory account URL
+  without proof that the configured signer controls the CA account;
 - JOSE algorithm confusion, nonce reuse, or malformed nested JWS;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - issuance for an unintended identifier or with an unintended key;
@@ -30,13 +32,19 @@ its returned bytes are still structurally and semantically verified.
 - stale workers activating data after losing a lease;
 - server-injected private keys or mismatched certificate chains;
 - stale/replayed verification records, forged or cross-version status/CT
-  evidence, incomplete OCSP chain coverage, or false DNSSEC security from an
+  evidence, forged STH/inclusion/consistency or witness evidence, CT split view,
+  incomplete OCSP chain coverage, or false DNSSEC security from an
   unauthenticated resolver/AD bit;
+- certificate/path errors from locale-dependent, lossy, non-profile ASN.1 time
+  parsing or display-string/incorrect Unicode distinguished-name comparison;
 - DNS spoofing through predictable/reused IDs or source ports, incomplete tuple
   binding, TCP framing/correlation errors, Cookie downgrade, EDNS/fragmentation
   fallback, or unauthenticated RFC 2136 update responses;
 - provider capability overclaim caused by inferring purpose support from a
   shared algorithm name, or platform-trust overclaim after constraint loss;
+- false key destruction claims caused by confusing disablement, scheduled
+  deletion, object absence, handle loss, unlink, zeroization, retention, or
+  provider unavailability with evidenced physical destruction;
 - activation or continued service of a Must-Staple certificate with a missing,
   stale, mismatched, or separately committed OCSP staple;
 - dependency, CI action, toolchain, or release-process compromise.

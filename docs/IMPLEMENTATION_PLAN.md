@@ -144,6 +144,9 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
   secret domain that cannot be reused for EAB;
+- key disposition uses a shared typed request/receipt/reconciliation contract
+  that distinguishes destruction from disablement, scheduled deletion,
+  retention, absence, ambiguity, and provider unavailability;
 - ACME HTTPS roots, issued-certificate roots, CT log keys, and DNSSEC anchors
   are distinct trust types rather than interchangeable byte collections;
 - nonce ownership makes reuse unrepresentable where practical; and
@@ -158,9 +161,17 @@ the provider-neutral key roles are stable.
 
 Versions `0.14.0` through `0.25.2` implement the entire client side of RFC 8555
 in resource order: bounded transport semantics, URL/origin policy, directory,
-`newNonce`, account creation and lifecycle, rollover, multi-issuer policy,
-orders, ordinary and `newAuthz` pre-authorizations, polling, finalization,
-retrieval, revocation, problems, and pagination.
+`newNonce`, account creation, recovery and explicit adoption, lifecycle,
+rollover, multi-issuer policy, orders, ordinary and `newAuthz`
+pre-authorizations, polling, finalization, retrieval, revocation, problems, and
+pagination.
+
+Existing-account adoption accepts a directory URL, account URL, and signer/key
+handle only as inputs. Ownership is established by local signer/public-key
+self-verification and a fresh authenticated POST-as-GET whose effective URL and
+account object bind to the same directory. Operator assertions or possession of
+an account URL are never proof. Imported, created, and recovered provenance
+remain distinct and non-exportable HSM/KMS signers are first-class.
 
 Each operation has:
 
@@ -221,6 +232,19 @@ an uncheckable responder certificate cannot silently satisfy a required status
 policy. OCSP acquisition can require POST and partitions caches by request body,
 tenant, purpose, privacy policy, and policy version.
 
+One shared strict ASN.1/PKIX time layer parses certificate, CRL, OCSP, and
+CMS/CT fields. It enforces RFC 5280 UTCTime/GeneralizedTime year selection,
+Zulu and seconds requirements, profile-specific fraction/offset rejection,
+calendar and interval validity, explicit leap-second policy, and checked
+conversion into Vardheim wall time without locale/system parser behavior or
+lossy timestamps.
+
+Distinguished-name equality is also a first-class primitive rather than a path
+builder detail. It preserves RDN sequence, treats attributes within an RDN as a
+set, compares exact attribute OIDs, applies RFC 4518 StringPrep/caseIgnoreMatch
+and domainComponent rules, and returns typed unsupported results when an
+attribute's required equality rule cannot be implemented safely.
+
 ## Durable Orchestration Sequence
 
 Versions `0.32.0` through `0.39.5` add the pure
@@ -267,7 +291,9 @@ key/artifact destruction, inventory reconciliation, post-deployment status
 response, high-level lifecycle methods, provider-neutral DNS/EDNS query
 behavior, provider adapters, the restricted DNS agent, complete local DNSSEC
 validation, TLS-ALPN-01, RFC 7633 Must-Staple lifecycle, and rustls/OpenSSL
-staple consumers.
+staple consumers. It also schedules CT inclusion audits for every accepted
+v1/v2 SCT and can consume independent witness/gossip evidence without treating
+it as log proof.
 
 DNS propagation checks query authoritative servers and derive secure, insecure,
 bogus, and indeterminate results from canonical RRsets, DNSKEY/DS/RRSIG
@@ -301,6 +327,12 @@ verified OCSP evidence. Certificate, key, chain, and staple form one fenced
 deployment generation; refresh failure follows explicit hard-fail, rollback,
 and last-serving-generation policy.
 
+CT monitoring verifies version-specific STH signatures, Merkle inclusion, and
+append-only consistency after each log's MMD, retains durable checkpoints, and
+classifies outage, disqualification, closure, missing inclusion, rollback, and
+split view. Optional witness quorum/diversity policy can escalate conflicting
+views but cannot construct SCT, STH, inclusion, or consistency evidence.
+
 ## Transport And Crypto Sequence
 
 Versions `0.52.0` through `0.66.2` introduce strict ACME transports, a separate
@@ -330,8 +362,12 @@ provider lifecycle, and never exports legacy formats.
 Each provider implements capabilities and is explicitly selected. ring,
 aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
 CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
-and legacy verification hashes. Unsupported purposes are typed and never
-inferred from an algorithm name. Provider negotiation is:
+legacy verification hashes, and key disposition. Every software, HSM, TPM,
+KMS, remote, and platform key provider maps native states through the shared
+disposition contract and publishes reconciliation behavior. Scheduled deletion,
+disablement, object absence, handle loss, unlink, or zeroization is never
+inflated into physical destruction. Unsupported purposes or dispositions are
+typed and never inferred from an algorithm name. Provider negotiation is:
 
 ```text
 local key capabilities

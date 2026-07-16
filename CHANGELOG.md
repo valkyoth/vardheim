@@ -31,6 +31,10 @@ Keep a Changelog and the project follows Semantic Versioning.
   chain-status semantics, privacy-safe OCSP acquisition, hardened public-PKI
   HTTP framing/cache partitioning, legacy-key migration, and ring/aws-lc
   per-purpose capability milestones.
+- Added signer-proven existing-account adoption, strict RFC 5280 time and
+  distinguished-name handling, provider-neutral key-disposition semantics with
+  provider-wide reconciliation, CT v1/v2 Merkle auditing, durable MMD inclusion
+  monitoring, and optional independent witness/split-view evidence.
 
 ## 0.3.1 - Unreleased
 
