@@ -24,11 +24,19 @@ its returned bytes are still structurally and semantically verified.
   silently emptied during reload;
 - account takeover through an operator-supplied or cross-directory account URL
   without proof that the configured signer controls the CA account;
+- loss of account control or evidence through premature old/new key disposition
+  after ambiguous rollover or deactivation;
 - JOSE algorithm confusion, nonce reuse, or malformed nested JWS;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
+- parser/path confusion from noncanonical DER, illegal certificate-version
+  fields, duplicate extensions, signature-algorithm mismatch, or structural
+  constraints deferred until path validation;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;
+- duplicated ACME mutations through TLS/QUIC early data, hidden middleware
+  retry, incorrect HTTP/2/HTTP/3 reset/GOAWAY classification, connection
+  coalescing, or cross-directory session/resolver reuse;
 - stale workers activating data after losing a lease;
 - server-injected private keys or mismatched certificate chains;
 - stale/replayed verification records, forged or cross-version status/CT
@@ -39,7 +47,8 @@ its returned bytes are still structurally and semantically verified.
   parsing or display-string/incorrect Unicode distinguished-name comparison;
 - DNS spoofing through predictable/reused IDs or source ports, incomplete tuple
   binding, TCP framing/correlation errors, Cookie downgrade, EDNS/fragmentation
-  fallback, or unauthenticated RFC 2136 update responses;
+  fallback, forged referral/glue/AA/SOA/DNAME authority discovery, ambient
+  resolver fallback, or unauthenticated RFC 2136 update responses;
 - provider capability overclaim caused by inferring purpose support from a
   shared algorithm name, or platform-trust overclaim after constraint loss;
 - false key destruction claims caused by confusing disablement, scheduled

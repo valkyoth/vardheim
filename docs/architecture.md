@@ -67,6 +67,25 @@ effective account URL, returned object, and directory identity agree. Created,
 recovered, and imported provenance remain distinct, including for non-exportable
 HSM/KMS account keys.
 
+After rollover, neither the old nor new account key is disposable until fresh
+authenticated account evidence establishes the effective signer and that
+decision is durably committed. Ambiguous rollover or deactivation preserves
+both key records and enters provider-native disposition reconciliation,
+including retention, legal hold, scheduled deletion, and unavailable-provider
+states.
+
+## DER And Certificate Structure
+
+The PKIX boundary rejects noncanonical DER before interpreting certificate
+semantics. Minimal INTEGER and OID encodings, BIT STRING unused bits, canonical
+BOOLEAN, primitive/constructed form, SET ordering, and definite shortest
+lengths are shared rules. Certificate-envelope prevalidation then enforces
+field order, version gates, positive serial policy, inner/outer signature
+algorithm equality, unique-ID/extension legality, duplicate extension OIDs,
+unknown critical extensions without a profile handler, and
+empty-subject/critical-SAN requirements before issuer search or path
+processing.
+
 ## Public PKI Fetch Boundary
 
 OCSP, CRL, AIA, CT-list, and related public PKI downloads use a dedicated
@@ -136,6 +155,16 @@ codec that correlates partial, coalesced, and out-of-order messages on the same
 connection. Optional DNS Cookies remain server-scoped defense in depth and
 cannot weaken tuple, DNSSEC, or TSIG verification.
 
+## Authoritative DNS Discovery
+
+Self-check discovery walks zone cuts using authoritative answers and downward
+referrals, with AA, section placement, and SOA ownership interpreted together.
+In-domain, sibling, and out-of-bailiwick glue remain untrusted routing inputs
+and missing nameserver A/AAAA data is resolved iteratively. CNAME and DNAME
+synthesis, alias/referral dependencies, lame delegations, address families,
+servers, and total work are bounded. Ambient system resolution cannot silently
+complete an authority chain.
+
 ## DNS Update Authentication
 
 RFC 2136 updates use RFC 8945 TSIG through a dedicated `DnsUpdateMac`
@@ -150,6 +179,17 @@ certificate, chain, and key in one fenced deployment generation. Deployment
 adapters transport bytes and expiry but cannot fabricate verified status
 evidence. Refresh and rollback preserve the last policy-valid serving
 generation.
+
+## Transport Replay Boundary
+
+Every ACME adapter declares HTTP/1.1, HTTP/2, or HTTP/3 explicitly and disables
+TLS/QUIC early data and hidden retries. Only version-specific protocol evidence
+can prove a request was not processed; partial writes, resets, cancellation,
+response loss, and unproven stream/connection shutdown remain ambiguous and
+must reconcile at the ACME operation layer. Connection pools, TLS/QUIC
+sessions, DNS results, proxies, trust, directories, tenants, and policies are
+partitioned. Cross-origin connection coalescing is prohibited unless a
+version-specific conformance proof permits it.
 
 ## No-Heap Validation Workspaces
 
@@ -168,7 +208,11 @@ workspaces without changing validation rules or capacity accounting.
   bounded before allocation or traversal.
 - Account, certificate, EAB, challenge, audit, and storage keys have separate
   roles and lifecycles.
+- An old account key cannot be disposed after rollover or deactivation until
+  durable signer-control evidence and policy authorize that exact disposition.
 - A certificate cannot be deployed before structural and policy verification.
+- Noncanonical DER or an X.509 structural defect cannot reach issuer search or
+  path validation.
 - An imported account cannot become active without fresh signer-proven CA
   ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or
@@ -185,7 +229,11 @@ workspaces without changing validation rules or capacity accounting.
   recorded as physical destruction.
 - DNS responses require complete tuple/attempt correlation; TCP or Cookies do
   not reduce that requirement.
+- Authoritative DNS readiness cannot be inferred from ambient recursion,
+  unvalidated glue, a bare AA bit, or an incomplete referral chain.
 - DNS update success requires verified request-bound TSIG response evidence.
+- ACME requests are never sent as early data or automatically retried after an
+  ambiguous transmission.
 - Must-Staple certificates cannot activate or remain active with an expired or
   mismatched required staple.
 - Challenge cleanup removes only the presentation owned by that workflow.

@@ -71,17 +71,25 @@ The release comparison gate covers:
 - normalized ACME wire behavior and typed error/security decisions;
 - existing-account adoption ownership, URL/directory binding, provenance, and
   conflicting-local-account decisions;
+- account-rollover/deactivation key-control proof and disposition decisions,
+  including ambiguity, legal hold, and provider reconciliation;
 - normalized DNS/EDNS/source-port/TCP/Cookie/RFC 2136/TSIG behavior and
-  authenticated update outcomes;
+  authenticated update outcomes, plus authoritative/referral/zone-cut/SOA/
+  glue/CNAME/DNAME/nameserver-address discovery decisions;
 - distinct CT v1/v2 parsing, log-list, precertificate, signature, and policy
   decisions with no cross-version evidence conversion, plus STH/Merkle/MMD/
   checkpoint/witness split-view decisions;
 - strict ASN.1/PKIX time and distinguished-name equality decisions across
   certificate, CRL, OCSP, and CMS/CT inputs;
+- DER primitive canonicality, certificate-envelope structural rejection, and
+  durable certificate renewal key-rotation decisions;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and
   cache-partition decisions;
+- ACME HTTP-version selection, early-data refusal, retry prohibition,
+  connection/session/resolver partitioning, coalescing, and
+  definitely-unsent-versus-ambiguous transmission decisions;
 - every supported historical persisted snapshot and migration chain, including
   proof that verification capabilities are absent and stale audit records
   trigger revalidation;

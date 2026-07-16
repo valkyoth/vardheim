@@ -35,6 +35,10 @@ Keep a Changelog and the project follows Semantic Versioning.
   distinguished-name handling, provider-neutral key-disposition semantics with
   provider-wide reconciliation, CT v1/v2 Merkle auditing, durable MMD inclusion
   monitoring, and optional independent witness/split-view evidence.
+- Added strict DER/X.509 structural closure, rollover/deactivation account-key
+  disposition, durable certificate renewal key modes, complete authoritative
+  DNS referral/glue/DNAME discovery, and explicit replay-safe HTTP/1.1, HTTP/2,
+  and HTTP/3 transport milestones with early data disabled.
 
 ## 0.3.1 - Unreleased
 

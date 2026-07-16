@@ -173,6 +173,13 @@ account object bind to the same directory. Operator assertions or possession of
 an account URL are never proof. Imported, created, and recovered provenance
 remain distinct and non-exportable HSM/KMS signers are first-class.
 
+Account rollover does not end at a successful response parser. Both old and new
+keys remain protected until a fresh authenticated account observation proves
+which signer controls the account and that evidence is durable. Ambiguous
+rollover or deactivation keeps disposition pending; disablement, retention,
+scheduled deletion, destruction, legal hold, and provider unavailability use
+the shared disposition/reconciliation contract.
+
 Each operation has:
 
 - a pure request constructor;
@@ -205,6 +212,15 @@ upon.
 Separate private test verifiers supply genuine pinned status/CT and DNSSEC
 algorithm coverage before production providers exist; neither is shipped or
 presented as a supported backend.
+
+DER primitive conformance is complete before certificate semantics. INTEGER,
+OID, BIT STRING, BOOLEAN, constructed/primitive form, SET ordering, and length
+encodings are canonical and bounded. Certificate envelopes then enforce field
+ordering and version legality, positive serial policy, inner/outer signature
+algorithm equivalence, unique-ID and extension version gates, duplicate
+extension rejection, unknown-critical rejection unless a profile assigns a
+handler, and empty-subject/critical-SAN rules before issuer search or path
+validation begins.
 
 Certificate verification compares:
 
@@ -244,6 +260,12 @@ builder detail. It preserves RDN sequence, treats attributes within an RDN as a
 set, compares exact attribute OIDs, applies RFC 4518 StringPrep/caseIgnoreMatch
 and domainComponent rules, and returns typed unsupported results when an
 attribute's required equality rule cannot be implemented safely.
+
+Certificate renewal selects a durable key mode: always rotate, reuse only
+within explicit count/time limits, provider-managed rotation, or forced
+rotation after compromise or relevant policy/provider/attestation change. The
+chosen key generation and reason are part of renewal intent and cannot change
+implicitly after restart or retry.
 
 ## Durable Orchestration Sequence
 
@@ -303,6 +325,14 @@ validating-resolver evidence is an explicit policy alternative. Provider record
 handles preserve unrelated TXT data and enable exact cleanup. Heavy AWS and
 Azure SDKs stay outside core dependency graphs.
 
+Authoritative discovery distinguishes answers, downward referrals, partial
+answer/referrals, and lame or upward responses using AA, section placement,
+zone cuts, and SOA ownership. It validates in-domain, sibling, and
+out-of-bailiwick glue; resolves missing nameserver A/AAAA records iteratively;
+processes CNAME and DNAME synthesis; and bounds aliases, referrals, nameserver
+dependencies, addresses, servers, and total work without ambient system
+resolution.
+
 DNS queries construct and parse bounded EDNS(0), request DNSSEC material with
 DO, use fresh unpredictable transaction IDs and UDP source ports/socket
 rotations for every attempt, and bind responses to the complete local/remote
@@ -342,6 +372,16 @@ RustCrypto including EAB HMAC and RSA-PSS, ring, aws-lc-rs, separate AWS-LC
 FIPS, purpose-bound legacy verification hashes, DNSSEC algorithms, and TSIG
 HMAC, custom/platform issued-certificate trust providers, PKCS#11, TPM2, AWS
 KMS, Azure Key Vault, OpenBao-compatible, and remote/offline signing.
+
+Every production transport explicitly selects HTTP/1.1, HTTP/2, or HTTP/3 and
+implements one replay-safety contract. TLS/QUIC early data is disabled, adapter
+and middleware retries are disabled, and only protocol evidence can classify a
+request as definitely unsent. Partial writes, resets, cancellation, response
+loss, and unproven GOAWAY/stream outcomes are ambiguous and enter ACME
+reconciliation. Connection, TLS/QUIC session, resolver, proxy, directory,
+tenant, trust, and policy state are partitioned; cross-origin coalescing is off
+unless a version-specific proof permits it. HTTP/1.1 is the initial mandatory
+profile, with RFC 9113 HTTP/2 and RFC 9114 HTTP/3 admitted separately.
 
 Public PKI fetching may use HTTP or HTTPS according to explicit policy but has
 dedicated configuration and pools, no ACME/cookie/proxy/ambient credentials,

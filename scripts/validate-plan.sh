@@ -48,6 +48,7 @@ required=(
     v0.14.2
     v0.15.2
     v0.16.3
+    v0.18.1
     v0.19.3
     v0.20.3
     v0.25.2
@@ -62,8 +63,11 @@ required=(
     v0.28.9
     v0.28.10
     v0.28.11
+    v0.28.12
+    v0.28.13
     v0.29.3
     v0.29.4
+    v0.29.5
     v0.30.7
     v0.30.8
     v0.30.9
@@ -116,6 +120,7 @@ required=(
     v0.42.5
     v0.42.6
     v0.42.7
+    v0.43.3
     v0.44.1
     v0.44.2
     v0.44.3
@@ -141,6 +146,9 @@ required=(
     v0.52.5
     v0.52.6
     v0.52.7
+    v0.52.8
+    v0.53.2
+    v0.53.3
     v0.56.0
     v0.56.1
     v0.56.5
@@ -194,6 +202,7 @@ grep -q 'Provider-neutral `DnsUpdateMac` capability' "$plan"
 grep -q 'Provider-neutral key-disposition request' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
+grep -q 'Durable old account-key lifecycle' "$plan"
 grep -q 'Optional RFC 8555 `newAuthz` pre-authorization' "$plan"
 grep -q 'Introduce the dependency-light `vardheim-pkix` crate' "$plan"
 grep -q 'Canonical bounded DER writer' "$plan"
@@ -203,6 +212,9 @@ grep -q 'Private test-only DNSSEC verifier extension' "$plan"
 grep -q 'Private test-only `DnsUpdateMac` implementation' "$plan"
 grep -q 'Strict bounded ASN.1/PKIX time parser' "$plan"
 grep -q 'RFC 5280 distinguished-name equality and normalization' "$plan"
+grep -q 'Strict DER primitive/constructed conformance layer' "$plan"
+grep -q 'X.509 certificate-envelope structural prevalidation' "$plan"
+grep -q 'Durable certificate-key renewal/rotation policy' "$plan"
 grep -q '`CertificateTrustProvider` load/reload contract' "$plan"
 grep -q 'Complete RFC 5280 certificate-policy processing' "$plan"
 grep -q 'Core-to-PKIX evidence bridge' "$plan"
@@ -237,6 +249,7 @@ grep -q 'EDNS query-attempt policy' "$plan"
 grep -q 'UDP DNS source-port and complete response-correlation policy' "$plan"
 grep -q 'Bounded DNS-over-TCP codec and correlation' "$plan"
 grep -q 'Optional RFC 7873/9018 DNS Cookies profile' "$plan"
+grep -q 'Complete bounded authoritative discovery semantics' "$plan"
 grep -q 'Production `std` wall/monotonic clock adapter' "$plan"
 grep -q 'Canonical DNSSEC owner-name and RRset serialization' "$plan"
 grep -q 'Local DS-to-DNSKEY digest and key-tag verification' "$plan"
@@ -251,6 +264,9 @@ grep -q 'TSIG secret lifecycle and rotation' "$plan"
 grep -q 'Production custom issued-certificate trust provider' "$plan"
 grep -q 'Production `PublicPkiFetch` HTTP framing' "$plan"
 grep -q 'Production version-aware CT audit HTTP adapter' "$plan"
+grep -q 'Transport protocol-version and replay-safety contract' "$plan"
+grep -q 'Optional explicit RFC 9113 HTTP/2 ACME transport profile' "$plan"
+grep -q 'Optional explicit RFC 9114 HTTP/3 ACME transport profile' "$plan"
 grep -q 'Explicit and separate capability sets' "$plan"
 grep -q 'Optional default-off migration import' "$plan"
 grep -q 'Reusable key-disposition provider conformance' "$plan"

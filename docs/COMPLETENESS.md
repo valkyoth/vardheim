@@ -53,7 +53,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - strict directory discovery, refresh, origin policy, ToS changes, complete
   `newNonce` acquisition/harvesting, and directory-scoped nonce ownership;
 - account create/recover/adopt/update/orders/rollover/deactivate and EAB, with
-  signer-proven ownership proof for imported accounts;
+  signer-proven ownership proof for imported accounts and durable old/new key
+  disposition after rollover or deactivation;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
   structured problems;
@@ -66,12 +67,14 @@ At `1.0.0`, all of these must work without placeholder success paths:
   construction and per-purpose capability/disposition tables, including
   narrowly purpose-bound legacy verification hashes where standards still
   require them;
-- bounded certificate parsing, strict shared ASN.1/PKIX time handling and RFC
-  5280 DN equality, CSR/key/SAN/profile binding, PKIX path policy, complete RFC
-  5280 policy processing, chain-wide local OCSP/CRL parsing and signature
-  verification, distinct RFC 6962 CT v1 and RFC 9162 CT v2 parsing/signature/
-  Merkle verification, hardened credential-free optional acquisition/AIA,
-  context-bound transient evidence, and server private-key injection refusal;
+- bounded strict DER primitive parsing and X.509 structural prevalidation,
+  shared ASN.1/PKIX time handling and RFC 5280 DN equality, CSR/key/SAN/profile
+  binding, explicit durable renewal key-rotation modes, PKIX path policy,
+  complete RFC 5280 policy processing, chain-wide local OCSP/CRL parsing and
+  signature verification, distinct RFC 6962 CT v1 and RFC 9162 CT v2 parsing/
+  signature/Merkle verification, hardened credential-free optional
+  acquisition/AIA, context-bound transient evidence, and server private-key
+  injection refusal;
 - distinct versioned issued-certificate trust providers for custom/platform
   anchors, additions/removals/distrust, constraints, tenant isolation, and
   reload failure without reusing ACME HTTPS/CT/DNSSEC trust;
@@ -88,7 +91,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
   fencing, cleanup, deployment activation, health verification, rollback, and
   mandatory revalidation rather than restored verification capabilities;
-- async, blocking, embedded/custom transports and explicit crypto/TLS backends;
+- async, blocking, embedded/custom transports and explicit crypto/TLS backends,
+  with explicit HTTP protocol versions, disabled early data, no hidden retry,
+  partitioned connection/session/resolver state, and definite-versus-ambiguous
+  transmission evidence;
 - strict public-PKI HTTP framing, decompression/work budgets, media validation,
   complete-body enforcement, OCSP POST privacy, and tenant/purpose/policy cache
   isolation;
@@ -98,6 +104,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   source ports/socket rotations, complete tuple binding, bounded framed TCP
   correlation, optional DNS Cookies, and RFC 2136 updates authenticated with
   RFC 8945 TSIG;
+- complete authoritative DNS discovery across zone cuts, referrals, AA/SOA
+  semantics, glue, nameserver A/AAAA resolution, CNAME/DNAME synthesis, lame
+  delegations, and unreachable authorities without ambient system resolution;
 - complete local DNSSEC validation including canonical RRsets, DNSKEY/DS/RRSIG,
   chain/time policy, NSEC/NSEC3 denial, trust-anchor rollover, and explicit
   authenticated-resolver evidence policy;
@@ -191,6 +200,9 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   public-PKI framing/cache semantics, RFC 7633 Must-Staple deployment/refresh,
   existing-account adoption, strict ASN.1 time and DN equality, CT Merkle/
   inclusion/split-view monitoring, honest provider-wide key disposition,
+  DER/X.509 structural closure, rollover/deactivation account-key disposition,
+  durable renewal key modes, complete authoritative DNS discovery, explicit
+  HTTP version/replay/early-data policy and HTTP/2/HTTP/3 profiles,
   legacy-key migration, provider capability tables, lifecycle facade methods,
   stable invalidation reasons, OCSP freshness edges, and continuous parser/
   canonicalization fuzzing received tactical versions;
