@@ -45,13 +45,14 @@ The public crate family is intentionally small:
 - `vardheim-rustls`: introduced at `0.51.0` for the concrete rustls boundary.
 
 Heavy provider SDKs, validated cryptographic distributions, hardware/remote
-signers, test servers, CLI, daemon, and agents may be private workspace packages
-or separately published packages when the release plan reaches them. Internal
-account, order, certificate, renewal, policy, persistence, deployment, and
-observation concerns remain modules unless they meet the crate-splitting rule.
-Route 53, Azure DNS, Redis, HTTP frameworks, rustls/OpenSSL, crypto providers,
-and similar ecosystems do not become features of the portable challenge or
-core crates; their packages depend inward on Vardheim semantic types.
+signers, public-PKI fetch implementations, test servers, CLI, daemon, and agents
+may be private workspace packages or separately published packages when the
+release plan reaches them. Internal account, order, certificate, renewal,
+policy, persistence, deployment, and observation concerns remain modules
+unless they meet the crate-splitting rule. Route 53, Azure DNS, Redis, HTTP
+frameworks, rustls/OpenSSL, crypto providers, and similar ecosystems do not
+become features of the portable challenge or core crates; their packages depend
+inward on Vardheim semantic types.
 
 ## Non-Negotiable Engineering Rules
 
@@ -139,6 +140,8 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - provider-neutral digest, signing, verification, entropy, and key-generation
   semantics precede their first JOSE, scheduling, CSR, PKIX, or challenge
   consumer while concrete cryptographic implementations remain later;
+- standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
+  NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - nonce ownership makes reuse unrepresentable where practical; and
 - Kani, differential parsing, fuzzing, and Loom begin with the primitives they
   protect rather than being postponed to final qualification.
@@ -170,14 +173,19 @@ repeat. `newOrder` and other ambiguous outcomes enter reconciliation first.
 
 ## Challenge And Certificate Sequence
 
-Versions `0.26.0` through `0.31.2` implement HTTP-01, introduce
+Versions `0.26.0` through `0.31.3` implement HTTP-01, introduce
 `vardheim-pkix`, place canonical DER writing/reading and shared algorithm
 identifiers before CSR, add isolated test-only real crypto for genuine early
 interoperability, and complete CSR policy, full RFC 5280 path/policy behavior,
-optional OCSP/CRL/CT/AIA acquisition, alternate chains, and the private PKIX
-evidence bridge. Challenge presentation is a transaction: prepare, present,
-visibility barrier, self-check, CA acknowledgement, poll, and owned cleanup.
-Cleanup obligations are persisted; async destruction is never relied upon.
+bounded local OCSP/CRL/SCT parsing and cryptographic verification, credential-
+free public-PKI acquisition, alternate chains, and transient context-bound PKIX
+evidence. Challenge presentation is a transaction: prepare, present, visibility
+barrier, self-check, CA acknowledgement, poll, and owned cleanup. Cleanup
+obligations are persisted; async destruction is never relied upon.
+
+Separate private test verifiers supply genuine pinned status/CT and DNSSEC
+algorithm coverage before production providers exist; neither is shipped or
+presented as a supported backend.
 
 Certificate verification compares:
 
@@ -190,6 +198,12 @@ Certificate verification compares:
 Non-certificate PEM objects are rejected, including server-injected private
 keys.
 
+The no-allocation validation tier receives caller-provided path candidates,
+policy-tree arenas, OCSP/CRL extensions and entries, SCT lists, DNSSEC RRsets,
+chains, and denial-proof workspaces. Capacity exhaustion is a deterministic
+typed result. The `alloc` tier may provide owned convenience wrappers but
+cannot change validation semantics or budgets.
+
 ## Durable Orchestration Sequence
 
 Versions `0.32.0` through `0.39.5` add the pure
@@ -200,6 +214,11 @@ deterministic hostile CA, a test-only loopback transport, a production
 wall/monotonic clock adapter, Pebble integration, historical differential
 replay, existing-certificate adoption, renewal bootstrap, and durable
 multi-issuer migration policy.
+
+Snapshots contain verification audit records and invalidation inputs, never
+live verification capabilities. Restart, migration, root/policy/status/CT/
+algorithm/provider changes, and renewed verification time create a mandatory
+revalidation obligation before deployment or activation.
 
 Every external side effect follows:
 
@@ -224,12 +243,16 @@ Versions `0.40.0` through `0.51.3` implement ARI, durable scheduling,
 certificate/account-key compromise response, certificate retirement,
 key/artifact destruction, inventory reconciliation, post-deployment status
 response, provider-neutral and concrete DNS query behavior, provider adapters,
-the restricted DNS agent, TLS-ALPN-01, and the rustls/OpenSSL adapters.
+the restricted DNS agent, complete local DNSSEC validation, TLS-ALPN-01, and
+the rustls/OpenSSL adapters.
 
-DNS propagation checks query authoritative servers and distinguish secure,
-insecure, bogus, and indeterminate DNSSEC outcomes. Provider record handles
-preserve unrelated TXT data and enable exact cleanup. Heavy AWS and Azure SDKs
-stay outside core dependency graphs.
+DNS propagation checks query authoritative servers and derive secure, insecure,
+bogus, and indeterminate results from canonical RRsets, DNSKEY/DS/RRSIG
+verification, root-to-leaf chains, NSEC/NSEC3 denial, time policy, and explicit
+trust anchors. An unauthenticated AD bit is never evidence; authenticated
+validating-resolver evidence is an explicit policy alternative. Provider record
+handles preserve unrelated TXT data and enable exact cleanup. Heavy AWS and
+Azure SDKs stay outside core dependency graphs.
 
 TLS-ALPN-01 identity construction remains independent from rustls. The rustls
 resolver activates only for matching identifier, exact `acme-tls/1`, and an
@@ -237,11 +260,18 @@ active unexpired owned presentation.
 
 ## Transport And Crypto Sequence
 
-Versions `0.52.0` through `0.66.2` introduce strict transports, async/blocking/
-embedded profiles, purpose-specific key/MAC/sign/verify/generation capabilities,
+Versions `0.52.0` through `0.66.2` introduce strict ACME transports, a separate
+credential-free `PublicPkiFetch` implementation, async/blocking/embedded
+profiles, purpose-specific key/MAC/sign/verify/generation capabilities,
 RustCrypto including EAB HMAC and RSA-PSS, ring, aws-lc-rs, separate AWS-LC
-FIPS, PKCS#11, TPM2, AWS KMS, Azure Key Vault, OpenBao-compatible, and
-remote/offline signing.
+FIPS, purpose-bound legacy verification hashes and DNSSEC algorithms, PKCS#11,
+TPM2, AWS KMS, Azure Key Vault, OpenBao-compatible, and remote/offline signing.
+
+Public PKI fetching may use HTTP or HTTPS according to explicit policy but has
+dedicated configuration and pools, no ACME/cookie/proxy/ambient credentials,
+strict SSRF and cache bounds, and returns only untrusted bytes. OCSP, CRL, AIA,
+certificate, and SCT signatures—not delivery authentication—establish object
+authenticity.
 
 Each provider implements capabilities and is explicitly selected. Provider
 negotiation is:

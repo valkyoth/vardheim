@@ -17,6 +17,7 @@ its returned bytes are still structurally and semantically verified.
 ## Primary Risks
 
 - SSRF or cross-origin credential leakage through directory-controlled URLs;
+- ambient/ACME credential leakage or fabricated trust through public-PKI URLs;
 - JOSE algorithm confusion, nonce reuse, or malformed nested JWS;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - issuance for an unintended identifier or with an unintended key;
@@ -24,6 +25,8 @@ its returned bytes are still structurally and semantically verified.
 - duplicate orders or deployments after ambiguous network outcomes;
 - stale workers activating data after losing a lease;
 - server-injected private keys or mismatched certificate chains;
+- stale/replayed verification records, forged status/CT evidence, or false
+  DNSSEC security from an unauthenticated resolver/AD bit;
 - dependency, CI action, toolchain, or release-process compromise.
 
 ## Out Of Scope

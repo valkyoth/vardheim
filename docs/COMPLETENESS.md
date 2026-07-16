@@ -61,10 +61,12 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - ARI and conservative fallback renewal scheduling;
 - key/CSR generation or external/HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation contracts and
-  explicit concrete-provider construction;
+  explicit concrete-provider construction, including narrowly purpose-bound
+  legacy verification hashes where standards still require them;
 - bounded certificate parsing, CSR/key/SAN/profile binding, PKIX path policy,
-  complete RFC 5280 policy processing, optional OCSP/CRL/CT/AIA acquisition and
-  evidence policy, and server private-key injection refusal;
+  complete RFC 5280 policy processing, local OCSP/CRL/SCT parsing and signature
+  verification, credential-free optional acquisition/AIA, context-bound
+  transient evidence, and server private-key injection refusal;
 - existing-certificate/key/chain adoption, renewal bootstrap, issuer/account
   association, and managed/replacement-required/unmanaged classification;
 - multi-issuer isolation and migration without silent CA failover or
@@ -75,10 +77,14 @@ At `1.0.0`, all of these must work without placeholder success paths:
   removal acknowledgement, overlap policy, inventory reconciliation/export,
   orphan handling, and post-deployment status-driven replacement;
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
-  fencing, cleanup, deployment activation, health verification, and rollback;
+  fencing, cleanup, deployment activation, health verification, rollback, and
+  mandatory revalidation rather than restored verification capabilities;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends;
 - bounded provider-neutral transport and DNS-query interfaces before concrete
   integrations;
+- complete local DNSSEC validation including canonical RRsets, DNSKEY/DS/RRSIG,
+  chain/time policy, NSEC/NSEC3 denial, trust-anchor rollover, and explicit
+  authenticated-resolver evidence policy;
 - memory/filesystem/SQLite/PostgreSQL storage and local/remote deployment;
 - Android Keystore, Apple Keychain/Secure Enclave, Windows CNG/certificate
   store, and optional PKCS#12 interoperability profiles;
@@ -147,6 +153,12 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   and backend trust were made explicit, full RFC 5280 policy/AIA coverage,
   concrete clock/DNS adapters, EAB HMAC/RSA-PSS, certificate retirement and
   reconciliation, and platform key-store adapters received tactical versions;
+- verification evidence was made transient and context-bound, status/CT
+  parsers and local signature verification were assigned, public-PKI fetching
+  was separated from authenticated ACME transport, and complete DNSSEC/NSEC3/
+  trust-anchor validation, genuine early verifier coverage, production
+  purpose-bound legacy/DNSSEC crypto, and no-heap workspaces received tactical
+  versions;
 - Pebble DNS/TLS integrations were moved after their primitives exist;
 - active device-enrollment integrations and identity-controlled validation work
   received versions;

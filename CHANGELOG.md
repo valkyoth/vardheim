@@ -18,6 +18,10 @@ Keep a Changelog and the project follows Semantic Versioning.
   adapters, EAB HMAC and RSA-PSS capability milestones, certificate retirement
   and inventory reconciliation, and Android/Apple/Windows key-store plus
   PKCS#12 interoperability milestones.
+- Added transient context-bound verification evidence, complete local OCSP/CRL/
+  SCT verification, isolated credential-free public-PKI fetching, purpose-bound
+  legacy hashing, complete DNSSEC/NSEC/NSEC3 and trust-anchor validation, and
+  deterministic caller-provided no-heap validation workspaces.
 
 ## 0.3.1 - Unreleased
 

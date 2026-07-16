@@ -7,12 +7,14 @@
 | JOSE | typed payloads, explicit algorithms, exact `jwk`/`kid` exclusivity |
 | Nonces | per-directory bounded queues and destructive take semantics |
 | URLs | trusted origins, no signed-request redirect, SSRF policy |
+| Public PKI fetch | isolated credential-free transport; untrusted bytes require local verification |
 | Issuers | explicit directory identity and selection; no credential crossover or silent failover |
 | Secrets | redacted formatting, role separation, minimum retention |
 | Workflow | valid transitions only, persisted effects, reconciliation |
 | Challenges | ownership receipts, self-check, durable cleanup |
 | Certificates | key/SAN/profile/chain checks before deployment |
-| PKIX evidence | private constructors in PKIX; facade-only reducer translation |
+| PKIX evidence | private, context-bound, non-serializable capabilities; facade-only reducer translation |
+| DNSSEC | local chain/signature/denial validation; no unauthenticated AD trust |
 | Adoption | validate key/chain/issuer/account/provenance before managed status |
 | Compromise | suspend affected key roles, explicit emergency replacement and revocation |
 | Retirement | acknowledged target removal, fenced overlap, evidenced key/artifact disposition |

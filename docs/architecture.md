@@ -39,11 +39,35 @@ bounded observations and cannot construct verified workflow events directly.
 Core therefore remains independent from PKIX while deployment still requires
 positive certificate evidence.
 
+Verification evidence is validation-session-bound and transient. It binds the
+input hashes, intent/CSR, policy and trust-anchor identities, verification time,
+validity deadline and clock epoch, status/CT inputs, and crypto-provider
+capabilities. It is never deserialized or restored from workflow state.
+Persisted verification records are audit facts; restart or any bound-context
+change requires local revalidation before deployment or activation.
+
 Caller-supplied transport, signer, verifier, clock, store, DNS, and deployment
 implementations are part of the application's trusted computing base. Vardheim
 types prevent accidental category/purpose misuse and validate observations at
 their boundaries, but cannot make a deliberately malicious implementation
 truthful.
+
+## Public PKI Fetch Boundary
+
+OCSP, CRL, AIA, CT-list, and related public PKI downloads use a dedicated
+`PublicPkiFetch` boundary, never authenticated ACME transport. It has no ambient
+credentials, cookies, ACME headers, or proxy authentication; applies explicit
+scheme, address, redirect, cache, body, and deadline policy; and returns only
+untrusted bytes. Local certificate/status/CT signature verification establishes
+authenticity.
+
+## No-Heap Validation Workspaces
+
+The strict `no_std` tier accepts caller-provided storage for PKIX path
+candidates, RFC 5280 policy trees, OCSP/CRL extensions and entries, SCT lists,
+DNSSEC RRsets/chains, and NSEC/NSEC3 proofs. Exhaustion is deterministic and
+typed. Optional `alloc` wrappers own these workspaces without changing
+validation rules or capacity accounting.
 
 ## Security Invariants
 
@@ -55,6 +79,9 @@ truthful.
 - Account, certificate, EAB, challenge, audit, and storage keys have separate
   roles and lifecycles.
 - A certificate cannot be deployed before structural and policy verification.
+- Verification capabilities cannot be serialized, replayed across contexts, or
+  restored after restart as current proof.
+- Public PKI fetch results and unauthenticated DNS AD bits are never evidence.
 - Challenge cleanup removes only the presentation owned by that workflow.
 - External effects use persist-before-effect and reconciliation semantics.
 - Feature unification never silently chooses a cryptographic or TLS backend.

@@ -22,6 +22,13 @@ expectation, applicability range, content hash, and first/last release metadata.
 Secrets, account identifiers, private keys, tokens, and uncontrolled personal
 or provider data must never enter retained evidence.
 
+Verification capabilities are not evidence artifacts and must never be
+serialized into a retained snapshot. A snapshot may retain redacted
+verification audit records and the hashes/versions needed to decide that
+revalidation is required. Replay after restart or a policy, trust-anchor,
+status, CT-list, algorithm, provider-capability, time, or input change must
+perform local verification again before deployment or activation.
+
 ## Replay Rules
 
 Normal CI is deterministic and offline. It replays every historical evidence
@@ -60,7 +67,9 @@ The release comparison gate covers:
 
 - Rust public API and feature resolution against the latest published release;
 - normalized ACME wire behavior and typed error/security decisions;
-- every supported historical persisted snapshot and migration chain;
+- every supported historical persisted snapshot and migration chain, including
+  proof that verification capabilities are absent and stale audit records
+  trigger revalidation;
 - provider observations without encoding undocumented quirks as standards;
 - target/profile compile and runtime evidence;
 - formal-model traces and generated adversarial cases; and
@@ -74,7 +83,7 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.4.3`, `0.4.4`,
-`0.33.3`, `0.39.2`, `0.69.3`, `0.92.6`, `0.97.3`, `0.119.0`, and `0.119.1` in
-[the release plan](RELEASE_PLAN.md). Release binding itself is assigned to
-`0.3.3`. Each boundary receives its own complete test suite and mandatory
-pentest stop.
+`0.33.3`, `0.33.4`, `0.39.2`, `0.69.3`, `0.92.6`, `0.97.3`, `0.119.0`, and
+`0.119.1` in [the release plan](RELEASE_PLAN.md). Release binding itself is
+assigned to `0.3.3`. Each boundary receives its own complete test suite and
+mandatory pentest stop.
