@@ -26,8 +26,9 @@ Validation, signer/secret binding, signer/MAC request-admission, signature/MAC
 verification, provider assertion/attestation, and effect-authority capabilities
 are not evidence artifacts and must never be serialized into a retained
 snapshot. `SecretBindingAttempt`, `BoundMacKey`, `MacConsumerAdmission`,
-`VerifiedMac`, `ProviderAssertedMac`, and `CryptographicallyAttestedMac` are
-explicitly forbidden. A snapshot may retain lifecycle/inventory facts,
+live `EabAccountCreationAttempt` typestates, `VerifiedMac`,
+`ProviderAssertedMac`, and `CryptographicallyAttestedMac` are explicitly
+forbidden. A snapshot may retain lifecycle/inventory facts,
 orthogonal obligation sets, redacted audit records, and the hashes/versions
 needed to decide that reconstruction is required. Durable `Active` means
 lifecycle eligibility, not present authority. Replay after restart or a
@@ -118,8 +119,9 @@ The release comparison gate covers:
   authenticated-peer/cryptographic-attestation/provider-assertion/unverified
   content-binding modes, private single-use `SecretBindingAttempt` confinement,
   exact local transcript and peer-effect binding, stable attempt/effect IDs,
-  non-mutating/mutating classification, authenticated `DefinitelyUnsent`/
-  `Succeeded`/`Rejected`/`Ambiguous`/`Unavailable` decisions, persist-before-
+  non-mutating/mutating classification, orthogonal `DispatchKnowledge ×
+  OperationOutcome × BindingEvidence × ObservationStatus`, authenticated
+  definitely-unsent/success/rejection/binding/mismatch evidence, persist-before-
   effect ordering, EAB account/result coupling, TSIG probe preference and
   UPDATE ownership/rollback/reconciliation, source-secret retention/destruction
   ordering, wrong-secret and cross-directory/zone import, lost/duplicate
@@ -129,6 +131,17 @@ The release comparison gate covers:
   replay, one-time EAB disposition, capability-free snapshots, fencing,
   cleanup/disposition ambiguity, no absence-as-destruction, no blind retry, and
   no bare-handle activation;
+- composed EAB account creation across canonical intent/contacts/ToS,
+  directory/URL, account JWK and immutable signer session, EAB key/secret
+  version/algorithm, exact inner JWS and positive MAC evidence, outer nonce/JWS
+  input/admission/`VerifiedSignature`, attempt/request/effect IDs, and final
+  HTTP bytes/digest; consumed `Prepared`/`InnerMacVerified`/
+  `OuterSignatureVerified`/`OutboxCommitted`/`Dispatched`/`Reconciled`
+  transitions; failure between every inner/outer/durable boundary; no evidence
+  stitching, old-MAC/new-nonce reuse, committed-request rebuilding, blind
+  may-have-dispatched resend, binding-failure inflation from operation
+  rejection, capability serialization, or repeated result application; and
+  full fresh assembly after authenticated `badNonce`;
 - transactional generation/import/migration/platform-adoption states, stable
   request/idempotency identities, lifecycle-state/obligation-set products,
   quarantine, active-as-eligibility semantics, fresh-session authority
@@ -167,8 +180,8 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.4.3`, `0.4.4`,
-`0.33.3`, `0.33.4`, `0.33.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
-`0.97.3`, `0.119.0`, and `0.119.1` in
+`0.33.3`, `0.33.4`, `0.33.5`, `0.33.6`, `0.37.5`, `0.39.2`, `0.56.12`,
+`0.69.3`, `0.92.6`, `0.97.3`, `0.119.0`, and `0.119.1` in
 [the release plan](RELEASE_PLAN.md). Release binding itself is assigned to
 `0.3.3`. Each boundary receives its own complete test suite and mandatory
 pentest stop.

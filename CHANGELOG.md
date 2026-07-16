@@ -103,13 +103,21 @@ Keep a Changelog and the project follows Semantic Versioning.
   symmetric-secret onboarding milestones through `v0.66.5`.
 - Added `v0.10.19`-`v0.10.20` to break the `PeerConfirmed` quarantine cycle
   with private single-use `SecretBindingAttempt`, exact local/peer ceremony
-  confinement, stable peer-effect identities, authenticated result classes,
-  and explicit non-mutating-versus-mutating semantics.
+  confinement, stable peer-effect identities, authenticated observations, and
+  explicit non-mutating-versus-mutating semantics.
 - Added `v0.33.5` durable peer-binding outbox/reconciliation and `v0.56.12`
   provider conformance, including lost EAB account success, duplicate-account
   prevention, ambiguous TSIG DNS UPDATE ownership/rollback, source-secret
   retention, and restart rules that never automatically repeat a mutating peer
   ceremony.
+- Added `v0.10.21` to replace flat peer results with orthogonal dispatch,
+  operation, binding-evidence, and observation state plus an explicit recovery
+  matrix that permits only wholly fresh attempts after positive unsent proof.
+- Added `v0.16.4` composed EAB account-creation typestate, `v0.33.6` durable
+  exact-request execution/recovery, and `v0.37.5` cross-adapter conformance to
+  prevent inner/outer evidence stitching, committed-request rebuilding,
+  partial crash restoration, incomplete `badNonce` rebuilds, and repeated
+  success application.
 - Renamed ordinary opaque MAC verification evidence to
   `ProviderAssertedMac`; reserved `CryptographicallyAttestedMac` for verified
   signed/native replay-protected receipts bound to the complete operation

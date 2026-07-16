@@ -227,13 +227,61 @@ Peer confirmation is an external effect, not necessarily a harmless check.
 Every typed peer effect has a stable effect identity and exact request digest,
 peer/security profile, mutation class, reconciliation key, authenticated
 success/rejection evidence contract, and affected account or DNS resource.
-Results distinguish `DefinitelyUnsent`, `Succeeded`, `Rejected`, `Ambiguous`,
-and `Unavailable`. Only authenticated request-bound peer evidence proves
-success or rejection; unauthenticated errors do not. Any sent-or-maybe-sent
-request without conclusive evidence is ambiguous and is never blindly retried.
+Outcomes are the product `DispatchKnowledge × OperationOutcome ×
+BindingEvidence × ObservationStatus`, not an interchangeable flat enum.
+Dispatch knowledge preserves not-started, positively definitely-unsent,
+committed-but-not-dispatched, may-have-dispatched, and positively dispatched
+facts. Operation success/rejection is independent from purpose-specific peer
+confirmation/content mismatch, and observation or reconciler unavailability
+cannot erase either axis. Only authenticated request-bound, purpose-specific
+peer evidence proves success, rejection, binding, or mismatch;
+unauthenticated errors do not. A rate limit, contact/ToS rejection,
+`badNonce`, or DNS `REFUSED` changes only the axes it proves. Any
+sent-or-maybe-sent request without conclusive evidence is ambiguous and is
+never blindly retried.
 EAB account creation may jointly establish peer binding and durable account
 state. TSIG prefers an authenticated non-mutating probe; a mutating DNS UPDATE
 must carry ownership, rollback/cleanup, duplicate, and reconciliation rules.
+
+The recovery boundary is exact:
+
+| Boundary | Permitted recovery |
+| --- | --- |
+| Before provider MAC dispatch | Close with positive unsent evidence and mint a wholly new attempt. |
+| MAC consumed, no outbox envelope | Prove peer dispatch was impossible, discard transient artifacts, and start fresh. |
+| Exact envelope committed, dispatch not started | Send only the committed bytes; never rebuild or re-sign. |
+| Dispatch started or may have started | Preserve ambiguity and reconcile; never resend blindly. |
+| Authenticated `badNonce` | Record operation rejection without secret mismatch and rebuild the complete EAB attempt with fresh identities. |
+| Authenticated account success | Commit account, peer binding, and obligations before disposition. |
+
+Positive definitely-unsent evidence authorizes creation of a new capability,
+never restoration or reuse of the consumed one.
+
+EAB account creation composes both authentication layers in one consumed
+typestate rather than collecting independent evidence:
+
+```text
+EabAccountCreationAttempt
+
+Prepared
+  -> InnerMacVerified
+  -> OuterSignatureVerified
+  -> OutboxCommitted
+  -> Dispatched
+  -> Reconciled
+```
+
+Every state binds the canonical account intent, contacts, ToS agreement,
+directory and exact `newAccount` URL, account JWK and immutable signer/session,
+EAB key ID and immutable secret version, algorithms, complete inner JWS,
+outer nonce/signing input/admission, bootstrap/account/outbox identities, and
+final HTTP bytes/digest. Positive purpose-matching MAC evidence alone advances
+the inner state; `VerifiedSignature` over the exact complete outer input alone
+advances the outer state. The peer effect cannot execute before that outer
+request is locally verified and durably committed. Evidence, inner JWS values,
+nonces, identities, and states cannot cross attempts. Authenticated `badNonce`
+consumes the complete attempt and rebuilds both layers with fresh identities;
+it does not prove an EAB-secret mismatch.
 
 Durable execution commits the binding-attempt intent before privileged
 provider MAC dispatch and commits the exact peer-effect envelope to the outbox
@@ -255,10 +303,10 @@ and is not reconstructed.
 Snapshots may retain lifecycle state, obligations, binding-mode/profile
 identifiers, redacted receipt digests, and durable peer-effect/reconciliation
 facts. They never contain or restore `SecretBindingAttempt`, `BoundMacKey`,
-`MacConsumerAdmission`, `VerifiedMac`,
-`ProviderAssertedMac`, `CryptographicallyAttestedMac`, or any other MAC effect
-capability. Restart, provider/session/policy/health change, object
-restore/recreation, alias/version retargeting, peer-trust change, or assurance
+`MacConsumerAdmission`, live `EabAccountCreationAttempt` typestates,
+`VerifiedMac`, `ProviderAssertedMac`, `CryptographicallyAttestedMac`, or any
+other MAC effect capability. Restart, provider/session/policy/health change,
+object restore/recreation, alias/version retargeting, peer-trust change, or assurance
 profile change requires fresh reconstruction; unavailable reconstruction
 leaves the secret eligible but unusable.
 
@@ -459,6 +507,16 @@ workspaces without changing validation rules or capacity accounting.
   incompletely bound native signatures cannot prove a signer handle is bound.
 - Signer success, failure, cancellation, ambiguity, `badNonce`, and ambiguous
   network transmission never restore or reuse a consumed request admission.
+- EAB account creation cannot stitch inner MAC evidence, outer signature
+  evidence, a nonce, signer session, JWK, account intent, directory, or effect
+  identity from different attempts; every typestate transition consumes its
+  predecessor and only exact verified outer bytes may enter the outbox.
+- Peer-effect dispatch knowledge, operation outcome, binding evidence, and
+  observation availability are orthogonal; operation rejection or observer
+  unavailability cannot fabricate secret mismatch or definitely-unsent proof.
+- A committed EAB envelope is dispatched byte-for-byte without rebuilding; a
+  may-have-dispatched envelope reconciles without blind resend, while positive
+  definitely-unsent evidence permits only an entirely new attempt.
 - Invalidation before dispatch blocks signing; a racing or post-dispatch
   invalidation stays ambiguous without positive provider evidence and requires
   an entirely new validated/bound/request-admitted attempt.

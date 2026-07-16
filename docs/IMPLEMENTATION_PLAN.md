@@ -141,8 +141,8 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   public-key-validation, domain-separated `BoundSigner`, and local
   exact-request admission, separate transactional asymmetric-key and symmetric-
   secret onboarding/content binding, narrow quarantined secret-binding
-  bootstrap, peer-effect classification/reconciliation, safe live signer/MAC-
-  authority reconstruction, immutable dispatch, and verified signature/MAC
+  bootstrap, orthogonal peer-effect outcomes/reconciliation, safe live signer/
+  MAC-authority reconstruction, immutable dispatch, and verified signature/MAC
   evidence semantics precede their first JOSE, scheduling, account-adoption,
   CSR, PKIX, DNS update, or challenge consumer while concrete cryptographic
   implementations remain later;
@@ -254,20 +254,55 @@ provider dispatch without restoration after any outcome.
 
 Peer confirmation uses a stable external-effect identity and exact immutable
 request digest, peer/security profile, mutation class, reconciliation key,
-affected account or DNS resource, and authenticated evidence contract. Results
-are `DefinitelyUnsent`, `Succeeded`, `Rejected`, `Ambiguous`, or `Unavailable`.
-Unauthenticated errors never prove rejection, sent-or-maybe-sent effects
-without conclusive evidence remain ambiguous, and ambiguous effects are never
-blindly retried. EAB account success can jointly commit peer binding and
-durable account state. TSIG prefers authenticated non-mutating probes; a
+affected account or DNS resource, and authenticated evidence contract. State
+is `DispatchKnowledge × OperationOutcome × BindingEvidence ×
+ObservationStatus`, not a flat result enum. Dispatch knowledge, operation
+success/rejection, purpose-specific peer confirmation/content mismatch, and
+observation availability change independently. Unauthenticated errors prove
+none of those security facts; `badNonce`, rate/contact/ToS rejection, and DNS
+`REFUSED` do not imply secret mismatch; observation unavailability cannot turn
+a may-have-dispatched effect into a definitely-unsent one. Ambiguous effects
+are never blindly retried. EAB account success can jointly commit peer binding
+and durable account state. TSIG prefers authenticated non-mutating probes; a
 mutating UPDATE must define ownership, duplicate behavior, rollback/cleanup,
 and reconciliation.
+
+Recovery follows one table. Before provider MAC dispatch, close with positive
+unsent evidence and mint a wholly new attempt. After MAC consumption but before
+any outbox envelope, prove network dispatch was impossible, discard transient
+artifacts, and start fresh. Dispatch a committed envelope exactly as stored
+without rebuilding or re-signing. Once dispatch starts or may have started,
+reconcile and do not resend. A new attempt after positive definitely-unsent
+evidence is not restoration or reconstruction of the consumed capability.
+
+EAB uses one consumed `EabAccountCreationAttempt` typestate:
+
+```text
+Prepared -> InnerMacVerified -> OuterSignatureVerified
+         -> OutboxCommitted -> Dispatched -> Reconciled
+```
+
+It immutably joins account intent/contacts/ToS, directory and exact
+`newAccount` URL, account JWK and signer identity/session, EAB key ID and
+secret identity/version/algorithm, inner protected header/payload/positive MAC
+evidence, outer nonce/signing input/admission/verified signature,
+bootstrap/account/outbox identities, and final HTTP bytes/digest. Each
+transition consumes its predecessor. Only purpose-matching positive MAC
+evidence completes the inner JWS; only `VerifiedSignature` over the exact
+complete outer input completes the outer JWS; only a durable commit makes the
+effect executable. No field or evidence can be stitched across attempts.
+Authenticated `badNonce` consumes the whole attempt and rebuilds both layers
+with fresh nonce, bootstrap, MAC, admission, request, effect, and outbox
+identities.
 
 Durable orchestration commits binding-attempt intent before privileged provider
 MAC dispatch and the exact peer-effect envelope before network dispatch.
 Attempt consumption, outbox/transmission state, account or DNS mutation,
 binding evidence, source-secret retention/destruction, lifecycle, and
-obligations are ordered and fenced.
+obligations are ordered and fenced. Live EAB typestates and evidence are never
+serialized; before outbox commit only redacted phase facts/digests persist,
+then the complete verified request bytes become the immutable outbox payload.
+Result application is once-only.
 
 Every process/provider session reconstructs reusable MAC authority by resolving
 the exact immutable secret identity/version and performing a fresh safe
@@ -448,10 +483,11 @@ Versions `0.32.0` through `0.39.5` add the pure
 command/state/policy/event reducer, typed effects and positive evidence,
 snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
-deployment, public APIs, reusable adapter conformance, a deterministic hostile
-CA, a test-only loopback transport, a production wall/monotonic clock adapter,
-Pebble integration, historical differential replay, existing-certificate
-adoption, renewal bootstrap, and durable multi-issuer migration policy.
+composed-EAB execution, transactional deployment, public APIs, reusable adapter
+and composed-effect conformance, a deterministic hostile CA, a test-only
+loopback transport, a production wall/monotonic clock adapter, Pebble
+integration, historical differential replay, existing-certificate adoption,
+renewal bootstrap, and durable multi-issuer migration policy.
 
 Snapshots contain lifecycle/inventory facts, orthogonal obligation sets, audit
 records, durable peer-effect state, and invalidation inputs, never live
@@ -616,6 +652,12 @@ session reconstruction without mutating-effect replay. A provider that
 supports MAC operations but no admitted onboarding/binding/bootstrap mode
 remains unusable for new or adopted secrets rather than accepting a bare
 handle.
+Every EAB-capable signer/MAC/transport/store/executor combination passes the
+shared composed-effect suite: exact identity/digest binding across both JWS
+layers, consumed typestates, positive evidence at each transition, orthogonal
+outcome preservation, committed-byte dispatch, complete `badNonce` rebuild,
+fenced reconciliation, once-only application, capability-free persistence,
+and no provider or transport fallback.
 Native pairwise consistency or the narrow canonical `bind_signer` operation
 establishes binding; all request admissions are then minted locally and
 consumed before immutable-identity signer dispatch and local output

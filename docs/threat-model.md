@@ -66,6 +66,18 @@ its returned bytes are still structurally and semantically verified.
   retried; ambiguous DNS ownership or rollback; source destruction before
   durable reconciliation; or restart automatically repeating a mutating peer
   ceremony or reconstructing live authority from historical confirmation;
+- stitching an EAB MAC from one bootstrap/secret/account intent to another
+  account JWK, directory, contacts/ToS payload, nonce, signer session, request,
+  outbox effect, or outer JWS; executing before both inner MAC and outer
+  signature have exact positive evidence and durable commit; rebuilding signed
+  bytes after outbox commit; combining old MAC evidence with a fresh nonce;
+  restoring a partial typestate after crash; or applying account success more
+  than once;
+- flattening dispatch knowledge, account/DNS operation outcome, secret-binding
+  evidence, and observer availability so `badNonce`, rate/contact/ToS rejection,
+  DNS `REFUSED`, or reconciliation outage fabricates secret mismatch,
+  definitely-unsent proof, retry permission, or loss of may-have-dispatched
+  state;
 - generated, imported, migrated, or adopted keys becoming active before
   reconciliation, public-key validation, and signer binding; duplicate keys
   after lost responses or restart; or cleanup/lookup ambiguity being treated

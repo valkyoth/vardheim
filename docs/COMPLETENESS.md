@@ -58,8 +58,11 @@ At `1.0.0`, all of these must work without placeholder success paths:
   imported accounts, and durable old/new key disposition after rollover or
   deactivation; EAB additionally requires immutable secret-version binding,
   transactional secret onboarding/content binding, narrow quarantined
-  secret-binding attempts, durable account-creation peer-effect reconciliation,
-  safe authority reconstruction without repeating account mutation,
+  secret-binding attempts, orthogonal dispatch/operation/binding/observation
+  outcomes, a consumed composed inner-MAC/outer-signature account-creation
+  typestate, durable exact-request peer-effect reconciliation, complete fresh
+  assembly after `badNonce`, safe authority reconstruction without repeating
+  account mutation,
   exact-input single-use MAC admission, and purpose-specific positive evidence
   with independently verified, provider-asserted, and genuinely
   cryptographically attested assurance kept distinct;
@@ -82,8 +85,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   `VerifiedMac` versus `ProviderAssertedMac` versus
   `CryptographicallyAttestedMac`, separate transactional asymmetric-key and
   symmetric-secret onboarding, typed secret-content binding, private
-  single-use `SecretBindingAttempt`, exact peer-effect/result typing,
-  capability-free snapshots, safe signer/MAC authority reconstruction, and
+  single-use `SecretBindingAttempt`, orthogonal peer-effect outcome typing,
+  evidence-stitching-resistant EAB composition, capability-free snapshots,
+  safe signer/MAC authority reconstruction, and
   honest disposition/reconciliation contracts with explicit concrete-provider
   construction and
   per-purpose capability/validation/binding/onboarding/reconstruction/
@@ -246,10 +250,12 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   weaker-assurance policy, and no secret export or fallback across software,
   HSM, KMS, secret-manager, and remote providers; transactional symmetric-
   secret onboarding/content binding, quarantine, narrow local/peer bootstrap,
-  persist-before-effect account/DNS confirmation, authenticated result
-  classification, no blind ambiguous retry, source-secret destruction
-  obligations, capability-free snapshots, and restart reconstruction that
-  never automatically repeats a mutating peer ceremony;
+  persist-before-effect account/DNS confirmation, orthogonal authenticated
+  dispatch/operation/binding/observation classification, composed EAB
+  inner/outer typestate and exact committed-byte execution, full `badNonce`
+  rebuild, no blind ambiguous retry or duplicate result application, source-
+  secret destruction obligations, capability-free snapshots, and restart
+  reconstruction that never automatically repeats a mutating peer ceremony;
   explicit verified-signature propagation into CSR, TLS-ALPN, authority-token,
   and signed-audit effects;
   transactional generation/import/migration/platform adoption with quarantine,
