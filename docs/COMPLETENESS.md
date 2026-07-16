@@ -61,12 +61,14 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - ARI and conservative fallback renewal scheduling;
 - key/CSR generation or external/HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation contracts and
-  explicit concrete-provider construction, including narrowly purpose-bound
-  legacy verification hashes where standards still require them;
+  explicit concrete-provider construction with per-purpose capability tables,
+  including narrowly purpose-bound legacy verification hashes where standards
+  still require them;
 - bounded certificate parsing, CSR/key/SAN/profile binding, PKIX path policy,
-  complete RFC 5280 policy processing, local OCSP/CRL/SCT parsing and signature
-  verification, credential-free optional acquisition/AIA, context-bound
-  transient evidence, and server private-key injection refusal;
+  complete RFC 5280 policy processing, chain-wide local OCSP/CRL parsing and
+  signature verification, distinct RFC 6962 CT v1 and RFC 9162 CT v2 parsing/
+  verification, hardened credential-free optional acquisition/AIA, context-
+  bound transient evidence, and server private-key injection refusal;
 - distinct versioned issued-certificate trust providers for custom/platform
   anchors, additions/removals/distrust, constraints, tenant isolation, and
   reload failure without reusing ACME HTTPS/CT/DNSSEC trust;
@@ -84,15 +86,22 @@ At `1.0.0`, all of these must work without placeholder success paths:
   fencing, cleanup, deployment activation, health verification, rollback, and
   mandatory revalidation rather than restored verification capabilities;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends;
+- strict public-PKI HTTP framing, decompression/work budgets, media validation,
+  complete-body enforcement, OCSP POST privacy, and tenant/purpose/policy cache
+  isolation;
 - bounded provider-neutral transport and DNS-query interfaces before concrete
   integrations;
-- complete EDNS(0) query mechanics, fresh per-attempt transaction IDs, bounded
-  UDP/TCP fallback, and RFC 2136 updates authenticated with RFC 8945 TSIG;
+- complete EDNS(0) query mechanics, fresh per-attempt transaction IDs and UDP
+  source ports/socket rotations, complete tuple binding, bounded framed TCP
+  correlation, optional DNS Cookies, and RFC 2136 updates authenticated with
+  RFC 8945 TSIG;
 - complete local DNSSEC validation including canonical RRsets, DNSKEY/DS/RRSIG,
   chain/time policy, NSEC/NSEC3 denial, trust-anchor rollover, and explicit
   authenticated-resolver evidence policy;
 - optional RFC 7633 TLS Feature/Must-Staple verification, fresh OCSP activation
   gating, atomic certificate/key/staple generations, and durable refresh;
+- bounded optional PKCS#1/SEC1 migration import into PKCS#8/opaque lifecycles,
+  with no legacy export;
 - memory/filesystem/SQLite/PostgreSQL storage and local/remote deployment;
 - Android Keystore, Apple Keychain/Secure Enclave, Windows CNG/certificate
   store, and optional PKCS#12 interoperability profiles;
@@ -168,8 +177,11 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   trust-anchor validation, genuine early verifier coverage, production
   purpose-bound legacy/DNSSEC crypto, and no-heap workspaces received tactical
   versions;
-- EDNS query mechanics, RFC 8945 TSIG sequencing, issued-certificate trust
-  providers, RFC 7633 Must-Staple deployment/refresh, lifecycle facade methods,
+- EDNS query mechanics, source-port/full-tuple correlation, DNS TCP framing and
+  Cookies, RFC 8945 TSIG sequencing, issued-certificate trust providers,
+  distinct CT v1/v2 profiles, chain-wide OCSP and acquisition privacy, hardened
+  public-PKI framing/cache semantics, RFC 7633 Must-Staple deployment/refresh,
+  legacy-key migration, provider capability tables, lifecycle facade methods,
   stable invalidation reasons, OCSP freshness edges, and continuous parser/
   canonicalization fuzzing received tactical versions;
 - Pebble DNS/TLS integrations were moved after their primitives exist;

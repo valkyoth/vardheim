@@ -26,6 +26,11 @@ Keep a Changelog and the project follows Semantic Versioning.
   issued-certificate trust providers, RFC 7633 Must-Staple deployment/refresh,
   lifecycle facade coverage, stable verification invalidation reasons, OCSP
   freshness edges, and continuous DNS/PKIX parser fuzz targets.
+- Added DNS source-port/full-tuple correlation, bounded DNS-over-TCP framing,
+  optional DNS Cookies, separate CT v1/v2 profiles, complete OCSP responder and
+  chain-status semantics, privacy-safe OCSP acquisition, hardened public-PKI
+  HTTP framing/cache partitioning, legacy-key migration, and ring/aws-lc
+  per-purpose capability milestones.
 
 ## 0.3.1 - Unreleased
 

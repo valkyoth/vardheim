@@ -181,11 +181,15 @@ Versions `0.26.0` through `0.31.3` implement HTTP-01, introduce
 `vardheim-pkix`, place canonical DER writing/reading and shared algorithm
 identifiers before CSR, add isolated test-only real crypto for genuine early
 interoperability, and complete CSR policy, full RFC 5280 path/policy behavior,
-bounded local OCSP/CRL/SCT parsing and cryptographic verification, credential-
+bounded local OCSP/CRL/CT parsing and cryptographic verification, credential-
 free public-PKI acquisition, alternate chains, and transient context-bound PKIX
-evidence. Challenge presentation is a transaction: prepare, present, visibility
-barrier, self-check, CA acknowledgement, poll, and owned cleanup. Cleanup
-obligations are persisted; async destruction is never relied upon.
+evidence. RFC 6962 CT v1 SCTs and RFC 9162 CT v2 `TransItem` evidence use
+separate bounded types, log identities, signature inputs, precertificate
+reconstruction, log-list capabilities, and verification results; no conversion
+or fallback crosses versions. Challenge presentation is a transaction: prepare,
+present, visibility barrier, self-check, CA acknowledgement, poll, and owned
+cleanup. Cleanup obligations are persisted; async destruction is never relied
+upon.
 
 Separate private test verifiers supply genuine pinned status/CT and DNSSEC
 algorithm coverage before production providers exist; neither is shipped or
@@ -204,10 +208,18 @@ Non-certificate PEM objects are rejected, including server-injected private
 keys.
 
 The no-allocation validation tier receives caller-provided path candidates,
-policy-tree arenas, OCSP/CRL extensions and entries, SCT lists, DNSSEC RRsets,
-chains, and denial-proof workspaces. Capacity exhaustion is a deterministic
-typed result. The `alloc` tier may provide owned convenience wrappers but
-cannot change validation semantics or budgets.
+policy-tree arenas, OCSP/CRL extensions and entries, CT v1 SCT lists, CT v2
+`TransItem` collections, DNSSEC RRsets, chains, and denial-proof workspaces.
+Capacity exhaustion is a deterministic typed result. The `alloc` tier may
+provide owned convenience wrappers but cannot change validation semantics or
+budgets.
+
+OCSP verification classifies `nocheck`, archive-cutoff, extended-revoke, and
+other RFC 6960 extensions explicitly. Leaf and intermediate status requirements
+are independently configurable, delegated-responder recursion is bounded, and
+an uncheckable responder certificate cannot silently satisfy a required status
+policy. OCSP acquisition can require POST and partitions caches by request body,
+tenant, purpose, privacy policy, and policy version.
 
 ## Durable Orchestration Sequence
 
@@ -266,10 +278,14 @@ handles preserve unrelated TXT data and enable exact cleanup. Heavy AWS and
 Azure SDKs stay outside core dependency graphs.
 
 DNS queries construct and parse bounded EDNS(0), request DNSSEC material with
-DO, use fresh unpredictable transaction IDs for every attempt, bind responses
-to the exact server/source/transport/question, avoid fragmented UDP, and retry
-truncated responses over TCP. EDNS fallback cannot silently remove semantics
-required by local DNSSEC validation.
+DO, use fresh unpredictable transaction IDs and UDP source ports/socket
+rotations for every attempt, and bind responses to the complete local/remote
+tuple, server, transport, question, and attempt. Truncated responses retry with
+a fresh ID over a bounded RFC 7766 two-byte-framed TCP codec that handles
+partial and out-of-order frames. Optional RFC 7873/9018 DNS Cookies are
+server-scoped defense in depth and never replace tuple correlation, DNSSEC, or
+TSIG. EDNS fallback cannot silently remove semantics required by local DNSSEC
+validation.
 
 RFC 2136 UPDATE and RFC 8945 TSIG are first implemented against provider-neutral
 contracts and genuine private test cryptography. The production adapter is
@@ -297,12 +313,25 @@ KMS, Azure Key Vault, OpenBao-compatible, and remote/offline signing.
 
 Public PKI fetching may use HTTP or HTTPS according to explicit policy but has
 dedicated configuration and pools, no ACME/cookie/proxy/ambient credentials,
-strict SSRF and cache bounds, and returns only untrusted bytes. OCSP, CRL, AIA,
-certificate, and SCT signatures—not delivery authentication—establish object
-authenticity.
+strict SSRF and cache bounds, and returns only untrusted bytes. Decompression is
+disabled by default or has independent encoded/decoded/work budgets; HTTP
+framing rejects CL/TE ambiguity, incomplete bodies, excessive chunks/trailers/
+informational responses, and wrong purpose-specific media types. Cache identity
+includes URL, method, request-body digest, tenant, purpose, policy, trust, and
+privacy context. OCSP, CRL, AIA, certificate, and CT signatures—not delivery
+authentication—establish object authenticity.
 
-Each provider implements capabilities and is explicitly selected. Provider
-negotiation is:
+Platform issued-trust adapters preserve platform constraints, distrust, and
+scope or return typed unsupported; flattening roots into DER never implies
+native-equivalent trust. Optional migration import accepts bounded PKCS#1 RSA
+and SEC1 EC keys only to validate and convert them into PKCS#8 or an opaque
+provider lifecycle, and never exports legacy formats.
+
+Each provider implements capabilities and is explicitly selected. ring,
+aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
+CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
+and legacy verification hashes. Unsupported purposes are typed and never
+inferred from an algorithm name. Provider negotiation is:
 
 ```text
 local key capabilities

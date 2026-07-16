@@ -63,8 +63,11 @@ truthful.
 OCSP, CRL, AIA, CT-list, and related public PKI downloads use a dedicated
 `PublicPkiFetch` boundary, never authenticated ACME transport. It has no ambient
 credentials, cookies, ACME headers, or proxy authentication; applies explicit
-scheme, address, redirect, cache, body, and deadline policy; and returns only
-untrusted bytes. Local certificate/status/CT signature verification establishes
+scheme, address, redirect, cache, body, framing, representation, decompression,
+privacy, and deadline policy; and returns only complete untrusted bytes.
+Framing-invalid or partial HTTP bodies never become PKI objects, and cache keys
+include method, request-body digest, tenant, purpose, policy, trust, and privacy
+context. Local certificate/status/CT signature verification establishes
 authenticity.
 
 ## Trust Domain Separation
@@ -74,7 +77,25 @@ and signer/provider trust have distinct types and snapshot identities. A
 `CertificateTrustProvider` supplies immutable, versioned, tenant/profile-bound
 issued-certificate snapshots with explicit additions, removals, distrust, and
 constraints. Reload failure preserves the last accepted snapshot and never
-loads an empty or transport-root set.
+loads an empty or transport-root set. Platform snapshots preserve native
+constraints and distrust or return typed unsupported; flattening roots alone
+does not claim native-platform-equivalent trust.
+
+## Certificate Transparency Version Separation
+
+RFC 6962 CT v1 SCTs and RFC 9162 CT v2 `TransItem` objects use distinct types,
+log identities, signature schemes and inputs, precertificate reconstruction,
+log-list capabilities, and verified evidence. Neither version can be converted
+to or used as fallback evidence for the other.
+
+## DNS Query Correlation
+
+Every UDP DNS attempt binds an unpredictable transaction ID and source port (or
+bounded socket rotation) to the complete local/remote tuple, server, question,
+transport, and attempt. TCP retry uses a fresh ID and a bounded two-byte-framed
+codec that correlates partial, coalesced, and out-of-order messages on the same
+connection. Optional DNS Cookies remain server-scoped defense in depth and
+cannot weaken tuple, DNSSEC, or TSIG verification.
 
 ## DNS Update Authentication
 
@@ -95,9 +116,9 @@ generation.
 
 The strict `no_std` tier accepts caller-provided storage for PKIX path
 candidates, RFC 5280 policy trees, OCSP/CRL extensions and entries, SCT lists,
-DNSSEC RRsets/chains, and NSEC/NSEC3 proofs. Exhaustion is deterministic and
-typed. Optional `alloc` wrappers own these workspaces without changing
-validation rules or capacity accounting.
+CT v2 `TransItem` collections, DNSSEC RRsets/chains, and NSEC/NSEC3 proofs.
+Exhaustion is deterministic and typed. Optional `alloc` wrappers own these
+workspaces without changing validation rules or capacity accounting.
 
 ## Security Invariants
 
@@ -112,8 +133,13 @@ validation rules or capacity accounting.
 - Verification capabilities cannot be serialized, replayed across contexts, or
   restored after restart as current proof.
 - Public PKI fetch results and unauthenticated DNS AD bits are never evidence.
+- A partial, ambiguously framed, wrongly typed, or cross-context cached public
+  PKI body is never accepted as an object.
 - Issued-certificate trust never falls back to ACME transport roots or an empty
   snapshot.
+- CT v1 and CT v2 log identities, inputs, and evidence are non-interchangeable.
+- DNS responses require complete tuple/attempt correlation; TCP or Cookies do
+  not reduce that requirement.
 - DNS update success requires verified request-bound TSIG response evidence.
 - Must-Staple certificates cannot activate or remain active with an expired or
   mismatched required staple.

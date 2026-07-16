@@ -71,6 +71,14 @@ required=(
     v0.30.15
     v0.30.16
     v0.30.17
+    v0.30.18
+    v0.30.19
+    v0.30.20
+    v0.30.21
+    v0.30.22
+    v0.30.23
+    v0.30.24
+    v0.30.25
     v0.31.2
     v0.31.3
     v0.33.3
@@ -96,6 +104,9 @@ required=(
     v0.42.2
     v0.42.3
     v0.42.4
+    v0.42.5
+    v0.42.6
+    v0.42.7
     v0.44.1
     v0.44.2
     v0.44.3
@@ -119,14 +130,18 @@ required=(
     v0.52.3
     v0.52.4
     v0.52.5
+    v0.52.6
     v0.56.0
     v0.56.1
+    v0.56.5
     v0.57.5
     v0.57.6
     v0.57.7
     v0.57.8
     v0.57.9
     v0.57.10
+    v0.58.1
+    v0.59.1
     v0.60.0
     v0.69.3
     v0.71.1
@@ -178,7 +193,15 @@ grep -q 'Core-to-PKIX evidence bridge' "$plan"
 grep -q 'Validation-session-bound PKIX capabilities' "$plan"
 grep -q 'Bounded OCSP request encoding and response decoding' "$plan"
 grep -q 'Bounded CRL and `TBSCertList` parsing' "$plan"
-grep -q 'Bounded SCT-list parsing' "$plan"
+grep -q 'Bounded RFC 6962 CT v1 SCT-list parsing' "$plan"
+grep -q 'Bounded RFC 9162 CT v2 `TransItem`' "$plan"
+grep -q 'Local RFC 9162 CT v2 signature-input' "$plan"
+grep -q 'Complete RFC 6960 OCSP extension' "$plan"
+grep -q 'Chain-wide certificate-status policy' "$plan"
+grep -q 'OCSP acquisition privacy policy' "$plan"
+grep -q 'Public-PKI HTTP representation and framing policy' "$plan"
+grep -q 'Purpose-specific public-PKI representation and cache contract' "$plan"
+grep -q 'Optional RFC 9162 CT v2 acquisition and policy integration' "$plan"
 grep -q 'Provider-neutral `PublicPkiFetch` contract' "$plan"
 grep -q 'Snapshot rehydration and verification-invalidation boundary' "$plan"
 grep -q 'Optional OCSP-staple deployment artifact contract' "$plan"
@@ -190,6 +213,9 @@ grep -q 'High-level lifecycle facade methods' "$plan"
 grep -q 'Provider-neutral bounded DNS query contract' "$plan"
 grep -q 'Bounded EDNS(0) OPT construction/parsing' "$plan"
 grep -q 'EDNS query-attempt policy' "$plan"
+grep -q 'UDP DNS source-port and complete response-correlation policy' "$plan"
+grep -q 'Bounded DNS-over-TCP codec and correlation' "$plan"
+grep -q 'Optional RFC 7873/9018 DNS Cookies profile' "$plan"
 grep -q 'Production `std` wall/monotonic clock adapter' "$plan"
 grep -q 'Canonical DNSSEC owner-name and RRset serialization' "$plan"
 grep -q 'Local DS-to-DNSKEY digest and key-tag verification' "$plan"
@@ -202,10 +228,14 @@ grep -q 'Provider-neutral RFC 2136 UPDATE wire/state model' "$plan"
 grep -q 'RFC 8945 TSIG record and canonical MAC-input construction' "$plan"
 grep -q 'TSIG secret lifecycle and rotation' "$plan"
 grep -q 'Production custom issued-certificate trust provider' "$plan"
+grep -q 'Production `PublicPkiFetch` HTTP framing' "$plan"
 grep -q 'Explicit and separate capability sets' "$plan"
+grep -q 'Optional default-off migration import' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
 grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
+grep -q 'Published ring per-purpose capability table' "$plan"
+grep -q 'Published aws-lc-rs non-FIPS per-purpose capability table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"
