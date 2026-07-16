@@ -30,6 +30,21 @@ Internal account, order, authorization, renewal, policy, storage, deployment,
 certificate, error, and observation concerns remain modules. A new public crate
 requires a meaningful portability, dependency, ecosystem, or security boundary.
 
+## PKIX Evidence Ownership
+
+`vardheim-pkix` owns private-field `VerifiedLeaf`, `VerifiedPath`, and
+`CertificateBinding` evidence. The facade invokes PKIX validation and converts
+that evidence into crate-private reducer events; public custom adapters return
+bounded observations and cannot construct verified workflow events directly.
+Core therefore remains independent from PKIX while deployment still requires
+positive certificate evidence.
+
+Caller-supplied transport, signer, verifier, clock, store, DNS, and deployment
+implementations are part of the application's trusted computing base. Vardheim
+types prevent accidental category/purpose misuse and validate observations at
+their boundaries, but cannot make a deliberately malicious implementation
+truthful.
+
 ## Security Invariants
 
 - A replay nonce is consumed exactly once and never returned to a pool.

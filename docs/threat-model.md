@@ -28,10 +28,14 @@ its returned bytes are still structurally and semantically verified.
 
 ## Out Of Scope
 
-Vardheim cannot make a compromised operating system, CA, HSM, DNS provider, or
-deployment target trustworthy. FIPS claims depend on a validated module and
-deployment profile, not on a Cargo feature name. Availability against an
-unbounded adversary is not guaranteed.
+Vardheim cannot make a compromised operating system, CA, HSM, DNS provider,
+deployment target, or caller-supplied adapter trustworthy. Configured backend
+implementations are part of the trusted computing base: typed requests,
+bounded observations, evidence constructors, and self-verification reduce
+accidental misuse but cannot force deliberately malicious code to report
+truthfully. FIPS claims depend on a validated module and deployment profile,
+not on a Cargo feature name. Availability against an unbounded adversary is not
+guaranteed.
 
 ## Availability And Panic Policy
 

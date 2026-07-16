@@ -12,8 +12,10 @@
 | Workflow | valid transitions only, persisted effects, reconciliation |
 | Challenges | ownership receipts, self-check, durable cleanup |
 | Certificates | key/SAN/profile/chain checks before deployment |
+| PKIX evidence | private constructors in PKIX; facade-only reducer translation |
 | Adoption | validate key/chain/issuer/account/provenance before managed status |
 | Compromise | suspend affected key roles, explicit emergency replacement and revocation |
+| Retirement | acknowledged target removal, fenced overlap, evidenced key/artifact disposition |
 | Deployment | atomic activation, health verification, rollback |
 | Concurrency | compare-and-swap revisions, leases, fencing tokens |
 | Supply chain | pinned CI actions, deny policy, audit, SBOM, review |

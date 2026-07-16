@@ -1,6 +1,6 @@
 # ACME Completeness Contract
 
-Status: planning audit, 2026-07-12
+Status: planning audit, 2026-07-16
 
 Completeness claims are preserved across releases through the immutable
 evidence and replay rules in [the regression strategy](REGRESSION_STRATEGY.md).
@@ -63,20 +63,25 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - provider-neutral digest/sign/verify/entropy/key-generation contracts and
   explicit concrete-provider construction;
 - bounded certificate parsing, CSR/key/SAN/profile binding, PKIX path policy,
-  optional OCSP/CRL/CT acquisition and evidence policy, and server private-key
-  injection refusal;
+  complete RFC 5280 policy processing, optional OCSP/CRL/CT/AIA acquisition and
+  evidence policy, and server private-key injection refusal;
 - existing-certificate/key/chain adoption, renewal bootstrap, issuer/account
   association, and managed/replacement-required/unmanaged classification;
 - multi-issuer isolation and migration without silent CA failover or
   cross-directory credential/nonce reuse;
 - account-key and certificate-key compromise response, emergency replacement,
   safe revocation ordering, and honest lost-key failure modes;
+- certificate supersession/retirement/revocation/destruction, deployment
+  removal acknowledgement, overlap policy, inventory reconciliation/export,
+  orphan handling, and post-deployment status-driven replacement;
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
   fencing, cleanup, deployment activation, health verification, and rollback;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends;
 - bounded provider-neutral transport and DNS-query interfaces before concrete
   integrations;
 - memory/filesystem/SQLite/PostgreSQL storage and local/remote deployment;
+- Android Keystore, Apple Keychain/Secure Enclave, Windows CNG/certificate
+  store, and optional PKCS#12 interoperability profiles;
 - manual, library, CLI, daemon, agent, and web-server integration surfaces;
 - redacted observability, audit evidence, target compatibility, formal methods,
   fuzzing, security audits, and reviewed-implementation-bound pentests.
@@ -124,7 +129,7 @@ claims.
 
 ## Audit Result
 
-The 2026-07-12 plan audit found and corrected these weaknesses:
+Planning audits through 2026-07-16 found and corrected these weaknesses:
 
 - overloaded JSON, type, PKIX, workflow, persistence, deployment, operations,
   platform, formal-assurance, and qualification milestones were split;
@@ -137,6 +142,11 @@ The 2026-07-12 plan audit found and corrected these weaknesses:
   renewal bootstrap, multi-issuer migration, compromise response, feature
   powersets, and early formal/fuzz/concurrency assurance were assigned to
   tactical pre-1.0 versions;
+- DER writer/reader and algorithm identifiers were moved before CSR, genuine
+  test-only crypto was added before interoperability, PKIX evidence ownership
+  and backend trust were made explicit, full RFC 5280 policy/AIA coverage,
+  concrete clock/DNS adapters, EAB HMAC/RSA-PSS, certificate retirement and
+  reconciliation, and platform key-store adapters received tactical versions;
 - Pebble DNS/TLS integrations were moved after their primitives exist;
 - active device-enrollment integrations and identity-controlled validation work
   received versions;

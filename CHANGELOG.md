@@ -13,6 +13,11 @@ Keep a Changelog and the project follows Semantic Versioning.
   crypto/transport/DNS interfaces, `newNonce`, `newAuthz`, dedicated PKIX
   packaging, status/CT acquisition, certificate adoption, multi-issuer
   migration, compromise response, and early formal/fuzz/concurrency assurance.
+- Corrected DER/CSR and real-crypto integration sequencing, and added full RFC
+  5280 policy/AIA coverage, PKIX evidence ownership, production clock/DNS
+  adapters, EAB HMAC and RSA-PSS capability milestones, certificate retirement
+  and inventory reconciliation, and Android/Apple/Windows key-store plus
+  PKCS#12 interoperability milestones.
 
 ## 0.3.1 - Unreleased
 

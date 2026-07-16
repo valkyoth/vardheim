@@ -48,26 +48,48 @@ required=(
     v0.20.3
     v0.25.2
     v0.28.1
+    v0.28.2
+    v0.28.3
+    v0.28.4
+    v0.28.5
+    v0.28.6
     v0.30.7
     v0.30.8
     v0.30.9
+    v0.30.10
+    v0.31.2
     v0.33.3
     v0.37.4
     v0.38.3
+    v0.38.4
     v0.39.2
     v0.39.3
     v0.39.4
     v0.39.5
     v0.41.2
     v0.41.3
+    v0.41.4
+    v0.41.5
+    v0.41.6
+    v0.41.7
     v0.42.1
     v0.42.2
+    v0.44.1
+    v0.44.2
     v0.51.2
+    v0.56.0
+    v0.56.1
+    v0.57.5
+    v0.57.6
     v0.60.0
     v0.69.3
     v0.71.1
     v0.71.2
     v0.81.0
+    v0.91.3
+    v0.91.4
+    v0.91.5
+    v0.91.6
     v0.92.5
     v0.92.6
     v0.97.3
@@ -97,9 +119,17 @@ grep -q 'Provider-neutral digest semantics' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Optional RFC 8555 `newAuthz` pre-authorization' "$plan"
 grep -q 'Introduce the dependency-light `vardheim-pkix` crate' "$plan"
+grep -q 'Canonical bounded DER writer' "$plan"
+grep -q 'Private test-only reference crypto primitives' "$plan"
+grep -q 'Complete RFC 5280 certificate-policy processing' "$plan"
+grep -q 'Core-to-PKIX evidence bridge' "$plan"
 grep -q 'Existing certificate adoption' "$plan"
 grep -q 'Certificate-key compromise response' "$plan"
+grep -q 'Certificate generation retirement state machine' "$plan"
 grep -q 'Provider-neutral bounded DNS query contract' "$plan"
+grep -q 'Production `std` wall/monotonic clock adapter' "$plan"
+grep -q 'Explicit and separate capability sets' "$plan"
+grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"
 grep -q 'Fluxheim integration fixture' "$plan"

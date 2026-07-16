@@ -170,12 +170,14 @@ repeat. `newOrder` and other ambiguous outcomes enter reconciliation first.
 
 ## Challenge And Certificate Sequence
 
-Versions `0.26.0` through `0.31.1` implement HTTP-01, introduce
-`vardheim-pkix`, and complete CSR policy, certificate parsing, verification,
-optional OCSP/CRL/CT acquisition, and alternate chains. Challenge presentation
-is a transaction: prepare, present, visibility barrier, self-check, CA
-acknowledgement, poll, and owned cleanup. Cleanup obligations are persisted;
-async destruction is never relied upon.
+Versions `0.26.0` through `0.31.2` implement HTTP-01, introduce
+`vardheim-pkix`, place canonical DER writing/reading and shared algorithm
+identifiers before CSR, add isolated test-only real crypto for genuine early
+interoperability, and complete CSR policy, full RFC 5280 path/policy behavior,
+optional OCSP/CRL/CT/AIA acquisition, alternate chains, and the private PKIX
+evidence bridge. Challenge presentation is a transaction: prepare, present,
+visibility barrier, self-check, CA acknowledgement, poll, and owned cleanup.
+Cleanup obligations are persisted; async destruction is never relied upon.
 
 Certificate verification compares:
 
@@ -194,9 +196,10 @@ Versions `0.32.0` through `0.39.5` add the pure
 command/state/policy/event reducer, typed effects and positive evidence,
 snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 transactional deployment, public APIs, reusable adapter conformance, a
-deterministic hostile CA, a test-only loopback transport, Pebble integration,
-historical differential replay, existing-certificate adoption, renewal
-bootstrap, and durable multi-issuer migration policy.
+deterministic hostile CA, a test-only loopback transport, a production
+wall/monotonic clock adapter, Pebble integration, historical differential
+replay, existing-certificate adoption, renewal bootstrap, and durable
+multi-issuer migration policy.
 
 Every external side effect follows:
 
@@ -218,9 +221,10 @@ features only expose constructors and never select an implementation.
 ## Renewal And Challenge Ecosystem
 
 Versions `0.40.0` through `0.51.3` implement ARI, durable scheduling,
-certificate/account-key compromise response, provider-neutral DNS query
-semantics, complete DNS behavior, provider adapters, the restricted DNS agent,
-TLS-ALPN-01, and the rustls/OpenSSL adapters.
+certificate/account-key compromise response, certificate retirement,
+key/artifact destruction, inventory reconciliation, post-deployment status
+response, provider-neutral and concrete DNS query behavior, provider adapters,
+the restricted DNS agent, TLS-ALPN-01, and the rustls/OpenSSL adapters.
 
 DNS propagation checks query authoritative servers and distinguish secure,
 insecure, bogus, and indeterminate DNSSEC outcomes. Provider record handles
@@ -234,8 +238,9 @@ active unexpired owned presentation.
 ## Transport And Crypto Sequence
 
 Versions `0.52.0` through `0.66.2` introduce strict transports, async/blocking/
-embedded profiles, explicit key roles, RustCrypto, ring, aws-lc-rs, separate
-AWS-LC FIPS, PKCS#11, TPM2, AWS KMS, Azure Key Vault, OpenBao-compatible, and
+embedded profiles, purpose-specific key/MAC/sign/verify/generation capabilities,
+RustCrypto including EAB HMAC and RSA-PSS, ring, aws-lc-rs, separate AWS-LC
+FIPS, PKCS#11, TPM2, AWS KMS, Azure Key Vault, OpenBao-compatible, and
 remote/offline signing.
 
 Each provider implements capabilities and is explicitly selected. Provider
@@ -265,9 +270,11 @@ provider name. Observations expire and cannot override operator security policy.
 
 ## Production Operations Sequence
 
-Versions `0.82.0` through `0.91.2` implement SQLite, PostgreSQL HA,
+Versions `0.82.0` through `0.91.6` implement SQLite, PostgreSQL HA,
 multi-tenancy, deployment adapters, Kubernetes, remote deployment agents,
-redacted observability, signed audit records, CLI, daemon, and hardened agents.
+redacted observability, signed audit records, CLI, daemon, hardened agents,
+Android Keystore, Apple Keychain/Secure Enclave, Windows CNG/certificate
+stores, and optional PKCS#12 interoperability.
 
 Secrets are never ordinary observability fields. Identifier logging defaults to
 hashed or redacted. Multi-tenant stores separate encryption, quotas, leases,
