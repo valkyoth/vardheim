@@ -43,6 +43,13 @@ its returned bytes are still structurally and semantically verified.
   wrong-key, malformed, incorrectly encoded, or unverified signature bytes
   entering a protocol effect because local verification was optional,
   unavailable, or silently replaced by another backend;
+- an EAB or TSIG secret alias/version being retargeted after discovery; a valid
+  MAC from another tenant, directory, external account, zone, secret version,
+  purpose, or TSIG chain entering a protocol object; raw `UnverifiedMac` being
+  accepted; provider attestation being inflated into independent verification;
+  or failure, cancellation, ambiguity, session change, or verifier
+  unavailability restoring MAC admission, exporting the secret, or selecting a
+  fallback provider;
 - generated, imported, migrated, or adopted keys becoming active before
   reconciliation, public-key validation, and signer binding; duplicate keys
   after lost responses or restart; or cleanup/lookup ambiguity being treated
@@ -80,7 +87,8 @@ its returned bytes are still structurally and semantically verified.
 - provider capability overclaim caused by inferring purpose support from a
   shared algorithm name, accepting stale/cross-session public-key validation
   evidence, silently falling back when validation is unavailable, or platform-
-  trust overclaim after constraint loss;
+  trust overclaim after constraint loss; including an opaque MAC provider
+  claiming independent verification without a separate admitted verifier;
 - false key destruction claims caused by confusing disablement, scheduled
   deletion, object absence, handle loss, unlink, zeroization, retention, or
   provider unavailability with evidenced physical destruction;

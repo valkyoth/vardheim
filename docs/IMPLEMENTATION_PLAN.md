@@ -202,6 +202,25 @@ result. The admission stays consumed. A replacement attempt revalidates the
 key, establishes a new `BoundSigner`, constructs a new request identity, and
 mints a new admission; it never retries under the old identity.
 
+Handle-backed EAB and TSIG MAC authority follows a separate shared boundary.
+Discovery aliases resolve to a transient `BoundMacKey` that pins the immutable
+secret identity/version, tenant, directory or zone, provider/session,
+algorithm, policy, purpose, health epoch, and expiry. A single-use
+`MacConsumerAdmission` binds the exact canonical input, request identity,
+output/truncation policy, and TSIG request/response/chaining state and is
+consumed before immutable-identity dispatch. Provider bytes remain
+`UnverifiedMac`.
+
+Software or exportable-secret backends independently recompute and compare the
+MAC in constant time before constructing purpose-specific `VerifiedMac`.
+Opaque HSM, KMS, secret-manager, remote, and platform adapters may instead
+return only separately typed `ProviderAttestedMac` evidence with an explicit
+assurance profile when independent verification is impossible. That evidence
+cannot be promoted to `VerifiedMac`; EAB and TSIG reject it by default unless
+policy explicitly admits the exact provider and weaker profile. No unavailable
+verification path exports the secret, changes providers, exposes raw usable
+MAC bytes, or restores a consumed admission.
+
 Key creation, import, migration, and platform adoption are transactions, not
 handle-returning shortcuts. A stable request ID and provider idempotency token
 drives a durable `KeyLifecycleState × KeyObligationSet` model, with direct
@@ -446,6 +465,12 @@ RFC 2136 UPDATE and RFC 8945 TSIG are first implemented against provider-neutral
 contracts and genuine private test cryptography. The production adapter is
 deliberately later, after the dedicated RustCrypto `DnsUpdateMac` backend; an
 unauthenticated or incorrectly chained TSIG response can never confirm success.
+Request and response MAC construction uses the shared `BoundMacKey`,
+single-use exact-input admission, immutable secret-version dispatch, and
+positive evidence boundary. Secret aliases cannot authorize an UPDATE,
+provider-returned bytes cannot directly form TSIG, and independently verified
+MAC evidence remains distinct from explicitly policy-admitted provider
+attestation.
 
 TLS-ALPN-01 identity construction remains independent from rustls. The rustls
 resolver activates only for matching identifier, exact `acme-tls/1`, and an
@@ -467,7 +492,7 @@ views but cannot construct SCT, STH, inclusion, or consistency evidence.
 
 ## Transport And Crypto Sequence
 
-Versions `0.52.0` through `0.66.2` introduce strict ACME transports, a separate
+Versions `0.52.0` through `0.66.4` introduce strict ACME transports, a separate
 credential-free `PublicPkiFetch` implementation, async/blocking/embedded
 profiles, purpose-specific key/MAC/sign/verify/generation capabilities,
 RustCrypto including EAB HMAC and RSA-PSS, ring, aws-lc-rs, separate AWS-LC
@@ -507,11 +532,16 @@ activation contract.
 Each provider implements capabilities and is explicitly selected. ring,
 aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
 CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
-public-key validation, signer binding, immutable dispatch, returned-signature
-verification, legacy verification hashes, and key disposition. Every software,
-HSM, TPM, KMS, remote, and platform key provider implements the shared
-validation, `BoundSigner`, request-admission, and verified-signature conformance
-boundaries and maps native states through the shared disposition contract.
+public-key validation, signer binding, immutable signature/MAC dispatch,
+returned-signature verification, independent or provider-attested MAC evidence,
+legacy verification hashes, and key disposition. Every software, HSM, TPM,
+KMS, remote, and platform key provider implements the shared validation,
+`BoundSigner`, request-admission, and verified-signature conformance boundaries
+and maps native states through the shared disposition contract. Every provider
+offering EAB or TSIG MAC operations also implements the shared `BoundMacKey`,
+exact-input admission, immutable secret dispatch, purpose-specific evidence,
+assurance publication, and no-secret-export/no-fallback conformance boundary;
+providers without those semantics publish typed unsupported capability cells.
 Native pairwise consistency or the narrow canonical `bind_signer` operation
 establishes binding; all request admissions are then minted locally and
 consumed before immutable-identity signer dispatch and local output
@@ -527,6 +557,8 @@ another backend. Scheduled
 deletion, disablement, object absence, handle loss, unlink, or zeroization is
 never inflated into physical destruction. Unsupported purposes, validations,
 bindings, or dispositions are typed and never inferred from an algorithm name.
+Unsupported MAC verification or a weaker provider-attested assurance profile
+is likewise typed and cannot be upgraded into independent verification.
 Provider negotiation is:
 
 ```text
@@ -562,6 +594,11 @@ stores, and optional PKCS#12 interoperability.
 Secrets are never ordinary observability fields. Identifier logging defaults to
 hashed or redacted. Multi-tenant stores separate encryption, quotas, leases,
 accounts, intents, and audit streams.
+Handle-backed signed audit checkpoints use immutable signer dispatch and
+`VerifiedSignature` before durable commit or export. Authority-token extensions
+apply the same rule to any locally signed request/effect, while externally
+issued tokens remain verification evidence and cannot manufacture local signer
+authority.
 
 ## Platform And Assurance Sequence
 

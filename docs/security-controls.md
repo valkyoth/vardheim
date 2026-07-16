@@ -17,6 +17,7 @@
 | Challenges | ownership receipts, self-check, durable cleanup |
 | DER/X.509 structure | canonical primitive/length encoding and version-gated certificate fields rejected before path validation |
 | Public keys and signer handles | provider/session-bound RSA/EC/EdDSA validation; transient role-limited `BoundSigner` pins immutable native identity/version and public-key digest, never mutable aliases; ordinary signature effects consume exact-request admission, dispatch only to that identity, treat provider output as untrusted, and locally verify exact bytes/algorithm/parameters/encoding/key before use; binding operation alone is narrowly exempt; no signer/verifier fallback |
+| MAC secrets and handles | transient purpose-limited `BoundMacKey` pins tenant, directory/zone, provider/session, immutable secret identity/version, algorithm, policy, health, and expiry; exact-input single-use admission is consumed before immutable dispatch; raw provider output remains `UnverifiedMac`; local/exportable secrets require constant-time independent `VerifiedMac`, while opaque-provider attestation remains separately typed and is rejected by default unless exact weaker assurance is explicitly admitted; no secret export or provider fallback |
 | Key onboarding | stable idempotent create/import identity; durable lifecycle state is separate from orthogonal obligations and live authority; `Active` means eligible, not signable; every process/provider session freshly validates and binds; ambiguous/lost/eventually visible outcomes reconcile with fencing; failures retain obligations; absence never proves destruction |
 | Certificates | key/SAN/profile/chain checks and explicit durable renewal key-rotation mode before deployment |
 | PKIX evidence | private, context-bound, non-serializable capabilities; facade-only reducer translation |
@@ -26,7 +27,7 @@
 | DNSSEC | local chain/signature/denial validation; no unauthenticated AD trust |
 | DNS query | fresh IDs and source ports, complete tuple/attempt binding, bounded EDNS/UDP and framed TCP correlation, optional non-authoritative Cookies |
 | DNS authority discovery | AA/section/zone-cut/SOA/referral/glue/CNAME/DNAME semantics with bounded iterative nameserver address resolution and no ambient resolver fallback |
-| DNS update | RFC 8945 request-bound TSIG; dedicated MAC purpose and authenticated response |
+| DNS update | RFC 8945 request/response/chaining-bound TSIG through immutable secret-version dispatch and purpose-specific positive MAC evidence; dedicated MAC purpose, no raw provider MAC, and authenticated response |
 | Adoption | validate key/chain/issuer/account/provenance before managed status |
 | Compromise | suspend affected key roles, explicit emergency replacement and revocation |
 | Retirement | acknowledged target removal, fenced overlap, typed provider-native disposition and reconciliation; destruction never inferred |

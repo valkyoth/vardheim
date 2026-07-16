@@ -22,9 +22,10 @@ expectation, applicability range, content hash, and first/last release metadata.
 Secrets, account identifiers, private keys, tokens, and uncontrolled personal
 or provider data must never enter retained evidence.
 
-Validation, signer-binding, request-admission, verification, and effect-
-authority capabilities are not evidence artifacts and must never be serialized
-into a retained snapshot. A snapshot may retain lifecycle/inventory facts,
+Validation, signer-binding, signer/MAC request-admission, signature/MAC
+verification, and effect-authority capabilities are not evidence artifacts and
+must never be serialized into a retained snapshot. A snapshot may retain
+lifecycle/inventory facts,
 orthogonal obligation sets, redacted audit records, and the hashes/versions
 needed to decide that reconstruction is required. Durable `Active` means
 lifecycle eligibility, not present authority. Replay after restart or a
@@ -99,6 +100,14 @@ The release comparison gate covers:
   wrong-key/malformed/verifier-unavailable outcomes, invalidation after
   provider/session/policy/key-health change, unsupported/unavailable/ambiguous
   outcomes, no signer/verifier fallback, and issued-leaf decisions;
+- handle-backed EAB/TSIG immutable secret identity/version binding,
+  `BoundMacKey`, exact canonical input/purpose/request/truncation/TSIG-chain
+  admission, destructive consumption across success/failure/cancellation/
+  ambiguity/session change, alias/version replacement at every barrier,
+  `UnverifiedMac` rejection, constant-time independent `VerifiedMac`, separately
+  typed provider-attested assurance, default weaker-evidence rejection,
+  wrong-valid-key/malformed/truncated/verifier-unavailable outcomes, no secret
+  export, no fallback, and provider capability/assurance publication;
 - transactional generation/import/migration/platform-adoption states, stable
   request/idempotency identities, lifecycle-state/obligation-set products,
   quarantine, active-as-eligibility semantics, fresh-session authority
@@ -120,8 +129,8 @@ The release comparison gate covers:
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
 - per-purpose crypto-provider capability, public-key validation/signer-binding,
-  immutable dispatch, returned-signature verification, and legacy-key migration
-  decisions;
+  immutable signature/MAC dispatch, returned-signature verification, MAC
+  evidence/assurance, and legacy-key migration decisions;
 - provider-native key disposition, receipt binding, and reconciliation decisions
   without destruction-state inflation;
 - target/profile compile and runtime evidence;

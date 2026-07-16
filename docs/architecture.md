@@ -52,11 +52,11 @@ trust snapshot identity. They never collapse trust removal, distrust, policy,
 time, status, CT, algorithm/provider, or input changes into an unauditable
 generic stale flag.
 
-Caller-supplied transport, signer, verifier, clock, store, DNS, and deployment
-implementations are part of the application's trusted computing base. Vardheim
-types prevent accidental category/purpose misuse and validate observations at
-their boundaries, but cannot make a deliberately malicious implementation
-truthful.
+Caller-supplied transport, signer, verifier, MAC, clock, store, DNS, and
+deployment implementations are part of the application's trusted computing
+base. Vardheim types prevent accidental category/purpose misuse and validate
+observations at their boundaries, but cannot make a deliberately malicious
+implementation truthful.
 
 ## Existing Account Ownership
 
@@ -137,6 +137,37 @@ Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
 evidence proves otherwise; the admission remains consumed. Replacement uses a
 revalidated key, new `BoundSigner`, new request identity, and new admission.
+
+## Handle-Backed MAC Evidence
+
+EAB and TSIG use a MAC authority boundary parallel to, but type-separated from,
+signer authority. A transient non-serializable `BoundMacKey` pins tenant,
+directory or zone, provider/session, immutable secret identity/version,
+algorithm, policy, allowed EAB or TSIG purposes, health epoch, and expiry.
+Mutable secret names and aliases are discovery inputs only.
+
+Each MAC effect consumes a private single-use `MacConsumerAdmission` binding
+the exact canonical input, purpose, request identity, output and truncation
+policy, and TSIG request/response/chaining state where applicable. It is
+consumed immediately before dispatch to the immutable secret identity and is
+never restored after success, failure, cancellation, ambiguity, session
+change, or invalidation. Provider output remains private `UnverifiedMac`.
+
+For local or exportable secrets, Vardheim independently recomputes and compares
+the MAC in constant time before constructing purpose-specific `VerifiedMac`.
+An opaque HSM, KMS, or secret manager that cannot support independent
+verification may produce only separately typed `ProviderAttestedMac` evidence
+bound to the admitted transcript and a declared assurance profile. That
+evidence never becomes `VerifiedMac`; EAB and TSIG reject it by default unless
+policy explicitly admits that exact provider and weaker assurance profile.
+Unavailable verification never exports a secret, selects another provider, or
+makes raw MAC bytes usable.
+
+Secret retargeting or version replacement before admission prevents authority.
+A race during or after dispatch remains ambiguous unless matching positive
+evidence proves the exact outcome, while the admission stays consumed. A new
+attempt resolves and binds the current immutable secret version and creates a
+new request identity and admission.
 
 ## Transactional Key Onboarding
 

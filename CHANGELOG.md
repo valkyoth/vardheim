@@ -80,6 +80,19 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Propagated fresh reconstruction and binding-to-signing TOCTOU race coverage
   to software, ring, aws-lc/FIPS, PKCS#11, TPM, AWS/Azure KMS, OpenBao, remote
   signer/agent, Android, Apple, and Windows provider milestones.
+- Added `v0.10.16` and `v0.56.10` for handle-backed EAB/TSIG MAC authority:
+  immutable secret-version binding, exact-input single-use admission,
+  `UnverifiedMac`, constant-time independent `VerifiedMac`, distinctly typed
+  provider-attested evidence, explicit weaker-assurance policy, and no secret
+  export or provider fallback.
+- Added tactical MAC conformance milestones for PKCS#11, TPM, AWS KMS, Azure
+  capability closure, OpenBao, and the remote protocol/agent, and propagated
+  the boundary through EAB, TSIG rotation, RustCrypto, ring, aws-lc/FIPS, and
+  production RFC 2136.
+- Explicitly required `v0.10.15` immutable dispatch and `VerifiedSignature` for
+  CSR, TLS-ALPN, locally signed authority-token effects, draft authority-token
+  constraints, and signed audit checkpoints, with wrong-key, replacement,
+  malformed-output, and verifier-unavailable regressions.
 
 ## 0.3.1 - Unreleased
 

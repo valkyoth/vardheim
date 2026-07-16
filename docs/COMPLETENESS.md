@@ -56,7 +56,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   current validated and role-bound signers plus exact-request admission for
   every handle-backed account effect, signer-proven ownership proof for
   imported accounts, and durable old/new key disposition after rollover or
-  deactivation;
+  deactivation; EAB additionally requires immutable secret-version binding,
+  exact-input single-use MAC admission, and purpose-specific positive evidence
+  with independently verified and provider-attested assurance kept distinct;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
   structured problems;
@@ -71,12 +73,14 @@ At `1.0.0`, all of these must work without placeholder success paths:
   HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated transient `BoundSigner`, locally minted
-  single-use exact-request admission, transactional key onboarding, and honest
-  key-disposition/reconciliation contracts with explicit concrete-provider
-  construction and per-purpose capability/validation/binding/onboarding/
-  immutable-dispatch/output-verification/disposition tables, including
-  narrowly purpose-bound legacy verification hashes where standards still
-  require them;
+  single-use exact-request signer admission, handle-backed `BoundMacKey`,
+  exact-input MAC admission, immutable signer/secret dispatch, purpose-specific
+  `VerifiedMac` versus provider-attested evidence, transactional key onboarding,
+  and honest key-disposition/reconciliation contracts with explicit concrete-
+  provider construction and per-purpose capability/validation/binding/
+  onboarding/immutable-dispatch/signature-verification/MAC-evidence/disposition
+  tables, including narrowly purpose-bound legacy verification hashes where
+  standards still require them;
 - bounded strict DER primitive parsing and X.509 structural prevalidation,
   shared ASN.1/PKIX time handling and RFC 5280 DN equality, CSR/key/SAN/profile
   binding, provider/session-bound RSA/EC/EdDSA public-key validation including
@@ -116,7 +120,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - complete EDNS(0) query mechanics, fresh per-attempt transaction IDs and UDP
   source ports/socket rotations, complete tuple binding, bounded framed TCP
   correlation, optional DNS Cookies, and RFC 2136 updates authenticated with
-  RFC 8945 TSIG;
+  RFC 8945 TSIG whose request, response, and chain MACs use immutable secret
+  identity/version dispatch and exact positive evidence;
 - complete authoritative DNS discovery across zone cuts, referrals, AA/SOA
   semantics, glue, nameserver A/AAAA resolution, CNAME/DNAME synthesis, lame
   delegations, and unreachable authorities without ambient system resolution;
@@ -225,7 +230,13 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   native-consistency equivalence, bounded concurrency, and destructive
   admission handling across retry, invalidation races, and ambiguity; immutable
   provider identity dispatch and mandatory wrong-key/malformed-output detection
-  before any protocol effect;
+  before any protocol effect; an equivalent handle-backed MAC authority
+  boundary for EAB and TSIG with immutable secret-version dispatch, exact-input
+  admission, constant-time independent verification where possible, distinctly
+  typed provider attestation, explicit weaker-assurance policy, and no secret
+  export or fallback across software, HSM, KMS, secret-manager, and remote
+  providers; explicit verified-signature propagation into CSR, TLS-ALPN,
+  authority-token, and signed-audit effects;
   transactional generation/import/migration/platform adoption with quarantine,
   lifecycle-state/obligation separation, active-as-eligibility semantics,
   fresh-session authority reconstruction, idempotent fenced reconciliation,
