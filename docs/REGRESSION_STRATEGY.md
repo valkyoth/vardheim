@@ -22,14 +22,17 @@ expectation, applicability range, content hash, and first/last release metadata.
 Secrets, account identifiers, private keys, tokens, and uncontrolled personal
 or provider data must never enter retained evidence.
 
-Verification capabilities are not evidence artifacts and must never be
-serialized into a retained snapshot. A snapshot may retain redacted
-verification audit records and the hashes/versions needed to decide that
-revalidation is required. Replay after restart or a policy, trust-anchor,
-status, CT-list, algorithm, provider-capability, time, or input change must
-perform local verification again before deployment or activation.
+Validation, signer-binding, request-admission, verification, and effect-
+authority capabilities are not evidence artifacts and must never be serialized
+into a retained snapshot. A snapshot may retain lifecycle/inventory facts,
+orthogonal obligation sets, redacted audit records, and the hashes/versions
+needed to decide that reconstruction is required. Durable `Active` means
+lifecycle eligibility, not present authority. Replay after restart or a
+process, provider-session, policy, trust-anchor, status, CT-list, algorithm,
+provider-capability, key-health, handle/public-key, alias/version, time, or
+input change must reconstruct local authority before deployment or signing.
 Audit records retain stable invalidation reasons so historical replay can
-detect both changed revalidation behavior and loss of operator-visible cause.
+detect both changed reconstruction behavior and loss of operator-visible cause.
 
 ## Replay Rules
 
@@ -92,10 +95,11 @@ The release comparison gate covers:
   invalidation after provider/session/policy/key-health change, unsupported/
   unavailable/ambiguous outcomes, and issued-leaf decisions;
 - transactional generation/import/migration/platform-adoption states, stable
-  request/idempotency identities, quarantine, validation/binding activation
-  gates, lost-response and eventual-visibility reconciliation, duplicate
-  prevention, cleanup/disposition obligations, and no absence-as-destruction
-  decisions;
+  request/idempotency identities, lifecycle-state/obligation-set products,
+  quarantine, active-as-eligibility semantics, fresh-session authority
+  reconstruction, lost-response and eventual-visibility reconciliation,
+  duplicate prevention, fencing, cleanup/disposition obligations, and no
+  absence-as-destruction decisions;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and
@@ -104,8 +108,9 @@ The release comparison gate covers:
   connection/session/resolver partitioning, coalescing, and
   definitely-unsent-versus-ambiguous transmission decisions;
 - every supported historical persisted snapshot and migration chain, including
-  proof that verification capabilities are absent and stale audit records
-  trigger revalidation;
+  proof that validation/binding/admission/verification/effect capabilities are
+  absent, active snapshots grant no authority, stale audit records cannot be
+  upgraded, and reconstruction obligations survive;
 - provider observations without encoding undocumented quirks as standards;
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;

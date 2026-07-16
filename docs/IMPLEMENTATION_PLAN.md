@@ -189,16 +189,28 @@ mints a new admission; it never retries under the old identity.
 
 Key creation, import, migration, and platform adoption are transactions, not
 handle-returning shortcuts. A stable request ID and provider idempotency token
-drive `Requested -> CreationUnknown -> CreatedQuarantined ->
-PublicKeyValidated -> SignerBound -> Active`, with direct typed observations
-for definitely-not-created, created, ambiguous, and unavailable outcomes.
-Tenant, role, algorithm/parameters, provider, intended key version, origin,
-exportability, persistence, attestation, and policy remain bound throughout.
-Created or imported keys are unusable while quarantined. Lost responses,
+drives a durable `KeyLifecycleState × KeyObligationSet` model, with direct
+typed observations for definitely-not-created, created, ambiguous, and
+unavailable outcomes. Lifecycle values cover requested, creation-unknown,
+created-quarantined, active eligibility, retained quarantine, and retirement;
+orthogonal obligations cover reconciliation, validation, binding,
+revalidation, disposition, and operator decision. Tenant, role,
+algorithm/parameters, provider, intended key version, origin, exportability,
+persistence, attestation, and policy remain bound throughout. Created or
+imported keys are unusable while quarantined. A durable active value is only
+inventory/policy eligibility, never present signing authority.
+
+Persisted validation/binding history cannot become `ValidatedPublicKey`,
+`BoundSigner`, request admission, or an effect capability. Every process and
+provider session reconstructs fresh validation and binding before signing.
+Restart, provider-session or policy change, key-health epoch change, handle or
+public-key replacement, KMS alias/version retargeting, or HSM object recreation
+invalidates live authority and adds a revalidation obligation. Lost responses,
 eventual provider visibility, unreadable attributes, validation/binding
 failure, restart, and duplicate requests retain durable reconciliation or
-key-disposition obligations. Lookup failure or object absence never proves
-destruction.
+key-disposition obligations. Concurrent reconstruction/reconciliation is
+fenced, and stale workers cannot publish authority or clear obligations.
+Lookup failure or object absence never proves destruction.
 
 ## RFC 8555 Sequence
 
@@ -344,15 +356,19 @@ wall/monotonic clock adapter, Pebble integration, historical differential
 replay, existing-certificate adoption, renewal bootstrap, and durable
 multi-issuer migration policy.
 
-Snapshots contain verification audit records and invalidation inputs, never
-live verification capabilities. Restart, migration, issued-trust/policy/status/
-CT/algorithm/provider changes, and renewed verification time create a mandatory
-revalidation obligation before deployment or activation.
+Snapshots contain lifecycle/inventory facts, orthogonal obligation sets, audit
+records, and invalidation inputs, never live validation, signer-binding,
+request-admission, verification, or effect-authority capabilities. Restart,
+migration, process/provider-session change, issued-trust/policy/status/CT/
+algorithm/key-health change, handle/public-key or alias/version replacement,
+and renewed verification time create mandatory reconstruction obligations
+before deployment or signing. Durable `Active` is lifecycle eligibility only.
 
-Verification audit records retain stable invalidation reasons so operators and
-future regression replay can distinguish trust removal, explicit distrust,
-policy change, expiry, clock rollback, status/CT change, algorithm/provider
-change, and input mutation.
+Audit records retain stable invalidation reasons so operators and future
+regression replay can distinguish trust removal, explicit distrust, policy
+change, expiry, clock rollback, status/CT change, algorithm/provider-session or
+key-health change, handle/public-key or alias/version replacement, and input
+mutation.
 
 Every external side effect follows:
 
@@ -482,10 +498,12 @@ contract. Native pairwise consistency or the narrow canonical `bind_signer`
 operation establishes binding; all request admissions are then minted locally
 and consumed before ordinary signer dispatch. Every key creation/import path
 also implements transactional onboarding, idempotent reconciliation,
-quarantine, and cleanup obligations. Invalid keys, wrong handles, stale
-provider sessions, unsupported validation, failed or ambiguous binding,
-ambiguous creation/import, or provider unavailability cannot fall back to
-another backend. Scheduled
+lifecycle/obligation separation, quarantine, fresh-session authority
+reconstruction, fencing, and cleanup obligations. Invalid keys, wrong handles,
+stale provider sessions, replayed history, mutable alias retargeting,
+unsupported validation, failed or ambiguous binding, ambiguous
+creation/import, or provider unavailability cannot fall back to another
+backend. Scheduled
 deletion, disablement, object absence, handle loss, unlink, or zeroization is
 never inflated into physical destruction. Unsupported purposes, validations,
 bindings, or dispositions are typed and never inferred from an algorithm name.

@@ -17,7 +17,7 @@
 | Challenges | ownership receipts, self-check, durable cleanup |
 | DER/X.509 structure | canonical primitive/length encoding and version-gated certificate fields rejected before path validation |
 | Public keys and signer handles | provider/session-bound RSA/EC/EdDSA validation; transient role-limited `BoundSigner` from native consistency or canonical `bind_signer`; ordinary signature effects consume locally minted exact-request admission before dispatch and never restore it; binding operation alone is narrowly exempt; no fallback |
-| Key onboarding | stable idempotent create/import identity; created keys quarantined until validation and binding; ambiguous/lost/eventually visible outcomes reconcile durably; failures retain disposition obligation; absence never proves destruction |
+| Key onboarding | stable idempotent create/import identity; durable lifecycle state is separate from orthogonal obligations and live authority; `Active` means eligible, not signable; every process/provider session freshly validates and binds; ambiguous/lost/eventually visible outcomes reconcile with fencing; failures retain obligations; absence never proves destruction |
 | Certificates | key/SAN/profile/chain checks and explicit durable renewal key-rotation mode before deployment |
 | PKIX evidence | private, context-bound, non-serializable capabilities; facade-only reducer translation |
 | Certificate Transparency | distinct RFC 6962 v1 and RFC 9162 v2 types, log lists, signatures, STH/Merkle evidence and MMD monitoring; no conversion/fallback |

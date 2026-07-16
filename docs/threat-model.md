@@ -42,6 +42,11 @@ its returned bytes are still structurally and semantically verified.
   reconciliation, public-key validation, and signer binding; duplicate keys
   after lost responses or restart; or cleanup/lookup ambiguity being treated
   as deletion or destruction;
+- persisted lifecycle state, `Active` eligibility, or validation/binding audit
+  history being deserialized or upgraded into live signer authority; provider
+  session rotation, KMS alias/version retargeting, or HSM object recreation
+  leaving stale authority valid; or a generic failure state dropping
+  reconciliation, revalidation, disposition, or operator-decision obligations;
 - recursive signer admission, arbitrary-byte abuse of the privileged binding
   operation, per-request remote proof costs that make secure HSM/KMS or
   user-presence deployment impractical, or restoration/reuse of admission

@@ -64,8 +64,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
   identifier/challenge families assigned by published standards;
 - ARI and conservative fallback renewal scheduling;
 - transactional key/CSR generation, import, migration, or platform adoption
-  with quarantine, reconciliation, validation/binding activation gates, and
-  external/HSM/KMS signing without private-key export;
+  with lifecycle-state/obligation separation, quarantine, fenced
+  reconciliation, active-as-eligibility semantics, fresh per-session
+  validation/binding authority reconstruction, and external/HSM/KMS signing
+  without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated transient `BoundSigner`, locally minted
   single-use exact-request admission, transactional key onboarding, and honest
@@ -98,7 +100,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
   lifecycle APIs, and post-deployment status-driven replacement;
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
   fencing, cleanup, deployment activation, health verification, rollback, and
-  mandatory revalidation rather than restored verification capabilities;
+  mandatory reconstruction rather than restored validation, signer-binding,
+  admission, verification, or effect-authority capabilities;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends,
   with explicit HTTP protocol versions, disabled early data, no hidden retry,
   partitioned connection/session/resolver state, and definite-versus-ambiguous
@@ -220,7 +223,9 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   native-consistency equivalence, bounded concurrency, and destructive
   admission handling across retry, invalidation races, and ambiguity;
   transactional generation/import/migration/platform adoption with quarantine,
-  idempotent reconciliation, eventual visibility, and cleanup obligations;
+  lifecycle-state/obligation separation, active-as-eligibility semantics,
+  fresh-session authority reconstruction, idempotent fenced reconciliation,
+  eventual visibility, and crash-persistent cleanup obligations;
   legacy-key migration, provider capability tables, lifecycle facade methods,
   stable invalidation reasons, OCSP freshness edges, and continuous parser/
   canonicalization fuzzing received tactical versions;

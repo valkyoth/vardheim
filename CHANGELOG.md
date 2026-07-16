@@ -63,6 +63,15 @@ Keep a Changelog and the project follows Semantic Versioning.
   operation, racing or post-dispatch invalidation remains ambiguous without
   positive provider evidence, admission stays consumed, and replacement uses a
   revalidated key, new binding, request identity, and admission.
+- Added `v0.10.14` for fresh live key-authority reconstruction and separated
+  durable lifecycle eligibility/audit history from transient validation,
+  signer-binding, request-admission, and effect authority.
+- Changed transactional onboarding to a
+  `KeyLifecycleState × KeyObligationSet` model so reconciliation,
+  revalidation, disposition, cleanup, and operator-decision work survives every
+  failure and crash boundary; extended snapshot, fencing, provider, HSM, and
+  KMS milestones with restart, alias/version retargeting, object replacement,
+  replayed-history, and stale-worker tests.
 
 ## 0.3.1 - Unreleased
 

@@ -48,6 +48,7 @@ required=(
     v0.10.11
     v0.10.12
     v0.10.13
+    v0.10.14
     v0.13.1
     v0.14.2
     v0.15.2
@@ -211,8 +212,10 @@ grep -q 'Provider-neutral key-disposition request' "$plan"
 grep -q 'Provider-neutral public-key validation contract' "$plan"
 grep -q 'Domain-separated signer-binding ceremony producing transient non-serializable `BoundSigner`' "$plan"
 grep -q 'Local request-specific signer-consumer admission contract over `&mut BoundSigner`' "$plan"
-grep -q 'Provider-neutral transactional key-onboarding state machine' "$plan"
+grep -q 'Provider-neutral transactional key-onboarding state model' "$plan"
 grep -q 'Invalidation observed before dispatch prevents signing' "$plan"
+grep -q 'Live key-authority reconstruction boundary' "$plan"
+grep -q 'KeyLifecycleState × KeyObligationSet' "$plan"
 grep -q 'Account creation with contacts.*v0.10.12' "$plan"
 grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
 grep -q 'Account key rollover.*v0.10.12' "$plan"
@@ -256,7 +259,7 @@ grep -q 'RFC 6962 CT v1 Merkle audit primitives' "$plan"
 grep -q 'RFC 9162 CT v2 Merkle audit primitives' "$plan"
 grep -q 'Provider-neutral version-aware CT audit acquisition contract' "$plan"
 grep -q 'Provider-neutral `PublicPkiFetch` contract' "$plan"
-grep -q 'Snapshot rehydration and verification-invalidation boundary' "$plan"
+grep -q 'Snapshot restoration and capability-reconstruction boundary' "$plan"
 grep -q 'Optional OCSP-staple deployment artifact contract' "$plan"
 grep -q 'Existing certificate adoption' "$plan"
 grep -q 'Certificate-key compromise response' "$plan"
@@ -293,7 +296,9 @@ grep -q 'Explicit and separate capability sets' "$plan"
 grep -q 'Optional default-off migration import' "$plan"
 grep -q 'Reusable key-disposition provider conformance' "$plan"
 grep -q 'Reusable public-key validation, `BoundSigner`, request-admission, and provider conformance framework' "$plan"
-grep -q 'Reusable transactional key-onboarding provider/import conformance framework' "$plan"
+grep -q 'Reusable transactional key-onboarding and live-authority-reconstruction provider/import conformance framework' "$plan"
+grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
+grep -q 'AWS KMS signer/key provider with transactional create/import onboarding and fresh-session authority reconstruction' "$plan"
 grep -q 'Bounded SPKI/PKCS#8 import/export policy.*v0.10.13' "$plan"
 grep -q 'Optional default-off migration import.*v0.10.13' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional create/import onboarding' "$plan"
@@ -313,4 +318,4 @@ grep -q 'every mandatory client requirement implemented' "$plan"
 grep -q 'Longitudinal replay runner' "$plan"
 grep -q 'Previous-release compatibility gate' "$plan"
 grep -q 'No command may automatically bless current output' docs/REGRESSION_STRATEGY.md
-grep -q 'Verification capabilities are not evidence artifacts' docs/REGRESSION_STRATEGY.md
+grep -q 'authority capabilities are not evidence artifacts' docs/REGRESSION_STRATEGY.md

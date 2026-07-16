@@ -127,25 +127,45 @@ revalidated key, new `BoundSigner`, new request identity, and new admission.
 ## Transactional Key Onboarding
 
 Generation, PKCS#8 or PKCS#12 import, legacy-key migration, and provider or
-platform key adoption share one state machine:
+platform key adoption share a durable product model:
 
 ```text
-Requested
-    -> CreationUnknown
-    -> CreatedQuarantined
-    -> PublicKeyValidated
-    -> SignerBound
-    -> Active
+KeyLifecycleState × KeyObligationSet
+
+Requested -> CreationUnknown -> CreatedQuarantined -> Active
+                                            \-> RetainedQuarantined
+
+Obligations = {
+    ReconciliationPending,
+    ValidationRequired,
+    BindingRequired,
+    RevalidationRequired,
+    DispositionPending,
+    OperatorDecisionRequired,
+}
 ```
 
 Stable request and provider idempotency identities bind tenant, role,
 algorithm/parameters, provider, intended key version, origin, exportability,
 persistence, attestation, and policy. Provider observations distinguish
 definitely not created, created, ambiguous, and unavailable. No newly created
-or imported key is signable while quarantined. Lost responses, eventual
-visibility, unreadable attributes, failed validation/binding, restart, and
-duplicate requests retain reconciliation or disposition obligations. Object
-absence and failed lookup never prove destruction.
+or imported key is signable while quarantined. Obligations are orthogonal so a
+failure or lifecycle transition cannot discard reconciliation, revalidation,
+operator-decision, cleanup, or disposition work. `Active` is only a durable
+inventory and lifecycle-policy eligibility fact. Historical validation and
+binding audit records are not `ValidatedPublicKey` or `BoundSigner` values and
+cannot be converted into them.
+
+Every process and provider session reconstructs fresh live authority before
+signing: validate the current public material, bind the exact current handle,
+then mint request-specific admission. Restart, provider-session or policy
+change, key-health epoch change, handle or public-key replacement, KMS
+alias/version retargeting, or HSM object recreation invalidates live authority
+and adds `RevalidationRequired`. If reconstruction is unavailable, the key may
+remain lifecycle-eligible but is unusable. Lost responses, eventual visibility,
+unreadable attributes, failed validation/binding, restart, and duplicate
+requests retain reconciliation or disposition obligations. Object absence and
+failed lookup never prove destruction.
 
 ## Public PKI Fetch Boundary
 
@@ -277,7 +297,14 @@ workspaces without changing validation rules or capacity accounting.
 - Parsed JWK/SPKI material cannot become an account, CSR, certificate, or
   deployment key without current provider-bound public-key validation evidence.
 - A generated, imported, migrated, or adopted key cannot become active before
-  transactional reconciliation, public-key validation, and signer binding.
+  transactional reconciliation and recorded onboarding validation/binding;
+  durable active eligibility alone never grants current signing authority.
+- Persisted lifecycle state, validation/binding history, and audit records
+  cannot construct or restore `ValidatedPublicKey`, `BoundSigner`,
+  `SignerConsumerAdmission`, verification, or effect-authority capabilities.
+- Each process/provider session reconstructs live signer authority, and any
+  provider session, policy, key-health, handle, public-key, alias, or version
+  change invalidates it without clearing durable obligations.
 - No handle-backed signature effect can be constructed without current
   public-key validation, a role-permitted `BoundSigner`, and exact-request
   single-use signer-consumer admission, except the canonical `bind_signer`
