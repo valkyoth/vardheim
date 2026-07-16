@@ -22,6 +22,10 @@ Keep a Changelog and the project follows Semantic Versioning.
   SCT verification, isolated credential-free public-PKI fetching, purpose-bound
   legacy hashing, complete DNSSEC/NSEC/NSEC3 and trust-anchor validation, and
   deterministic caller-provided no-heap validation workspaces.
+- Added complete EDNS query mechanics, RFC 8945 TSIG and production sequencing,
+  issued-certificate trust providers, RFC 7633 Must-Staple deployment/refresh,
+  lifecycle facade coverage, stable verification invalidation reasons, OCSP
+  freshness edges, and continuous DNS/PKIX parser fuzz targets.
 
 ## 0.3.1 - Unreleased
 

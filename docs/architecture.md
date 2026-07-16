@@ -10,6 +10,7 @@ application
     -> vardheim orchestration, policy, verification, and durable workflow
         -> vardheim-core typed ACME, JOSE, and deterministic state machines
         -> vardheim-pkix bounded certificate and policy verification
+        -> issued-certificate trust provider chosen separately from TLS roots
         -> signer and certificate-key provider chosen explicitly by caller
         -> transport, challenge, storage, and deployment adapters
 ```
@@ -46,6 +47,11 @@ capabilities. It is never deserialized or restored from workflow state.
 Persisted verification records are audit facts; restart or any bound-context
 change requires local revalidation before deployment or activation.
 
+Audit records use stable invalidation reasons and retain the issued-certificate
+trust snapshot identity. They never collapse trust removal, distrust, policy,
+time, status, CT, algorithm/provider, or input changes into an unauditable
+generic stale flag.
+
 Caller-supplied transport, signer, verifier, clock, store, DNS, and deployment
 implementations are part of the application's trusted computing base. Vardheim
 types prevent accidental category/purpose misuse and validate observations at
@@ -60,6 +66,30 @@ credentials, cookies, ACME headers, or proxy authentication; applies explicit
 scheme, address, redirect, cache, body, and deadline policy; and returns only
 untrusted bytes. Local certificate/status/CT signature verification establishes
 authenticity.
+
+## Trust Domain Separation
+
+ACME transport roots, issued-certificate anchors, CT log keys, DNSSEC anchors,
+and signer/provider trust have distinct types and snapshot identities. A
+`CertificateTrustProvider` supplies immutable, versioned, tenant/profile-bound
+issued-certificate snapshots with explicit additions, removals, distrust, and
+constraints. Reload failure preserves the last accepted snapshot and never
+loads an empty or transport-root set.
+
+## DNS Update Authentication
+
+RFC 2136 updates use RFC 8945 TSIG through a dedicated `DnsUpdateMac`
+capability. EAB keys and MAC purposes cannot cross this boundary. Update
+success requires response authentication bound to the request MAC, server,
+transaction, time, key, algorithm, and message chain.
+
+## Stapled Status Generations
+
+For RFC 7633 certificates, verified OCSP staple bytes and expiry join the
+certificate, chain, and key in one fenced deployment generation. Deployment
+adapters transport bytes and expiry but cannot fabricate verified status
+evidence. Refresh and rollback preserve the last policy-valid serving
+generation.
 
 ## No-Heap Validation Workspaces
 
@@ -82,6 +112,11 @@ validation rules or capacity accounting.
 - Verification capabilities cannot be serialized, replayed across contexts, or
   restored after restart as current proof.
 - Public PKI fetch results and unauthenticated DNS AD bits are never evidence.
+- Issued-certificate trust never falls back to ACME transport roots or an empty
+  snapshot.
+- DNS update success requires verified request-bound TSIG response evidence.
+- Must-Staple certificates cannot activate or remain active with an expired or
+  mismatched required staple.
 - Challenge cleanup removes only the presentation owned by that workflow.
 - External effects use persist-before-effect and reconciliation semantics.
 - Feature unification never silently chooses a cryptographic or TLS backend.

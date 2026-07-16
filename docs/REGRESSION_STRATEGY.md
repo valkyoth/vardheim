@@ -28,6 +28,8 @@ verification audit records and the hashes/versions needed to decide that
 revalidation is required. Replay after restart or a policy, trust-anchor,
 status, CT-list, algorithm, provider-capability, time, or input change must
 perform local verification again before deployment or activation.
+Audit records retain stable invalidation reasons so historical replay can
+detect both changed revalidation behavior and loss of operator-visible cause.
 
 ## Replay Rules
 
@@ -67,10 +69,13 @@ The release comparison gate covers:
 
 - Rust public API and feature resolution against the latest published release;
 - normalized ACME wire behavior and typed error/security decisions;
+- normalized DNS/EDNS/RFC 2136/TSIG behavior and authenticated update outcomes;
 - every supported historical persisted snapshot and migration chain, including
   proof that verification capabilities are absent and stale audit records
   trigger revalidation;
 - provider observations without encoding undocumented quirks as standards;
+- issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
+  deployment decisions;
 - target/profile compile and runtime evidence;
 - formal-model traces and generated adversarial cases; and
 - dependency/tool manifests, where drift is reported separately from behavior.

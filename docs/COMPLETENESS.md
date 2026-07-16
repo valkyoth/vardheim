@@ -67,6 +67,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   complete RFC 5280 policy processing, local OCSP/CRL/SCT parsing and signature
   verification, credential-free optional acquisition/AIA, context-bound
   transient evidence, and server private-key injection refusal;
+- distinct versioned issued-certificate trust providers for custom/platform
+  anchors, additions/removals/distrust, constraints, tenant isolation, and
+  reload failure without reusing ACME HTTPS/CT/DNSSEC trust;
 - existing-certificate/key/chain adoption, renewal bootstrap, issuer/account
   association, and managed/replacement-required/unmanaged classification;
 - multi-issuer isolation and migration without silent CA failover or
@@ -75,16 +78,21 @@ At `1.0.0`, all of these must work without placeholder success paths:
   safe revocation ordering, and honest lost-key failure modes;
 - certificate supersession/retirement/revocation/destruction, deployment
   removal acknowledgement, overlap policy, inventory reconciliation/export,
-  orphan handling, and post-deployment status-driven replacement;
+  orphan handling, high-level lifecycle APIs, and post-deployment status-driven
+  replacement;
 - durable workflow snapshots, transactional outbox, reconciliation, leases,
   fencing, cleanup, deployment activation, health verification, rollback, and
   mandatory revalidation rather than restored verification capabilities;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends;
 - bounded provider-neutral transport and DNS-query interfaces before concrete
   integrations;
+- complete EDNS(0) query mechanics, fresh per-attempt transaction IDs, bounded
+  UDP/TCP fallback, and RFC 2136 updates authenticated with RFC 8945 TSIG;
 - complete local DNSSEC validation including canonical RRsets, DNSKEY/DS/RRSIG,
   chain/time policy, NSEC/NSEC3 denial, trust-anchor rollover, and explicit
   authenticated-resolver evidence policy;
+- optional RFC 7633 TLS Feature/Must-Staple verification, fresh OCSP activation
+  gating, atomic certificate/key/staple generations, and durable refresh;
 - memory/filesystem/SQLite/PostgreSQL storage and local/remote deployment;
 - Android Keystore, Apple Keychain/Secure Enclave, Windows CNG/certificate
   store, and optional PKCS#12 interoperability profiles;
@@ -107,7 +115,8 @@ ACME protocol logic. The `0.71.1` acceptance fixture must prove:
 6. survive process restart after every issuance transition;
 7. validate the returned key, SANs, profile, validity, and chain;
 8. atomically activate certificate/key generations, request live reload,
-   health-check the serving endpoint, and roll back on failure;
+   health-check the serving endpoint, deploy/refresh a required verified OCSP
+   staple in the same fenced generation, and roll back on failure;
 9. calculate due renewals through ARI/fallback, renew one/all targets, expose
    status, rollover accounts, and revoke certificates;
 10. keep existing certificates serving during failed first issuance/renewal;
@@ -159,6 +168,10 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   trust-anchor validation, genuine early verifier coverage, production
   purpose-bound legacy/DNSSEC crypto, and no-heap workspaces received tactical
   versions;
+- EDNS query mechanics, RFC 8945 TSIG sequencing, issued-certificate trust
+  providers, RFC 7633 Must-Staple deployment/refresh, lifecycle facade methods,
+  stable invalidation reasons, OCSP freshness edges, and continuous parser/
+  canonicalization fuzzing received tactical versions;
 - Pebble DNS/TLS integrations were moved after their primitives exist;
 - active device-enrollment integrations and identity-controlled validation work
   received versions;

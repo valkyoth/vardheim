@@ -42,6 +42,7 @@ required=(
     v0.10.5
     v0.10.6
     v0.10.7
+    v0.10.8
     v0.13.1
     v0.14.2
     v0.15.2
@@ -56,6 +57,9 @@ required=(
     v0.28.6
     v0.28.7
     v0.28.8
+    v0.28.9
+    v0.29.3
+    v0.29.4
     v0.30.7
     v0.30.8
     v0.30.9
@@ -71,6 +75,7 @@ required=(
     v0.31.3
     v0.33.3
     v0.33.4
+    v0.36.3
     v0.37.4
     v0.38.3
     v0.38.4
@@ -84,8 +89,13 @@ required=(
     v0.41.5
     v0.41.6
     v0.41.7
+    v0.41.8
+    v0.41.9
+    v0.41.10
     v0.42.1
     v0.42.2
+    v0.42.3
+    v0.42.4
     v0.44.1
     v0.44.2
     v0.44.3
@@ -99,14 +109,24 @@ required=(
     v0.44.11
     v0.44.12
     v0.44.13
+    v0.45.0
+    v0.45.1
+    v0.45.2
+    v0.45.3
     v0.51.2
+    v0.51.4
+    v0.51.5
     v0.52.3
+    v0.52.4
+    v0.52.5
     v0.56.0
     v0.56.1
     v0.57.5
     v0.57.6
     v0.57.7
     v0.57.8
+    v0.57.9
+    v0.57.10
     v0.60.0
     v0.69.3
     v0.71.1
@@ -143,6 +163,7 @@ grep -q 'Backend-boundary contract' "$plan"
 grep -q 'Crate and feature topology contract' "$plan"
 grep -q 'Provider-neutral digest semantics' "$plan"
 grep -q 'Narrow legacy-hash compatibility capability' "$plan"
+grep -q 'Provider-neutral `DnsUpdateMac` capability' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Optional RFC 8555 `newAuthz` pre-authorization' "$plan"
 grep -q 'Introduce the dependency-light `vardheim-pkix` crate' "$plan"
@@ -150,6 +171,8 @@ grep -q 'Canonical bounded DER writer' "$plan"
 grep -q 'Private test-only reference crypto primitives' "$plan"
 grep -q 'Private test-only PKIX evidence verifier extension' "$plan"
 grep -q 'Private test-only DNSSEC verifier extension' "$plan"
+grep -q 'Private test-only `DnsUpdateMac` implementation' "$plan"
+grep -q '`CertificateTrustProvider` load/reload contract' "$plan"
 grep -q 'Complete RFC 5280 certificate-policy processing' "$plan"
 grep -q 'Core-to-PKIX evidence bridge' "$plan"
 grep -q 'Validation-session-bound PKIX capabilities' "$plan"
@@ -158,10 +181,15 @@ grep -q 'Bounded CRL and `TBSCertList` parsing' "$plan"
 grep -q 'Bounded SCT-list parsing' "$plan"
 grep -q 'Provider-neutral `PublicPkiFetch` contract' "$plan"
 grep -q 'Snapshot rehydration and verification-invalidation boundary' "$plan"
+grep -q 'Optional OCSP-staple deployment artifact contract' "$plan"
 grep -q 'Existing certificate adoption' "$plan"
 grep -q 'Certificate-key compromise response' "$plan"
 grep -q 'Certificate generation retirement state machine' "$plan"
+grep -q 'RFC 7633 TLS Feature/Must-Staple lifecycle policy' "$plan"
+grep -q 'High-level lifecycle facade methods' "$plan"
 grep -q 'Provider-neutral bounded DNS query contract' "$plan"
+grep -q 'Bounded EDNS(0) OPT construction/parsing' "$plan"
+grep -q 'EDNS query-attempt policy' "$plan"
 grep -q 'Production `std` wall/monotonic clock adapter' "$plan"
 grep -q 'Canonical DNSSEC owner-name and RRset serialization' "$plan"
 grep -q 'Local DS-to-DNSKEY digest and key-tag verification' "$plan"
@@ -170,8 +198,14 @@ grep -q 'RFC 5155 NSEC3 authenticated denial' "$plan"
 grep -q 'DNSSEC trust-anchor provisioning' "$plan"
 grep -q 'Validating-resolver evidence policy' "$plan"
 grep -q 'Production `std` `PublicPkiFetch` adapter' "$plan"
+grep -q 'Provider-neutral RFC 2136 UPDATE wire/state model' "$plan"
+grep -q 'RFC 8945 TSIG record and canonical MAC-input construction' "$plan"
+grep -q 'TSIG secret lifecycle and rotation' "$plan"
+grep -q 'Production custom issued-certificate trust provider' "$plan"
 grep -q 'Explicit and separate capability sets' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
+grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
+grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"

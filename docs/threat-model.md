@@ -18,6 +18,8 @@ its returned bytes are still structurally and semantically verified.
 
 - SSRF or cross-origin credential leakage through directory-controlled URLs;
 - ambient/ACME credential leakage or fabricated trust through public-PKI URLs;
+- issued-certificate trust confused with ACME TLS/platform/CT/DNSSEC trust or
+  silently emptied during reload;
 - JOSE algorithm confusion, nonce reuse, or malformed nested JWS;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - issuance for an unintended identifier or with an unintended key;
@@ -27,6 +29,10 @@ its returned bytes are still structurally and semantically verified.
 - server-injected private keys or mismatched certificate chains;
 - stale/replayed verification records, forged status/CT evidence, or false
   DNSSEC security from an unauthenticated resolver/AD bit;
+- DNS spoofing through predictable/reused IDs, weak response binding, EDNS/
+  fragmentation fallback, or unauthenticated RFC 2136 update responses;
+- activation or continued service of a Must-Staple certificate with a missing,
+  stale, mismatched, or separately committed OCSP staple;
 - dependency, CI action, toolchain, or release-process compromise.
 
 ## Out Of Scope

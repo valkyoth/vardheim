@@ -142,6 +142,10 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   consumer while concrete cryptographic implementations remain later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
+- DNS update authentication uses a separate `DnsUpdateMac` capability and
+  secret domain that cannot be reused for EAB;
+- ACME HTTPS roots, issued-certificate roots, CT log keys, and DNSSEC anchors
+  are distinct trust types rather than interchangeable byte collections;
 - nonce ownership makes reuse unrepresentable where practical; and
 - Kani, differential parsing, fuzzing, and Loom begin with the primitives they
   protect rather than being postponed to final qualification.
@@ -192,8 +196,9 @@ Certificate verification compares:
 - order identifiers;
 - CSR identifiers and public key;
 - returned leaf SANs and public key;
-- requested certificate profile and validity;
-- chain candidates against configured roots and policy.
+- requested certificate profile, TLS Feature requirements, and validity;
+- chain candidates against a versioned immutable issued-certificate trust
+  snapshot and policy, never implicitly against ACME transport roots.
 
 Non-certificate PEM objects are rejected, including server-injected private
 keys.
@@ -216,9 +221,14 @@ replay, existing-certificate adoption, renewal bootstrap, and durable
 multi-issuer migration policy.
 
 Snapshots contain verification audit records and invalidation inputs, never
-live verification capabilities. Restart, migration, root/policy/status/CT/
-algorithm/provider changes, and renewed verification time create a mandatory
+live verification capabilities. Restart, migration, issued-trust/policy/status/
+CT/algorithm/provider changes, and renewed verification time create a mandatory
 revalidation obligation before deployment or activation.
+
+Verification audit records retain stable invalidation reasons so operators and
+future regression replay can distinguish trust removal, explicit distrust,
+policy change, expiry, clock rollback, status/CT change, algorithm/provider
+change, and input mutation.
 
 Every external side effect follows:
 
@@ -239,12 +249,13 @@ features only expose constructors and never select an implementation.
 
 ## Renewal And Challenge Ecosystem
 
-Versions `0.40.0` through `0.51.3` implement ARI, durable scheduling,
+Versions `0.40.0` through `0.51.5` implement ARI, durable scheduling,
 certificate/account-key compromise response, certificate retirement,
 key/artifact destruction, inventory reconciliation, post-deployment status
-response, provider-neutral and concrete DNS query behavior, provider adapters,
-the restricted DNS agent, complete local DNSSEC validation, TLS-ALPN-01, and
-the rustls/OpenSSL adapters.
+response, high-level lifecycle methods, provider-neutral DNS/EDNS query
+behavior, provider adapters, the restricted DNS agent, complete local DNSSEC
+validation, TLS-ALPN-01, RFC 7633 Must-Staple lifecycle, and rustls/OpenSSL
+staple consumers.
 
 DNS propagation checks query authoritative servers and derive secure, insecure,
 bogus, and indeterminate results from canonical RRsets, DNSKEY/DS/RRSIG
@@ -254,9 +265,25 @@ validating-resolver evidence is an explicit policy alternative. Provider record
 handles preserve unrelated TXT data and enable exact cleanup. Heavy AWS and
 Azure SDKs stay outside core dependency graphs.
 
+DNS queries construct and parse bounded EDNS(0), request DNSSEC material with
+DO, use fresh unpredictable transaction IDs for every attempt, bind responses
+to the exact server/source/transport/question, avoid fragmented UDP, and retry
+truncated responses over TCP. EDNS fallback cannot silently remove semantics
+required by local DNSSEC validation.
+
+RFC 2136 UPDATE and RFC 8945 TSIG are first implemented against provider-neutral
+contracts and genuine private test cryptography. The production adapter is
+deliberately later, after the dedicated RustCrypto `DnsUpdateMac` backend; an
+unauthenticated or incorrectly chained TSIG response can never confirm success.
+
 TLS-ALPN-01 identity construction remains independent from rustls. The rustls
 resolver activates only for matching identifier, exact `acme-tls/1`, and an
 active unexpired owned presentation.
+
+Certificates requiring `status_request` are not activated without fresh locally
+verified OCSP evidence. Certificate, key, chain, and staple form one fenced
+deployment generation; refresh failure follows explicit hard-fail, rollback,
+and last-serving-generation policy.
 
 ## Transport And Crypto Sequence
 
@@ -264,8 +291,9 @@ Versions `0.52.0` through `0.66.2` introduce strict ACME transports, a separate
 credential-free `PublicPkiFetch` implementation, async/blocking/embedded
 profiles, purpose-specific key/MAC/sign/verify/generation capabilities,
 RustCrypto including EAB HMAC and RSA-PSS, ring, aws-lc-rs, separate AWS-LC
-FIPS, purpose-bound legacy verification hashes and DNSSEC algorithms, PKCS#11,
-TPM2, AWS KMS, Azure Key Vault, OpenBao-compatible, and remote/offline signing.
+FIPS, purpose-bound legacy verification hashes, DNSSEC algorithms, and TSIG
+HMAC, custom/platform issued-certificate trust providers, PKCS#11, TPM2, AWS
+KMS, Azure Key Vault, OpenBao-compatible, and remote/offline signing.
 
 Public PKI fetching may use HTTP or HTTPS according to explicit policy but has
 dedicated configuration and pools, no ACME/cookie/proxy/ambient credentials,
@@ -348,6 +376,10 @@ Coverage numbers are supporting evidence, not permission to leave behavior
 untested. Every public function and meaningful private branch must have direct
 behavioral tests. Generated code and structurally unreachable defensive lines
 need documented exclusions reviewed at the release gate.
+
+Parser and canonicalization fuzzing begins with each boundary, including OCSP,
+CRL, SCT, EDNS, TSIG, and DNSSEC RRset processing; `0.96.0` qualifies and
+closes those continuously retained corpora rather than introducing them late.
 
 ## Dependency Maintenance
 
