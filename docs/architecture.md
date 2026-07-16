@@ -77,14 +77,28 @@ states.
 ## DER And Certificate Structure
 
 The PKIX boundary rejects noncanonical DER before interpreting certificate
-semantics. Minimal INTEGER and OID encodings, BIT STRING unused bits, canonical
-BOOLEAN, primitive/constructed form, SET ordering, and definite shortest
-lengths are shared rules. Certificate-envelope prevalidation then enforces
-field order, version gates, positive serial policy, inner/outer signature
-algorithm equality, unique-ID/extension legality, duplicate extension OIDs,
-unknown critical extensions without a profile handler, and
-empty-subject/critical-SAN requirements before issuer search or path
-processing.
+semantics. Minimal signed INTEGER and ENUMERATED encodings, OID encodings, BIT
+STRING unused bits, canonical BOOLEAN, zero-length NULL, primitive/constructed
+form, SET ordering, and definite shortest lengths are shared rules. Canonical
+zero, positive, and negative integers are valid DER; field schemas impose
+positivity, range, and zero restrictions. Certificate-envelope prevalidation
+then enforces field order, version gates, positive serial policy, normalized
+inner/outer signature algorithm-and-parameter equivalence, unique-ID/extension
+legality, duplicate extension OIDs, unknown critical extensions without a
+profile handler, and empty-subject/critical-SAN requirements before issuer
+search or path processing.
+
+## Public-Key Validation Evidence
+
+Decoded JWK or SPKI bytes are not a validated public key. A selected provider
+checks RSA modulus/exponent policy, Weierstrass curve/point validity, and
+Ed25519/Ed448 encoding plus algorithm-specific weak/small-order policy, with
+exact algorithm and parameter binding. The private-constructor evidence binds
+the material hash, provider/session, tenant, purpose, and policy and is
+transient. Signer-handle binding additionally requires proof of possession or a
+provider-native pairwise-consistency result; material-only evidence cannot be
+promoted. Unsupported or unavailable validation never falls back, and issued
+leaf public keys are validated even when not used for signature verification.
 
 ## Public PKI Fetch Boundary
 
@@ -213,6 +227,10 @@ workspaces without changing validation rules or capacity accounting.
 - A certificate cannot be deployed before structural and policy verification.
 - Noncanonical DER or an X.509 structural defect cannot reach issuer search or
   path validation.
+- Parsed JWK/SPKI material cannot become an account, CSR, certificate, or
+  deployment key without current provider-bound public-key validation evidence.
+- Public-key validation evidence cannot prove a signer handle is bound without
+  separate proof of possession or provider-native pairwise consistency.
 - An imported account cannot become active without fresh signer-proven CA
   ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or

@@ -31,6 +31,9 @@ its returned bytes are still structurally and semantically verified.
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
   constraints deferred until path validation;
+- invalid or substituted RSA/EC/EdDSA public material accepted because parsing,
+  signature verification, or a provider handle was mistaken for current
+  provider-bound key validation and proof of possession;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;
@@ -50,7 +53,9 @@ its returned bytes are still structurally and semantically verified.
   fallback, forged referral/glue/AA/SOA/DNAME authority discovery, ambient
   resolver fallback, or unauthenticated RFC 2136 update responses;
 - provider capability overclaim caused by inferring purpose support from a
-  shared algorithm name, or platform-trust overclaim after constraint loss;
+  shared algorithm name, accepting stale/cross-session public-key validation
+  evidence, silently falling back when validation is unavailable, or platform-
+  trust overclaim after constraint loss;
 - false key destruction claims caused by confusing disablement, scheduled
   deletion, object absence, handle loss, unlink, zeroization, retention, or
   provider unavailability with evidenced physical destruction;

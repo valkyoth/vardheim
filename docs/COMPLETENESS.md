@@ -62,19 +62,20 @@ At `1.0.0`, all of these must work without placeholder success paths:
   identifier/challenge families assigned by published standards;
 - ARI and conservative fallback renewal scheduling;
 - key/CSR generation or external/HSM/KMS signing without private-key export;
-- provider-neutral digest/sign/verify/entropy/key-generation and honest key-
-  disposition/reconciliation contracts with explicit concrete-provider
-  construction and per-purpose capability/disposition tables, including
-  narrowly purpose-bound legacy verification hashes where standards still
-  require them;
+- provider-neutral digest/sign/verify/entropy/key-generation, public-key
+  validation/signer binding, and honest key-disposition/reconciliation
+  contracts with explicit concrete-provider construction and per-purpose
+  capability/validation/disposition tables, including narrowly purpose-bound
+  legacy verification hashes where standards still require them;
 - bounded strict DER primitive parsing and X.509 structural prevalidation,
   shared ASN.1/PKIX time handling and RFC 5280 DN equality, CSR/key/SAN/profile
-  binding, explicit durable renewal key-rotation modes, PKIX path policy,
-  complete RFC 5280 policy processing, chain-wide local OCSP/CRL parsing and
-  signature verification, distinct RFC 6962 CT v1 and RFC 9162 CT v2 parsing/
-  signature/Merkle verification, hardened credential-free optional
-  acquisition/AIA, context-bound transient evidence, and server private-key
-  injection refusal;
+  binding, provider/session-bound RSA/EC/EdDSA public-key validation including
+  issued leaf keys and signer-handle proof, explicit durable renewal
+  key-rotation modes, PKIX path policy, complete RFC 5280 policy processing,
+  chain-wide local OCSP/CRL parsing and signature verification, distinct RFC
+  6962 CT v1 and RFC 9162 CT v2 parsing/signature/Merkle verification, hardened
+  credential-free optional acquisition/AIA, context-bound transient evidence,
+  and server private-key injection refusal;
 - distinct versioned issued-certificate trust providers for custom/platform
   anchors, additions/removals/distrust, constraints, tenant isolation, and
   reload failure without reusing ACME HTTPS/CT/DNSSEC trust;
@@ -203,6 +204,8 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   DER/X.509 structural closure, rollover/deactivation account-key disposition,
   durable renewal key modes, complete authoritative DNS discovery, explicit
   HTTP version/replay/early-data policy and HTTP/2/HTTP/3 profiles,
+  provider-neutral public-key validation and signer binding across every
+  software, HSM, TPM, KMS, remote, and platform provider,
   legacy-key migration, provider capability tables, lifecycle facade methods,
   stable invalidation reasons, OCSP freshness edges, and continuous parser/
   canonicalization fuzzing received tactical versions;

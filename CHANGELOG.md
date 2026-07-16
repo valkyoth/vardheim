@@ -39,6 +39,10 @@ Keep a Changelog and the project follows Semantic Versioning.
   disposition, durable certificate renewal key modes, complete authoritative
   DNS referral/glue/DNAME discovery, and explicit replay-safe HTTP/1.1, HTTP/2,
   and HTTP/3 transport milestones with early data disabled.
+- Corrected generic DER INTEGER semantics, added ENUMERATED and NULL closure,
+  clarified normalized certificate signature-algorithm equivalence, and added
+  provider/session-bound public-key validation and signer-binding milestones
+  across PKIX, software crypto, HSM/KMS, remote, and platform providers.
 
 ## 0.3.1 - Unreleased
 

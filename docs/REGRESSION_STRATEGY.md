@@ -83,6 +83,9 @@ The release comparison gate covers:
   certificate, CRL, OCSP, and CMS/CT inputs;
 - DER primitive canonicality, certificate-envelope structural rejection, and
   durable certificate renewal key-rotation decisions;
+- provider/session-bound RSA/EC/EdDSA public-key validation, JWK/SPKI/algorithm
+  consistency, signer-handle binding, unsupported/unavailable, and issued-leaf
+  decisions;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and
@@ -96,7 +99,8 @@ The release comparison gate covers:
 - provider observations without encoding undocumented quirks as standards;
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
-- per-purpose crypto-provider capability and legacy-key migration decisions;
+- per-purpose crypto-provider capability, public-key validation/signer-binding,
+  and legacy-key migration decisions;
 - provider-native key disposition, receipt binding, and reconciliation decisions
   without destruction-state inflation;
 - target/profile compile and runtime evidence;

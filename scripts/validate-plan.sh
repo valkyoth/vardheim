@@ -44,6 +44,7 @@ required=(
     v0.10.7
     v0.10.8
     v0.10.9
+    v0.10.10
     v0.13.1
     v0.14.2
     v0.15.2
@@ -65,6 +66,7 @@ required=(
     v0.28.11
     v0.28.12
     v0.28.13
+    v0.28.14
     v0.29.3
     v0.29.4
     v0.29.5
@@ -153,6 +155,7 @@ required=(
     v0.56.1
     v0.56.5
     v0.56.6
+    v0.56.7
     v0.57.5
     v0.57.6
     v0.57.7
@@ -160,6 +163,7 @@ required=(
     v0.57.9
     v0.57.10
     v0.57.11
+    v0.57.12
     v0.58.1
     v0.59.1
     v0.60.0
@@ -200,6 +204,7 @@ grep -q 'Provider-neutral digest semantics' "$plan"
 grep -q 'Narrow legacy-hash compatibility capability' "$plan"
 grep -q 'Provider-neutral `DnsUpdateMac` capability' "$plan"
 grep -q 'Provider-neutral key-disposition request' "$plan"
+grep -q 'Provider-neutral public-key validation and signer-binding contract' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Durable old account-key lifecycle' "$plan"
@@ -214,6 +219,7 @@ grep -q 'Strict bounded ASN.1/PKIX time parser' "$plan"
 grep -q 'RFC 5280 distinguished-name equality and normalization' "$plan"
 grep -q 'Strict DER primitive/constructed conformance layer' "$plan"
 grep -q 'X.509 certificate-envelope structural prevalidation' "$plan"
+grep -q 'JWK/SPKI/CSR/certificate public-key validation integration' "$plan"
 grep -q 'Durable certificate-key renewal/rotation policy' "$plan"
 grep -q '`CertificateTrustProvider` load/reload contract' "$plan"
 grep -q 'Complete RFC 5280 certificate-policy processing' "$plan"
@@ -270,12 +276,14 @@ grep -q 'Optional explicit RFC 9114 HTTP/3 ACME transport profile' "$plan"
 grep -q 'Explicit and separate capability sets' "$plan"
 grep -q 'Optional default-off migration import' "$plan"
 grep -q 'Reusable key-disposition provider conformance' "$plan"
+grep -q 'Reusable public-key validation/provider conformance framework' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
 grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"
 grep -q 'RustCrypto/software-key disposition implementation' "$plan"
-grep -q 'Published ring per-purpose capability and key-disposition table' "$plan"
-grep -q 'Published aws-lc-rs non-FIPS per-purpose capability and key-disposition table' "$plan"
+grep -q 'RustCrypto public-key validation and software-signer binding implementation' "$plan"
+grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, and key-disposition table' "$plan"
+grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
 grep -q 'Reusable adapter conformance framework' "$plan"
 grep -q 'qualification and coverage closure' "$plan"

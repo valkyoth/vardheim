@@ -137,9 +137,10 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   policies keep the strict core usable without `alloc`;
 - base64url, JWK, JWA, thumbprints, JWS, EAB, and rollover use typed purpose-
   specific construction rather than arbitrary JSON values;
-- provider-neutral digest, signing, verification, entropy, and key-generation
-  semantics precede their first JOSE, scheduling, CSR, PKIX, or challenge
-  consumer while concrete cryptographic implementations remain later;
+- provider-neutral digest, signing, verification, entropy, key-generation, and
+  public-key-validation/signer-binding semantics precede their first JOSE,
+  scheduling, account-adoption, CSR, PKIX, or challenge consumer while concrete
+  cryptographic implementations remain later;
 - standards-required SHA-1 is exposed only through purpose-bound OCSP/DNSSEC/
   NSEC3 verification capabilities and cannot become a general or JOSE digest;
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
@@ -168,10 +169,11 @@ pagination.
 
 Existing-account adoption accepts a directory URL, account URL, and signer/key
 handle only as inputs. Ownership is established by local signer/public-key
-self-verification and a fresh authenticated POST-as-GET whose effective URL and
-account object bind to the same directory. Operator assertions or possession of
-an account URL are never proof. Imported, created, and recovered provenance
-remain distinct and non-exportable HSM/KMS signers are first-class.
+validation plus signer-bound proof and a fresh authenticated POST-as-GET whose
+effective URL and account object bind to the same directory. Operator
+assertions, parsed public material, or possession of an account URL are never
+proof. Imported, created, and recovered provenance remain distinct and
+non-exportable HSM/KMS signers are first-class.
 
 Account rollover does not end at a successful response parser. Both old and new
 keys remain protected until a fresh authenticated account observation proves
@@ -213,14 +215,27 @@ Separate private test verifiers supply genuine pinned status/CT and DNSSEC
 algorithm coverage before production providers exist; neither is shipped or
 presented as a supported backend.
 
-DER primitive conformance is complete before certificate semantics. INTEGER,
-OID, BIT STRING, BOOLEAN, constructed/primitive form, SET ordering, and length
-encodings are canonical and bounded. Certificate envelopes then enforce field
-ordering and version legality, positive serial policy, inner/outer signature
-algorithm equivalence, unique-ID and extension version gates, duplicate
-extension rejection, unknown-critical rejection unless a profile assigns a
-handler, and empty-subject/critical-SAN rules before issuer search or path
-validation begins.
+DER primitive conformance is complete before certificate semantics. Canonical
+zero, positive, and negative INTEGER/ENUMERATED values are accepted while
+nonminimal encodings fail; OID, BIT STRING, BOOLEAN, zero-length NULL,
+constructed/primitive form, SET ordering, and length encodings are canonical
+and bounded. Context schemas impose positivity, range, and zero restrictions.
+Certificate envelopes then enforce field ordering and version legality,
+positive serial policy, normalized inner/outer algorithm-and-parameter
+equivalence through the shared algorithm model, unique-ID and extension version
+gates, duplicate extension rejection, unknown-critical rejection unless a
+profile assigns a handler, and empty-subject/critical-SAN rules before issuer
+search or path validation begins.
+
+Public-key parsing is not public-key validation. JWK and SPKI material passes
+through a provider/session-bound validation capability covering RSA integer and
+size/exponent policy, exact Weierstrass curve binding and point validity, and
+Ed25519/Ed448 encoding plus algorithm-specific weak/small-order policy.
+Algorithm/parameter identities must agree across JWK, SPKI, CSR, certificate,
+and provider capability. `ValidatedPublicKey` evidence is transient and cannot
+be restored, crossed between providers/policies, or promoted into signer-handle
+binding without proof of possession or provider-native pairwise consistency.
+Issued leaf keys are validated even when no signature is verified with them.
 
 Certificate verification compares:
 
@@ -402,11 +417,14 @@ provider lifecycle, and never exports legacy formats.
 Each provider implements capabilities and is explicitly selected. ring,
 aws-lc-rs, and AWS-LC FIPS publish per-purpose capability tables covering JOSE,
 CSR, X.509, OCSP, CRL, CT v1/v2, TLS-ALPN, DNSSEC, TSIG, key import/generation,
-legacy verification hashes, and key disposition. Every software, HSM, TPM,
-KMS, remote, and platform key provider maps native states through the shared
-disposition contract and publishes reconciliation behavior. Scheduled deletion,
-disablement, object absence, handle loss, unlink, or zeroization is never
-inflated into physical destruction. Unsupported purposes or dispositions are
+public-key validation, signer binding, legacy verification hashes, and key
+disposition. Every software, HSM, TPM, KMS, remote, and platform key provider
+implements the shared validation conformance boundary and maps native states
+through the shared disposition contract. Invalid keys, wrong handles, stale
+provider sessions, unsupported validation, or provider unavailability cannot
+fall back to another backend. Scheduled deletion, disablement, object absence,
+handle loss, unlink, or zeroization is never inflated into physical
+destruction. Unsupported purposes, validations, bindings, or dispositions are
 typed and never inferred from an algorithm name. Provider negotiation is:
 
 ```text
