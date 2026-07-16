@@ -84,10 +84,12 @@ The release comparison gate covers:
 - DER primitive canonicality, certificate-envelope structural rejection, and
   durable certificate renewal key-rotation decisions;
 - provider/session-bound RSA/EC/EdDSA public-key validation, JWK/SPKI/algorithm
-  consistency, domain-separated signer-binding transcripts, native
-  pairwise-consistency equivalence, exact-role single-use signer-consumer
-  admission for every handle-backed signature effect, unsupported/unavailable/
-  ambiguous outcomes, and issued-leaf decisions;
+  consistency, domain-separated `BoundSigner` transcripts, narrow binding-
+  operation exemption, native pairwise-consistency equivalence, locally minted
+  exact-request admission, bounded concurrent identities, destructive
+  consumption across signer/network/retry outcomes, invalidation after
+  provider/session/policy/key-health change, unsupported/unavailable/ambiguous
+  outcomes, and issued-leaf decisions;
 - OCSP responder-extension/recursion, chain-status, privacy, and tenant/cache
   decisions;
 - public-PKI HTTP framing, decompression, representation, complete-body, and

@@ -38,6 +38,10 @@ its returned bytes are still structurally and semantically verified.
   handle-backed signing effect accepting cached, unrelated, cross-protocol,
   replayed, expired, ambiguously produced, or incompletely bound native
   signatures instead of fresh exact-role signer-consumer admission;
+- recursive signer admission, arbitrary-byte abuse of the privileged binding
+  operation, per-request remote proof costs that make secure HSM/KMS or
+  user-presence deployment impractical, or restoration/reuse of admission
+  after signing failure, cancellation, ambiguity, `badNonce`, or reconciliation;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;

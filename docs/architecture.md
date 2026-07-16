@@ -97,18 +97,27 @@ exact algorithm and parameter binding. The private-constructor evidence binds
 the material hash, provider/session, tenant, purpose, and policy and is
 transient. It never authorizes use of a signer handle.
 
-Every handle-backed signature effect additionally consumes a private,
-non-serializable, single-use `SignerConsumerAdmission` for its exact role. A
-provider-native pairwise-consistency result is accepted only when it binds the
-provider/session, tenant, handle, validated material hash, algorithm and
-parameters, policy version, intended role, request identity, and expiry.
-Otherwise the provider signs a fresh entropy-backed canonical `SignerBinding`
-transcript under a dedicated purpose unavailable to JWS, CSR, revocation,
-TLS-challenge, or audit signing, and Vardheim verifies the exact signature
-locally against the current validated key. Failure, ambiguity, expiry, replay,
-session change, or incomplete native evidence yields no admission. Unsupported
-or unavailable validation/binding never falls back, and issued leaf public keys
-are validated even when not used for signature verification.
+A transient non-serializable `BoundSigner` separately establishes that a
+provider handle controls the validated public key for bounded roles and time.
+A provider-native pairwise-consistency operation may establish that
+relationship. Otherwise a narrowly privileged `bind_signer` operation signs a
+fresh entropy-backed canonical `SignerBinding` transcript and Vardheim verifies
+the exact signature locally. `bind_signer` is the only handle-backed signing
+operation exempt from ordinary consumer admission and accepts only that
+canonical transcript, never arbitrary bytes or JWS, CSR, revocation,
+TLS-challenge, or audit requests.
+
+Ordinary handle-backed signature effects consume a private non-serializable
+single-use `SignerConsumerAdmission` minted locally from `&mut BoundSigner`.
+Admission binds the exact canonical signing bytes, algorithm and parameters,
+output format, protocol role, request identity, and replay nonce where
+applicable; minting performs no provider signature. Admission is consumed
+immediately before signer dispatch and is never restored after success,
+failure, cancellation, or ambiguity. Outstanding identities are unique and
+bounded. Provider/session/policy/key-health change or signer expiry invalidates
+`BoundSigner` and all derived admissions. Unsupported or unavailable
+validation/binding never falls back, and issued leaf public keys are validated
+even when not used for signature verification.
 
 ## Public PKI Fetch Boundary
 
@@ -240,9 +249,13 @@ workspaces without changing validation rules or capacity accounting.
 - Parsed JWK/SPKI material cannot become an account, CSR, certificate, or
   deployment key without current provider-bound public-key validation evidence.
 - No handle-backed signature effect can be constructed without current
-  public-key validation and exact-role, single-use signer-consumer admission.
+  public-key validation, a role-permitted `BoundSigner`, and exact-request
+  single-use signer-consumer admission, except the canonical `bind_signer`
+  proof operation.
 - Cached, unrelated, cross-protocol, ambiguous, expired, replayed, or
   incompletely bound native signatures cannot prove a signer handle is bound.
+- Signer success, failure, cancellation, ambiguity, `badNonce`, and ambiguous
+  network transmission never restore or reuse a consumed request admission.
 - An imported account cannot become active without fresh signer-proven CA
   ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or

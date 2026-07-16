@@ -46,6 +46,7 @@ required=(
     v0.10.9
     v0.10.10
     v0.10.11
+    v0.10.12
     v0.13.1
     v0.14.2
     v0.15.2
@@ -206,13 +207,16 @@ grep -q 'Narrow legacy-hash compatibility capability' "$plan"
 grep -q 'Provider-neutral `DnsUpdateMac` capability' "$plan"
 grep -q 'Provider-neutral key-disposition request' "$plan"
 grep -q 'Provider-neutral public-key validation contract' "$plan"
-grep -q 'Domain-separated signer-binding ceremony and universal signer-consumer admission contract' "$plan"
-grep -q 'Account creation with contacts.*v0.10.11' "$plan"
-grep -q '`onlyReturnExisting` account recovery.*v0.10.11' "$plan"
-grep -q 'Account key rollover.*v0.10.11' "$plan"
-grep -q 'Complete revocation:.*v0.10.11' "$plan"
-grep -q 'RFC 2986 CSR construction.*v0.10.11' "$plan"
-grep -q 'TLS-ALPN-01 identity construction.*v0.10.11' "$plan"
+grep -q 'Domain-separated signer-binding ceremony producing transient non-serializable `BoundSigner`' "$plan"
+grep -q 'Local request-specific signer-consumer admission contract over `&mut BoundSigner`' "$plan"
+grep -q 'Account creation with contacts.*v0.10.12' "$plan"
+grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
+grep -q 'Account key rollover.*v0.10.12' "$plan"
+grep -q 'Complete revocation:.*v0.10.12' "$plan"
+grep -q 'RFC 2986 CSR construction.*v0.10.12' "$plan"
+grep -q 'TLS-ALPN-01 identity construction.*v0.10.12' "$plan"
+grep -q 'Single-use replay nonce ownership integrated with `v0.10.12` request admission' "$plan"
+grep -q '`badNonce` retry discards the old nonce, signing bytes, request identity' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Durable old account-key lifecycle' "$plan"
@@ -284,7 +288,7 @@ grep -q 'Optional explicit RFC 9114 HTTP/3 ACME transport profile' "$plan"
 grep -q 'Explicit and separate capability sets' "$plan"
 grep -q 'Optional default-off migration import' "$plan"
 grep -q 'Reusable key-disposition provider conformance' "$plan"
-grep -q 'Reusable public-key validation, signer-binding-ceremony, and provider conformance framework' "$plan"
+grep -q 'Reusable public-key validation, `BoundSigner`, request-admission, and provider conformance framework' "$plan"
 grep -q 'RustCrypto DNSSEC verifier capabilities' "$plan"
 grep -q 'RustCrypto `DnsUpdateMac` backend' "$plan"
 grep -q 'Production RFC 2136 DNS provider adapter' "$plan"

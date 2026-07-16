@@ -53,9 +53,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - strict directory discovery, refresh, origin policy, ToS changes, complete
   `newNonce` acquisition/harvesting, and directory-scoped nonce ownership;
 - account create/recover/adopt/update/orders/rollover/deactivate and EAB, with
-  current validated and exact-role admitted signers for every handle-backed
-  account effect, signer-proven ownership proof for imported accounts, and
-  durable old/new key disposition after rollover or deactivation;
+  current validated and role-bound signers plus exact-request admission for
+  every handle-backed account effect, signer-proven ownership proof for
+  imported accounts, and durable old/new key disposition after rollover or
+  deactivation;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
   structured problems;
@@ -64,15 +65,16 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - ARI and conservative fallback renewal scheduling;
 - key/CSR generation or external/HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
-  validation, domain-separated single-use signer-consumer admission, and honest
-  key-disposition/reconciliation contracts with explicit concrete-provider
-  construction and per-purpose capability/validation/binding/disposition
-  tables, including narrowly purpose-bound legacy verification hashes where
-  standards still require them;
+  validation, domain-separated transient `BoundSigner`, locally minted
+  single-use exact-request admission, and honest key-disposition/reconciliation
+  contracts with explicit concrete-provider construction and per-purpose
+  capability/validation/binding/disposition tables, including narrowly
+  purpose-bound legacy verification hashes where standards still require them;
 - bounded strict DER primitive parsing and X.509 structural prevalidation,
   shared ASN.1/PKIX time handling and RFC 5280 DN equality, CSR/key/SAN/profile
   binding, provider/session-bound RSA/EC/EdDSA public-key validation including
-  issued leaf keys and signer-handle proof, explicit durable renewal
+  issued leaf keys plus signer-handle binding and exact-request admission,
+  explicit durable renewal
   key-rotation modes, PKIX path policy, complete RFC 5280 policy processing,
   chain-wide local OCSP/CRL parsing and signature verification, distinct RFC
   6962 CT v1 and RFC 9162 CT v2 parsing/signature/Merkle verification, hardened
@@ -208,11 +210,12 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
   HTTP version/replay/early-data policy and HTTP/2/HTTP/3 profiles,
   provider-neutral public-key validation and signer binding across every
   software, HSM, TPM, KMS, remote, and platform provider,
-  universal admission enforcement across account creation/recovery/adoption,
-  both rollover signers, internal CSR construction, certificate-key
-  revocation, TLS-ALPN ephemeral signing, and future handle-backed effects,
-  fresh domain-separated binding transcripts with exact native-consistency
-  equivalence,
+  nonrecursive `BoundSigner` plus local request-admission enforcement across
+  account creation/recovery/adoption, both rollover signers, internal CSR
+  construction, certificate-key revocation, TLS-ALPN ephemeral signing, and
+  future handle-backed effects; fresh domain-separated binding transcripts,
+  native-consistency equivalence, bounded concurrency, and destructive
+  admission handling across retry and ambiguity,
   legacy-key migration, provider capability tables, lifecycle facade methods,
   stable invalidation reasons, OCSP freshness edges, and continuous parser/
   canonicalization fuzzing received tactical versions;
