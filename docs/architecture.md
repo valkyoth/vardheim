@@ -31,6 +31,23 @@ Internal account, order, authorization, renewal, policy, storage, deployment,
 certificate, error, and observation concerns remain modules. A new public crate
 requires a meaningful portability, dependency, ecosystem, or security boundary.
 
+Crate policy is tiered rather than pretending every future operating-system or
+FFI adapter has the same build constraints as protocol code. Portable crates
+remain `no_std` and safe Rust. A native adapter may use `std` and a minimal
+inventoried unsafe module only after its crate, module invariants, owner,
+platform evidence, and audit scope are machine declared. Native code depends
+inward on safe semantic types; core never depends on it.
+
+## Backend Observation Boundary
+
+Core emits inert purpose-specific effects and accepts bounded observations. An
+adapter never returns reducer authority directly and cannot construct sealed
+positive evidence such as `VerifiedSignature`, `BoundSigner`, `DurableCommit`,
+or `OwnedPresentation`. Backend failures use the stable classes `Unsupported`,
+`Unavailable`, `Rejected`, `Corrupt`, `DefinitelyNotDispatched`, and
+`MayHaveDispatched`. Bounded redacted provider diagnostics are retained for
+operators but cannot select retry or narrow dispatch knowledge.
+
 ## PKIX Evidence Ownership
 
 `vardheim-pkix` owns private-field `VerifiedLeaf`, `VerifiedPath`, and
@@ -128,7 +145,11 @@ the discovery alias. Provider-returned bytes are private
 `UnverifiedSignature`, still untrusted even when the provider reports success.
 Vardheim verifies the exact admitted bytes, algorithm, parameters, encoding,
 immutable identity, and bound public key locally. Only that check constructs
-`VerifiedSignature` accepted by protocol effects. Unsupported, unavailable,
+`VerifiedSignature` accepted by protocol effects. The evidence binds the
+verifier implementation/version, execution and trust identity, and assurance
+class. A remote signer verifying its own output is provider-correlated evidence,
+not independent local verification; it cannot satisfy the default production
+assurance class. Unsupported, unavailable,
 malformed, or failed verification transmits nothing, consumes the admission,
 invalidates or quarantines the signer according to policy, and cannot select a
 fallback signer or verifier.
@@ -470,7 +491,9 @@ workspaces without changing validation rules or capacity accounting.
 
 ## Security Invariants
 
-- A replay nonce is consumed exactly once and never returned to a pool.
+- A replay nonce is linear authority, not a confidential secret: it is consumed
+  exactly once, never cloned/restored, and never returned to a pool; an
+  independent response nonce is harvested before response-outcome handling.
 - A JWS contains exactly one of `jwk` or `kid`.
 - Signed requests cannot redirect automatically or change their signed URL.
 - Untrusted bytes, JSON, extension maps, headers, PEM, DER, and recursion are
@@ -502,7 +525,9 @@ workspaces without changing validation rules or capacity accounting.
   digest pinned during binding must be used.
 - Provider-returned signature bytes are untrusted and cannot enter any protocol
   effect until locally verified against the bound key and exact admitted
-  request; unavailable verification fails closed without fallback.
+  request; provider-correlated verification cannot be promoted to independent
+  local assurance, and unavailable required verification fails closed without
+  fallback.
 - Cached, unrelated, cross-protocol, ambiguous, expired, replayed, or
   incompletely bound native signatures cannot prove a signer handle is bound.
 - Signer success, failure, cancellation, ambiguity, `badNonce`, and ambiguous

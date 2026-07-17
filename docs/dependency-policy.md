@@ -29,3 +29,10 @@ compile-time and binary-size impact.
 Before each implementation milestone and release, run the networked tooling and
 dependency version check. Live upstream state informs updates; reproducible
 release claims remain tied to committed manifests, lockfiles, and evidence.
+
+Before a public adapter trait freezes, private pinned API spikes validate each
+materially different dependency/runtime family independently. Spike code and
+dependencies remain unpublished evidence, carry no production support claim,
+and may force the candidate boundary to change. A successful spike for one
+provider cannot stand in for another provider's message/digest, buffer,
+cancellation, identity, verification, or ambiguity semantics.

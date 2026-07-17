@@ -31,3 +31,11 @@ dependency-light `no_std` certificate boundary; provider SDKs, Redis, HTTP
 frameworks, TLS stacks, databases, and crypto implementations remain outside
 it. Dependency-cycle, feature-power-set, public API, compile-time, binary-size,
 and architecture-direction checks become mandatory at their roadmap versions.
+
+The machine policy introduced at `0.4.13` assigns every crate one tier. A
+portable crate is `no_std`, safe Rust, and constrained by allocation/dependency
+budgets. A native adapter may use `std` and only explicitly inventoried unsafe
+modules. Unclassified crates fail validation. Semantic module boundaries also
+declare invariant ownership, sealed authority constructors, bounded stack/depth
+expectations, and reducer/API complexity; splitting a file cannot hide growth
+in any of those dimensions.

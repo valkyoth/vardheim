@@ -7,6 +7,22 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ### Changed
 
+- Added a machine-readable roadmap/requirement DAG milestone with stable work
+  IDs, ownership, prerequisites, generated views, critical-path reporting, and
+  validation that cannot merge or omit the established pre-1.0 pentest stops.
+- Split pre-freeze architecture qualification into separate unpublished
+  RustCrypto, ring, rustls, blocking/async/embedded executor, and transactional
+  store spikes; added machine portable/native crate tiers, eight independent
+  formal models, semantic module/stack/reducer gates, and early plus final
+  security-mutation programs.
+- Added linear non-secret nonce authority, layered backend failure classes,
+  verifier identity and independent-assurance evidence, conflict-checked
+  versioned challenge registration, sealed presentation receipts, an early real
+  HTTP/TLS/crypto/outbox vertical slice, and explicit compile/emulator/native/
+  production platform evidence tiers.
+- Recorded the deliberate scope decision to retain the owner-defined common
+  Rust `1.90.0`-`1.97.0` range, every assigned pre-1.0 version, and a pentest at
+  each stop instead of collapsing releases or moving current scope after 1.0.
 - Expanded the complete pre-1.0 roadmap with explicit release boundaries for
   full errata/reference evidence, reviewed-implementation release binding,
   reproducible SBOMs, cross-target and feature-power-set gates, provider-neutral

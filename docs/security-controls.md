@@ -5,7 +5,7 @@
 | Input | explicit size, count, depth, time, and retry budgets |
 | JSON | duplicate-key rejection and bounded unknown-field retention |
 | JOSE | typed payloads, explicit algorithms, exact `jwk`/`kid` exclusivity |
-| Nonces | per-directory bounded queues and destructive take semantics |
+| Nonces | linear non-secret `FreshNonce` authority, per-directory/account/tenant bounded caller-backed queues, destructive take with no restore, independent response harvesting before outcome handling, and persistable consumed IDs without live authority |
 | URLs | trusted origins, no signed-request redirect, SSRF policy |
 | Public PKI fetch | isolated credential-free transport; strict framing/media/complete-body checks and context-partitioned cache; untrusted bytes require local verification |
 | Trust domains | ACME, issued-certificate, CT, DNSSEC, and provider trust are non-interchangeable |
@@ -15,9 +15,9 @@
 | Account rollover | retain old/new keys until durable effective-signer proof; ambiguous rollover/deactivation blocks disposition |
 | Secrets | redacted formatting, role separation, minimum retention |
 | Workflow | valid transitions only, persisted effects, reconciliation |
-| Challenges | ownership receipts, self-check, durable cleanup |
+| Challenges | conflict-checked method/revision registry; sealed receipts bind exact method revision, identifier, account/key authorization, resource IDs, generation, expiry, backend, observed value and cleanup owner; no cross-family/revision conversion; self-check and durable cleanup |
 | DER/X.509 structure | canonical primitive/length encoding and version-gated certificate fields rejected before path validation |
-| Public keys and signer handles | provider/session-bound RSA/EC/EdDSA validation; transient role-limited `BoundSigner` pins immutable native identity/version and public-key digest, never mutable aliases; ordinary signature effects consume exact-request admission, dispatch only to that identity, treat provider output as untrusted, and locally verify exact bytes/algorithm/parameters/encoding/key before use; binding operation alone is narrowly exempt; no signer/verifier fallback |
+| Public keys and signer handles | provider/session-bound RSA/EC/EdDSA validation; transient role-limited `BoundSigner` pins immutable native identity/version and public-key digest, never mutable aliases; ordinary signature effects consume exact-request admission, dispatch only to that identity, treat provider output as untrusted, and locally verify exact bytes/algorithm/parameters/encoding/key before use; `VerifiedSignature` binds verifier implementation/execution/trust identity and assurance, same-provider verification is not independent, and default production acceptance requires an independent local software verifier; binding operation alone is narrowly exempt; no signer/verifier fallback |
 | MAC secrets and handles | create/import/adopt is transactional and quarantined until an admitted typed content-binding mode succeeds; a private single-use `SecretBindingAttempt` permits only the exact domain-separated local transcript or request-bound peer ceremony and never ordinary EAB/TSIG authority; peer confirmation has stable attempt/effect IDs, persist-before-effect ordering, orthogonal dispatch/operation/binding/observation state, authenticated purpose-specific evidence, no blind ambiguous retry, operation-specific EAB/DNS reconciliation, and no automatic mutating ceremony replay on restart; stable idempotency and durable lifecycle/obligations protect reconciliation, revalidation, source destruction, and disposition; transient purpose-limited `BoundMacKey` pins tenant, directory/zone, provider/session, immutable secret identity/version, algorithm, policy, health, and expiry; exact-input single-use admission is consumed before immutable dispatch; raw provider output remains `UnverifiedMac`; local/exportable secrets require constant-time independent `VerifiedMac`; ordinary opaque results are `ProviderAssertedMac`, while `CryptographicallyAttestedMac` requires a signed/native replay-protected full-transcript receipt; weaker evidence is rejected by default; no capability restoration, secret export, or provider fallback |
 | Key onboarding | stable idempotent create/import identity; durable lifecycle state is separate from orthogonal obligations and live authority; `Active` means eligible, not signable; every process/provider session freshly validates and binds; ambiguous/lost/eventually visible outcomes reconcile with fencing; failures retain obligations; absence never proves destruction |
 | Certificates | key/SAN/profile/chain checks and explicit durable renewal key-rotation mode before deployment |
@@ -36,6 +36,8 @@
 | Deployment | atomic activation, health verification, rollback |
 | Concurrency | compare-and-swap revisions, leases, fencing tokens |
 | ACME transport replay | explicit HTTP version, early data and implicit retries disabled, partitioned connection/session/resolver state, only proven-unsent requests retryable |
+| Adapter failures | stable protocol/security/resource/backend/reconciliation/unsupported envelope; bounded diagnostics never drive authority; backend classes preserve unsupported/unavailable/rejected/corrupt/definitely-not-dispatched/may-have-dispatched distinctions |
+| Crate tiers | portable crates remain `no_std` and safe Rust; native/FFI adapters require machine inventory, narrow audited unsafe modules, invariant owners, platform evidence, and inward-only dependencies |
 | Supply chain | pinned CI actions, deny policy, audit, SBOM, review |
 | Crypto capabilities | per-purpose provider tables; unsupported purposes typed rather than inferred from algorithm names |
 | Release | pentest bound to reviewed implementation; allowlisted evidence-only finalization |

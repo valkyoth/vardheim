@@ -75,6 +75,8 @@ behavior.
 The release comparison gate covers:
 
 - Rust public API and feature resolution against the latest published release;
+- roadmap/requirement graph identity, prerequisite ordering, ownership,
+  evidence assignment, generated views, and pentest boundaries;
 - normalized ACME wire behavior and typed error/security decisions;
 - existing-account adoption ownership, URL/directory binding, provenance, and
   conflicting-local-account decisions;
@@ -170,6 +172,9 @@ The release comparison gate covers:
   without destruction-state inflation;
 - target/profile compile and runtime evidence;
 - formal-model traces and generated adversarial cases; and
+- security mutation outcomes, including permanent named tests for removed
+  verification, restored nonce/admission, parser ambiguity, certificate bypass,
+  ambiguous resend, cleanup weakening, evidence promotion, and fallback; and
 - dependency/tool manifests, where drift is reported separately from behavior.
 
 Before `1.0.0`, an intentional breaking change is possible only when documented
@@ -179,9 +184,10 @@ candidate sequence.
 
 ## Assigned Milestones
 
-The implementation is deliberately split across `0.3.8`, `0.4.3`, `0.4.4`,
-`0.33.3`, `0.33.4`, `0.33.5`, `0.33.6`, `0.37.5`, `0.39.2`, `0.56.12`,
-`0.69.3`, `0.92.6`, `0.97.3`, `0.119.0`, and `0.119.1` in
+The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.23`, `0.33.3`, `0.33.4`, `0.33.5`,
+`0.33.6`, `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
+`0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in
 [the release plan](RELEASE_PLAN.md). Release binding itself is assigned to
 `0.3.3`. Each boundary receives its own complete test suite and mandatory
 pentest stop.

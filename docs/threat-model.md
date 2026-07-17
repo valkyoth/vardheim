@@ -144,3 +144,7 @@ Published libraries do not prescribe an application's panic strategy: the
 final binary, target, and operator choose unwind or abort behavior and any
 supervision policy. Security-sensitive arithmetic must use checked operations;
 release-profile overflow checks are defense in depth, not the primary control.
+Adapter failures are classified structurally rather than by diagnostic text;
+unavailability cannot erase may-have-dispatched knowledge or create authority.
+Provider diagnostics remain bounded and redacted, and operators must treat
+native/FFI adapters as separately inventoried trusted-computing-base members.

@@ -31,11 +31,30 @@ required=(
     v0.3.6
     v0.3.7
     v0.3.8
+    v0.3.9
     v0.4.4
     v0.4.5
     v0.4.6
     v0.4.7
+    v0.4.8
+    v0.4.9
+    v0.4.10
+    v0.4.11
+    v0.4.12
+    v0.4.13
+    v0.4.14
+    v0.4.15
+    v0.4.16
+    v0.4.17
+    v0.4.18
+    v0.4.19
+    v0.4.20
+    v0.4.21
+    v0.4.22
+    v0.4.23
     v0.5.2
+    v0.6.5
+    v0.7.2
     v0.10.2
     v0.10.3
     v0.10.4
@@ -56,6 +75,7 @@ required=(
     v0.10.19
     v0.10.20
     v0.10.21
+    v0.10.22
     v0.13.1
     v0.14.2
     v0.15.2
@@ -64,7 +84,9 @@ required=(
     v0.18.1
     v0.19.3
     v0.20.3
+    v0.20.4
     v0.25.2
+    v0.27.5
     v0.28.1
     v0.28.2
     v0.28.3
@@ -115,6 +137,7 @@ required=(
     v0.37.5
     v0.38.3
     v0.38.4
+    v0.38.5
     v0.39.2
     v0.39.3
     v0.39.4
@@ -176,6 +199,7 @@ required=(
     v0.56.10
     v0.56.11
     v0.56.12
+    v0.56.13
     v0.57.5
     v0.57.6
     v0.57.7
@@ -214,6 +238,7 @@ required=(
     v0.91.6
     v0.92.5
     v0.92.6
+    v0.96.4
     v0.97.3
     v0.100.0
     v0.111.0
@@ -237,6 +262,32 @@ grep -q 'Reproducible SPDX SBOM generation' "$plan"
 grep -q 'Core cross-target CI baseline' "$plan"
 grep -q 'Backend-boundary contract' "$plan"
 grep -q 'Crate and feature topology contract' "$plan"
+grep -q 'Machine-readable roadmap and requirement-work graph' "$plan"
+grep -q 'Unpublished RustCrypto signer/verifier feasibility spike' "$plan"
+grep -q 'Unpublished ring signer/verifier feasibility spike' "$plan"
+grep -q 'Unpublished rustls resolver and ACME transport feasibility spike' "$plan"
+grep -q 'Unpublished executor-mode feasibility spike' "$plan"
+grep -q 'Unpublished memory-store and SQL-like transaction feasibility spike' "$plan"
+grep -q 'Machine-readable crate policy tiers' "$plan"
+grep -q 'Independent replay-nonce linear-authority formal model' "$plan"
+grep -q 'Independent request-admission/sign/commit/dispatch formal model' "$plan"
+grep -q 'Independent challenge-presentation ownership formal model' "$plan"
+grep -q 'Independent order/authorization aggregation formal model' "$plan"
+grep -q 'Independent transactional-outbox ambiguity formal model' "$plan"
+grep -q 'Independent lease, fencing, and once-only application formal model' "$plan"
+grep -q 'Independent deployment formal model' "$plan"
+grep -q 'Independent renewal formal model' "$plan"
+grep -q 'Semantic module-invariant and complexity gate' "$plan"
+grep -q 'Security mutation-testing baseline' "$plan"
+grep -q 'Linear replay-authority taxonomy' "$plan"
+grep -q 'Layered stable failure envelope' "$plan"
+grep -q 'Signature-verifier assurance evidence' "$plan"
+grep -q 'Conflict-checked versioned challenge-method registry' "$plan"
+grep -q 'Shared sealed challenge-presentation receipt envelope' "$plan"
+grep -q 'Private thin real-boundary vertical slice' "$plan"
+grep -q 'Reusable signature-verifier assurance conformance' "$plan"
+grep -q 'four-level evidence publication' "$plan"
+grep -q 'Pre-production security mutation qualification' "$plan"
 grep -q 'Provider-neutral digest semantics' "$plan"
 grep -q 'Narrow legacy-hash compatibility capability' "$plan"
 grep -q 'Provider-neutral `DnsUpdateMac` operation semantics' "$plan"

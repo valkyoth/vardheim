@@ -1,6 +1,6 @@
 # ACME Completeness Contract
 
-Status: planning audit, 2026-07-16
+Status: planning audit, 2026-07-17
 
 Completeness claims are preserved across releases through the immutable
 evidence and replay rules in [the regression strategy](REGRESSION_STRATEGY.md).
@@ -51,7 +51,9 @@ the published phase and rerun the standards/security review.
 At `1.0.0`, all of these must work without placeholder success paths:
 
 - strict directory discovery, refresh, origin policy, ToS changes, complete
-  `newNonce` acquisition/harvesting, and directory-scoped nonce ownership;
+  `newNonce` acquisition/harvesting, and directory-scoped linear nonce
+  authority that is distinct from secrets, cannot be cloned/restored, and
+  harvests an independent response nonce before interpreting the outcome;
 - account create/recover/adopt/update/orders/rollover/deactivate and EAB, with
   current validated and role-bound signers plus exact-request admission for
   every handle-backed account effect, signer-proven ownership proof for
@@ -68,7 +70,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
   cryptographically attested assurance kept distinct;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
-  structured problems;
+  structured problems, with conflict-checked versioned method registration and
+  sealed presentation receipts that cannot cross families or revisions;
 - HTTP, DNS, TLS, IP, email, authority-token, onion, DTN, and external-profile
   identifier/challenge families assigned by published standards;
 - ARI and conservative fallback renewal scheduling;
@@ -91,7 +94,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
   honest disposition/reconciliation contracts with explicit concrete-provider
   construction and
   per-purpose capability/validation/binding/onboarding/reconstruction/
-  immutable-dispatch/signature-verification/MAC-evidence/disposition tables,
+  immutable-dispatch/signature-verification and independent-verifier-assurance/
+  MAC-evidence/disposition tables,
   including narrowly purpose-bound legacy verification hashes where standards
   still require them;
 - bounded strict DER primitive parsing and X.509 structural prevalidation,
@@ -154,6 +158,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - manual, library, CLI, daemon, agent, and web-server integration surfaces;
 - redacted observability, audit evidence, target compatibility, formal methods,
   fuzzing, security audits, and reviewed-implementation-bound pentests.
+- a machine-checked acyclic requirement/work/version graph with ownership,
+  evidence, generated plan views, critical path, and no omitted or merged
+  pre-1.0 pentest boundary.
 
 ## Web-Server Acceptance Contract
 
@@ -201,7 +208,7 @@ claims.
 
 ## Audit Result
 
-Planning audits through 2026-07-16 found and corrected these weaknesses:
+Planning audits through 2026-07-17 found and corrected these weaknesses:
 
 - overloaded JSON, type, PKIX, workflow, persistence, deployment, operations,
   platform, formal-assurance, and qualification milestones were split;
@@ -268,6 +275,18 @@ Planning audits through 2026-07-16 found and corrected these weaknesses:
 - Pebble DNS/TLS integrations were moved after their primitives exist;
 - active device-enrollment integrations and identity-controlled validation work
   received versions;
+- the roadmap received stable machine work IDs and DAG validation; separate
+  unpublished RustCrypto, ring, rustls, executor-mode, and store-model spikes;
+  machine portable/native crate tiers; eight independent formal models;
+  semantic module/stack/reducer gates; early and final mutation programs;
+  linear non-secret nonce authority; layered adapter failure classes;
+  verifier-identity/assurance evidence; versioned challenge registration and
+  sealed revision receipts; an early real-boundary vertical slice; and explicit
+  compile/emulator/native/production platform evidence tiers;
+- recommendations to collapse planned releases, weaken adapter MSRV, or move
+  current draft/provider/platform scope after `1.0.0` were reviewed but not
+  adopted because they conflict with the owner-defined completion and pentest
+  contract; graph/critical-path tooling is used to control that scope instead;
 - the roadmap now enforces a tactical one-boundary-per-version size rule.
 
 The remaining uncertainty is external rather than hidden scope: exact draft

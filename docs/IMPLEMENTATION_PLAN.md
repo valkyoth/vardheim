@@ -65,7 +65,8 @@ inward on Vardheim semantic types.
 3. Public behavior is total over its documented inputs: success or a typed
    bounded error, never a panic.
 4. Unsafe code remains forbidden in protocol and policy code. Future FFI/native
-   adapters isolate and audit every unsafe boundary.
+   adapters use a machine-declared native tier, isolate and audit every unsafe
+   boundary, and cannot weaken the portable crate policy.
 5. Every function, branch, state, parser limit, retry path, feature profile, and
    supported target behavior is testable through injected dependencies.
 6. Features are additive. The caller explicitly constructs crypto, TLS,
@@ -103,10 +104,17 @@ validity, chain, or deployment policy.
 Versions `0.1.0` through `0.4.5` establish the workspace, release refusal and
 reviewed-implementation binding, full offline RFC/errata/IANA/reference
 evidence, reproducible SBOMs, cross-target compile CI, threat model, invariants,
-early executable TLA+/Quint state models, regression replay, and the pure
-effect/backend contract. Versions `0.4.6` and `0.4.7` freeze crate/feature
-topology and the build/API ergonomics gates. Implementation must not start a
-parser before its resource budget and source requirements are committed.
+the formal trace contract, regression replay, and the candidate pure
+effect/backend contract. Versions `0.4.6` and `0.4.7` establish crate/feature
+topology and build/API ergonomics. Versions `0.4.8` through `0.4.12` challenge
+that candidate boundary with separate unpublished RustCrypto, ring, rustls,
+executor-mode, and transactional-store spikes; `0.4.13` replaces the temporary
+all-crates policy with machine-readable portable/native tiers. Versions
+`0.4.14` through `0.4.21` build eight small independent models rather than one
+model that appears to prove unrelated lifecycles, and `0.4.22`-`0.4.23` close
+semantic module and mutation baselines. The public boundary freezes only after
+these empirical and formal checks. Implementation must not start a parser
+before its resource budget and source requirements are committed.
 
 Required outputs:
 
@@ -121,6 +129,12 @@ Required outputs:
   commit;
 - feature-power-set, dependency-direction, public API, compile-time, and
   binary-size regression gates;
+- a machine-readable work/requirement DAG whose generated release views cannot
+  omit, merge, reorder, or silently detach a pentest boundary;
+- real private adapter/store feasibility evidence before their public traits
+  freeze, without publishing those spikes as production support;
+- machine-readable crate tiers that keep portable semantics `no_std` and safe
+  while allowing later native adapters only narrowly inventoried unsafe FFI;
 - a completeness register reviewed whenever scope changes; and
 - immutable historical evidence and semantic release-to-release comparison as
   defined by [the regression strategy](REGRESSION_STRATEGY.md).
@@ -156,7 +170,9 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   retention, absence, ambiguity, and provider unavailability;
 - ACME HTTPS roots, issued-certificate roots, CT log keys, and DNSSEC anchors
   are distinct trust types rather than interchangeable byte collections;
-- nonce ownership makes reuse unrepresentable where practical; and
+- nonce ownership uses linear, non-restorable authority distinct from secret
+  material and harvests an independent response nonce before interpreting the
+  response outcome; and
 - Kani, differential parsing, fuzzing, and Loom begin with the primitives they
   protect rather than being postponed to final qualification.
 
@@ -194,7 +210,11 @@ Provider output is private untrusted `UnverifiedSignature`. Before any JWS,
 CSR, revocation, TLS-ALPN, audit, or other effect can use it, Vardheim locally
 verifies the exact admitted bytes, algorithm, parameters, output encoding,
 immutable provider identity/version, and bound public key. Only successful
-verification constructs `VerifiedSignature`. Unsupported, unavailable,
+verification constructs `VerifiedSignature`. That evidence also records the
+verifier implementation/version, execution/trust identity, and assurance
+class. Verification performed by the same remote signing provider is
+provider-correlated and cannot be promoted to the default independently local
+software-verifier class. Unsupported, unavailable,
 malformed, wrong-key, or failed verification sends nothing, consumes the
 admission, invalidates or quarantines authority by policy, and never selects an
 implicit signer or verifier fallback.
