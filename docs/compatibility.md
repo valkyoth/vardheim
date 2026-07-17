@@ -54,8 +54,9 @@ input-bound, locally-verified, finalized, publication-attempt, outbox-committed,
 definitely-not-committed, commit-unknown, quarantined, and abandoned states.
 The sequence distinguishes local verification, private unsplit finalization,
 consuming publication, non-authority validated stored facts, qualified commit,
-positive fenced non-commit, unresolved uncertainty, and quarantine. Public store traits
-remain downstream-implementable; observations are compatible data, never
+positive fenced non-commit, single-use same-process republication, unresolved
+uncertainty, wholly new signed-request replacement, and quarantine. Public store
+traits remain downstream-implementable; observations are compatible data, never
 evidence. Adapter/session/publication-transaction/record/fence/assurance/policy
 qualification, the orthogonal store-commit observation product, and the residual
 atomicity/durability TCB claim are versioned compatibility fields. The
@@ -70,7 +71,11 @@ serialized authority representation; persisted phase facts and abandonment
 tombstones cannot be upgraded into one. Publication tombstones and outbox
 records are mutually exclusive under the same stable record identity/fence;
 commit-unknown cannot migrate to retryable without positive reconciliation
-evidence. Policy snapshot compatibility includes
+evidence. Republication preserves exact record/fingerprint/image while changing
+transaction/fence; replacement changes reservation/nonce/admission/signature/
+fingerprint/effect/policy/record. Neither the live aggregate nor
+`RepublishPermit` is persisted or reconstructed from `ValidatedStoredRequest`.
+Policy snapshot compatibility includes
 normalized effective semantics, schema/canonicalization version, and digest-
 algorithm identity, not
 source formatting. Fingerprint compatibility is purpose-specific and

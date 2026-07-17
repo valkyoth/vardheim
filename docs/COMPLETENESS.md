@@ -95,7 +95,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   state, transactionally inert unsplit finalized ID/image aggregate, downstream-
   implementable store observations plus stable transaction/record/fence identity,
   sealed present-record commit or fenced-absence qualification, unknown-state
-  replacement blocking, publication quarantine and tombstone/outbox exclusion,
+  retry blocking, single-use exact same-process republication without re-signing,
+  non-reconstructible republication authority, wholly new abandoned/restart
+  signed-request replacement, publication quarantine and tombstone/outbox exclusion,
   explicit adapter-TCB limits, and non-authority recovery recomputation,
   versioned canonical effective-policy snapshots, sealed purpose-specific
   fingerprints, and exact-effect current-policy dispatch authority,

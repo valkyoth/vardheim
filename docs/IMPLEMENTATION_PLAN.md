@@ -264,7 +264,8 @@ sequence: `ReservedProtocolRequestId` ->
 `LocallyVerifiedRequest` ->
 `FinalizedProtocolRequest<FinalRequestFingerprint>` ->
 `PublicationAttempt` -> committed/definitely-not-committed/commit-unknown/
-quarantined. Signer dispatch consumes input-bound state. Exact local
+quarantined. Same-process definite non-commit can privately retain the live
+aggregate for a single-use `RepublishPermit`. Signer dispatch consumes input-bound state. Exact local
 verification creates the local-verified state owning signature/image inputs;
 successful inert encoding privately creates one unsplit finalized aggregate of
 verified ID and encoded image. Encoding failure abandons rather than restoring
@@ -273,10 +274,14 @@ identity before adapter entry, which consumes the finalized aggregate into
 `PublicationAttempt`. Public stores return observations; present validated
 records plus sealed qualification commit, positive fenced absence proves
 non-commit, lost/unavailable/post-entry mismatched evidence remains unknown, and
-contradiction quarantines. Unknown blocks replacement until reconciliation.
+contradiction quarantines. Consuming `RepublishPermit` and the retained aggregate
+creates one new publication transaction/fence over the identical record,
+fingerprint, and image without re-signing. Unknown blocks republication and
+replacement until reconciliation.
 Cancellation, `badNonce`, invalidation, or restore never advances/reuses a
 predecessor. `0.10.30` permits tombstoning only before publication or after
-positive non-commit; every signing retry is wholly new.
+positive non-commit. Restart facts never reconstruct aggregate or permit; a
+signed-request replacement after abandonment/restart is wholly new.
 
 Every admitted effect binds an immutable canonical `PolicySnapshot`. Its
 identity includes policy schema/canonicalization version and digest algorithm;
@@ -341,12 +346,15 @@ failure leaves the unsplit aggregate untouched; adapter entry consumes it into
 The `0.6.6` sealed promoter checks adapter/session, transaction/record/fence,
 request/fingerprint, assurance, policy, and atomicity/durability profile. A
 present validated record plus qualified evidence commits; positive fenced
-absence proves non-commit; may-have-committed, lost/unavailable, or post-entry
-mismatched evidence remains unknown; contradiction quarantines request and store
-session. Unknown blocks replacement until reconciliation, and tombstone/outbox
+absence proves non-commit and may privately retain the same-process aggregate;
+may-have-committed, lost/unavailable, or post-entry mismatched evidence remains
+unknown; contradiction quarantines request and store session. One single-use
+`RepublishPermit` consumes the retained aggregate into a new transaction/fence
+with identical record/fingerprint/image. Unknown blocks both retry classes, and tombstone/outbox
 are mutually exclusive under the same record/fence. Restart applies the same
 rules to non-authority `ValidatedStoredRequest` and never recreates finalized
-authority. Third-party atomicity/pre-commit visibility/durability remain
+authority or republication permit; positive non-commit after restart can only
+lead to abandonment and wholly new signed-request replacement. Third-party atomicity/pre-commit visibility/durability remain
 explicit TCB claims, never Rust guarantees.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
@@ -442,7 +450,9 @@ publication outcome observation, and qualified durable commit. Each
 transition consumes its predecessor. Only purpose-matching positive MAC
 evidence completes the inner JWS; only `VerifiedSignature` over the exact
 complete outer input completes the outer JWS; only a durable commit makes the
-effect executable. Commit unknown blocks replacement and reconciliation alone
+effect executable. Same-process definite non-commit permits one exact
+republication without repeating inner MAC or outer signature; restart cannot.
+Commit unknown blocks republication and replacement, and reconciliation alone
 may prove committed or definitely not committed. No field or evidence can be
 stitched across attempts.
 Authenticated `badNonce` consumes the whole attempt and rebuilds both layers

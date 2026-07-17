@@ -226,7 +226,8 @@ ReservedProtocolRequestId
     -> FinalizedProtocolRequest<FinalRequestFingerprint>
     -> PublicationAttempt
          -> OutboxCommittedRequest
-         -> DefinitelyNotCommitted
+         -> DefinitelyNotCommitted<FinalizedProtocolRequest>
+              + RepublishPermit -> PublicationAttempt
          -> PublicationCommitUnknown
          -> PublicationQuarantined
 ```
@@ -246,16 +247,22 @@ entry leaves the aggregate unconsumed; adapter entry consumes it into
 call. Store observations retain
 `DispatchKnowledge × OperationOutcome<StoreCommit> × ObservationStatus`.
 A present validated record plus qualified evidence becomes
-`OutboxCommittedRequest`; positive fenced absence becomes
-`DefinitelyNotCommitted`; lost/unavailable or post-entry mismatched evidence
+`OutboxCommittedRequest`; positive fenced absence may privately become
+`DefinitelyNotCommitted<FinalizedProtocolRequest>` while the exact live
+aggregate remains in the same process; lost/unavailable or post-entry mismatched evidence
 becomes `PublicationCommitUnknown`; contradiction or substitution becomes
 `PublicationQuarantined` and quarantines the store session. Unknown blocks a
 replacement until reconciliation proves commit or definite non-commit.
 Tombstone and outbox publication are mutually exclusive under the same record
-identity/fence. Recovery consumes non-authority `ValidatedStoredRequest` plus
-qualified evidence and never recreates finalized live authority. Only positive
-definite non-commit may authorize abandonment or policy-controlled fresh
-publication, and every permitted signing retry is wholly new.
+identity/fence. Policy may consume definite non-commit into abandonment or mint
+one single-use `RepublishPermit`; consuming the permit and retained aggregate
+starts one new attempt with a new `PublicationTransactionId` and fence, the same
+`OutboxRecordId`, and byte-identical fingerprint/image without re-signing.
+Recovery consumes non-authority `ValidatedStoredRequest` plus qualified evidence
+and never recreates the aggregate or a permit. If the aggregate was lost across
+restart or abandoned, signed-request replacement is wholly new: reservation,
+nonce, admission, signature, fingerprint, effect, policy, and record identity.
+Unknown authorizes neither republication nor replacement.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -351,9 +358,12 @@ receive a core-created read-only finalized-request view after core has persisted
 stable transaction/record/fence identity. Entering the adapter consumes the
 finalized aggregate into `PublicationAttempt`; returned values are untrusted
 observations, not a way to recover it. Core-owned qualification, not the adapter,
-creates committed or definitely-not-committed evidence. Unknown and
-contradictory outcomes retain reconciliation or quarantine rather than
-authorizing replacement. Rust types prevent accidental promotion/stitching;
+creates committed or definitely-not-committed evidence. Same-process positive
+non-commit can privately retain the aggregate for one single-use
+`RepublishPermit`; the next attempt preserves record/fingerprint/image but gets
+a new transaction/fence. Stored validation facts cannot reconstruct either.
+Unknown and contradictory outcomes retain reconciliation or quarantine rather
+than authorizing republication or replacement. Rust types prevent accidental promotion/stitching;
 atomic visibility and physical durability remain explicit adapter assurance/TCB
 claims. Recovery
 recomputes URL parts, origin, header admission, length, and fingerprint into

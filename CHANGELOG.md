@@ -19,9 +19,10 @@ Keep a Changelog and the project follows Semantic Versioning.
   framing-independent HTTP/1.1, HTTP/2, and HTTP/3 execution.
 - Added `v0.10.30` evidence-gated interrupted-request abandonment: pre-publication
   failures or positive fenced non-commit may retire work, while commit unknown
-  blocks replacement and contradiction quarantines; any permitted signing retry
-  uses wholly new identity, nonce, admission, fingerprints, signature, effect,
-  policy, and authority.
+  blocks every retry and contradiction quarantines. Same-process positive non-
+  commit may instead mint one single-use permit to republish the identical live
+  aggregate under a new transaction/fence without re-signing; restart cannot
+  reconstruct it, and signed-request replacement uses wholly new identities.
 - Added `v0.10.31` bounded transactionally inert `no_std` request-image encoding
   that consumes `LocallyVerifiedRequest` into one private unsplittable
   `FinalizedProtocolRequest`; failure abandons and storage/network sinks remain
@@ -32,8 +33,8 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Added `v0.10.33` consuming `PublicationAttempt` with stable transaction/record/
   fence identity, orthogonal store-commit observations, qualified committed,
   definitely-not-committed, commit-unknown, and quarantined outcomes, mutually
-  exclusive tombstone/outbox publication, and explicit residual adapter-TCB
-  assumptions.
+  exclusive tombstone/outbox publication, exact same-process republication versus
+  wholly new restart/abandonment replacement, and explicit residual adapter-TCB assumptions.
 - Extended `PolicySnapshot` identity with policy schema/canonicalization version
   and digest-algorithm identity so normalization/tooling changes cannot retain
   stale authority.

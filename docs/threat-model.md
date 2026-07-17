@@ -80,8 +80,11 @@ its returned bytes are still structurally and semantically verified.
   store response, unavailable observation, or wrong post-call assertion being
   treated as proof of non-commit; signing or publishing a replacement while the
   original record may exist; corrupt/contradictory evidence avoiding request and
-  store-session quarantine; or tombstone and outbox publication succeeding
-  under competing fences for the same record identity;
+  store-session quarantine; a republication permit being duplicated, replayed,
+  persisted, or reconstructed after restart; republication changing the record,
+  fingerprint, or image, reusing transaction/fence, or re-signing; a signed-
+  request replacement reusing any old signing or record identity; or tombstone
+  and outbox publication succeeding under competing fences for one record;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
