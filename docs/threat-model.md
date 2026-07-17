@@ -66,6 +66,15 @@ its returned bytes are still structurally and semantically verified.
   pre-commit durable visibility; recovery accepting caller-supplied URL parts,
   origin, header admission, length, or fingerprint without recomputation; or a
   nominal `no_std` path allocating or exceeding published bounds;
+- final fingerprint/ID minted before encoding finalization; encoding failure
+  restoring input-bound authority; locally verified state, encoded image, and
+  final-bound ID being split, independently constructed, substituted,
+  serialized as live authority, or stitched at outbox commit;
+- downstream store injection blocked by a sealed extension trait; a
+  `StoreAssertedCommit` directly advancing state; cross-adapter/session/
+  transaction/request/fingerprint/assurance/policy promotion; or Rust types
+  being claimed to prove third-party pre-commit invisibility, atomicity,
+  physical durability, or absence of a perfectly formed semantic lie;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural

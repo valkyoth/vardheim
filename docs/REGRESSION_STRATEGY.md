@@ -89,10 +89,12 @@ The release comparison gate covers:
 - local-signing versus staged durable protocol request identity, reservation,
   exact signing-input binding, verified canonical application-request-image
   binding, single-source exact URL with derived/revalidated component views and
-  origin, sealed initially empty header registry/ownership projection, inert
-  preflighted one-shot/incremental encoding, finalized encoded-image typestate,
-  malicious sink/partial-digest refusal, atomic publication, single-copy body,
-  recovery derived-field/fingerprint recomputation, outbox-only admission,
+  origin, sealed initially empty header registry/ownership projection, input-
+  bound consumption into local verification, inert encoding into private unsplit
+  finalized ID/image aggregate, encode-failure abandonment, malicious sink/
+  partial-digest refusal, public store assertions, sealed same-aggregate commit
+  qualification, explicit adapter TCB limits, single-copy body, non-authority
+  recovery recomputation, outbox-only admission,
   physical HTTP/TLS/QUIC framing independence, observed-effective-
   URL non-authority, middleware immutability, crash abandonment/tombstone
   without old-identity re-sign/rebind, transient/partial-persistence rejection,
@@ -172,8 +174,8 @@ The release comparison gate covers:
 - composed EAB account creation across canonical intent/contacts/ToS,
   directory/URL, account JWK and immutable signer session, EAB key/secret
   version/algorithm, exact inner JWS and positive MAC evidence, outer nonce/JWS
-  input/admission/`VerifiedSignature`, attempt/request/effect IDs, canonical
-  `AcmeRequestImage`, and `VerifiedRequestId<FinalRequestFingerprint>`;
+  input/admission/`VerifiedSignature`, attempt/request/effect IDs, local-verified
+  state, unsplit finalized aggregate, store assertion, and qualified commit;
   consumed `Prepared`/`InnerMacVerified`/
   `OuterSignatureVerified`/`OutboxCommitted`/`Dispatched`/`Reconciled`
   transitions; failure between every inner/outer/durable boundary; no evidence
@@ -242,7 +244,7 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.32`, `0.33.3`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.33`, `0.33.3`,
 `0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`-`0.33.9`, `0.34.3`, `0.37.4`,
 `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in

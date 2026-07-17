@@ -91,7 +91,7 @@ required=(
     v0.10.28
     v0.10.29
     v0.10.30
-    v0.10.31 v0.10.32
+    v0.10.31 v0.10.32 v0.10.33
     v0.13.1
     v0.14.2
     v0.14.3
@@ -315,7 +315,7 @@ grep -q 'Core-only/no-store tests mint transient admissions' "$plan"
 grep -q 'Immutable canonical `PolicySnapshot`.*`EffectDispatchPermit`' "$plan"
 grep -q 'Request-identity taxonomy separating.*`LocalSigningRequestId`.*`ProtocolRequestId`' "$plan"
 grep -q 'Purpose-specific effect-dispatch authority composition' "$plan"
-grep -q 'Consuming two-stage protocol request identity' "$plan"
+grep -q 'Consuming staged protocol-request identity' "$plan"
 grep -q 'Sealed purpose-specific effect fingerprints replace generic byte/semantic digests' "$plan"
 grep -q 'Authenticated replay-nonce admission and reservation policy' "$plan"
 grep -q 'Conflict-checked challenge-method registry' "$plan"
@@ -325,7 +325,7 @@ grep -q 'Injected external `RollbackWitness` protocol' "$plan"
 grep -q '`RollbackDetecting { maximum_window }`' "$plan"
 grep -q 'witness trust root, bootstrap identity' "$plan"
 grep -q 'Typed `RollbackCoverage` manifest' "$plan"
-grep -q 'Transactional durable identity allocator/store boundary for request reservation, abandonment, and outbox commit' "$plan"
+grep -q 'Transactional durable identity allocator/store boundary for reservation, abandonment, and outbox commit' "$plan"
 grep -q 'Private thin real-boundary vertical slice' "$plan"
 grep -q 'Reusable strict signature-evidence and multi-axis verifier-assurance conformance' "$plan"
 grep -q 'four-level evidence publication' "$plan"
@@ -349,7 +349,7 @@ grep -q 'Provider-neutral peer-binding external-effect identity/observation cont
 grep -q 'Durable peer-binding effect orchestration and recovery' "$plan"
 grep -q 'Orthogonal peer-effect outcome product and recovery matrix' "$plan"
 grep -q 'Composed EAB account-creation typestate' "$plan"
-grep -q 'Durable composed EAB account creation through staged request identities' "$plan"
+grep -q 'Durable composed EAB account creation through staged identity, fingerprints, finalized request aggregate, qualified store commit, and abandonment' "$plan"
 grep -q 'KeyLifecycleState × KeyObligationSet' "$plan"
 grep -q 'Account creation with contacts.*v0.10.12' "$plan"
 grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
@@ -365,9 +365,9 @@ grep -q 'Canonical transport-independent `AcmeRequestImage' "$plan"
 grep -q "single-source \`SignedRequestTarget<'a> { exact_url: ExactAcmeUrl<'a>, validated_parts: UrlComponentRanges, origin: OriginIdentity }\`" "$plan"
 grep -q 'extensions admitted only through a sealed registry' "$plan"
 grep -q 'Interrupted signed-request abandonment and retry contract' "$plan"
-grep -q 'later retry as a wholly new reservation, nonce, admission, fingerprints, signature, effect, and policy authority' "$plan"
-grep -q 'Bounded, transactionally inert `no_std` request-image encoder' "$plan"
-grep -q 'Durable request-image publication and recovery validation contract' "$plan"
+grep -q 'unsplittable `FinalizedProtocolRequest { id: VerifiedRequestId<FinalRequestFingerprint>, image: EncodedAcmeRequestImage }`' "$plan"
+grep -q 'Bounded, transactionally inert `no_std` request finalization' "$plan"
+grep -q 'Durable request-image representation and recovery validation contract' "$plan" && grep -q 'Extensible outbox publication and qualified-commit contract' "$plan"
 ! grep -R -q 'FinalWireFingerprint\|final-wire' docs CHANGELOG.md README.md
 ! grep -R -q 'HTTP bytes/digest\|exact request digest' docs CHANGELOG.md README.md
 ! grep -R -q 'normalized effective URL\|exact_protected_url, exact_path_and_query\|BoundedAdmittedHeaders' docs CHANGELOG.md README.md
@@ -449,7 +449,7 @@ grep -q 'Reusable immutable-dispatch and returned-signature verification conform
 grep -q 'Reusable handle-backed MAC authority/evidence conformance framework' "$plan"
 grep -q 'Reusable transactional symmetric-secret onboarding, content-binding, and live-authority reconstruction conformance' "$plan"
 grep -q 'Reusable secret-binding bootstrap and peer-effect conformance' "$plan"
-grep -q 'Reusable composed EAB conformance through single-source target, sealed metadata, inert encoding, atomic publication, and abandonment milestones' "$plan"
+grep -q 'Reusable composed EAB conformance through target/metadata, locally verified and unsplit finalized states, extensible-store qualification, and abandonment milestones' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
@@ -489,7 +489,7 @@ grep -q 'RustCrypto public-key validation, software-signer binding, immutable di
 grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
-grep -q 'Reusable adapter conformance for transport, signer, store, clock, entropy, staged/abandoned identity' "$plan"
+grep -q 'Reusable adapter conformance for transport, signer, public stores, clock, entropy, staged/abandoned identity' "$plan"
 grep -q 'qualification and coverage closure' "$plan"
 grep -q 'Fluxheim integration fixture' "$plan"
 grep -q 'every mandatory client requirement implemented' "$plan"

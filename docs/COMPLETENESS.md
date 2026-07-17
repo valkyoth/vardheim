@@ -89,10 +89,11 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated durable-versus-transient security-sensitive
   identity issuance, transient local versus consuming reserved/input-bound/
-  final-request-bound/committed/abandoned protocol request identity, exact
-  single-source `SignedRequestTarget`, sealed request metadata registry,
-  transactionally inert transport-independent encoding, completed-image atomic
-  publication, and recovery URL/header/length/fingerprint recomputation,
+  locally-verified/finalized/committed/abandoned protocol request identity, exact
+  single-source `SignedRequestTarget`, sealed request metadata, local-verified
+  state, transactionally inert unsplit finalized ID/image aggregate, downstream-
+  implementable store assertions plus sealed same-aggregate commit qualification,
+  explicit adapter-TCB limits, and non-authority recovery recomputation,
   versioned canonical effective-policy snapshots, sealed purpose-specific
   fingerprints, and exact-effect current-policy dispatch authority,
   `UnverifiedSignature`/`ProviderAssertedSignature`/`AttestedSignature` strictly

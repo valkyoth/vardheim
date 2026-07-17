@@ -21,11 +21,15 @@ Keep a Changelog and the project follows Semantic Versioning.
   requests are tombstoned and retired, while any retry uses wholly new identity,
   nonce, admission, fingerprints, signature, effect, policy, and authority.
 - Added `v0.10.31` bounded transactionally inert `no_std` request-image encoding
-  that constructs `EncodedAcmeRequestImage` only after length, complete buffer,
-  and fingerprint finalization agree; storage/network sinks are forbidden.
-- Added `v0.10.32` atomic request-image outbox publication and recovery
-  revalidation, including sealed transactional store sinks and recomputation of
-  URL components, origin, header admission, length, and fingerprint.
+  that consumes `LocallyVerifiedRequest` into one private unsplittable
+  `FinalizedProtocolRequest`; failure abandons and storage/network sinks remain
+  forbidden.
+- Added `v0.10.32` single-copy stored representation and recovery validation
+  yielding non-authority facts after recomputing URL components, origin, header
+  admission, length, and fingerprint.
+- Added `v0.10.33` publicly implementable store transactions returning untrusted
+  assertions, sealed commit qualification, same-aggregate outbox transition,
+  and explicit residual atomicity/durability adapter-TCB assumptions.
 - Extended `PolicySnapshot` identity with policy schema/canonicalization version
   and digest-algorithm identity so normalization/tooling changes cannot retain
   stale authority.

@@ -222,20 +222,29 @@ Protocol identity advances only through consuming states:
 ```text
 ReservedProtocolRequestId
     -> InputBoundRequestId<SigningInputFingerprint>
-    -> VerifiedRequestId<FinalRequestFingerprint>
+    -> LocallyVerifiedRequest
+    -> FinalizedProtocolRequest<FinalRequestFingerprint>
     -> OutboxCommittedRequest
 ```
 
 The base is durably reserved first. Input binding fixes canonical signing bytes,
 algorithm/parameters, nonce, purpose, policy, and signer admission before signer
-dispatch. Only local `VerifiedSignature` permits deterministic final
-construction of the canonical `AcmeRequestImage`. Only the final-request-bound
-state enters outbox or transport. Failure, ambiguity, cancellation, `badNonce`,
-invalidation, crash, or restore cannot advance or reuse partial state. If image
-and verified identity were not atomically committed, recovery permanently
-retires the reservation/nonce/admission/input-bound identity/fingerprints and
-records non-authority `AbandonedProtocolRequest`; a later retry is a wholly new
-signing operation and never re-signs, advances, or rebinds the old identity.
+dispatch, which consumes input-bound state. Exact local verification constructs
+`LocallyVerifiedRequest` owning the signature and image inputs. Successful inert
+encoding privately consumes it into one unsplittable `FinalizedProtocolRequest`
+containing both `VerifiedRequestId<FinalRequestFingerprint>` and
+`EncodedAcmeRequestImage`; neither field can be independently constructed or
+extracted. Encoding failure abandons the request and cannot restore input-bound
+authority. A public store transaction returns only `StoreAssertedCommit`; the
+sealed promotion facade must qualify its adapter/session/transaction/request/
+fingerprint/assurance/policy binding, then a private transition consumes the
+same finalized aggregate plus `QualifiedDurableCommit`. Only the result enters
+transport. After restart, the parallel private path consumes non-authority
+`ValidatedStoredRequest` plus qualified evidence bound to its exact record and
+fingerprint; it never recreates finalized live authority. Failure, ambiguity,
+cancellation, `badNonce`, invalidation, crash, or restore cannot advance/reuse
+partial state. Uncommitted recovery records `AbandonedProtocolRequest`; every
+retry is a wholly new signing operation.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -268,7 +277,7 @@ tenant/resource generation, worker lease/fence, deadline/clock epoch, and policy
 snapshot. Private constructors produce one same-effect checked authority from:
 
 - `SignerConsumerAdmission + EffectDispatchPermit<Sign>`;
-- `QualifiedDurableCommit + EffectDispatchPermit<AcmeSend>`;
+- `OutboxCommittedRequest + EffectDispatchPermit<AcmeSend>`;
 - `PresentationIntent + EffectDispatchPermit<Present>`;
 - `VerifiedGeneration + Fence + EffectDispatchPermit<Activate>`; or
 - `CleanupOwnership + Fence + EffectDispatchPermit<Cleanup>`.
@@ -323,14 +332,18 @@ duplicate, conflicting, or profile-ineligible fields fail closed.
 
 `FinalRequestFingerprint` covers the image. `encoded_len_checked()` validates
 all lengths and complete caller-buffer capacity before inert-memory encoding.
-Only exact length, complete fill, and one-time fingerprint finalization create
-opaque `EncodedAcmeRequestImage`; partial bytes/digest state have no authority.
-The encoder cannot target storage or transport. Durable publication consumes
-the completed value atomically, or uses a sealed begin/write/commit/abort sink
-whose bytes are invisible before commit and which network adapters cannot
-implement. Recovery recomputes URL parts, origin, header admission, length, and
-fingerprint. HTTP/1.1 formatting, HTTP/2/3 frames, HPACK/QPACK state, stream IDs,
-frame boundaries, TLS records, and QUIC packets remain executor-local.
+Only exact length, complete fill, and one-time fingerprint finalization consume
+`LocallyVerifiedRequest` into opaque unsplit `FinalizedProtocolRequest`; partial
+bytes/digest state have no authority and errors abandon the attempt. The encoder
+cannot target storage or transport. Publicly implementable store transactions
+receive a core-created read-only finalized-request view and return untrusted
+observations. Core-owned qualification, not the adapter, creates commit evidence.
+Rust types prevent accidental promotion/stitching; atomic visibility and
+physical durability remain explicit adapter assurance/TCB claims. Recovery
+recomputes URL parts, origin, header admission, length, and fingerprint into
+non-authority validated facts before qualified committed-state reconstruction.
+HTTP/1.1 formatting, HTTP/2/3 frames, compression/stream state, TLS records, and
+QUIC packets remain executor-local.
 `EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile,
 adapter/session, policy snapshot, and final request fingerprint. Middleware may
 frame but cannot inject or override method, target, metadata, or body after

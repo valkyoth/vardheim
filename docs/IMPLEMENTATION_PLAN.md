@@ -261,14 +261,16 @@ the real store/outbox allocator arrives in `0.34.3`.
 protocol identity base. `0.10.27` then makes protocol identity a consuming
 sequence: `ReservedProtocolRequestId` ->
 `InputBoundRequestId<SigningInputFingerprint>` ->
-`VerifiedRequestId<FinalRequestFingerprint>` -> `OutboxCommittedRequest`. Signing
-accepts only the canonical-input-bound state; verified local signature enables
-deterministic `AcmeRequestImage` construction; only final-request-bound state
-enters outbox/transport. Failure, ambiguity, cancellation, `badNonce`, or
-invalidation never advances partial identity. After interruption, `0.10.30`
-retires the old reservation/nonce/admission/input state and writes non-authority
-`AbandonedProtocolRequest`; a later retry is wholly new and never re-signs,
-advances, or rebinds the old identity.
+`LocallyVerifiedRequest` ->
+`FinalizedProtocolRequest<FinalRequestFingerprint>` ->
+`OutboxCommittedRequest`. Signer dispatch consumes input-bound state. Exact local
+verification creates the local-verified state owning signature/image inputs;
+successful inert encoding privately creates one unsplit finalized aggregate of
+verified ID and encoded image. Encoding failure abandons rather than restoring
+input-bound authority. Public store transactions return assertions; only sealed
+core qualification plus the same aggregate commits. Failure, ambiguity,
+cancellation, `badNonce`, invalidation, or restore never advances/reuses a
+predecessor. `0.10.30` tombstones interrupted work; retry is wholly new.
 
 Every admitted effect binds an immutable canonical `PolicySnapshot`. Its
 identity includes policy schema/canonicalization version and digest algorithm;
@@ -314,20 +316,26 @@ and redaction; it starts empty, and raw authority/framing/auth/cookie/proxy/
 content-encoding fields are forbidden. A closed table derives transport fields
 from target/body/profile. Middleware cannot inject or override them.
 
-`0.10.31` is transactionally inert: `encoded_len_checked()` validates all
-lengths and caller-buffer capacity before encoding, and only complete fill plus
-one-time fingerprint finalization constructs `EncodedAcmeRequestImage`.
-Encoding into storage, network transport, or an observable generic sink is not
-an API. Partial bytes/digest state and typed capacity/length/finalization errors
-cannot advance authority. Published stack/caller-buffer bounds retain the
-portable `no_std`/`no_alloc` contract.
+`0.10.31` is transactionally inert: length/capacity preflight, complete fill,
+and one-time fingerprint finalization atomically consume `LocallyVerifiedRequest`
+into private `FinalizedProtocolRequest { id, image }`. Its fields cannot split,
+and errors abandon the attempt. Encoding into storage/network/observable sinks
+is not an API. Published bounds retain `no_std`/`no_alloc`.
 
-`0.10.32` atomically consumes that completed value with matching
-`VerifiedRequestId`, or permits a store only a sealed transactional
-begin/write/commit/abort sink with no pre-commit visibility. Network adapters
-cannot implement it. The outbox has one URL and body occurrence. Recovery
-recomputes URL ranges/origin, sealed-header admission, length, and fingerprint;
-persisted derived fields are absent or non-authoritative checked caches.
+`0.10.32` defines the single-copy stored representation and decoder. Recovery
+recomputes URL ranges/origin, sealed-header admission, length, and fingerprint
+into bounded non-authority `ValidatedStoredRequest`; persisted derived values
+are absent or checked caches and cannot reconstruct live authority.
+
+`0.10.33` exposes publicly implementable general store transactions receiving
+a core-created read-only finalized-request view and returning untrusted
+`StoreAssertedCommit`. The `0.6.6` sealed promoter checks adapter/session,
+transaction, request/fingerprint, assurance, policy, and atomicity/durability
+profile before `QualifiedDurableCommit`; only it plus the same unsplit aggregate
+commits live work. Restart instead joins non-authority `ValidatedStoredRequest`
+with qualified evidence for its exact record/fingerprint and never recreates
+finalized authority. Built-in streaming is private. Third-party atomicity/pre-
+commit visibility/durability remain explicit TCB claims, never Rust guarantees.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -416,8 +424,8 @@ It immutably joins account intent/contacts/ToS, directory and exact
 `newAccount` URL, account JWK and signer identity/session, EAB key ID and
 secret identity/version/algorithm, inner protected header/payload/positive MAC
 evidence, outer nonce/signing input/admission/verified signature,
-bootstrap/account/outbox identities, canonical `AcmeRequestImage`, and
-`VerifiedRequestId<FinalRequestFingerprint>`. Each
+bootstrap/account/outbox identities, `LocallyVerifiedRequest`, unsplit
+`FinalizedProtocolRequest`, store assertion, and qualified durable commit. Each
 transition consumes its predecessor. Only purpose-matching positive MAC
 evidence completes the inner JWS; only `VerifiedSignature` over the exact
 complete outer input completes the outer JWS; only a durable commit makes the
@@ -616,9 +624,10 @@ snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
 composed-EAB execution, system-wide restored-store recovery epochs,
 externally rooted rollback assurance and explicit coverage manifests,
-store-backed durable protocol-request reservation/completed-image atomic
-publication with derived-field recovery validation and interrupted-request
-abandonment tombstones, transactional deployment, current-policy dispatch
+store-backed durable protocol-request reservation/unsplit finalization/public
+store assertion/sealed commit qualification/non-authority recovery validation
+and interrupted-request abandonment tombstones, transactional deployment,
+current-policy dispatch
 authorization, public APIs,
 reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
