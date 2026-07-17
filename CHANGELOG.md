@@ -7,6 +7,19 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ### Changed
 
+- Made `VerifiedSignature` an invariant exact-cryptographic-verification type,
+  distinct from provider assertions and attestations, while retaining separate
+  locality, trust-domain, implementation, validated-module, and binding axes.
+- Added provider-neutral security-sensitive identity issuance covering entropy/
+  counters, domain separation, durable allocation, collision/exhaustion,
+  fork/clone/restore, multi-node concurrency, and caller idempotency separation.
+- Confined generic executors to the local process and required later remote
+  signer/DNS/KMS/deployment/agent integrations to use purpose-specific bounded,
+  versioned, authenticated observation-only protocols.
+- Added an external rollback-witness protocol and optional native secret-memory
+  assurance; corrected nonce uniqueness to bounded local duplicate checking,
+  made hostile-adapter test claims honest, and bound stack evidence to the exact
+  build configuration.
 - Corrected flat backend failure classification into orthogonal capability,
   dispatch-knowledge, operation-outcome, and observation-status state, and
   added an explicit adapter-assertion-to-qualified-evidence promotion boundary

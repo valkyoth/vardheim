@@ -42,6 +42,8 @@ in any of those dimensions.
 
 A nominal `no_alloc` boundary is not established by feature resolution alone.
 It must link without a global allocator, survive a panic-on-allocation harness,
-stay within published peak-stack/scratch budgets, and document ownership,
-pinning, callback reentrancy, `Send`/`Sync`, and caller-buffer lifetime/aliasing
-for every executor surface.
+stay within peak-stack results bound to exact target/compiler/optimization/
+features/linker plus published scratch budgets, and document ownership, pinning,
+callback reentrancy, `Send`/`Sync`, and caller-buffer lifetime/aliasing for every
+executor surface. Generic executors remain local-process boundaries; remote
+integrations use separate purpose-specific adapter protocols.

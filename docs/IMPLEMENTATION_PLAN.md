@@ -114,7 +114,9 @@ all-crates policy with machine-readable portable/native tiers. Versions
 model that appears to prove unrelated lifecycles, `0.4.22`-`0.4.23` close
 semantic module and mutation baselines, `0.4.24` proves the nominal
 no-allocation executor contract, and `0.4.25` records an evidence-backed
-DER/PKIX build-versus-adopt decision. The public boundary freezes only after
+DER/PKIX build-versus-adopt decision. `0.4.26` confines generic executors to the
+local process and reserves cross-process behavior for later purpose-specific
+authenticated protocols. The public boundary freezes only after
 these empirical and formal checks. Implementation must not start a parser
 before its resource budget and source requirements are committed.
 
@@ -137,7 +139,8 @@ Required outputs:
   a pentest boundary;
 - real private adapter/store and DER/PKIX feasibility evidence before their
   public traits freeze, without publishing those spikes as production support;
-- executable allocator-free, stack, scratch-lifetime, pinning, reentrancy, and
+- executable allocator-free, configuration-bound stack, scratch-lifetime,
+  pinning, reentrancy, and
   `Send`/`Sync` evidence for every nominal `no_alloc` executor claim;
 - machine-readable crate tiers that keep portable semantics `no_std` and safe
   while allowing later native adapters only narrowly inventoried unsafe FFI;
@@ -158,7 +161,8 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - base64url, JWK, JWA, thumbprints, JWS, EAB, and rollover use typed purpose-
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
-  public-key-validation, domain-separated `BoundSigner`, and local
+  security-sensitive identity issuance, public-key-validation,
+  domain-separated `BoundSigner`, and local
   exact-request admission, separate transactional asymmetric-key and symmetric-
   secret onboarding/content binding, narrow quarantined secret-binding
   bootstrap, orthogonal peer-effect outcomes/reconciliation, safe live signer/
@@ -171,6 +175,10 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - DNS update authentication uses a separate `DnsUpdateMac` capability and
   secret domain that cannot be reused for EAB, and neither a bare secret handle
   nor immutable provider identity proves intended secret content;
+- portable secret types never overclaim erasure; an optional native
+  `SecretMemory` boundary publishes exact page-locking, dump/swap, guarded-
+  allocation, copy-tracking, zeroization, privilege, and platform assurance or
+  returns typed unsupported without fallback;
 - key disposition uses a shared typed request/receipt/reconciliation contract
   that distinguishes destruction from disablement, scheduled deletion,
   retention, absence, ambiguity, and provider unavailability;
@@ -178,9 +186,10 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   are distinct trust types rather than interchangeable byte collections;
 - nonce ownership uses linear, non-restorable authority distinct from secret
   material; a parsed nonce remains an observation until authenticated origin,
-  effective-URL, framing, operation, grammar, uniqueness, and directory checks
-  promote it, and authenticated `badNonce` reserves its nonce for the complete
-  rebuilt retry; and
+  effective-URL, framing, operation, grammar, directory, and bounded local
+  duplicate/consumed-window checks promote it; the client never claims global
+  server uniqueness, and authenticated `badNonce` reserves its nonce for the
+  complete rebuilt retry; and
 - Kani, differential parsing, fuzzing, and Loom begin with the primitives they
   protect rather than being postponed to final qualification.
 
@@ -218,10 +227,12 @@ Provider output is private untrusted `UnverifiedSignature`. Before any JWS,
 CSR, revocation, TLS-ALPN, audit, or other effect can use it, Vardheim locally
 verifies the exact admitted bytes, algorithm, parameters, output encoding,
 immutable provider identity/version, and bound public key. Only successful
-verification constructs `VerifiedSignature`. That evidence records independent
-axes for execution locality, signer/verifier trust-domain and implementation
-relationships, verification basis, validated-module identity, key/input
-binding, and verifier implementation/session. Baseline production requires
+verification constructs `VerifiedSignature`. `ProviderAssertedSignature` and
+`AttestedSignature` remain separate evidence and cannot construct it.
+`VerifiedSignature` always means exact cryptographic verification and records
+independent axes for execution locality, signer/verifier trust-domain and
+implementation relationships, validated-module identity, key/input binding,
+and verifier implementation/session. Baseline production requires
 exact local cryptographic verification. A local software signer may use its own
 conforming implementation; diversity is an optional stronger profile. Remote
 self-verification remains insufficient, and a FIPS-only profile keeps required
@@ -229,6 +240,14 @@ verification inside its exact validated boundary. Unsupported, unavailable,
 malformed, wrong-key, or failed verification sends nothing, consumes the
 admission, invalidates or quarantines authority by policy, and never selects an
 implicit signer or verifier fallback.
+
+Request, attempt, effect, admission, reconciliation, correlation, and provider
+idempotency identities come only from the `0.10.23` issuer. Stable internal IDs,
+ephemeral correlation values, and caller-supplied idempotency strings remain
+distinct. Entropy-backed or transactionally counted issuers domain-separate
+tenant, purpose, store, provider, node/process incarnation, and recovery epoch,
+detect bounded collision/exhaustion, survive fork/snapshot/restore safely, and
+durably allocate an identity before it reaches an outbox or external provider.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -542,6 +561,15 @@ quarantined until operation-specific reconciliation and revalidation complete.
 Where monotonic secure state is unavailable, restoration must be declared by
 the operator or rollback detection remains explicitly unsupported.
 
+Automatic rollback detection requires an injected authenticated
+`RollbackWitness` outside the store failure domain. It binds store identity and
+state-head digest to a monotonic counter or journal and defines recovery for
+store-before-witness and witness-before-store crashes, batching windows,
+partitions, reset/clone/split-brain, loss, and key rotation. High-assurance
+startup rejects rollback-unprotected storage; a named operator-selected reduced
+profile is required to proceed. Declaring a known restore initiates recovery but
+does not protect against an unnoticed rollback.
+
 Audit records retain stable invalidation reasons so operators and future
 regression replay can distinguish trust removal, explicit distrust, policy
 change, expiry, clock rollback, status/CT change, algorithm/provider-session or
@@ -569,10 +597,14 @@ The test server must kill/restart the orchestrator after every transition and
 effect boundary. A stale worker cannot present, finalize, activate, clean, or
 roll back after losing its fencing authority.
 
-Executors may be async, blocking, polling, embedded, or remote, but async never
-enters the reducer. Static dispatch remains available without allocation;
-object-safe executor collections require an explicit `alloc` feature. Backend
-features only expose constructors and never select an implementation.
+Generic executors may be async, blocking, polling, or embedded, but remain in
+the local process and async never enters the reducer. Static dispatch remains
+available without allocation; object-safe executor collections require an
+explicit `alloc` feature. Live Rust capabilities are never serialized. Later
+remote signer, DNS, KMS, deployment, and agent protocols are purpose-specific,
+versioned, mutually authenticated adapter boundaries that return observations
+only and cannot mint local evidence. Backend features only expose constructors
+and never select an implementation.
 
 ## Renewal And Challenge Ecosystem
 

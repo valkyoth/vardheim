@@ -67,7 +67,19 @@ digest, resource generation/owner, and validation context. The promoting
 facade/policy component and residual trusted-computing-base assumption are
 documented. Rust privacy prevents accidental fabrication; it cannot prove a
 malicious in-process store performed media synchronization or a DNS provider
-published a record.
+published a record. Generic tests reject structural and policy inconsistency,
+not a perfectly formed semantic lie from a trusted adapter.
+
+## Executor Process Boundary
+
+Generic blocking, async, polling, embedded, static, and allocation-backed
+executors remain local-process drivers. They may hold transient Rust authority
+but cannot serialize it, create a generic remote `EffectTicket`, or delegate the
+generic executor contract across a process boundary. Later remote signer, DNS,
+KMS, secret-manager, deployment, and agent integrations each define a narrow
+versioned mutually authenticated protocol, bind their purpose-specific request
+and recovery context, and return observations only. A remote endpoint never
+mints local qualified evidence.
 
 ## PKIX Evidence Ownership
 
@@ -166,9 +178,11 @@ the discovery alias. Provider-returned bytes are private
 `UnverifiedSignature`, still untrusted even when the provider reports success.
 Vardheim verifies the exact admitted bytes, algorithm, parameters, encoding,
 immutable identity, and bound public key locally. Only that check constructs
-`VerifiedSignature` accepted by protocol effects. The evidence separately
-binds execution locality, signer/verifier trust-domain and implementation
-relationships, exact-verification/assertion/attestation basis, validated-module
+`VerifiedSignature` accepted by protocol effects. `ProviderAssertedSignature`
+and `AttestedSignature` are separate sealed evidence and cannot construct or be
+treated as `VerifiedSignature`, which always means exact cryptographic
+verification. The verified evidence separately binds execution locality,
+signer/verifier trust-domain and implementation relationships, validated-module
 identity, key/input binding strength, and verifier implementation/session.
 Baseline production requires exact local cryptographic verification. A local
 software signer may verify through its own conforming implementation; diversity
@@ -178,6 +192,18 @@ boundary. Unsupported, unavailable,
 malformed, or failed verification transmits nothing, consumes the admission,
 invalidates or quarantines the signer according to policy, and cannot select a
 fallback signer or verifier.
+
+## Security-Sensitive Identity Issuance
+
+Request, attempt, effect, admission, reconciliation, correlation, and provider
+idempotency identities are minted through one provider-neutral boundary.
+Stable internal identities, ephemeral correlation values, and caller-supplied
+idempotency strings are distinct. An admitted issuer uses injected entropy or a
+transactionally allocated counter, domain-separated by tenant, purpose, store,
+provider, node/process incarnation, and recovery epoch. Collision/exhaustion,
+fork/VM clone, rollback, restore, and multi-node concurrency are explicit. An
+identity is durably allocated before it reaches an outbox, evidence, admission,
+reconciliation record, or external provider.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -368,6 +394,15 @@ operation-specific reconciliation plus trust/signer/secret/deployment
 revalidation. Without monotonic secure storage, automatic detection is typed
 unsupported and operators must declare restoration.
 
+Automatic detection requires an authenticated `RollbackWitness` outside the
+store failure domain. The witness binds its implementation/identity/session,
+store identity and state-head digest to a monotonic counter or authenticated
+journal. Its protocol models store-before-witness and witness-before-store
+crashes, bounded batching windows, loss/reset/clone/rollback/split-brain,
+partitions, and key rotation. High-assurance startup refuses
+`RollbackUnprotected`; operator-declared restore starts recovery but cannot
+protect against unnoticed rollback.
+
 ## Transactional Key Onboarding
 
 Generation, PKCS#8 or PKCS#12 import, legacy-key migration, and provider or
@@ -528,10 +563,22 @@ workspaces without changing validation rules or capacity accounting.
 
 `no_alloc` is an executable property, not a feature-name claim. Nominal paths
 link without a global allocator, run under allocation traps where host harnesses
-are needed, publish peak-stack and scratch-exhaustion evidence, and specify
+are needed, publish peak-stack evidence bound to exact target, compiler,
+optimization profile, feature set, and linker plus scratch-exhaustion evidence,
+and specify
 `Send`/`Sync`, pinning, callback reentrancy, effect ownership, and caller-buffer
 lifetime/aliasing. An allocation-backed object-safe executor is a separate
 explicit tier.
+
+## Native Secret Memory
+
+Portable secret types promise redaction and explicit ownership, not universal
+erasure. An optional outward native `SecretMemory` boundary may add page
+locking, dump exclusion, guarded allocation, swap policy, copy/provenance
+tracking, restricted export, and best-effort zeroization. It publishes the
+exact operating-system primitives, privileges, configuration, and residual
+copies it can cover. Missing support is typed unsupported and never falls back
+while retaining a stronger assurance label.
 
 ## Challenge Identity Layers
 
@@ -547,9 +594,15 @@ receipts never convert merely because they share a family crate.
 - A replay nonce is linear authority, not a confidential secret: it is consumed
   exactly once, never cloned/restored, and never returned to a pool. A parsed
   response nonce is only an observation until authenticated TLS/origin,
-  effective URL, strict framing, admitted ACME operation, grammar, uniqueness,
-  and directory context are validated; authenticated `badNonce` reserves its
-  nonce for that complete rebuilt retry.
+  effective URL, strict framing, admitted ACME operation, grammar, directory
+  context, and local duplicate/non-reuse checks within the bounded queue and
+  consumed-ID window are validated; the client makes no global server-
+  uniqueness claim, and authenticated `badNonce` reserves its nonce for that
+  complete rebuilt retry.
+- Security-sensitive internal identities are domain-separated and durably
+  allocated before use; caller idempotency strings, fork/clone state, or a
+  rolled-back counter cannot join unrelated evidence, outbox, admission, or
+  reconciliation state.
 - A JWS contains exactly one of `jwk` or `kid`.
 - Signed requests cannot redirect automatically or change their signed URL.
 - Untrusted bytes, JSON, extension maps, headers, PEM, DER, and recursion are
@@ -581,7 +634,8 @@ receipts never convert merely because they share a family crate.
   digest pinned during binding must be used.
 - Provider-returned signature bytes are untrusted and cannot enter any protocol
   effect until locally verified against the bound key and exact admitted
-  request; assurance axes cannot be collapsed or upgraded, remote
+  request; assertions and attestations remain distinct from
+  `VerifiedSignature`, assurance axes cannot be collapsed or upgraded, remote
   self-verification is insufficient, FIPS boundary identity is preserved, and
   unavailable required verification fails closed without fallback.
 - Cached, unrelated, cross-protocol, ambiguous, expired, replayed, or
@@ -605,6 +659,13 @@ receipts never convert merely because they share a family crate.
   ownership evidence bound to the exact directory and account URL.
 - Verification capabilities cannot be serialized, replayed across contexts, or
   restored after restart as current proof.
+- A generic executor never crosses the process boundary or serializes live
+  authority; a purpose-specific remote endpoint returns observations and cannot
+  construct local qualified evidence.
+- Rollback detection cannot be inferred from an epoch stored only inside the
+  rollback domain; high assurance requires admitted external witness evidence.
+- Portable secret ownership/zeroization and optional native memory controls do
+  not imply universal erasure or protection from privileged software.
 - Public PKI fetch results and unauthenticated DNS AD bits are never evidence.
 - A partial, ambiguously framed, wrongly typed, or cross-context cached public
   PKI body is never accepted as an object.

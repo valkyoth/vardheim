@@ -43,3 +43,11 @@ compared against exact semantic, MSRV, allocation, unsafe, maintenance, and
 replacement requirements. The resulting build-versus-adopt decision is
 reviewed evidence; an oracle or spike dependency is not automatically admitted
 to production.
+
+Native secret-memory primitives and purpose-specific remote protocols follow
+the outward-adapter rule. OS bindings, transport stacks, authentication, schema
+codecs, and witness implementations cannot enter portable core or create local
+authority. Each admission records its exact platform/security semantics,
+protocol/version surface, recovery behavior, and typed unsupported cells; a
+dependency's claim of page locking, secure memory, delivery, or monotonic state
+is not accepted without Vardheim conformance evidence.

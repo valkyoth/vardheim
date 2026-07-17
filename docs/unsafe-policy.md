@@ -16,3 +16,10 @@ of a repository-wide text scan. Portable crates continue to require
 owner, invariant, reason, target, and evidence set; unsafe elsewhere, a widened
 allowlist, missing evidence, or an unclassified crate fails the gate. Safe core
 semantics never move into the allowlisted module.
+
+An optional native `SecretMemory` implementation follows the same tier and
+allowlist rules. Page locking, dump exclusion, guarded allocations, swap
+controls, copy tracking, or zeroization never justify unsafe in portable secret
+types and never support a universal-erasure claim. Missing operating-system
+semantics or privilege produces typed unsupported behavior without fallback to
+a falsely equivalent assurance profile.

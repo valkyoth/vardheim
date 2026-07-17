@@ -28,7 +28,12 @@ its returned bytes are still structurally and semantically verified.
   after ambiguous rollover or deactivation;
 - JOSE algorithm confusion, nonce reuse, malformed nested JWS, or admitting a
   nonce from unauthenticated/wrong-origin/redirected/framing-invalid/unrelated
-  responses; including losing the authenticated `badNonce` retry reservation;
+  responses; including losing the authenticated `badNonce` retry reservation
+  or overclaiming global server nonce uniqueness from a bounded local window;
+- collision or reuse of request, attempt, effect, admission, reconciliation,
+  correlation, or provider-idempotency identity after entropy failure, counter
+  exhaustion, process fork, VM clone, database restore, recovery-epoch change,
+  multi-node race, caller-key substitution, or use before durable allocation;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
@@ -46,10 +51,12 @@ its returned bytes are still structurally and semantically verified.
   entering a protocol effect because local verification was optional,
   unavailable, or silently replaced by another backend;
 - collapsing signature-verifier locality, trust-domain relationship,
-  implementation relationship, verification basis, validated-module identity,
-  or key/input binding into one assurance rank; rejecting safe same-
-  implementation local verification, admitting remote self-verification, or
-  moving required verification outside an exact FIPS boundary;
+  implementation relationship, validated-module identity, or key/input binding
+  into one assurance rank; collapsing exact verification, assertion, and
+  attestation into one evidence type; rejecting safe same-
+  implementation local verification, promoting provider assertion/attestation
+  into `VerifiedSignature`, admitting remote self-verification, or moving
+  required verification outside an exact FIPS boundary;
 - an EAB or TSIG secret alias/version being retargeted after discovery; a valid
   MAC from another tenant, directory, external account, zone, secret version,
   purpose, or TSIG chain entering a protocol object; raw `UnverifiedMac` being
@@ -112,6 +119,14 @@ its returned bytes are still structurally and semantically verified.
   leases/fences, retired key eligibility, superseded challenge cleanup
   ownership, deployment generations, trust state, or live authority without a
   recovery-epoch discontinuity and complete reconciliation/revalidation;
+- relying on an epoch stored inside the rolled-back database; external rollback
+  witness commit skew, loss, reset, clone, rollback, split-brain, state-head or
+  store-identity substitution, key-rotation failure, or silently starting a
+  high-assurance profile without witness evidence;
+- serializing transient authority through a generic remote executor, or a
+  purpose-specific remote endpoint replaying, reordering, duplicating,
+  downgrading, cross-session substituting, or falsely acknowledging an effect
+  and then minting local qualified evidence;
 - server-injected private keys or mismatched certificate chains;
 - stale/replayed verification records, forged or cross-version status/CT
   evidence, forged STH/inclusion/consistency or witness evidence, CT split view,
@@ -135,6 +150,9 @@ its returned bytes are still structurally and semantically verified.
 - activation or continued service of a Must-Staple certificate with a missing,
   stale, mismatched, or separately committed OCSP staple;
 - dependency, CI action, toolchain, or release-process compromise.
+- secret-memory overclaim from assuming overwrite-on-drop, page locking, dump
+  exclusion, swap policy, guarded allocation, or copy tracking provides
+  universal erasure or protection from a compromised kernel/hypervisor.
 
 ## Out Of Scope
 

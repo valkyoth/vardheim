@@ -54,7 +54,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   `newNonce` acquisition/harvesting, and directory-scoped linear nonce
   authority that is distinct from secrets, cannot be cloned/restored, and
   admits an observed response nonce only after authenticated TLS/origin,
-  effective-URL, framing, operation, grammar, uniqueness, and directory checks;
+  effective-URL, framing, operation, grammar, directory, and bounded local
+  queued/consumed-window duplicate checks without claiming global server
+  uniqueness;
   an authenticated `badNonce` nonce is reserved for its complete rebuilt retry;
 - account create/recover/adopt/update/orders/rollover/deactivate and EAB, with
   current validated and role-bound signers plus exact-request admission for
@@ -85,7 +87,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
   dispatch, mandatory local verification of returned signatures, and external/
   HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
-  validation, domain-separated transient `BoundSigner`, locally minted
+  validation, domain-separated security-sensitive identity issuance,
+  `UnverifiedSignature`/`ProviderAssertedSignature`/`AttestedSignature` strictly
+  separated from exact cryptographic `VerifiedSignature`, transient
+  `BoundSigner`, locally minted
   single-use exact-request signer admission, handle-backed `BoundMacKey`,
   exact-input MAC admission, immutable signer/secret dispatch, purpose-specific
   `VerifiedMac` versus `ProviderAssertedMac` versus
@@ -97,7 +102,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
   honest disposition/reconciliation contracts with explicit concrete-provider
   construction and
   per-purpose capability/validation/binding/onboarding/reconstruction/
-  immutable-dispatch/signature-verification and multi-axis verifier-assurance/
+  immutable-dispatch/strict signature-evidence verification and multi-axis
+  verifier-assurance/
   MAC-evidence/disposition tables,
   including narrowly purpose-bound legacy verification hashes where standards
   still require them;
@@ -129,13 +135,18 @@ At `1.0.0`, all of these must work without placeholder success paths:
   mandatory reconstruction rather than restored validation, signer-binding,
   admission, verification, or effect-authority capabilities;
 - whole-store rollback discontinuity with protected/detecting/unprotected
-  capability, store/recovery epochs or operator declaration, invalidated live
-  authority/leases/fences/sessions, and quarantine plus reconciliation of
-  restored outbox, key, challenge, deployment, retirement, and trust state;
+  capability, an authenticated external witness over store/state head and
+  monotonic counter/journal, store/recovery epochs or operator declaration,
+  invalidated live authority/leases/fences/sessions, high-assurance startup
+  refusal without evidence, and quarantine plus reconciliation of restored
+  outbox, key, challenge, deployment, retirement, and trust state;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends,
   with explicit HTTP protocol versions, disabled early data, no hidden retry,
   partitioned connection/session/resolver state, and definite-versus-ambiguous
   transmission evidence;
+- local-only generic executors with no serializable live authority or generic
+  remote ticket, plus purpose-specific versioned mutually authenticated remote
+  signer/DNS/KMS/deployment/agent protocols returning observations only;
 - strict public-PKI HTTP framing, decompression/work budgets, media validation,
   complete-body enforcement, OCSP POST privacy, and tenant/purpose/policy cache
   isolation;
@@ -165,6 +176,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - manual, library, CLI, daemon, agent, and web-server integration surfaces;
 - redacted observability, audit evidence, target compatibility, formal methods,
   fuzzing, security audits, and reviewed-implementation-bound pentests.
+- optional native secret-memory assurance for exact supported page-lock,
+  dump/swap, guarded-allocation, copy-tracking and zeroization profiles without
+  universal-erasure claims or fallback;
 - a machine-checked acyclic requirement/work/version graph with ownership,
   typed RFC/errata/registry/threat/architecture/compatibility/platform/finding
   sources, evidence, generated plan views, critical path, and no omitted or
@@ -290,14 +304,17 @@ Planning audits through 2026-07-17 found and corrected these weaknesses:
   typed requirement-source categories; unpublished RustCrypto, ring, rustls,
   executor-mode, store-model, and DER/PKIX spikes;
   machine portable/native crate tiers; eight independent formal models;
-  semantic module/stack/reducer and executable no-allocation gates; early and
+  semantic module/configuration-bound-stack/reducer and executable
+  no-allocation gates; local-only generic executor confinement; early and
   final mutation programs; sealed external-evidence promotion; linear
   non-secret nonce authority with authenticated admission and `badNonce`
-  reservation; layered errors plus orthogonal effect observations; multi-axis
-  verifier assurance including FIPS identity; method/specification/schema-aware
-  challenge registration and sealed receipts; whole-store rollback epochs; an
-  early real-boundary vertical slice; and explicit compile/emulator/native/
-  production platform evidence tiers;
+  reservation and local duplicate-window honesty; layered errors plus
+  orthogonal effect observations; strict signature evidence and multi-axis
+  verifier assurance including FIPS identity; security-sensitive identity
+  issuance; optional native secret memory; method/specification/schema-aware
+  challenge registration and sealed receipts; whole-store rollback epochs plus
+  an external witness; an early real-boundary vertical slice; and explicit
+  compile/emulator/native/production platform evidence tiers;
 - recommendations to collapse planned releases, weaken adapter MSRV, or move
   current draft/provider/platform scope after `1.0.0` were reviewed but not
   adopted because they conflict with the owner-defined completion and pentest

@@ -54,9 +54,11 @@ required=(
     v0.4.23
     v0.4.24
     v0.4.25
+    v0.4.26
     v0.5.2
     v0.6.5
     v0.6.6
+    v0.6.7
     v0.7.2
     v0.7.3
     v0.10.2
@@ -80,6 +82,7 @@ required=(
     v0.10.20
     v0.10.21
     v0.10.22
+    v0.10.23
     v0.13.1
     v0.14.2
     v0.14.3
@@ -138,6 +141,7 @@ required=(
     v0.33.5
     v0.33.6
     v0.33.7
+    v0.33.8
     v0.36.3
     v0.37.4
     v0.37.5
@@ -287,17 +291,21 @@ grep -q 'Semantic module-invariant and complexity gate' "$plan"
 grep -q 'Security mutation-testing baseline' "$plan"
 grep -q 'Executable no-allocation and executor-contract proof' "$plan"
 grep -q 'Unpublished safe `no_std` DER/PKIX feasibility and build-versus-adopt decision' "$plan"
+grep -q 'Generic executor authority confinement' "$plan"
 grep -q 'Linear replay-authority taxonomy' "$plan"
 grep -q 'Sealed observation-to-evidence promotion pipeline' "$plan"
+grep -q 'Optional native `SecretMemory` assurance boundary' "$plan"
 grep -q 'Layered stable error envelope' "$plan"
 grep -q 'Orthogonal effect-observation product shared by every backend boundary' "$plan"
-grep -q 'Multi-axis signature-verifier assurance evidence' "$plan"
+grep -q 'Strict signature-evidence and multi-axis verifier-assurance invariant' "$plan"
+grep -q 'Provider-neutral security-sensitive identity issuance contract' "$plan"
 grep -q 'Authenticated replay-nonce admission and reservation policy' "$plan"
 grep -q 'Conflict-checked challenge-method registry' "$plan"
 grep -q 'Shared sealed challenge-presentation receipt envelope' "$plan"
 grep -q 'System-wide rollback discontinuity and restored-store recovery model' "$plan"
+grep -q 'Injected external `RollbackWitness` protocol' "$plan"
 grep -q 'Private thin real-boundary vertical slice' "$plan"
-grep -q 'Reusable multi-axis signature-verifier assurance conformance' "$plan"
+grep -q 'Reusable strict signature-evidence and multi-axis verifier-assurance conformance' "$plan"
 grep -q 'four-level evidence publication' "$plan"
 grep -q 'Pre-production security mutation qualification' "$plan"
 grep -q 'Provider-neutral digest semantics' "$plan"
