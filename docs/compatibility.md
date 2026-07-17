@@ -50,10 +50,13 @@ default and never silently advances revisions.
 
 Persisted and wire compatibility distinguishes transient
 `LocalSigningRequestId` from the durable protocol reservation and its consuming
-input-bound, final-wire-bound, and outbox-committed states. Partial/live states
-have no serialized authority representation; persisted phase facts cannot be
+input-bound, final-request-bound, outbox-committed, and abandoned states. The
+versioned canonical `AcmeRequestImage`, not HTTP/1.1 serialization, HTTP/2/3
+frames, compression state, streams, TLS records, or QUIC packets, defines ACME
+request compatibility. Partial/live states have no serialized authority
+representation; persisted phase facts and abandonment tombstones cannot be
 upgraded into one. Policy snapshot compatibility includes normalized effective
 semantics, schema/canonicalization version, and digest-algorithm identity, not
-source formatting. Fingerprint compatibility is purpose-specific: wire and
-semantic families never convert, and schema/canonicalization/hash changes
+source formatting. Fingerprint compatibility is purpose-specific and
+cross-family conversion is forbidden; schema/canonicalization/hash changes
 produce a new identity.

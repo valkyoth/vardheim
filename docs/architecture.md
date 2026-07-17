@@ -222,17 +222,20 @@ Protocol identity advances only through consuming states:
 ```text
 ReservedProtocolRequestId
     -> InputBoundRequestId<SigningInputFingerprint>
-    -> VerifiedRequestId<FinalWireFingerprint>
+    -> VerifiedRequestId<FinalRequestFingerprint>
     -> OutboxCommittedRequest
 ```
 
 The base is durably reserved first. Input binding fixes canonical signing bytes,
 algorithm/parameters, nonce, purpose, policy, and signer admission before signer
 dispatch. Only local `VerifiedSignature` permits deterministic final
-serialization and binding to the exact complete JWS/HTTP bytes. Only the final-
-wire-bound state enters outbox or transport. Failure, ambiguity, cancellation,
-`badNonce`, invalidation, crash, or restore cannot advance or reuse partial
-state; recovery reconstructs fresh authority and never silently re-signs.
+construction of the canonical `AcmeRequestImage`. Only the final-request-bound
+state enters outbox or transport. Failure, ambiguity, cancellation, `badNonce`,
+invalidation, crash, or restore cannot advance or reuse partial state. If image
+and verified identity were not atomically committed, recovery permanently
+retires the reservation/nonce/admission/input-bound identity/fingerprints and
+records non-authority `AbandonedProtocolRequest`; a later retry is a wholly new
+signing operation and never re-signs, advances, or rebinds the old identity.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -275,16 +278,33 @@ the components fails before adapter entry and consumes no unrelated authority.
 
 ## Purpose-Specific Effect Fingerprints
 
-There is no generic effect digest. Wire stages use sealed
-`SigningInputFingerprint` and `FinalWireFingerprint` over exact serialized
-bytes. Effects without wire bytes use `StoreMutationFingerprint<Schema>`,
+There is no generic effect digest. Signing stages use sealed
+`SigningInputFingerprint` over exact serialized bytes. Final ACME application
+requests use `FinalRequestFingerprint` over canonical `AcmeRequestImage`.
+Protocol-specific peer effects use `PeerEffectFingerprint<Protocol, Revision>`
+over their exact wire message or declared canonical image. Effects without a
+wire/image representation use `StoreMutationFingerprint<Schema>`,
 `PresentationFingerprint<Method, Revision>`,
 `DeploymentFingerprint<Generation>`, or `CleanupFingerprint<Resource>`.
 Every semantic fingerprint binds a domain separator, schema/canonicalization
 version, digest algorithm, complete normalized fields, purpose, and effect type.
-Wire and semantic fingerprints, and different purpose families, have no
-implicit conversions. Changing schema/canonicalization or digest identity
+Wire, application-image, and semantic fingerprints, and different families,
+have no implicit conversions. Changing schema/canonicalization or digest identity
 changes the fingerprint identity even when display text is unchanged.
+
+## Canonical ACME Request Image
+
+`AcmeRequestImage` is immutable application authority, not physical transport
+serialization. Its versioned canonical form contains method, normalized
+effective URL, exact verified JWS body, admitted content type, and an ordered
+set of admitted security-relevant headers. `FinalRequestFingerprint` covers the
+image, which the outbox stores with the exact JWS body. HTTP/1.1 formatting,
+HTTP/2/3 frames, HPACK/QPACK state, stream IDs, frame boundaries, TLS records,
+and QUIC packets are executor-local observations and never stored authority.
+`EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile,
+adapter/session, policy snapshot, and final request fingerprint. Middleware may
+frame but cannot change method, effective target, admitted headers, or body
+after authority composition.
 
 ## Handle-Backed MAC Evidence
 
@@ -372,7 +392,8 @@ bytes, or service unrelated EAB/TSIG traffic. It is consumed before immutable
 provider dispatch and is never cloned, serialized, restored, or reused.
 
 Peer confirmation is an external effect, not necessarily a harmless check.
-Every typed peer effect has a stable effect identity and exact request digest,
+Every typed peer effect has a stable effect identity and sealed
+`PeerEffectFingerprint<Protocol, Revision>`,
 peer/security profile, mutation class, reconciliation key, authenticated
 success/rejection evidence contract, and affected account or DNS resource.
 Outcomes are the product `DispatchKnowledge × OperationOutcome ×
@@ -422,11 +443,12 @@ Prepared
 Every state binds the canonical account intent, contacts, ToS agreement,
 directory and exact `newAccount` URL, account JWK and immutable signer/session,
 EAB key ID and immutable secret version, algorithms, complete inner JWS,
-outer nonce/signing input/admission, bootstrap/account/outbox identities, and
-final HTTP bytes/digest. Positive purpose-matching MAC evidence alone advances
-the inner state; `VerifiedSignature` over the exact complete outer input alone
-advances the outer state. The peer effect cannot execute before that outer
-request is locally verified and durably committed. Evidence, inner JWS values,
+outer nonce/signing input/admission, bootstrap/account/outbox identities,
+canonical `AcmeRequestImage`, and `FinalRequestFingerprint`. Positive purpose-
+matching MAC evidence alone advances the inner state; `VerifiedSignature` over
+the exact complete outer input alone advances the outer state. The peer effect
+cannot execute before that outer request is locally verified and durably
+committed. Evidence, inner JWS values,
 nonces, identities, and states cannot cross attempts. Authenticated `badNonce`
 consumes the complete attempt and rebuilds both layers with fresh identities;
 it does not prove an EAB-secret mismatch.
@@ -643,6 +665,11 @@ must reconcile at the ACME operation layer. Connection pools, TLS/QUIC
 sessions, DNS results, proxies, trust, directories, tenants, and policies are
 partitioned. Cross-origin connection coalescing is prohibited unless a
 version-specific conformance proof permits it.
+
+Every profile consumes the same committed `AcmeRequestImage`. HPACK/QPACK
+tables, stream identity/segmentation, connection restart, TLS record layout, and
+QUIC packetization cannot change `FinalRequestFingerprint`; a new connection
+can frame the stored application image without rebuilding or re-signing it.
 
 ## No-Heap Validation Workspaces
 

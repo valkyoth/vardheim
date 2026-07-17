@@ -89,9 +89,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated durable-versus-transient security-sensitive
   identity issuance, transient local versus consuming reserved/input-bound/
-  final-wire-bound/committed protocol request identity, versioned canonical
-  effective-policy snapshots, sealed purpose-specific fingerprints, and exact-
-  effect composed current-policy dispatch authority,
+  final-request-bound/committed/abandoned protocol request identity, canonical
+  transport-independent `AcmeRequestImage`, versioned canonical effective-policy
+  snapshots, sealed purpose-specific fingerprints, and exact-effect composed
+  current-policy dispatch authority,
   `UnverifiedSignature`/`ProviderAssertedSignature`/`AttestedSignature` strictly
   separated from exact cryptographic `VerifiedSignature`, transient
   `BoundSigner`, locally minted

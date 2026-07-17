@@ -89,6 +89,8 @@ required=(
     v0.10.26
     v0.10.27
     v0.10.28
+    v0.10.29
+    v0.10.30
     v0.13.1
     v0.14.2
     v0.14.3
@@ -322,7 +324,7 @@ grep -q 'Injected external `RollbackWitness` protocol' "$plan"
 grep -q '`RollbackDetecting { maximum_window }`' "$plan"
 grep -q 'witness trust root, bootstrap identity' "$plan"
 grep -q 'Typed `RollbackCoverage` manifest' "$plan"
-grep -q 'Transactional durable identity allocator integrated with store' "$plan"
+grep -q 'Transactional durable identity allocator/store boundary for request reservation, abandonment, and outbox commit' "$plan"
 grep -q 'Private thin real-boundary vertical slice' "$plan"
 grep -q 'Reusable strict signature-evidence and multi-axis verifier-assurance conformance' "$plan"
 grep -q 'four-level evidence publication' "$plan"
@@ -342,11 +344,11 @@ grep -q 'Provider-neutral handle-backed MAC authority and positive-evidence boun
 grep -q 'Provider-neutral transactional symmetric-secret onboarding and content-binding state model' "$plan"
 grep -q 'Live symmetric-secret authority reconstruction boundary' "$plan"
 grep -q 'Narrow symmetric-secret content-binding bootstrap authority' "$plan"
-grep -q 'Provider-neutral peer-binding external-effect identity and observation contract' "$plan"
+grep -q 'Provider-neutral peer-binding external-effect identity/observation contract' "$plan"
 grep -q 'Durable peer-binding effect orchestration and recovery' "$plan"
 grep -q 'Orthogonal peer-effect outcome product and recovery matrix' "$plan"
 grep -q 'Composed EAB account-creation typestate' "$plan"
-grep -q 'Durable composed EAB account-creation execution and recovery' "$plan"
+grep -q 'Durable composed EAB account creation through staged request identities' "$plan"
 grep -q 'KeyLifecycleState × KeyObligationSet' "$plan"
 grep -q 'Account creation with contacts.*v0.10.12' "$plan"
 grep -q '`onlyReturnExisting` account recovery.*v0.10.12' "$plan"
@@ -356,8 +358,14 @@ grep -q 'RFC 2986 CSR construction.*v0.10.12' "$plan"
 grep -q 'TLS-ALPN-01 identity construction.*v0.10.12' "$plan"
 grep -q 'RFC 2986 CSR construction.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'TLS-ALPN-01 identity construction.*v0.10.15.*VerifiedSignature' "$plan"
-grep -q 'Single-use replay nonce ownership integrated with request admission and `v0.10.27`' "$plan"
-grep -q '`badNonce` retry consumes the old nonce, reservation/input-bound/final-wire state' "$plan"
+grep -q 'Single-use replay nonce ownership integrated with request admission and staged protocol identity' "$plan"
+grep -q '`badNonce`.\+old nonce, reservation/input-bound/final-request state' "$plan"
+grep -q 'Canonical transport-independent `AcmeRequestImage`' "$plan"
+grep -q '`FinalRequestFingerprint` hashes the versioned canonical image' "$plan"
+grep -q 'Interrupted signed-request abandonment and retry contract' "$plan"
+grep -q 'later retry as a wholly new reservation, nonce, admission, fingerprints, signature, effect, and policy authority' "$plan"
+! grep -R -q 'FinalWireFingerprint\|final-wire' docs CHANGELOG.md README.md
+! grep -R -q 'final HTTP bytes/digest\|exact request digest' docs CHANGELOG.md README.md
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Durable old account-key lifecycle' "$plan"
@@ -436,7 +444,7 @@ grep -q 'Reusable immutable-dispatch and returned-signature verification conform
 grep -q 'Reusable handle-backed MAC authority/evidence conformance framework' "$plan"
 grep -q 'Reusable transactional symmetric-secret onboarding, content-binding, and live-authority reconstruction conformance' "$plan"
 grep -q 'Reusable secret-binding bootstrap and peer-effect conformance' "$plan"
-grep -q 'Reusable composed-authenticated-effect conformance' "$plan"
+grep -q 'Reusable composed EAB conformance through request-image and abandonment milestones' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
@@ -476,7 +484,7 @@ grep -q 'RustCrypto public-key validation, software-signer binding, immutable di
 grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
-grep -q 'Reusable adapter conformance framework' "$plan"
+grep -q 'Reusable adapter conformance for transport, signer, store, clock, entropy, staged/abandoned request identity' "$plan"
 grep -q 'qualification and coverage closure' "$plan"
 grep -q 'Fluxheim integration fixture' "$plan"
 grep -q 'every mandatory client requirement implemented' "$plan"

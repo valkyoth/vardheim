@@ -41,9 +41,13 @@ its returned bytes are still structurally and semantically verified.
   substitution; or identity reuse after `badNonce`, cancellation, restore, or
   policy-driven rebuild;
 - signer dispatch before exact signing-input binding; unverified or partially
-  bound request identity entering the outbox/transport; final bytes diverging
-  from the locally verified signature/input; crash recovery silently re-signing
-  or rebinding an old reservation; or skipping/restoring a request typestate;
+  bound request identity entering the outbox/transport; canonical application
+  request fields diverging from the locally verified signature/input; physical
+  HTTP/1.1, HTTP/2/3, TLS, or QUIC framing being mistaken for request authority;
+  middleware mutating method, target, admitted headers, or body after image
+  composition; crash recovery silently re-signing, advancing, or rebinding an
+  old reservation instead of tombstoning it and creating a wholly new retry;
+  or skipping/restoring a request typestate;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
@@ -138,6 +142,10 @@ its returned bytes are still structurally and semantically verified.
 - duplicated ACME mutations through TLS/QUIC early data, hidden middleware
   retry, incorrect HTTP/2/HTTP/3 reset/GOAWAY classification, connection
   coalescing, or cross-directory session/resolver reuse;
+- one canonical ACME request image changing identity across HTTP profiles,
+  compression tables, stream/frame boundaries, connection restart, TLS record
+  layout, or QUIC packetization; or executor-local framing observations
+  acquiring authority to rebuild signed application content;
 - stale workers activating data after losing a lease;
 - whole-store rollback resurrecting may-have-dispatched outbox work, old
   leases/fences, retired key eligibility, superseded challenge cleanup

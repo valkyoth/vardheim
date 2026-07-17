@@ -9,10 +9,16 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 - Added `v0.10.27` consuming protocol-request states from durable reservation
   through exact signing-input binding, local signature verification, exact
-  final-wire binding, and outbox commit, with no crash-time silent re-signing.
+  final-request binding, and outbox commit.
 - Added `v0.10.28` sealed purpose-specific wire, store, presentation,
   deployment, and cleanup fingerprints with explicit canonicalization and no
-  semantic/wire or cross-purpose conversions.
+  cross-family or cross-purpose conversions.
+- Added `v0.10.29` canonical transport-independent `AcmeRequestImage` and
+  `FinalRequestFingerprint`, with immutable application fields and framing-
+  independent HTTP/1.1, HTTP/2, and HTTP/3 execution.
+- Added `v0.10.30` durable interrupted-request abandonment: uncommitted signed
+  requests are tombstoned and retired, while any retry uses wholly new identity,
+  nonce, admission, fingerprints, signature, effect, policy, and authority.
 - Extended `PolicySnapshot` identity with policy schema/canonicalization version
   and digest-algorithm identity so normalization/tooling changes cannot retain
   stale authority.

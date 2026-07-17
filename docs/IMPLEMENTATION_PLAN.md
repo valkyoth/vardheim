@@ -261,11 +261,14 @@ the real store/outbox allocator arrives in `0.34.3`.
 protocol identity base. `0.10.27` then makes protocol identity a consuming
 sequence: `ReservedProtocolRequestId` ->
 `InputBoundRequestId<SigningInputFingerprint>` ->
-`VerifiedRequestId<FinalWireFingerprint>` -> `OutboxCommittedRequest`. Signing
+`VerifiedRequestId<FinalRequestFingerprint>` -> `OutboxCommittedRequest`. Signing
 accepts only the canonical-input-bound state; verified local signature enables
-deterministic final serialization; only exact-final-wire-bound state enters the
-outbox/transport. Failure, ambiguity, cancellation, `badNonce`, invalidation, or
-crash never advances or restores partial identity and never silently re-signs.
+deterministic `AcmeRequestImage` construction; only final-request-bound state
+enters outbox/transport. Failure, ambiguity, cancellation, `badNonce`, or
+invalidation never advances partial identity. After interruption, `0.10.30`
+retires the old reservation/nonce/admission/input state and writes non-authority
+`AbandonedProtocolRequest`; a later retry is wholly new and never re-signs,
+advances, or rebinds the old identity.
 
 Every admitted effect binds an immutable canonical `PolicySnapshot`. Its
 identity includes policy schema/canonicalization version and digest algorithm;
@@ -289,14 +292,24 @@ signer admission, durable commit, presentation intent, verified generation, or
 cleanup ownership. Executors receive one checked same-effect authority, never a
 bag of independently valid tokens that can be stitched together.
 
-`0.10.28` forbids generic effect digests. Exact wire effects use
-`SigningInputFingerprint` or `FinalWireFingerprint` over serialized bytes.
-Non-wire effects use only their sealed `StoreMutationFingerprint<Schema>`,
+`0.10.28` forbids generic effect digests. Exact signing/protocol wire effects
+use `SigningInputFingerprint` or `PeerEffectFingerprint<Protocol, Revision>`.
+Final ACME requests use `FinalRequestFingerprint` over the `0.10.29` canonical
+`AcmeRequestImage`; physical HTTP/TLS/QUIC framing is never authority. Non-wire
+effects use only sealed `StoreMutationFingerprint<Schema>`,
 `PresentationFingerprint<Method, Revision>`,
 `DeploymentFingerprint<Generation>`, or `CleanupFingerprint<Resource>`, each
 binding domain separator, schema/canonicalization version, digest algorithm,
 complete normalized fields, purpose, and effect type. There is no semantic-to-
 wire or cross-purpose conversion.
+
+The canonical ACME image contains method, normalized effective URL, exact
+verified JWS body, admitted content type, and ordered admitted security-relevant
+headers. The outbox stores this image, not HTTP/1.1 request formatting,
+HTTP/2/3 frames, compression state, stream IDs, TLS records, or QUIC packets.
+`EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile and
+adapter/session to the image fingerprint; middleware cannot mutate target,
+headers, or body after composition.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -351,11 +364,11 @@ It cannot create normal `BoundMacKey`/`MacConsumerAdmission`, MAC arbitrary
 bytes, or service unrelated EAB/TSIG requests, and it is consumed before
 provider dispatch without restoration after any outcome.
 
-Peer confirmation uses a stable external-effect identity and exact immutable
-request digest, peer/security profile, mutation class, reconciliation key,
-affected account or DNS resource, and authenticated evidence contract. State
-is `DispatchKnowledge × OperationOutcome × BindingEvidence ×
-ObservationStatus`, not a flat result enum. Dispatch knowledge, operation
+Peer confirmation uses a stable external-effect identity and sealed
+`PeerEffectFingerprint<Protocol, Revision>`, peer/security profile, mutation
+class, reconciliation key, affected account or DNS resource, and authenticated
+evidence contract. State is `DispatchKnowledge × OperationOutcome ×
+BindingEvidence × ObservationStatus`, not a flat result enum. Dispatch knowledge, operation
 success/rejection, purpose-specific peer confirmation/content mismatch, and
 observation availability change independently. Unauthenticated errors prove
 none of those security facts; `badNonce`, rate/contact/ToS rejection, and DNS
@@ -385,7 +398,8 @@ It immutably joins account intent/contacts/ToS, directory and exact
 `newAccount` URL, account JWK and signer identity/session, EAB key ID and
 secret identity/version/algorithm, inner protected header/payload/positive MAC
 evidence, outer nonce/signing input/admission/verified signature,
-bootstrap/account/outbox identities, and final HTTP bytes/digest. Each
+bootstrap/account/outbox identities, canonical `AcmeRequestImage`, and
+`VerifiedRequestId<FinalRequestFingerprint>`. Each
 transition consumes its predecessor. Only purpose-matching positive MAC
 evidence completes the inner JWS; only `VerifiedSignature` over the exact
 complete outer input completes the outer JWS; only a durable commit makes the
@@ -584,7 +598,8 @@ snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
 composed-EAB execution, system-wide restored-store recovery epochs,
 externally rooted rollback assurance and explicit coverage manifests,
-store-backed durable protocol-request reservation/staged final-wire commit,
+store-backed durable protocol-request reservation/canonical-image commit and
+interrupted-request abandonment tombstones,
 transactional deployment, current-policy dispatch authorization, public APIs,
 reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
