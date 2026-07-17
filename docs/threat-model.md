@@ -40,6 +40,10 @@ its returned bytes are still structurally and semantically verified.
   one durable protocol request identity naming different bytes; request/effect
   substitution; or identity reuse after `badNonce`, cancellation, restore, or
   policy-driven rebuild;
+- signer dispatch before exact signing-input binding; unverified or partially
+  bound request identity entering the outbox/transport; final bytes diverging
+  from the locally verified signature/input; crash recovery silently re-signing
+  or rebinding an old reservation; or skipping/restoring a request typestate;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
@@ -123,6 +127,11 @@ its returned bytes are still structurally and semantically verified.
   omitted from the snapshot; or independently valid admission, commit,
   presentation, deployment, cleanup, fence, and dispatch-permit tokens stitched
   across different effects;
+- policy schema/canonicalization or digest-algorithm changes retaining an old
+  snapshot identity; a generic digest relabeled across wire, store, challenge,
+  deployment, or cleanup effects; semantic fingerprint use where exact wire
+  bytes exist; or omission of domain/schema/hash/normalized fields/purpose from
+  a non-wire fingerprint;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;

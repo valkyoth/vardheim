@@ -217,11 +217,22 @@ is integrated with the store and outbox in `0.34.3`.
 Request identity is separately typed. `LocalSigningRequestId` is transient,
 non-serializable, and valid only when neither the result nor any request/effect
 crosses a crash, process, outbox, reconciliation, or external boundary.
-`ProtocolRequestId` is durably allocated before visibility and binds tenant,
-purpose, attempt/effect, policy snapshot, recovery epoch, and the exact final
-bytes or semantic-input digest. ACME JWS, EAB account creation, finalization,
-revocation, remote signing, and DNS update require the protocol type. Rebuild,
-`badNonce`, cancellation, or restore never reuses it.
+Protocol identity advances only through consuming states:
+
+```text
+ReservedProtocolRequestId
+    -> InputBoundRequestId<SigningInputFingerprint>
+    -> VerifiedRequestId<FinalWireFingerprint>
+    -> OutboxCommittedRequest
+```
+
+The base is durably reserved first. Input binding fixes canonical signing bytes,
+algorithm/parameters, nonce, purpose, policy, and signer admission before signer
+dispatch. Only local `VerifiedSignature` permits deterministic final
+serialization and binding to the exact complete JWS/HTTP bytes. Only the final-
+wire-bound state enters outbox or transport. Failure, ambiguity, cancellation,
+`badNonce`, invalidation, crash, or restore cannot advance or reuse partial
+state; recovery reconstructs fresh authority and never silently re-signs.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -231,11 +242,14 @@ revalidated key, new `BoundSigner`, new request identity, and new admission.
 ## Policy Epoch And Dispatch Authority
 
 Every admitted external effect binds an immutable `PolicySnapshot` containing
-the policy epoch and digest of the complete normalized effective policy:
+the policy epoch, policy schema/canonicalization version, digest algorithm
+identity, and digest of the complete normalized effective policy:
 explicit and defaulted values, inherited settings, trust/provider capability
 snapshot identities, and unsupported-cell decisions. Raw configuration bytes
 are not identity; incomplete, unresolved, invalid, or noncanonical reloads
-produce no snapshot. Immediately before adapter dispatch, the local
+produce no snapshot. A schema/compiler/canonicalization-version or digest-
+algorithm change produces a new snapshot identity even when rendered policy is
+equivalent. Immediately before adapter dispatch, the local
 orchestrator proves its policy, trust, and provider epoch is current and mints a
 transient non-serializable single-use `EffectDispatchPermit`. A stale worker or
 pre-dispatch policy change receives no permit and operation semantics decide
@@ -245,8 +259,8 @@ recorded, but current policy must separately authorize activation or deployment.
 Persisted old decisions are historical facts, not live authority, and committed
 bytes are never rebuilt or re-signed under their old identity.
 
-The permit is purpose-typed and binds effect type, `EffectId`, request identity,
-committed-byte or semantic-input digest, adapter implementation/session,
+The permit is purpose-typed and binds effect type, `EffectId`, request state,
+purpose-specific fingerprint, adapter implementation/session,
 tenant/resource generation, worker lease/fence, deadline/clock epoch, and policy
 snapshot. Private constructors produce one same-effect checked authority from:
 
@@ -258,6 +272,19 @@ snapshot. Private constructors produce one same-effect checked authority from:
 
 Executors never receive independently mixable tokens. Any disagreement among
 the components fails before adapter entry and consumes no unrelated authority.
+
+## Purpose-Specific Effect Fingerprints
+
+There is no generic effect digest. Wire stages use sealed
+`SigningInputFingerprint` and `FinalWireFingerprint` over exact serialized
+bytes. Effects without wire bytes use `StoreMutationFingerprint<Schema>`,
+`PresentationFingerprint<Method, Revision>`,
+`DeploymentFingerprint<Generation>`, or `CleanupFingerprint<Resource>`.
+Every semantic fingerprint binds a domain separator, schema/canonicalization
+version, digest algorithm, complete normalized fields, purpose, and effect type.
+Wire and semantic fingerprints, and different purpose families, have no
+implicit conversions. Changing schema/canonicalization or digest identity
+changes the fingerprint identity even when display text is unchanged.
 
 ## Handle-Backed MAC Evidence
 
@@ -727,7 +754,8 @@ receipts never convert merely because they share a family crate.
   authority; a purpose-specific remote endpoint returns observations, publishes
   exact protocol capabilities, and cannot construct local qualified evidence.
 - External dispatch requires a fresh current-policy `EffectDispatchPermit`;
-  it composes with matching purpose-specific authority over the same effect,
+  it composes with matching request state, purpose fingerprint, and authority
+  over the same effect,
   and historical policy facts, stale workers, independently mixable tokens, or
   observed success cannot bypass current activation/deployment policy.
 - Rollback detection cannot be inferred from an epoch stored only inside the

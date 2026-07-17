@@ -86,14 +86,20 @@ The release comparison gate covers:
   multi-node concurrency, with durable effect identities separated from
   no-store transient admissions/sessions and observational/caller values kept
   non-authoritative;
-- local-signing versus durable protocol request identity, exact final-byte/
-  digest binding, transient-persistence rejection, request/effect substitution,
-  and fresh identity after `badNonce`, cancellation, restore, or rebuild;
+- local-signing versus staged durable protocol request identity, reservation,
+  exact signing-input binding, verified deterministic final-wire binding,
+  outbox-only final-state admission, crash without silent re-sign/rebind,
+  transient/partial-persistence rejection, request/effect substitution, and
+  fresh identity after `badNonce`, cancellation, restore, or rebuild;
 - canonical effective-policy snapshots and exact-effect single-use dispatch
-  authority composition, including defaults/inheritance/capability decisions,
-  unresolved reloads, every cross-token substitution, multi-node stale workers,
+  authority composition, including policy schema/canonicalization/hash identity,
+  defaults/inheritance/capability decisions, unresolved reloads, every cross-
+  token substitution, multi-node stale workers,
   pre/racing/post-dispatch changes, `MayHaveDispatched`, forbidden-result
   activation, and fresh-work rebuilding;
+- sealed signing-input/final-wire/store-mutation/presentation/deployment/cleanup
+  fingerprints, exact-wire enforcement, complete semantic canonicalization,
+  schema/hash/domain separation, and semantic/wire/cross-purpose non-conversion;
 - normalized ACME wire behavior and typed error/security decisions;
 - existing-account adoption ownership, URL/directory binding, provenance, and
   conflicting-local-account decisions;
@@ -227,7 +233,7 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.26`, `0.33.3`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.28`, `0.33.3`,
 `0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`-`0.33.9`, `0.34.3`, `0.37.4`,
 `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in

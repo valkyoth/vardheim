@@ -164,8 +164,9 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
   security-sensitive transient/durable identity semantics, local/protocol
-  request identities, canonical policy snapshots, current-policy permits and
-  effect-bound authority composition, public-key-validation,
+  staged request identities, versioned canonical policy snapshots, current-
+  policy permits, effect-bound authority composition, sealed purpose-specific
+  fingerprints, public-key-validation,
   domain-separated `BoundSigner`, and local
   exact-request admission, separate transactional asymmetric-key and symmetric-
   secret onboarding/content binding, narrow quarantined secret-binding
@@ -256,19 +257,23 @@ collision resistance, and bounded local duplicate detection independently.
 The early release supplies fake durable issuers and fully local no-store signing;
 the real store/outbox allocator arrives in `0.34.3`.
 
-`0.10.25` separates `LocalSigningRequestId` from `ProtocolRequestId`. The local
-type is transient and cannot enter snapshots, outboxes, reconciliation, or
-external requests. The protocol type is durable before visibility and binds the
-exact final bytes or semantic-input digest plus attempt/effect, tenant, purpose,
-policy, and recovery epoch. ACME JWS, composed EAB, finalization, revocation,
-remote signing, and DNS update all require the protocol type. A `badNonce`,
-cancellation, restore, or policy rebuild always creates a fresh identity.
+`0.10.25` separates transient `LocalSigningRequestId` from the durably reserved
+protocol identity base. `0.10.27` then makes protocol identity a consuming
+sequence: `ReservedProtocolRequestId` ->
+`InputBoundRequestId<SigningInputFingerprint>` ->
+`VerifiedRequestId<FinalWireFingerprint>` -> `OutboxCommittedRequest`. Signing
+accepts only the canonical-input-bound state; verified local signature enables
+deterministic final serialization; only exact-final-wire-bound state enters the
+outbox/transport. Failure, ambiguity, cancellation, `badNonce`, invalidation, or
+crash never advances or restores partial identity and never silently re-signs.
 
-Every admitted effect binds an immutable canonical `PolicySnapshot`. Its digest
-covers the complete normalized effective policy, including defaults,
+Every admitted effect binds an immutable canonical `PolicySnapshot`. Its
+identity includes policy schema/canonicalization version and digest algorithm;
+its digest covers the complete normalized effective policy, including defaults,
 inheritance, trust/provider capability snapshot identities, and unsupported-
-cell decisions; raw configuration text, partial reloads, and unresolved policy
-cannot produce a snapshot. Immediately before adapter dispatch, `0.10.24`
+cell decisions. Schema/compiler/normalization or hash changes create a new
+identity even when displayed policy is equivalent; raw text, partial reloads,
+and unresolved policy produce no snapshot. Immediately before dispatch, `0.10.24`
 requires a transient single-use
 `EffectDispatchPermit` proving the worker's policy, trust, and provider epoch is
 still current. Pre-dispatch changes block the effect; racing changes preserve
@@ -276,13 +281,22 @@ still current. Pre-dispatch changes block the effect; racing changes preserve
 activate or deploy a now-forbidden artifact. Persisted policy decisions are
 facts, not authority, and old committed bytes are never rebuilt or re-signed.
 
-`0.10.26` binds that permit to the exact purpose, effect/request identity,
-committed-byte or semantic-input digest, adapter/session, tenant/resource
-generation, lease/fence, deadline/clock epoch, and policy snapshot. Private
+`0.10.26` binds that permit to exact purpose, effect/request state, the
+`0.10.28` purpose fingerprint, adapter/session, tenant/resource generation,
+lease/fence, deadline/clock epoch, and policy snapshot. Private
 purpose-specific constructors consume the permit together with the matching
 signer admission, durable commit, presentation intent, verified generation, or
 cleanup ownership. Executors receive one checked same-effect authority, never a
 bag of independently valid tokens that can be stitched together.
+
+`0.10.28` forbids generic effect digests. Exact wire effects use
+`SigningInputFingerprint` or `FinalWireFingerprint` over serialized bytes.
+Non-wire effects use only their sealed `StoreMutationFingerprint<Schema>`,
+`PresentationFingerprint<Method, Revision>`,
+`DeploymentFingerprint<Generation>`, or `CleanupFingerprint<Resource>`, each
+binding domain separator, schema/canonicalization version, digest algorithm,
+complete normalized fields, purpose, and effect type. There is no semantic-to-
+wire or cross-purpose conversion.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -570,7 +584,7 @@ snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
 composed-EAB execution, system-wide restored-store recovery epochs,
 externally rooted rollback assurance and explicit coverage manifests,
-store-backed durable protocol-request/effect identity allocation,
+store-backed durable protocol-request reservation/staged final-wire commit,
 transactional deployment, current-policy dispatch authorization, public APIs,
 reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
@@ -632,7 +646,8 @@ Every external side effect follows:
 2. bind an immutable policy snapshot and persist intended effect and revision;
 3. prove the policy/trust/provider epoch is still current and consume an
    exact-effect checked authority that composes `EffectDispatchPermit` with the
-   matching admission/commit/ownership/fence immediately before execution;
+   matching request typestate, purpose fingerprint, admission/commit/ownership/
+   fence immediately before execution;
 4. execute with an idempotency/reconciliation classification;
 5. receive a bounded adapter observation with independent dispatch, outcome,
    and observation-status axes;

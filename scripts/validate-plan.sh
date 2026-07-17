@@ -87,6 +87,8 @@ required=(
     v0.10.24
     v0.10.25
     v0.10.26
+    v0.10.27
+    v0.10.28
     v0.13.1
     v0.14.2
     v0.14.3
@@ -286,7 +288,7 @@ grep -q 'Unpublished executor-mode feasibility spike' "$plan"
 grep -q 'Unpublished memory-store and SQL-like transaction feasibility spike' "$plan"
 grep -q 'Machine-readable crate policy tiers' "$plan"
 grep -q 'Independent replay-nonce linear-authority formal model' "$plan"
-grep -q 'Independent request-admission/sign/commit/dispatch formal model' "$plan"
+grep -q 'Independent request-admission/sign/verify/finalize/commit/dispatch formal model' "$plan"
 grep -q 'Independent challenge-presentation ownership formal model' "$plan"
 grep -q 'Independent order/authorization aggregation formal model' "$plan"
 grep -q 'Independent transactional-outbox ambiguity formal model' "$plan"
@@ -308,8 +310,10 @@ grep -q 'Strict signature-evidence and multi-axis verifier-assurance invariant' 
 grep -q 'Provider-neutral security-sensitive identity semantics and issuer interfaces' "$plan"
 grep -q 'Core-only/no-store tests mint transient admissions' "$plan"
 grep -q 'Immutable canonical `PolicySnapshot`.*`EffectDispatchPermit`' "$plan"
-grep -q 'Exact request-identity lifecycle separating.*`LocalSigningRequestId`.*`ProtocolRequestId`' "$plan"
+grep -q 'Request-identity taxonomy separating.*`LocalSigningRequestId`.*`ProtocolRequestId`' "$plan"
 grep -q 'Purpose-specific effect-dispatch authority composition' "$plan"
+grep -q 'Consuming two-stage protocol request identity' "$plan"
+grep -q 'Sealed purpose-specific effect fingerprints replace generic byte/semantic digests' "$plan"
 grep -q 'Authenticated replay-nonce admission and reservation policy' "$plan"
 grep -q 'Conflict-checked challenge-method registry' "$plan"
 grep -q 'Shared sealed challenge-presentation receipt envelope' "$plan"
@@ -318,7 +322,7 @@ grep -q 'Injected external `RollbackWitness` protocol' "$plan"
 grep -q '`RollbackDetecting { maximum_window }`' "$plan"
 grep -q 'witness trust root, bootstrap identity' "$plan"
 grep -q 'Typed `RollbackCoverage` manifest' "$plan"
-grep -q 'Transactional durable identity allocator integrated with the store' "$plan"
+grep -q 'Transactional durable identity allocator integrated with store' "$plan"
 grep -q 'Private thin real-boundary vertical slice' "$plan"
 grep -q 'Reusable strict signature-evidence and multi-axis verifier-assurance conformance' "$plan"
 grep -q 'four-level evidence publication' "$plan"
@@ -352,8 +356,8 @@ grep -q 'RFC 2986 CSR construction.*v0.10.12' "$plan"
 grep -q 'TLS-ALPN-01 identity construction.*v0.10.12' "$plan"
 grep -q 'RFC 2986 CSR construction.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'TLS-ALPN-01 identity construction.*v0.10.15.*VerifiedSignature' "$plan"
-grep -q 'Single-use replay nonce ownership integrated with `v0.10.12` request admission' "$plan"
-grep -q '`badNonce` retry discards the old nonce, signing bytes, request identity' "$plan"
+grep -q 'Single-use replay nonce ownership integrated with request admission and `v0.10.27`' "$plan"
+grep -q '`badNonce` retry consumes the old nonce, reservation/input-bound/final-wire state' "$plan"
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Durable old account-key lifecycle' "$plan"

@@ -88,9 +88,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
   HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated durable-versus-transient security-sensitive
-  identity issuance, transient local versus durable exact-byte protocol request
-  identity, canonical effective-policy snapshots, and exact-effect composed
-  current-policy dispatch authority,
+  identity issuance, transient local versus consuming reserved/input-bound/
+  final-wire-bound/committed protocol request identity, versioned canonical
+  effective-policy snapshots, sealed purpose-specific fingerprints, and exact-
+  effect composed current-policy dispatch authority,
   `UnverifiedSignature`/`ProviderAssertedSignature`/`AttestedSignature` strictly
   separated from exact cryptographic `VerifiedSignature`, transient
   `BoundSigner`, locally minted
@@ -318,9 +319,10 @@ Planning audits through 2026-07-17 found and corrected these weaknesses:
   reservation and local duplicate-window honesty; layered errors plus
   orthogonal effect observations; strict signature evidence and multi-axis
   verifier assurance including FIPS identity; security-sensitive identity
-  issuance plus local/protocol request identity and anti-stitching dispatch
-  composition; canonical effective-policy identity; optional native secret
-  memory; method/specification/schema-aware
+  issuance plus staged local/protocol request identity and anti-stitching
+  dispatch composition; versioned canonical effective-policy identity; sealed
+  wire/semantic effect fingerprints; optional native secret memory;
+  method/specification/schema-aware
   challenge registration and sealed receipts; exact whole-store rollback
   assurance levels plus an externally rooted witness and bounded detection
   window with explicit coverage; transactional durable identity allocation; an
