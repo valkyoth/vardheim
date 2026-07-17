@@ -53,7 +53,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - strict directory discovery, refresh, origin policy, ToS changes, complete
   `newNonce` acquisition/harvesting, and directory-scoped linear nonce
   authority that is distinct from secrets, cannot be cloned/restored, and
-  harvests an independent response nonce before interpreting the outcome;
+  admits an observed response nonce only after authenticated TLS/origin,
+  effective-URL, framing, operation, grammar, uniqueness, and directory checks;
+  an authenticated `badNonce` nonce is reserved for its complete rebuilt retry;
 - account create/recover/adopt/update/orders/rollover/deactivate and EAB, with
   current validated and role-bound signers plus exact-request admission for
   every handle-backed account effect, signer-proven ownership proof for
@@ -70,8 +72,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   cryptographically attested assurance kept distinct;
 - order, optional `newAuthz` pre-authorization, authorization, challenge,
   polling, finalization, retrieval, alternate chains, revocation, and
-  structured problems, with conflict-checked versioned method registration and
-  sealed presentation receipts that cannot cross families or revisions;
+  structured problems, with conflict-checked registration that distinguishes
+  method token, specification revision, and evidence/schema revision plus
+  sealed presentation receipts that cannot implicitly cross any identity;
 - HTTP, DNS, TLS, IP, email, authority-token, onion, DTN, and external-profile
   identifier/challenge families assigned by published standards;
 - ARI and conservative fallback renewal scheduling;
@@ -94,7 +97,7 @@ At `1.0.0`, all of these must work without placeholder success paths:
   honest disposition/reconciliation contracts with explicit concrete-provider
   construction and
   per-purpose capability/validation/binding/onboarding/reconstruction/
-  immutable-dispatch/signature-verification and independent-verifier-assurance/
+  immutable-dispatch/signature-verification and multi-axis verifier-assurance/
   MAC-evidence/disposition tables,
   including narrowly purpose-bound legacy verification hashes where standards
   still require them;
@@ -125,6 +128,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
   fencing, cleanup, deployment activation, health verification, rollback, and
   mandatory reconstruction rather than restored validation, signer-binding,
   admission, verification, or effect-authority capabilities;
+- whole-store rollback discontinuity with protected/detecting/unprotected
+  capability, store/recovery epochs or operator declaration, invalidated live
+  authority/leases/fences/sessions, and quarantine plus reconciliation of
+  restored outbox, key, challenge, deployment, retirement, and trust state;
 - async, blocking, embedded/custom transports and explicit crypto/TLS backends,
   with explicit HTTP protocol versions, disabled early data, no hidden retry,
   partitioned connection/session/resolver state, and definite-versus-ambiguous
@@ -159,8 +166,12 @@ At `1.0.0`, all of these must work without placeholder success paths:
 - redacted observability, audit evidence, target compatibility, formal methods,
   fuzzing, security audits, and reviewed-implementation-bound pentests.
 - a machine-checked acyclic requirement/work/version graph with ownership,
-  evidence, generated plan views, critical path, and no omitted or merged
-  pre-1.0 pentest boundary.
+  typed RFC/errata/registry/threat/architecture/compatibility/platform/finding
+  sources, evidence, generated plan views, critical path, and no omitted or
+  merged pre-1.0 pentest boundary.
+- explicit adapter assertion-to-qualified-evidence promotion with orthogonal
+  dispatch/outcome/observation state, named trust assumptions, executable
+  allocator-free contracts, and a reviewed DER/PKIX build-versus-adopt decision.
 
 ## Web-Server Acceptance Contract
 
@@ -276,13 +287,17 @@ Planning audits through 2026-07-17 found and corrected these weaknesses:
 - active device-enrollment integrations and identity-controlled validation work
   received versions;
 - the roadmap received stable machine work IDs and DAG validation; separate
-  unpublished RustCrypto, ring, rustls, executor-mode, and store-model spikes;
+  typed requirement-source categories; unpublished RustCrypto, ring, rustls,
+  executor-mode, store-model, and DER/PKIX spikes;
   machine portable/native crate tiers; eight independent formal models;
-  semantic module/stack/reducer gates; early and final mutation programs;
-  linear non-secret nonce authority; layered adapter failure classes;
-  verifier-identity/assurance evidence; versioned challenge registration and
-  sealed revision receipts; an early real-boundary vertical slice; and explicit
-  compile/emulator/native/production platform evidence tiers;
+  semantic module/stack/reducer and executable no-allocation gates; early and
+  final mutation programs; sealed external-evidence promotion; linear
+  non-secret nonce authority with authenticated admission and `badNonce`
+  reservation; layered errors plus orthogonal effect observations; multi-axis
+  verifier assurance including FIPS identity; method/specification/schema-aware
+  challenge registration and sealed receipts; whole-store rollback epochs; an
+  early real-boundary vertical slice; and explicit compile/emulator/native/
+  production platform evidence tiers;
 - recommendations to collapse planned releases, weaken adapter MSRV, or move
   current draft/provider/platform scope after `1.0.0` were reviewed but not
   adopted because they conflict with the owner-defined completion and pentest

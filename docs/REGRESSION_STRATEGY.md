@@ -76,7 +76,11 @@ The release comparison gate covers:
 
 - Rust public API and feature resolution against the latest published release;
 - roadmap/requirement graph identity, prerequisite ordering, ownership,
-  evidence assignment, generated views, and pentest boundaries;
+  typed requirement-source category, evidence assignment, generated views, and
+  pentest boundaries;
+- external-effect observation products and assertion-to-qualified-evidence
+  promotion, including adapter/session/profile/request/digest/context binding
+  and residual trusted-computing-base declarations;
 - normalized ACME wire behavior and typed error/security decisions;
 - existing-account adoption ownership, URL/directory binding, provenance, and
   conflicting-local-account decisions;
@@ -102,6 +106,9 @@ The release comparison gate covers:
   mutable-locator replacement at every binding/admission/dispatch/verification
   barrier, untrusted returned-signature typing, mandatory local verification
   over exact admitted bytes/algorithm/parameters/encoding/bound key,
+  independent locality/trust-domain/implementation/basis/validated-module/key-
+  input assurance axes, valid same-implementation local verification, optional
+  diversity, remote-self-verification refusal, FIPS-boundary preservation,
   wrong-key/malformed/verifier-unavailable outcomes, invalidation after
   provider/session/policy/key-health change, unsupported/unavailable/ambiguous
   outcomes, no signer/verifier fallback, and issued-leaf decisions;
@@ -161,6 +168,10 @@ The release comparison gate covers:
   proof that validation/binding/admission/verification/effect capabilities are
   absent, active snapshots grant no authority, stale audit records cannot be
   upgraded, and reconstruction obligations survive;
+- whole-store rollback across outbox dispatch, leases/fences, key retirement,
+  challenge ownership, deployment generations and trust/provider changes,
+  including store/recovery epochs, operator declaration, quarantine,
+  reconciliation, revalidation, and honest unsupported detection;
 - provider observations without encoding undocumented quirks as standards;
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
@@ -171,6 +182,9 @@ The release comparison gate covers:
 - provider-native key disposition, receipt binding, and reconciliation decisions
   without destruction-state inflation;
 - target/profile compile and runtime evidence;
+- allocator-free link/run, panic-on-allocation, peak-stack, scratch-exhaustion,
+  pinning, reentrancy, lifetime/aliasing, and `Send`/`Sync` evidence for nominal
+  `no_alloc` profiles;
 - formal-model traces and generated adversarial cases; and
 - security mutation outcomes, including permanent named tests for removed
   verification, restored nonce/admission, parser ambiguity, certificate bypass,
@@ -185,8 +199,8 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.23`, `0.33.3`, `0.33.4`, `0.33.5`,
-`0.33.6`, `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.25`, `0.33.3`, `0.33.4`, `0.33.5`,
+`0.33.6`, `0.33.7`, `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in
 [the release plan](RELEASE_PLAN.md). Release binding itself is assigned to
 `0.3.3`. Each boundary receives its own complete test suite and mandatory

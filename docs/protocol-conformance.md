@@ -18,3 +18,9 @@ Each later claim requires:
 Unknown identifiers, challenges, directory fields, order fields, and problem
 types are retained only within explicit bounds. Recognizing a registry value is
 not the same as implementing its workflow.
+
+The wider implementation graph also contains reviewed requirements whose
+source is a threat-model control, architecture decision, compatibility
+contract, platform invariant, or security finding. Those remain distinct from
+RFC/errata/registry requirements and cannot be presented as protocol
+conformance or given an artificial standards citation.

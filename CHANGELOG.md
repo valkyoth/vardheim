@@ -7,6 +7,22 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ### Changed
 
+- Corrected flat backend failure classification into orthogonal capability,
+  dispatch-knowledge, operation-outcome, and observation-status state, and
+  added an explicit adapter-assertion-to-qualified-evidence promotion boundary
+  with named residual trust assumptions.
+- Refined verifier assurance into independent locality, trust-domain,
+  implementation, verification-basis, validated-module, and key/input axes:
+  exact local verification is the baseline, implementation diversity is an
+  optional stronger profile, remote self-verification remains insufficient,
+  and FIPS verification stays inside its exact validated boundary.
+- Tightened nonce admission to authenticated origin/effective-URL/framing/
+  operation/directory evidence with a dedicated `badNonce` retry reservation;
+  added whole-store rollback epochs and restored-state quarantine.
+- Added executable no-allocation qualification and a private DER/PKIX
+  build-versus-adopt spike, expanded roadmap requirement-source taxonomy, and
+  separated IANA challenge method tokens from specification and evidence-schema
+  revisions.
 - Added a machine-readable roadmap/requirement DAG milestone with stable work
   IDs, ownership, prerequisites, generated views, critical-path reporting, and
   validation that cannot merge or omit the established pre-1.0 pentest stops.

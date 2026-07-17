@@ -111,8 +111,10 @@ that candidate boundary with separate unpublished RustCrypto, ring, rustls,
 executor-mode, and transactional-store spikes; `0.4.13` replaces the temporary
 all-crates policy with machine-readable portable/native tiers. Versions
 `0.4.14` through `0.4.21` build eight small independent models rather than one
-model that appears to prove unrelated lifecycles, and `0.4.22`-`0.4.23` close
-semantic module and mutation baselines. The public boundary freezes only after
+model that appears to prove unrelated lifecycles, `0.4.22`-`0.4.23` close
+semantic module and mutation baselines, `0.4.24` proves the nominal
+no-allocation executor contract, and `0.4.25` records an evidence-backed
+DER/PKIX build-versus-adopt decision. The public boundary freezes only after
 these empirical and formal checks. Implementation must not start a parser
 before its resource budget and source requirements are committed.
 
@@ -129,10 +131,14 @@ Required outputs:
   commit;
 - feature-power-set, dependency-direction, public API, compile-time, and
   binary-size regression gates;
-- a machine-readable work/requirement DAG whose generated release views cannot
-  omit, merge, reorder, or silently detach a pentest boundary;
-- real private adapter/store feasibility evidence before their public traits
-  freeze, without publishing those spikes as production support;
+- a machine-readable work/requirement DAG with typed RFC, errata, registry,
+  threat-control, architecture, compatibility, platform, and security-finding
+  sources whose generated views cannot omit, merge, reorder, or silently detach
+  a pentest boundary;
+- real private adapter/store and DER/PKIX feasibility evidence before their
+  public traits freeze, without publishing those spikes as production support;
+- executable allocator-free, stack, scratch-lifetime, pinning, reentrancy, and
+  `Send`/`Sync` evidence for every nominal `no_alloc` executor claim;
 - machine-readable crate tiers that keep portable semantics `no_std` and safe
   while allowing later native adapters only narrowly inventoried unsafe FFI;
 - a completeness register reviewed whenever scope changes; and
@@ -171,8 +177,10 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - ACME HTTPS roots, issued-certificate roots, CT log keys, and DNSSEC anchors
   are distinct trust types rather than interchangeable byte collections;
 - nonce ownership uses linear, non-restorable authority distinct from secret
-  material and harvests an independent response nonce before interpreting the
-  response outcome; and
+  material; a parsed nonce remains an observation until authenticated origin,
+  effective-URL, framing, operation, grammar, uniqueness, and directory checks
+  promote it, and authenticated `badNonce` reserves its nonce for the complete
+  rebuilt retry; and
 - Kani, differential parsing, fuzzing, and Loom begin with the primitives they
   protect rather than being postponed to final qualification.
 
@@ -210,11 +218,14 @@ Provider output is private untrusted `UnverifiedSignature`. Before any JWS,
 CSR, revocation, TLS-ALPN, audit, or other effect can use it, Vardheim locally
 verifies the exact admitted bytes, algorithm, parameters, output encoding,
 immutable provider identity/version, and bound public key. Only successful
-verification constructs `VerifiedSignature`. That evidence also records the
-verifier implementation/version, execution/trust identity, and assurance
-class. Verification performed by the same remote signing provider is
-provider-correlated and cannot be promoted to the default independently local
-software-verifier class. Unsupported, unavailable,
+verification constructs `VerifiedSignature`. That evidence records independent
+axes for execution locality, signer/verifier trust-domain and implementation
+relationships, verification basis, validated-module identity, key/input
+binding, and verifier implementation/session. Baseline production requires
+exact local cryptographic verification. A local software signer may use its own
+conforming implementation; diversity is an optional stronger profile. Remote
+self-verification remains insufficient, and a FIPS-only profile keeps required
+verification inside its exact validated boundary. Unsupported, unavailable,
 malformed, wrong-key, or failed verification sends nothing, consumes the
 admission, invalidates or quarantines authority by policy, and never selects an
 implicit signer or verifier fallback.
@@ -503,7 +514,8 @@ Versions `0.32.0` through `0.39.5` add the pure
 command/state/policy/event reducer, typed effects and positive evidence,
 snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
-composed-EAB execution, transactional deployment, public APIs, reusable adapter
+composed-EAB execution, system-wide restored-store recovery epochs,
+transactional deployment, public APIs, reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
 loopback transport, a production wall/monotonic clock adapter, Pebble
 integration, historical differential replay, existing-certificate adoption,
@@ -520,6 +532,16 @@ before deployment, signing, EAB, or TSIG use. Reconstruction never
 automatically repeats a mutating peer effect. Durable `Active` is lifecycle
 eligibility only.
 
+A whole-store rollback is a discontinuity, not an ordinary restart. Stores
+publish rollback-protected, rollback-detecting, or rollback-unprotected
+capability; a changed `StoreEpoch`/`RecoveryEpoch`, detected restoration, or
+operator declaration invalidates leases, fences, sessions, caches, and all live
+authority. Restored outbox work, key eligibility, challenge ownership,
+deployment generations, retirement, trust, and provider state remain
+quarantined until operation-specific reconciliation and revalidation complete.
+Where monotonic secure state is unavailable, restoration must be declared by
+the operator or rollback detection remains explicitly unsupported.
+
 Audit records retain stable invalidation reasons so operators and future
 regression replay can distinguish trust removal, explicit distrust, policy
 change, expiry, clock rollback, status/CT change, algorithm/provider-session or
@@ -531,8 +553,17 @@ Every external side effect follows:
 1. validate it against current state and policy;
 2. persist intended effect and revision;
 3. execute with an idempotency/reconciliation classification;
-4. persist the typed outcome;
-5. apply it once and record cleanup obligations.
+4. receive a bounded adapter observation with independent dispatch, outcome,
+   and observation-status axes;
+5. structurally/contextually validate it and apply the configured assurance
+   policy before constructing sealed qualified evidence;
+6. persist the typed outcome;
+7. apply it once and record cleanup obligations.
+
+`Unsupported`, operation rejection, observation corruption/unavailability, and
+dispatch knowledge are never flattened into one error. An adapter can be
+unavailable while an operation may have dispatched. Only sealed positive
+evidence constructs `DefinitelyUnsent`; provider diagnostics never do.
 
 The test server must kill/restart the orchestrator after every transition and
 effect boundary. A stale worker cannot present, finalize, activate, clean, or

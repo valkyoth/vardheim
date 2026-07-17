@@ -36,3 +36,10 @@ dependencies remain unpublished evidence, carry no production support claim,
 and may force the candidate boundary to change. A successful spike for one
 provider cannot stand in for another provider's message/digest, buffer,
 cancellation, identity, verification, or ambiguity semantics.
+
+The first-party DER/PKIX boundary receives the same treatment before public API
+freeze. Safe `no_std` ASN.1/X.509 candidates and independent parser oracles are
+compared against exact semantic, MSRV, allocation, unsafe, maintenance, and
+replacement requirements. The resulting build-versus-adopt decision is
+reviewed evidence; an oracle or spike dependency is not automatically admitted
+to production.

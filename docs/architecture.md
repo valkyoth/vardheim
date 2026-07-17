@@ -43,10 +43,31 @@ inward on safe semantic types; core never depends on it.
 Core emits inert purpose-specific effects and accepts bounded observations. An
 adapter never returns reducer authority directly and cannot construct sealed
 positive evidence such as `VerifiedSignature`, `BoundSigner`, `DurableCommit`,
-or `OwnedPresentation`. Backend failures use the stable classes `Unsupported`,
-`Unavailable`, `Rejected`, `Corrupt`, `DefinitelyNotDispatched`, and
-`MayHaveDispatched`. Bounded redacted provider diagnostics are retained for
-operators but cannot select retry or narrow dispatch knowledge.
+or `OwnedPresentation`. Backend state is an orthogonal product: capability
+support is separate from an admitted effect; dispatch knowledge is separate
+from operation outcome; observation availability/corruption is separate from
+both. An adapter may be unavailable while an effect may have dispatched.
+Only sealed positive evidence constructs `DefinitelyUnsent`; error codes
+and bounded redacted diagnostics cannot select retry or narrow ambiguity.
+
+External evidence promotion is explicit:
+
+```text
+adapter observation
+    -> structural and context validation
+    -> policy and assurance check
+    -> sealed evidence constructor
+    -> reducer event
+```
+
+`StoreAssertedCommit` is not `QualifiedDurableCommit`, and
+`PresentationObserved` is not `OwnedPresentation`. Qualified evidence binds the
+adapter implementation/session, assurance profile, request/effect identity and
+digest, resource generation/owner, and validation context. The promoting
+facade/policy component and residual trusted-computing-base assumption are
+documented. Rust privacy prevents accidental fabrication; it cannot prove a
+malicious in-process store performed media synchronization or a DNS provider
+published a record.
 
 ## PKIX Evidence Ownership
 
@@ -145,11 +166,15 @@ the discovery alias. Provider-returned bytes are private
 `UnverifiedSignature`, still untrusted even when the provider reports success.
 Vardheim verifies the exact admitted bytes, algorithm, parameters, encoding,
 immutable identity, and bound public key locally. Only that check constructs
-`VerifiedSignature` accepted by protocol effects. The evidence binds the
-verifier implementation/version, execution and trust identity, and assurance
-class. A remote signer verifying its own output is provider-correlated evidence,
-not independent local verification; it cannot satisfy the default production
-assurance class. Unsupported, unavailable,
+`VerifiedSignature` accepted by protocol effects. The evidence separately
+binds execution locality, signer/verifier trust-domain and implementation
+relationships, exact-verification/assertion/attestation basis, validated-module
+identity, key/input binding strength, and verifier implementation/session.
+Baseline production requires exact local cryptographic verification. A local
+software signer may verify through its own conforming implementation; diversity
+is an optional stronger profile. Remote self-verification is insufficient, and
+FIPS-only profiles keep required verification inside the exact validated
+boundary. Unsupported, unavailable,
 malformed, or failed verification transmits nothing, consumes the admission,
 invalidates or quarantines the signer according to policy, and cannot select a
 fallback signer or verifier.
@@ -331,6 +356,18 @@ object restore/recreation, alias/version retargeting, peer-trust change, or assu
 profile change requires fresh reconstruction; unavailable reconstruction
 leaves the secret eligible but unusable.
 
+## Restore Discontinuity
+
+A whole-store rollback is not an ordinary restart. Stores publish
+`RollbackProtected`, `RollbackDetecting`, or `RollbackUnprotected` and bind
+durable state to a `StoreEpoch`/`RecoveryEpoch`. A detected change or explicit
+operator `RestoreDeclared` input invalidates leases, fences, provider sessions,
+caches, and live authority; quarantines restored outbox work, key eligibility,
+challenge ownership, deployment generations, and retirement state; and requires
+operation-specific reconciliation plus trust/signer/secret/deployment
+revalidation. Without monotonic secure storage, automatic detection is typed
+unsupported and operators must declare restoration.
+
 ## Transactional Key Onboarding
 
 Generation, PKCS#8 or PKCS#12 import, legacy-key migration, and provider or
@@ -489,11 +526,30 @@ CT v2 `TransItem` collections, DNSSEC RRsets/chains, and NSEC/NSEC3 proofs.
 Exhaustion is deterministic and typed. Optional `alloc` wrappers own these
 workspaces without changing validation rules or capacity accounting.
 
+`no_alloc` is an executable property, not a feature-name claim. Nominal paths
+link without a global allocator, run under allocation traps where host harnesses
+are needed, publish peak-stack and scratch-exhaustion evidence, and specify
+`Send`/`Sync`, pinning, callback reentrancy, effect ownership, and caller-buffer
+lifetime/aliasing. An allocation-backed object-safe executor is a separate
+explicit tier.
+
+## Challenge Identity Layers
+
+Challenge evidence keeps three identities distinct: the IANA method token such
+as `dns-01`, the exact RFC or draft specification revision implementing that
+token, and Vardheim's internal evidence/schema revision. A future `dns-02` is a
+new method token in the DNS family crate, not revision two of `dns-01`.
+Compatibility or migration between specification/schema identities is explicit;
+receipts never convert merely because they share a family crate.
+
 ## Security Invariants
 
 - A replay nonce is linear authority, not a confidential secret: it is consumed
-  exactly once, never cloned/restored, and never returned to a pool; an
-  independent response nonce is harvested before response-outcome handling.
+  exactly once, never cloned/restored, and never returned to a pool. A parsed
+  response nonce is only an observation until authenticated TLS/origin,
+  effective URL, strict framing, admitted ACME operation, grammar, uniqueness,
+  and directory context are validated; authenticated `badNonce` reserves its
+  nonce for that complete rebuilt retry.
 - A JWS contains exactly one of `jwk` or `kid`.
 - Signed requests cannot redirect automatically or change their signed URL.
 - Untrusted bytes, JSON, extension maps, headers, PEM, DER, and recursion are
@@ -525,9 +581,9 @@ workspaces without changing validation rules or capacity accounting.
   digest pinned during binding must be used.
 - Provider-returned signature bytes are untrusted and cannot enter any protocol
   effect until locally verified against the bound key and exact admitted
-  request; provider-correlated verification cannot be promoted to independent
-  local assurance, and unavailable required verification fails closed without
-  fallback.
+  request; assurance axes cannot be collapsed or upgraded, remote
+  self-verification is insufficient, FIPS boundary identity is preserved, and
+  unavailable required verification fails closed without fallback.
 - Cached, unrelated, cross-protocol, ambiguous, expired, replayed, or
   incompletely bound native signatures cannot prove a signer handle is bound.
 - Signer success, failure, cancellation, ambiguity, `badNonce`, and ambiguous

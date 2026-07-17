@@ -22,6 +22,12 @@ for durability/atomic replacement and symlink semantics, wall and monotonic
 clocks, entropy failure, mutable alias replacement, endian/width assumptions,
 and required atomics.
 
+Storage adapters additionally publish whether rollback is protected, detected,
+or unprotected and whether detection requires an operator restore declaration.
+Nominal `no_alloc` profiles publish allocator-free link/run evidence, bounded
+peak stack and caller-scratch behavior, and explicit `Send`/`Sync`, pinning,
+reentrancy, and scratch-lifetime guarantees.
+
 ## API And Protocol
 
 Before 1.0, APIs may change between minor releases, but release notes and

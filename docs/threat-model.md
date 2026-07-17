@@ -26,7 +26,9 @@ its returned bytes are still structurally and semantically verified.
   without proof that the configured signer controls the CA account;
 - loss of account control or evidence through premature old/new key disposition
   after ambiguous rollover or deactivation;
-- JOSE algorithm confusion, nonce reuse, or malformed nested JWS;
+- JOSE algorithm confusion, nonce reuse, malformed nested JWS, or admitting a
+  nonce from unauthenticated/wrong-origin/redirected/framing-invalid/unrelated
+  responses; including losing the authenticated `badNonce` retry reservation;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
@@ -43,6 +45,11 @@ its returned bytes are still structurally and semantically verified.
   wrong-key, malformed, incorrectly encoded, or unverified signature bytes
   entering a protocol effect because local verification was optional,
   unavailable, or silently replaced by another backend;
+- collapsing signature-verifier locality, trust-domain relationship,
+  implementation relationship, verification basis, validated-module identity,
+  or key/input binding into one assurance rank; rejecting safe same-
+  implementation local verification, admitting remote self-verification, or
+  moving required verification outside an exact FIPS boundary;
 - an EAB or TSIG secret alias/version being retargeted after discovery; a valid
   MAC from another tenant, directory, external account, zone, secret version,
   purpose, or TSIG chain entering a protocol object; raw `UnverifiedMac` being
@@ -101,6 +108,10 @@ its returned bytes are still structurally and semantically verified.
   retry, incorrect HTTP/2/HTTP/3 reset/GOAWAY classification, connection
   coalescing, or cross-directory session/resolver reuse;
 - stale workers activating data after losing a lease;
+- whole-store rollback resurrecting may-have-dispatched outbox work, old
+  leases/fences, retired key eligibility, superseded challenge cleanup
+  ownership, deployment generations, trust state, or live authority without a
+  recovery-epoch discontinuity and complete reconciliation/revalidation;
 - server-injected private keys or mismatched certificate chains;
 - stale/replayed verification records, forged or cross-version status/CT
   evidence, forged STH/inclusion/consistency or witness evidence, CT split view,
@@ -132,7 +143,9 @@ deployment target, or caller-supplied adapter trustworthy. Configured backend
 implementations are part of the trusted computing base: typed requests,
 bounded observations, evidence constructors, and self-verification reduce
 accidental misuse but cannot force deliberately malicious code to report
-truthfully. FIPS claims depend on a validated module and deployment profile,
+truthfully or independently prove physical durability/external publication.
+Every assertion-to-qualified-evidence promotion names that residual trust.
+FIPS claims depend on a validated module and deployment profile,
 not on a Cargo feature name. Availability against an unbounded adversary is not
 guaranteed.
 
