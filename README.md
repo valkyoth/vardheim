@@ -196,6 +196,8 @@ scripts/generate-sbom.sh
 scripts/release_crates.py --check
 scripts/validate-package-contents.py
 python3 scripts/test-package-contents.py
+python3 scripts/audit_release_plan.py docs/RELEASE_PLAN.md
+python3 scripts/test-release-plan-audit.py
 scripts/rfc_inventory.py
 scripts/rfc_errata.py
 scripts/registry_baseline.py

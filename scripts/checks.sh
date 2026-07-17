@@ -11,6 +11,7 @@ python3 scripts/test-rfc-sources.py
 scripts/registry_baseline.py
 python3 scripts/test-registry-baseline.py
 scripts/validate-plan.sh
+python3 scripts/test-release-plan-audit.py
 scripts/validate-release-metadata.sh
 scripts/validate-modularity-policy.sh
 scripts/validate-security-policy.sh

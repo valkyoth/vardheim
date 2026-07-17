@@ -81,6 +81,10 @@ inward on Vardheim semantic types.
 10. The default feature tier is core-only `no_std` without allocation where
     feasible; `alloc` and `std` are additive, heavy adapters are default-off,
     and multiple available providers never imply automatic selection.
+11. Every roadmap row names a single goal, concrete required deliverables, and
+    milestone-specific falsifiable verification. The row audit parses all
+    versions, and the mandatory exit contract stops each one for a reviewed-
+    commit pentest, remediation/retest, and `Status: PASS` before tagging.
 
 ## Core Data And Trust Flow
 

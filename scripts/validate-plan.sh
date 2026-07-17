@@ -276,7 +276,7 @@ for version in "${required[@]}"; do
     fi
 done
 
-grep -q '^## Tactical Milestone Size Rule$' "$plan"
+python3 scripts/audit_release_plan.py "$plan"
 grep -q 'Complete offline errata evidence' "$plan"
 grep -q 'Release evidence binding' "$plan"
 grep -q 'Reproducible SPDX SBOM generation' "$plan"

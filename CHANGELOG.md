@@ -7,6 +7,11 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ### Changed
 
+- Audited all 481 planned releases for a concrete goal/deliverable cell,
+  milestone-specific falsifiable verification, and the inherited commit-bound
+  pentest exit; strengthened terse proofs and added a negative-tested row audit
+  that rejects incomplete phase tables, placeholders, generic proof, and missing
+  pentest/retest requirements.
 - Added `v0.10.27` consuming protocol-request states from durable reservation
   through exact signing-input binding, local signature verification, exact
   final-request binding, and outbox commit.
