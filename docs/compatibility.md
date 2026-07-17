@@ -53,7 +53,10 @@ Persisted and wire compatibility distinguishes transient
 input-bound, final-request-bound, outbox-committed, and abandoned states. The
 versioned canonical `AcmeRequestImage`, not HTTP/1.1 serialization, HTTP/2/3
 frames, compression state, streams, TLS records, or QUIC packets, defines ACME
-request compatibility. Partial/live states have no serialized authority
+request compatibility. Its exact `SignedRequestTarget`, closed typed metadata,
+single authoritative body representation, encoding/domain/schema version, and
+fingerprint are persisted compatibility fields; `ObservedEffectiveUrl` is only
+transport evidence. Partial/live states have no serialized authority
 representation; persisted phase facts and abandonment tombstones cannot be
 upgraded into one. Policy snapshot compatibility includes normalized effective
 semantics, schema/canonicalization version, and digest-algorithm identity, not

@@ -91,6 +91,7 @@ required=(
     v0.10.28
     v0.10.29
     v0.10.30
+    v0.10.31
     v0.13.1
     v0.14.2
     v0.14.3
@@ -360,12 +361,15 @@ grep -q 'RFC 2986 CSR construction.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'TLS-ALPN-01 identity construction.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'Single-use replay nonce ownership integrated with request admission and staged protocol identity' "$plan"
 grep -q '`badNonce`.\+old nonce, reservation/input-bound/final-request state' "$plan"
-grep -q 'Canonical transport-independent `AcmeRequestImage`' "$plan"
-grep -q '`FinalRequestFingerprint` hashes the versioned canonical image' "$plan"
+grep -q 'Canonical transport-independent `AcmeRequestImage' "$plan"
+grep -q '`SignedRequestTarget { exact_protected_url, exact_path_and_query, origin_identity }`' "$plan"
+grep -q 'closed `AcmeRequestMetadata { content_type: ApplicationJoseJson, accept, extensions: BoundedAdmittedHeaders }`' "$plan"
 grep -q 'Interrupted signed-request abandonment and retry contract' "$plan"
 grep -q 'later retry as a wholly new reservation, nonce, admission, fingerprints, signature, effect, and policy authority' "$plan"
+grep -q 'Bounded `no_std` request-image encoding and persistence contract' "$plan"
 ! grep -R -q 'FinalWireFingerprint\|final-wire' docs CHANGELOG.md README.md
-! grep -R -q 'final HTTP bytes/digest\|exact request digest' docs CHANGELOG.md README.md
+! grep -R -q 'HTTP bytes/digest\|exact request digest' docs CHANGELOG.md README.md
+! grep -R -q 'normalized effective URL' docs CHANGELOG.md README.md
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Durable old account-key lifecycle' "$plan"
@@ -444,7 +448,7 @@ grep -q 'Reusable immutable-dispatch and returned-signature verification conform
 grep -q 'Reusable handle-backed MAC authority/evidence conformance framework' "$plan"
 grep -q 'Reusable transactional symmetric-secret onboarding, content-binding, and live-authority reconstruction conformance' "$plan"
 grep -q 'Reusable secret-binding bootstrap and peer-effect conformance' "$plan"
-grep -q 'Reusable composed EAB conformance through request-image and abandonment milestones' "$plan"
+grep -q 'Reusable composed EAB conformance through exact-target, request-image encoding, and abandonment milestones' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"

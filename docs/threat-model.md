@@ -48,6 +48,18 @@ its returned bytes are still structurally and semantically verified.
   composition; crash recovery silently re-signing, advancing, or rebinding an
   old reservation instead of tombstoning it and creating a wholly new retry;
   or skipping/restoring a request typestate;
+- signed-target confusion through percent-decoding, dot-segment removal,
+  default-port or empty-path rewriting, query reordering/deduplication, host/
+  IDNA/IPv6 normalization, or treating post-transport effective URL as the
+  pre-dispatch target; protected JWS URL and transmitted target divergence;
+- case/order/duplicate ambiguity in authority-bearing headers; middleware or
+  adapters overriding Host/`:authority`, request-target/`:path`, Content-Length,
+  content type, or typed extensions; or profile pseudo/connection fields being
+  admitted as arbitrary application headers;
+- request-image concatenation or duplicated outbox body creating divergent
+  storage and fingerprint inputs; length-boundary ambiguity; partial encoding
+  advancing authority; recovery accepting a fingerprint it did not recompute;
+  or a nominal `no_std` image path allocating or exceeding published bounds;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural

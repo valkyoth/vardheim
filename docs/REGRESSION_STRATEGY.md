@@ -88,9 +88,12 @@ The release comparison gate covers:
   non-authoritative;
 - local-signing versus staged durable protocol request identity, reservation,
   exact signing-input binding, verified canonical application-request-image
-  binding, outbox-only final-state admission, physical HTTP/TLS/QUIC framing
-  independence, middleware immutability, crash abandonment/tombstone without
-  old-identity re-sign/rebind, transient/partial-persistence rejection,
+  binding, exact protected-URL/path/query/origin separation, closed typed header
+  ownership/projection, bounded one-shot/incremental encoding, single-copy body
+  persistence, recovery fingerprint recomputation, outbox-only final-state
+  admission, physical HTTP/TLS/QUIC framing independence, observed-effective-
+  URL non-authority, middleware immutability, crash abandonment/tombstone
+  without old-identity re-sign/rebind, transient/partial-persistence rejection,
   request/effect substitution, and wholly new identity after `badNonce`,
   cancellation, restore, interruption, or rebuild;
 - canonical effective-policy snapshots and exact-effect single-use dispatch
@@ -167,8 +170,9 @@ The release comparison gate covers:
 - composed EAB account creation across canonical intent/contacts/ToS,
   directory/URL, account JWK and immutable signer session, EAB key/secret
   version/algorithm, exact inner JWS and positive MAC evidence, outer nonce/JWS
-  input/admission/`VerifiedSignature`, attempt/request/effect IDs, and final
-  HTTP bytes/digest; consumed `Prepared`/`InnerMacVerified`/
+  input/admission/`VerifiedSignature`, attempt/request/effect IDs, canonical
+  `AcmeRequestImage`, and `VerifiedRequestId<FinalRequestFingerprint>`;
+  consumed `Prepared`/`InnerMacVerified`/
   `OuterSignatureVerified`/`OutboxCommitted`/`Dispatched`/`Reconciled`
   transitions; failure between every inner/outer/durable boundary; no evidence
   stitching, old-MAC/new-nonce reuse, committed-request rebuilding, blind
@@ -236,7 +240,7 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.30`, `0.33.3`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.31`, `0.33.3`,
 `0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`-`0.33.9`, `0.34.3`, `0.37.4`,
 `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in

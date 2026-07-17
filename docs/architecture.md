@@ -295,16 +295,38 @@ changes the fingerprint identity even when display text is unchanged.
 ## Canonical ACME Request Image
 
 `AcmeRequestImage` is immutable application authority, not physical transport
-serialization. Its versioned canonical form contains method, normalized
-effective URL, exact verified JWS body, admitted content type, and an ordered
-set of admitted security-relevant headers. `FinalRequestFingerprint` covers the
-image, which the outbox stores with the exact JWS body. HTTP/1.1 formatting,
-HTTP/2/3 frames, HPACK/QPACK state, stream IDs, frame boundaries, TLS records,
-and QUIC packets are executor-local observations and never stored authority.
+serialization. Its versioned canonical form contains method, a borrowed exact
+verified JWS body, `SignedRequestTarget`, and closed `AcmeRequestMetadata`.
+
+`SignedRequestTarget` contains the exact protected-header URL, exact path and
+query to transmit, and separately normalized `OriginIdentity` used only for
+origin/policy comparison. Exact target identity never normalizes percent
+encoding, dot segments, default ports, empty paths, query ordering or
+duplicates, host representation, IDNA form, or IPv6 literal spelling into
+equivalence. The JWS protected URL and committed target validate together.
+After transport, `ObservedEffectiveUrl` is evidence compared with the committed
+target and redirect/origin policy; it can neither modify nor replace the image.
+
+`AcmeRequestMetadata` is a closed typed projection containing
+`content_type: ApplicationJoseJson`, an optional typed `accept`, and bounded
+policy-admitted extensions. A normative ownership table derives HTTP/1.1 Host
+and request-target and HTTP/2/3 `:scheme`, `:authority`, and `:path` only from
+`SignedRequestTarget`; Content-Length only from the exact body; and transfer or
+connection fields only from the selected profile. Duplicate/conflicting image-
+owned fields are rejected. Adapter-local observation fields are either
+explicitly outside authority or admitted through a typed policy extension.
+
+`FinalRequestFingerprint` covers the image. One domain-separated, versioned,
+length-delimited `encode_into<S: ByteSink>` definition feeds both persistence
+and incremental fingerprinting without concatenation. The outbox stores one
+authoritative representation and one body occurrence; recovery recomputes the
+fingerprint from it. Capacity exhaustion is typed and precedes authority
+advancement. HTTP/1.1 formatting, HTTP/2/3 frames, HPACK/QPACK state, stream
+IDs, frame boundaries, TLS records, and QUIC packets remain executor-local.
 `EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile,
 adapter/session, policy snapshot, and final request fingerprint. Middleware may
-frame but cannot change method, effective target, admitted headers, or body
-after authority composition.
+frame but cannot inject or override method, target, metadata, or body after
+authority composition.
 
 ## Handle-Backed MAC Evidence
 
@@ -670,6 +692,8 @@ Every profile consumes the same committed `AcmeRequestImage`. HPACK/QPACK
 tables, stream identity/segmentation, connection restart, TLS record layout, and
 QUIC packetization cannot change `FinalRequestFingerprint`; a new connection
 can frame the stored application image without rebuilding or re-signing it.
+The transport returns `ObservedEffectiveUrl`, which is checked against the
+immutable `SignedRequestTarget` without becoming request authority.
 
 ## No-Heap Validation Workspaces
 

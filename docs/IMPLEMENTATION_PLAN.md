@@ -303,13 +303,28 @@ binding domain separator, schema/canonicalization version, digest algorithm,
 complete normalized fields, purpose, and effect type. There is no semantic-to-
 wire or cross-purpose conversion.
 
-The canonical ACME image contains method, normalized effective URL, exact
-verified JWS body, admitted content type, and ordered admitted security-relevant
-headers. The outbox stores this image, not HTTP/1.1 request formatting,
-HTTP/2/3 frames, compression state, stream IDs, TLS records, or QUIC packets.
-`EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile and
-adapter/session to the image fingerprint; middleware cannot mutate target,
-headers, or body after composition.
+The canonical ACME image contains method, a borrowed exact verified JWS body,
+`SignedRequestTarget { exact_protected_url, exact_path_and_query,
+origin_identity }`, and closed `AcmeRequestMetadata` with typed JOSE content
+type, optional typed Accept, and bounded admitted extensions. Protected URL and
+committed target validate together. Normalization is only an origin/policy
+comparison and never replaces exact target identity. A closed ownership table
+derives Host/`:authority`, request-target/`:path`, Content-Length, and profile-
+controlled transfer/connection fields; duplicate/conflicting image-owned fields
+fail, and adapter-local headers are explicitly non-authoritative or typed-
+policy-admitted. The outbox stores this image, not physical HTTP/TLS/QUIC
+framing. `EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile and
+adapter/session to the image fingerprint; middleware cannot inject or override
+target, metadata, or body after composition.
+
+`0.10.31` defines one versioned, domain-separated, length-delimited
+`encode_into<S: ByteSink>` for storage and incremental fingerprinting. The
+borrowed in-memory image avoids URL/metadata/body concatenation, and the outbox
+has one authoritative representation with one body occurrence. Recovery
+recomputes `FinalRequestFingerprint` from that representation. Typed capacity
+or length failure precedes state advancement; one-shot and every incremental
+chunking are identical and published stack/caller-buffer bounds retain the
+portable `no_std`/`no_alloc` contract.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -598,8 +613,9 @@ snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
 composed-EAB execution, system-wide restored-store recovery epochs,
 externally rooted rollback assurance and explicit coverage manifests,
-store-backed durable protocol-request reservation/canonical-image commit and
-interrupted-request abandonment tombstones,
+store-backed durable protocol-request reservation/single-copy canonical-image
+commit with fingerprint recomputation and interrupted-request abandonment
+tombstones,
 transactional deployment, current-policy dispatch authorization, public APIs,
 reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
