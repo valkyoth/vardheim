@@ -86,9 +86,14 @@ The release comparison gate covers:
   multi-node concurrency, with durable effect identities separated from
   no-store transient admissions/sessions and observational/caller values kept
   non-authoritative;
-- immutable policy snapshots and single-use current-policy dispatch permits,
-  including multi-node stale workers, pre/racing/post-dispatch changes,
-  `MayHaveDispatched`, forbidden-result activation, and fresh-work rebuilding;
+- local-signing versus durable protocol request identity, exact final-byte/
+  digest binding, transient-persistence rejection, request/effect substitution,
+  and fresh identity after `badNonce`, cancellation, restore, or rebuild;
+- canonical effective-policy snapshots and exact-effect single-use dispatch
+  authority composition, including defaults/inheritance/capability decisions,
+  unresolved reloads, every cross-token substitution, multi-node stale workers,
+  pre/racing/post-dispatch changes, `MayHaveDispatched`, forbidden-result
+  activation, and fresh-work rebuilding;
 - normalized ACME wire behavior and typed error/security decisions;
 - existing-account adoption ownership, URL/directory binding, provenance, and
   conflicting-local-account decisions;
@@ -181,6 +186,8 @@ The release comparison gate covers:
 - whole-store rollback across outbox dispatch, leases/fences, key retirement,
   challenge ownership, deployment generations and trust/provider changes,
   including exact protected/detecting-with-maximum-window/unprotected claims,
+  closed namespace/record/effect/tenant-partition/schema coverage manifests,
+  unknown/new dependency downgrade,
   store/recovery epochs, an externally rooted authenticated monotonic witness,
   store/witness commit skew, restored bootstrap configuration, reset/clone/
   split-brain/key rotation, operator declaration, assurance-profile startup,
@@ -220,8 +227,8 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`, `0.10.24`, `0.33.3`,
-`0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`, `0.33.8`, `0.34.3`, `0.37.4`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.26`, `0.33.3`,
+`0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`-`0.33.9`, `0.34.3`, `0.37.4`,
 `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in
 [the release plan](RELEASE_PLAN.md). Release binding itself is assigned to

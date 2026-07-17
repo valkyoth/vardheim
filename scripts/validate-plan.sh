@@ -85,6 +85,8 @@ required=(
     v0.10.22
     v0.10.23
     v0.10.24
+    v0.10.25
+    v0.10.26
     v0.13.1
     v0.14.2
     v0.14.3
@@ -144,6 +146,7 @@ required=(
     v0.33.6
     v0.33.7
     v0.33.8
+    v0.33.9
     v0.34.3
     v0.36.3
     v0.37.4
@@ -304,7 +307,9 @@ grep -q 'Orthogonal effect-observation product shared by every backend boundary'
 grep -q 'Strict signature-evidence and multi-axis verifier-assurance invariant' "$plan"
 grep -q 'Provider-neutral security-sensitive identity semantics and issuer interfaces' "$plan"
 grep -q 'Core-only/no-store tests mint transient admissions' "$plan"
-grep -q 'Immutable `PolicySnapshot`.*`EffectDispatchPermit`' "$plan"
+grep -q 'Immutable canonical `PolicySnapshot`.*`EffectDispatchPermit`' "$plan"
+grep -q 'Exact request-identity lifecycle separating.*`LocalSigningRequestId`.*`ProtocolRequestId`' "$plan"
+grep -q 'Purpose-specific effect-dispatch authority composition' "$plan"
 grep -q 'Authenticated replay-nonce admission and reservation policy' "$plan"
 grep -q 'Conflict-checked challenge-method registry' "$plan"
 grep -q 'Shared sealed challenge-presentation receipt envelope' "$plan"
@@ -312,6 +317,7 @@ grep -q 'System-wide rollback discontinuity and restored-store recovery model' "
 grep -q 'Injected external `RollbackWitness` protocol' "$plan"
 grep -q '`RollbackDetecting { maximum_window }`' "$plan"
 grep -q 'witness trust root, bootstrap identity' "$plan"
+grep -q 'Typed `RollbackCoverage` manifest' "$plan"
 grep -q 'Transactional durable identity allocator integrated with the store' "$plan"
 grep -q 'Private thin real-boundary vertical slice' "$plan"
 grep -q 'Reusable strict signature-evidence and multi-axis verifier-assurance conformance' "$plan"

@@ -36,6 +36,10 @@ its returned bytes are still structurally and semantically verified.
   use before durable allocation; persistence of transient admission/session
   identity; or observational correlation and caller idempotency input being
   upgraded into authority;
+- a transient local request identity entering an outbox or external operation;
+  one durable protocol request identity naming different bytes; request/effect
+  substitution; or identity reuse after `badNonce`, cancellation, restore, or
+  policy-driven rebuild;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
@@ -114,6 +118,11 @@ its returned bytes are still structurally and semantically verified.
   before dispatch while a stale worker sends without a current single-use
   permit; or an observed success being activated/deployed despite current
   policy, rebuilt in place, or treated as proof that old policy remains valid;
+- raw/partial/noncanonical configuration being hashed as policy authority;
+  defaults, inheritance, trust/provider capabilities, or unsupported decisions
+  omitted from the snapshot; or independently valid admission, commit,
+  presentation, deployment, cleanup, fence, and dispatch-permit tokens stitched
+  across different effects;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;
@@ -130,6 +139,10 @@ its returned bytes are still structurally and semantically verified.
   store-identity substitution, restored witness configuration/bootstrap trust,
   key-rotation failure, rollback inside an unpublished detection window, or
   silently starting a high-assurance profile without witness evidence;
+- a witness profile overclaiming store-wide protection while omitting a
+  namespace, record dependency, effect type, tenant partition, or schema
+  version from its authenticated state head; or new/unknown data inheriting an
+  old coverage claim;
 - serializing transient authority through a generic remote executor, or a
   purpose-specific remote endpoint replaying, reordering, duplicating,
   downgrading, cross-session substituting, or falsely acknowledging an effect

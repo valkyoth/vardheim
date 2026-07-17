@@ -214,6 +214,15 @@ detection. The core-only/no-store profile can mint transient admission and
 complete local signing. Durable counter/range or uniqueness-registry allocation
 is integrated with the store and outbox in `0.34.3`.
 
+Request identity is separately typed. `LocalSigningRequestId` is transient,
+non-serializable, and valid only when neither the result nor any request/effect
+crosses a crash, process, outbox, reconciliation, or external boundary.
+`ProtocolRequestId` is durably allocated before visibility and binds tenant,
+purpose, attempt/effect, policy snapshot, recovery epoch, and the exact final
+bytes or semantic-input digest. ACME JWS, EAB account creation, finalization,
+revocation, remote signing, and DNS update require the protocol type. Rebuild,
+`badNonce`, cancellation, or restore never reuses it.
+
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
 evidence proves otherwise; the admission remains consumed. Replacement uses a
@@ -222,7 +231,11 @@ revalidated key, new `BoundSigner`, new request identity, and new admission.
 ## Policy Epoch And Dispatch Authority
 
 Every admitted external effect binds an immutable `PolicySnapshot` containing
-the policy epoch and digest. Immediately before adapter dispatch, the local
+the policy epoch and digest of the complete normalized effective policy:
+explicit and defaulted values, inherited settings, trust/provider capability
+snapshot identities, and unsupported-cell decisions. Raw configuration bytes
+are not identity; incomplete, unresolved, invalid, or noncanonical reloads
+produce no snapshot. Immediately before adapter dispatch, the local
 orchestrator proves its policy, trust, and provider epoch is current and mints a
 transient non-serializable single-use `EffectDispatchPermit`. A stale worker or
 pre-dispatch policy change receives no permit and operation semantics decide
@@ -231,6 +244,20 @@ dispatch preserves `MayHaveDispatched`. A result observed after a change is
 recorded, but current policy must separately authorize activation or deployment.
 Persisted old decisions are historical facts, not live authority, and committed
 bytes are never rebuilt or re-signed under their old identity.
+
+The permit is purpose-typed and binds effect type, `EffectId`, request identity,
+committed-byte or semantic-input digest, adapter implementation/session,
+tenant/resource generation, worker lease/fence, deadline/clock epoch, and policy
+snapshot. Private constructors produce one same-effect checked authority from:
+
+- `SignerConsumerAdmission + EffectDispatchPermit<Sign>`;
+- `QualifiedDurableCommit + EffectDispatchPermit<AcmeSend>`;
+- `PresentationIntent + EffectDispatchPermit<Present>`;
+- `VerifiedGeneration + Fence + EffectDispatchPermit<Activate>`; or
+- `CleanupOwnership + Fence + EffectDispatchPermit<Cleanup>`.
+
+Executors never receive independently mixable tokens. Any disagreement among
+the components fails before adapter entry and consumes no unrelated authority.
 
 ## Handle-Backed MAC Evidence
 
@@ -430,6 +457,15 @@ crashes, bounded batching windows, loss/reset/clone/rollback/split-brain,
 partitions, and key rotation. High-assurance startup refuses
 `RollbackUnprotected`; operator-declared restore starts recovery but cannot
 protect against unnoticed rollback.
+
+Each witness/store profile publishes a closed `RollbackCoverage` manifest that
+binds the authenticated state-head construction to exact store namespaces,
+record classes, effect types, tenant/partition scope, and schema version.
+Protected/detecting assurance applies only when every dependency of an operation
+is covered. Unknown, omitted, dynamically added, or excluded data is
+`RollbackUnprotected`; it cannot inherit an aggregate store label. Changing the
+coverage creates a new authenticated profile identity and requires recovery
+review before authority can be reconstructed.
 
 ## Transactional Key Onboarding
 
@@ -691,11 +727,13 @@ receipts never convert merely because they share a family crate.
   authority; a purpose-specific remote endpoint returns observations, publishes
   exact protocol capabilities, and cannot construct local qualified evidence.
 - External dispatch requires a fresh current-policy `EffectDispatchPermit`;
-  historical policy facts, stale workers, and observed success cannot bypass
-  current activation/deployment policy.
+  it composes with matching purpose-specific authority over the same effect,
+  and historical policy facts, stale workers, independently mixable tokens, or
+  observed success cannot bypass current activation/deployment policy.
 - Rollback detection cannot be inferred from an epoch stored only inside the
   rollback domain; high assurance requires externally rooted witness evidence
-  whose exact maximum detection window is published.
+  whose exact maximum detection window and namespace/effect coverage are
+  published.
 - Portable secret ownership/zeroization and optional native memory controls do
   not imply universal erasure or protection from privileged software.
 - Public PKI fetch results and unauthenticated DNS AD bits are never evidence.

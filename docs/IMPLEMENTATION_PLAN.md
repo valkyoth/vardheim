@@ -163,8 +163,9 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - base64url, JWK, JWA, thumbprints, JWS, EAB, and rollover use typed purpose-
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
-  security-sensitive transient/durable identity semantics, immutable policy
-  snapshots and current-policy dispatch permits, public-key-validation,
+  security-sensitive transient/durable identity semantics, local/protocol
+  request identities, canonical policy snapshots, current-policy permits and
+  effect-bound authority composition, public-key-validation,
   domain-separated `BoundSigner`, and local
   exact-request admission, separate transactional asymmetric-key and symmetric-
   secret onboarding/content binding, narrow quarantined secret-binding
@@ -255,13 +256,33 @@ collision resistance, and bounded local duplicate detection independently.
 The early release supplies fake durable issuers and fully local no-store signing;
 the real store/outbox allocator arrives in `0.34.3`.
 
-Every admitted effect binds an immutable `PolicySnapshot`. Immediately before
-adapter dispatch, `0.10.24` requires a transient single-use
+`0.10.25` separates `LocalSigningRequestId` from `ProtocolRequestId`. The local
+type is transient and cannot enter snapshots, outboxes, reconciliation, or
+external requests. The protocol type is durable before visibility and binds the
+exact final bytes or semantic-input digest plus attempt/effect, tenant, purpose,
+policy, and recovery epoch. ACME JWS, composed EAB, finalization, revocation,
+remote signing, and DNS update all require the protocol type. A `badNonce`,
+cancellation, restore, or policy rebuild always creates a fresh identity.
+
+Every admitted effect binds an immutable canonical `PolicySnapshot`. Its digest
+covers the complete normalized effective policy, including defaults,
+inheritance, trust/provider capability snapshot identities, and unsupported-
+cell decisions; raw configuration text, partial reloads, and unresolved policy
+cannot produce a snapshot. Immediately before adapter dispatch, `0.10.24`
+requires a transient single-use
 `EffectDispatchPermit` proving the worker's policy, trust, and provider epoch is
 still current. Pre-dispatch changes block the effect; racing changes preserve
 `MayHaveDispatched`; a result observed after a change is recorded but cannot
 activate or deploy a now-forbidden artifact. Persisted policy decisions are
 facts, not authority, and old committed bytes are never rebuilt or re-signed.
+
+`0.10.26` binds that permit to the exact purpose, effect/request identity,
+committed-byte or semantic-input digest, adapter/session, tenant/resource
+generation, lease/fence, deadline/clock epoch, and policy snapshot. Private
+purpose-specific constructors consume the permit together with the matching
+signer admission, durable commit, presentation intent, verified generation, or
+cleanup ownership. Executors receive one checked same-effect authority, never a
+bag of independently valid tokens that can be stitched together.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -548,7 +569,8 @@ command/state/policy/event reducer, typed effects and positive evidence,
 snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
 composed-EAB execution, system-wide restored-store recovery epochs,
-externally rooted rollback assurance, store-backed durable identity allocation,
+externally rooted rollback assurance and explicit coverage manifests,
+store-backed durable protocol-request/effect identity allocation,
 transactional deployment, current-policy dispatch authorization, public APIs,
 reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
@@ -590,6 +612,14 @@ before-store crashes, partitions, reset/clone/split-brain, loss, and key
 rotation. High-assurance startup rejects rollback-unprotected storage; a named
 operator-selected reduced profile is required to proceed.
 
+Every store/witness profile also publishes a closed `RollbackCoverage` manifest
+binding its state-head construction to store namespaces, record/effect types,
+tenant/partition scope, and schema version. Protection and detection claims
+apply only to that set. Unknown, omitted, or uncovered dependencies are
+unprotected and block higher-assurance authority rather than inheriting a store-
+wide label. A coverage change creates a new authenticated profile identity and
+enters recovery review.
+
 Audit records retain stable invalidation reasons so operators and future
 regression replay can distinguish trust removal, explicit distrust, policy
 change, expiry, clock rollback, status/CT change, algorithm/provider-session or
@@ -601,7 +631,8 @@ Every external side effect follows:
 1. validate it against current state and policy;
 2. bind an immutable policy snapshot and persist intended effect and revision;
 3. prove the policy/trust/provider epoch is still current and consume an
-   `EffectDispatchPermit` immediately before execution;
+   exact-effect checked authority that composes `EffectDispatchPermit` with the
+   matching admission/commit/ownership/fence immediately before execution;
 4. execute with an idempotency/reconciliation classification;
 5. receive a bounded adapter observation with independent dispatch, outcome,
    and observation-status axes;

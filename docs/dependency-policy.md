@@ -55,3 +55,8 @@ For fixed third-party services, the adapter's `RemoteProtocolCapabilities`
 record is derived from the actual authenticated API surface. Local correlation,
 outbox state, or reconciliation may compensate for a missing native facility
 where sound, but never turns that facility into a provider-authenticated claim.
+
+Store and witness dependencies additionally map their actual transaction,
+namespace, partition, schema, and authenticated-head behavior into a closed
+`RollbackCoverage` manifest. A library-level durability or backup claim cannot
+grant protection to omitted or newly introduced Vardheim records/effects.

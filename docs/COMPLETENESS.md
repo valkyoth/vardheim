@@ -88,7 +88,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
   validation, domain-separated durable-versus-transient security-sensitive
-  identity issuance and current-policy dispatch permits,
+  identity issuance, transient local versus durable exact-byte protocol request
+  identity, canonical effective-policy snapshots, and exact-effect composed
+  current-policy dispatch authority,
   `UnverifiedSignature`/`ProviderAssertedSignature`/`AttestedSignature` strictly
   separated from exact cryptographic `VerifiedSignature`, transient
   `BoundSigner`, locally minted
@@ -137,8 +139,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   admission, verification, or effect-authority capabilities;
 - whole-store rollback discontinuity with exact protected, detecting-with-
   maximum-window, or unprotected capability, an externally rooted authenticated
-  witness over store/state head and monotonic counter/journal, store/recovery
-  epochs or operator declaration,
+  witness over an explicitly covered namespace/record/effect/tenant/schema state
+  head and monotonic counter/journal, store/recovery epochs or operator
+  declaration,
   invalidated live authority/leases/fences/sessions, high-assurance startup
   refusal without evidence, and quarantine plus reconciliation of restored
   outbox, key, challenge, deployment, retirement, and trust state;
@@ -315,10 +318,13 @@ Planning audits through 2026-07-17 found and corrected these weaknesses:
   reservation and local duplicate-window honesty; layered errors plus
   orthogonal effect observations; strict signature evidence and multi-axis
   verifier assurance including FIPS identity; security-sensitive identity
-  issuance; optional native secret memory; method/specification/schema-aware
+  issuance plus local/protocol request identity and anti-stitching dispatch
+  composition; canonical effective-policy identity; optional native secret
+  memory; method/specification/schema-aware
   challenge registration and sealed receipts; exact whole-store rollback
   assurance levels plus an externally rooted witness and bounded detection
-  window; transactional durable identity allocation; an early real-boundary
+  window with explicit coverage; transactional durable identity allocation; an
+  early real-boundary
   vertical slice; and explicit
   compile/emulator/native/production platform evidence tiers;
 - recommendations to collapse planned releases, weaken adapter MSRV, or move

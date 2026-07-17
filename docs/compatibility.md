@@ -24,8 +24,10 @@ and required atomics.
 
 Storage adapters additionally publish exactly `RollbackProtected`,
 `RollbackDetecting { maximum_window }`, or `RollbackUnprotected`, the external
-witness profile and externally rooted bootstrap identity, and whether an
-operator restore declaration or reduced-assurance selection is required.
+witness profile and externally rooted bootstrap identity, the closed namespace/
+record/effect/tenant-partition/schema coverage of its authenticated state head,
+and whether an operator restore declaration or reduced-assurance selection is
+required. New or unknown store data never inherits a prior coverage claim.
 Nominal `no_alloc` profiles publish allocator-free link/run evidence, peak stack
 bound to exact target/compiler/optimization/features/linker, caller-scratch
 behavior, and explicit `Send`/`Sync`, pinning, reentrancy, and scratch-lifetime
@@ -45,3 +47,8 @@ Before 1.0, APIs may change between minor releases, but release notes and
 migration notes are mandatory. Stable RFC behavior is versioned separately from
 experimental Internet-Draft support. Draft behavior is never enabled by
 default and never silently advances revisions.
+
+Persisted and wire compatibility distinguishes `ProtocolRequestId` from
+transient `LocalSigningRequestId`; the latter has no serialized representation.
+Policy snapshot compatibility is defined by normalized effective semantics and
+its versioned canonical form, not source configuration formatting.

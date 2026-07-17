@@ -7,6 +7,18 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ### Changed
 
+- Added `v0.10.25` to separate transient local signing requests from durable
+  exact-byte-bound protocol request identities, with fresh identity on every
+  retry, cancellation, restore, or rebuild.
+- Added `v0.10.26` purpose-specific checked dispatch-authority composition so
+  admissions, commits, ownership/fences, and policy permits cannot be stitched
+  across effects.
+- Added `v0.33.9` closed rollback-coverage manifests over namespaces, record and
+  effect types, tenant partitions, and schema versions; uncovered dependencies
+  cannot inherit stronger store assurance.
+- Made `PolicySnapshot` identity cover canonical normalized effective policy,
+  including defaults, inheritance, trust/provider capability identities, and
+  unsupported decisions; partial reloads mint no authority.
 - Split security-sensitive identity semantics into durable external-effect IDs,
   transient no-store admission/session IDs, observational correlation, and
   untrusted caller idempotency; assigned the real transactional allocator to
