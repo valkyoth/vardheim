@@ -14,15 +14,18 @@ Keep a Changelog and the project follows Semantic Versioning.
   deployment, and cleanup fingerprints with explicit canonicalization and no
   cross-family or cross-purpose conversions.
 - Added `v0.10.29` canonical transport-independent `AcmeRequestImage` and
-  `FinalRequestFingerprint`, with exact `SignedRequestTarget`, closed typed
-  metadata ownership, and framing-independent HTTP/1.1, HTTP/2, and HTTP/3
-  execution.
+  `FinalRequestFingerprint`, with one authoritative exact URL, derived target
+  views/origin, an initially empty sealed header-extension registry, and
+  framing-independent HTTP/1.1, HTTP/2, and HTTP/3 execution.
 - Added `v0.10.30` durable interrupted-request abandonment: uncommitted signed
   requests are tombstoned and retired, while any retry uses wholly new identity,
   nonce, admission, fingerprints, signature, effect, policy, and authority.
-- Added `v0.10.31` bounded `no_std` request-image streaming, single-copy outbox
-  persistence, incremental fingerprinting, and recovery recomputation without
-  URL/header/body concatenation or duplicate authoritative body storage.
+- Added `v0.10.31` bounded transactionally inert `no_std` request-image encoding
+  that constructs `EncodedAcmeRequestImage` only after length, complete buffer,
+  and fingerprint finalization agree; storage/network sinks are forbidden.
+- Added `v0.10.32` atomic request-image outbox publication and recovery
+  revalidation, including sealed transactional store sinks and recomputation of
+  URL components, origin, header admission, length, and fingerprint.
 - Extended `PolicySnapshot` identity with policy schema/canonicalization version
   and digest-algorithm identity so normalization/tooling changes cannot retain
   stale authority.

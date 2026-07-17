@@ -88,10 +88,12 @@ The release comparison gate covers:
   non-authoritative;
 - local-signing versus staged durable protocol request identity, reservation,
   exact signing-input binding, verified canonical application-request-image
-  binding, exact protected-URL/path/query/origin separation, closed typed header
-  ownership/projection, bounded one-shot/incremental encoding, single-copy body
-  persistence, recovery fingerprint recomputation, outbox-only final-state
-  admission, physical HTTP/TLS/QUIC framing independence, observed-effective-
+  binding, single-source exact URL with derived/revalidated component views and
+  origin, sealed initially empty header registry/ownership projection, inert
+  preflighted one-shot/incremental encoding, finalized encoded-image typestate,
+  malicious sink/partial-digest refusal, atomic publication, single-copy body,
+  recovery derived-field/fingerprint recomputation, outbox-only admission,
+  physical HTTP/TLS/QUIC framing independence, observed-effective-
   URL non-authority, middleware immutability, crash abandonment/tombstone
   without old-identity re-sign/rebind, transient/partial-persistence rejection,
   request/effect substitution, and wholly new identity after `badNonce`,
@@ -240,7 +242,7 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.31`, `0.33.3`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`-`0.10.32`, `0.33.3`,
 `0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`-`0.33.9`, `0.34.3`, `0.37.4`,
 `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in

@@ -298,31 +298,39 @@ changes the fingerprint identity even when display text is unchanged.
 serialization. Its versioned canonical form contains method, a borrowed exact
 verified JWS body, `SignedRequestTarget`, and closed `AcmeRequestMetadata`.
 
-`SignedRequestTarget` contains the exact protected-header URL, exact path and
-query to transmit, and separately normalized `OriginIdentity` used only for
-origin/policy comparison. Exact target identity never normalizes percent
-encoding, dot segments, default ports, empty paths, query ordering or
-duplicates, host representation, IDNA form, or IPv6 literal spelling into
-equivalence. The JWS protected URL and committed target validate together.
-After transport, `ObservedEffectiveUrl` is evidence compared with the committed
-target and redirect/origin policy; it can neither modify nor replace the image.
+`SignedRequestTarget<'a>` owns one authoritative `ExactAcmeUrl<'a>`. Its private
+validating constructor derives `UrlComponentRanges` and `OriginIdentity` from
+those same bytes. Path/query and authority are borrowed views, never caller-
+supplied or independently persisted values. Decoding recomputes ranges and
+origin; any cached mismatch fails closed. Exact target identity never
+normalizes percent encoding, dot segments, default ports, empty paths, query
+ordering or duplicates, host representation, IDNA form, or IPv6 literal
+spelling into equivalence. The JWS protected URL and committed target validate
+together. After transport, `ObservedEffectiveUrl` is evidence compared with the
+committed target and redirect/origin policy; it cannot modify the image.
 
 `AcmeRequestMetadata` is a closed typed projection containing
-`content_type: ApplicationJoseJson`, an optional typed `accept`, and bounded
-policy-admitted extensions. A normative ownership table derives HTTP/1.1 Host
-and request-target and HTTP/2/3 `:scheme`, `:authority`, and `:path` only from
-`SignedRequestTarget`; Content-Length only from the exact body; and transfer or
-connection fields only from the selected profile. Duplicate/conflicting image-
-owned fields are rejected. Adapter-local observation fields are either
-explicitly outside authority or admitted through a typed policy extension.
+`content_type: ApplicationJoseJson`, optional typed `accept`, and extensions
+admitted only through a sealed registry. Each registry entry fixes canonical
+name/value grammar, cardinality and combinations, HTTP/1.1/2/3 eligibility,
+authority/fingerprint participation, owned-field conflicts, sensitivity, and
+redaction. The registry begins empty. Host, pseudo-headers, Content-Length,
+Transfer-Encoding, Connection, Authorization, cookies, proxy credentials, and
+content-encoding controls can never be extensions. A normative ownership table
+derives target/authority fields from `SignedRequestTarget`, Content-Length from
+the exact body, and transfer/connection fields from the profile. Unknown,
+duplicate, conflicting, or profile-ineligible fields fail closed.
 
-`FinalRequestFingerprint` covers the image. One domain-separated, versioned,
-length-delimited `encode_into<S: ByteSink>` definition feeds both persistence
-and incremental fingerprinting without concatenation. The outbox stores one
-authoritative representation and one body occurrence; recovery recomputes the
-fingerprint from it. Capacity exhaustion is typed and precedes authority
-advancement. HTTP/1.1 formatting, HTTP/2/3 frames, HPACK/QPACK state, stream
-IDs, frame boundaries, TLS records, and QUIC packets remain executor-local.
+`FinalRequestFingerprint` covers the image. `encoded_len_checked()` validates
+all lengths and complete caller-buffer capacity before inert-memory encoding.
+Only exact length, complete fill, and one-time fingerprint finalization create
+opaque `EncodedAcmeRequestImage`; partial bytes/digest state have no authority.
+The encoder cannot target storage or transport. Durable publication consumes
+the completed value atomically, or uses a sealed begin/write/commit/abort sink
+whose bytes are invisible before commit and which network adapters cannot
+implement. Recovery recomputes URL parts, origin, header admission, length, and
+fingerprint. HTTP/1.1 formatting, HTTP/2/3 frames, HPACK/QPACK state, stream IDs,
+frame boundaries, TLS records, and QUIC packets remain executor-local.
 `EffectDispatchPermit<AcmeSend>` binds the selected HTTP profile,
 adapter/session, policy snapshot, and final request fingerprint. Middleware may
 frame but cannot inject or override method, target, metadata, or body after

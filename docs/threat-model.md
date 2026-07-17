@@ -55,11 +55,17 @@ its returned bytes are still structurally and semantically verified.
 - case/order/duplicate ambiguity in authority-bearing headers; middleware or
   adapters overriding Host/`:authority`, request-target/`:path`, Content-Length,
   content type, or typed extensions; or profile pseudo/connection fields being
-  admitted as arbitrary application headers;
+  admitted as arbitrary application headers; a generic extension escape hatch
+  accepting authority, framing, authorization, cookie, proxy-credential, or
+  content-encoding controls without sealed grammar/cardinality/profile/
+  fingerprint/sensitivity/redaction rules;
 - request-image concatenation or duplicated outbox body creating divergent
   storage and fingerprint inputs; length-boundary ambiguity; partial encoding
-  advancing authority; recovery accepting a fingerprint it did not recompute;
-  or a nominal `no_std` image path allocating or exceeding published bounds;
+  advancing authority; a false-capacity/short-write/failing sink exposing bytes;
+  direct encoding into storage/network; repeated/partial digest finalization;
+  pre-commit durable visibility; recovery accepting caller-supplied URL parts,
+  origin, header admission, length, or fingerprint without recomputation; or a
+  nominal `no_std` path allocating or exceeding published bounds;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural

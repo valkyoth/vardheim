@@ -91,7 +91,7 @@ required=(
     v0.10.28
     v0.10.29
     v0.10.30
-    v0.10.31
+    v0.10.31 v0.10.32
     v0.13.1
     v0.14.2
     v0.14.3
@@ -291,7 +291,7 @@ grep -q 'Unpublished executor-mode feasibility spike' "$plan"
 grep -q 'Unpublished memory-store and SQL-like transaction feasibility spike' "$plan"
 grep -q 'Machine-readable crate policy tiers' "$plan"
 grep -q 'Independent replay-nonce linear-authority formal model' "$plan"
-grep -q 'Independent request-admission/sign/verify/finalize/commit/dispatch formal model' "$plan"
+grep -q 'Independent request-admission/sign/verify/finalize/publish/dispatch formal model' "$plan"
 grep -q 'Independent challenge-presentation ownership formal model' "$plan"
 grep -q 'Independent order/authorization aggregation formal model' "$plan"
 grep -q 'Independent transactional-outbox ambiguity formal model' "$plan"
@@ -362,14 +362,15 @@ grep -q 'TLS-ALPN-01 identity construction.*v0.10.15.*VerifiedSignature' "$plan"
 grep -q 'Single-use replay nonce ownership integrated with request admission and staged protocol identity' "$plan"
 grep -q '`badNonce`.\+old nonce, reservation/input-bound/final-request state' "$plan"
 grep -q 'Canonical transport-independent `AcmeRequestImage' "$plan"
-grep -q '`SignedRequestTarget { exact_protected_url, exact_path_and_query, origin_identity }`' "$plan"
-grep -q 'closed `AcmeRequestMetadata { content_type: ApplicationJoseJson, accept, extensions: BoundedAdmittedHeaders }`' "$plan"
+grep -q "single-source \`SignedRequestTarget<'a> { exact_url: ExactAcmeUrl<'a>, validated_parts: UrlComponentRanges, origin: OriginIdentity }\`" "$plan"
+grep -q 'extensions admitted only through a sealed registry' "$plan"
 grep -q 'Interrupted signed-request abandonment and retry contract' "$plan"
 grep -q 'later retry as a wholly new reservation, nonce, admission, fingerprints, signature, effect, and policy authority' "$plan"
-grep -q 'Bounded `no_std` request-image encoding and persistence contract' "$plan"
+grep -q 'Bounded, transactionally inert `no_std` request-image encoder' "$plan"
+grep -q 'Durable request-image publication and recovery validation contract' "$plan"
 ! grep -R -q 'FinalWireFingerprint\|final-wire' docs CHANGELOG.md README.md
 ! grep -R -q 'HTTP bytes/digest\|exact request digest' docs CHANGELOG.md README.md
-! grep -R -q 'normalized effective URL' docs CHANGELOG.md README.md
+! grep -R -q 'normalized effective URL\|exact_protected_url, exact_path_and_query\|BoundedAdmittedHeaders' docs CHANGELOG.md README.md
 grep -q 'Complete `newNonce` operation' "$plan"
 grep -q 'Explicit existing-account adoption' "$plan"
 grep -q 'Durable old account-key lifecycle' "$plan"
@@ -448,7 +449,7 @@ grep -q 'Reusable immutable-dispatch and returned-signature verification conform
 grep -q 'Reusable handle-backed MAC authority/evidence conformance framework' "$plan"
 grep -q 'Reusable transactional symmetric-secret onboarding, content-binding, and live-authority reconstruction conformance' "$plan"
 grep -q 'Reusable secret-binding bootstrap and peer-effect conformance' "$plan"
-grep -q 'Reusable composed EAB conformance through exact-target, request-image encoding, and abandonment milestones' "$plan"
+grep -q 'Reusable composed EAB conformance through single-source target, sealed metadata, inert encoding, atomic publication, and abandonment milestones' "$plan"
 grep -q 'PKCS#11 transactional key creation/import onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS signer/key provider with transactional onboarding, fresh-session authority reconstruction' "$plan"
 grep -q 'AWS KMS HMAC operation provider.*v0.10.16.*v0.56.10' "$plan"
@@ -488,7 +489,7 @@ grep -q 'RustCrypto public-key validation, software-signer binding, immutable di
 grep -q 'Published ring per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Published aws-lc-rs non-FIPS per-purpose capability, public-key-validation, signer-binding, asymmetric transactional onboarding, immutable signature dispatch/verification, handle-backed MAC operation authority/evidence, and key-disposition table' "$plan"
 grep -q 'Android Keystore key-provider adapter' "$plan"
-grep -q 'Reusable adapter conformance for transport, signer, store, clock, entropy, staged/abandoned request identity' "$plan"
+grep -q 'Reusable adapter conformance for transport, signer, store, clock, entropy, staged/abandoned identity' "$plan"
 grep -q 'qualification and coverage closure' "$plan"
 grep -q 'Fluxheim integration fixture' "$plan"
 grep -q 'every mandatory client requirement implemented' "$plan"
