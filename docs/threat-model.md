@@ -75,6 +75,13 @@ its returned bytes are still structurally and semantically verified.
   transaction/request/fingerprint/assurance/policy promotion; or Rust types
   being claimed to prove third-party pre-commit invisibility, atomicity,
   physical durability, or absence of a perfectly formed semantic lie;
+- a finalized aggregate being returned after store-adapter entry; unstable or
+  post-effect allocation of publication transaction/record identity; a lost
+  store response, unavailable observation, or wrong post-call assertion being
+  treated as proof of non-commit; signing or publishing a replacement while the
+  original record may exist; corrupt/contradictory evidence avoiding request and
+  store-session quarantine; or tombstone and outbox publication succeeding
+  under competing fences for the same record identity;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural

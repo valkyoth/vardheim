@@ -17,9 +17,11 @@ Keep a Changelog and the project follows Semantic Versioning.
   `FinalRequestFingerprint`, with one authoritative exact URL, derived target
   views/origin, an initially empty sealed header-extension registry, and
   framing-independent HTTP/1.1, HTTP/2, and HTTP/3 execution.
-- Added `v0.10.30` durable interrupted-request abandonment: uncommitted signed
-  requests are tombstoned and retired, while any retry uses wholly new identity,
-  nonce, admission, fingerprints, signature, effect, policy, and authority.
+- Added `v0.10.30` evidence-gated interrupted-request abandonment: pre-publication
+  failures or positive fenced non-commit may retire work, while commit unknown
+  blocks replacement and contradiction quarantines; any permitted signing retry
+  uses wholly new identity, nonce, admission, fingerprints, signature, effect,
+  policy, and authority.
 - Added `v0.10.31` bounded transactionally inert `no_std` request-image encoding
   that consumes `LocallyVerifiedRequest` into one private unsplittable
   `FinalizedProtocolRequest`; failure abandons and storage/network sinks remain
@@ -27,9 +29,11 @@ Keep a Changelog and the project follows Semantic Versioning.
 - Added `v0.10.32` single-copy stored representation and recovery validation
   yielding non-authority facts after recomputing URL components, origin, header
   admission, length, and fingerprint.
-- Added `v0.10.33` publicly implementable store transactions returning untrusted
-  assertions, sealed commit qualification, same-aggregate outbox transition,
-  and explicit residual atomicity/durability adapter-TCB assumptions.
+- Added `v0.10.33` consuming `PublicationAttempt` with stable transaction/record/
+  fence identity, orthogonal store-commit observations, qualified committed,
+  definitely-not-committed, commit-unknown, and quarantined outcomes, mutually
+  exclusive tombstone/outbox publication, and explicit residual adapter-TCB
+  assumptions.
 - Extended `PolicySnapshot` identity with policy schema/canonicalization version
   and digest-algorithm identity so normalization/tooling changes cannot retain
   stale authority.

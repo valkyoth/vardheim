@@ -50,12 +50,15 @@ default and never silently advances revisions.
 
 Persisted and wire compatibility distinguishes transient
 `LocalSigningRequestId` from the durable protocol reservation and its consuming
-input-bound, locally-verified, finalized, outbox-committed, and abandoned states.
-The sequence distinguishes local verification, private unsplit finalization, non-
-authority validated stored facts, and qualified commit. Public store traits
+input-bound, locally-verified, finalized, publication-attempt, outbox-committed,
+definitely-not-committed, commit-unknown, quarantined, and abandoned states.
+The sequence distinguishes local verification, private unsplit finalization,
+consuming publication, non-authority validated stored facts, qualified commit,
+positive fenced non-commit, unresolved uncertainty, and quarantine. Public store traits
 remain downstream-implementable; observations are compatible data, never
-evidence. Adapter/session/transaction/assurance/policy qualification and the
-residual atomicity/durability TCB claim are versioned compatibility fields. The
+evidence. Adapter/session/publication-transaction/record/fence/assurance/policy
+qualification, the orthogonal store-commit observation product, and the residual
+atomicity/durability TCB claim are versioned compatibility fields. The
 versioned canonical `AcmeRequestImage`, not HTTP/1.1 serialization, HTTP/2/3
 frames, compression state, streams, TLS records, or QUIC packets, defines ACME
 request compatibility. Its one exact URL/body representation, sealed header-
@@ -64,7 +67,10 @@ compatibility fields; component ranges, path/query views, origin, length, and
 header admission are recomputed rather than independent authority.
 `ObservedEffectiveUrl` is only transport evidence. Partial/live states have no
 serialized authority representation; persisted phase facts and abandonment
-tombstones cannot be upgraded into one. Policy snapshot compatibility includes
+tombstones cannot be upgraded into one. Publication tombstones and outbox
+records are mutually exclusive under the same stable record identity/fence;
+commit-unknown cannot migrate to retryable without positive reconciliation
+evidence. Policy snapshot compatibility includes
 normalized effective semantics, schema/canonicalization version, and digest-
 algorithm identity, not
 source formatting. Fingerprint compatibility is purpose-specific and

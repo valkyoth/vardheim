@@ -224,7 +224,11 @@ ReservedProtocolRequestId
     -> InputBoundRequestId<SigningInputFingerprint>
     -> LocallyVerifiedRequest
     -> FinalizedProtocolRequest<FinalRequestFingerprint>
-    -> OutboxCommittedRequest
+    -> PublicationAttempt
+         -> OutboxCommittedRequest
+         -> DefinitelyNotCommitted
+         -> PublicationCommitUnknown
+         -> PublicationQuarantined
 ```
 
 The base is durably reserved first. Input binding fixes canonical signing bytes,
@@ -235,16 +239,23 @@ encoding privately consumes it into one unsplittable `FinalizedProtocolRequest`
 containing both `VerifiedRequestId<FinalRequestFingerprint>` and
 `EncodedAcmeRequestImage`; neither field can be independently constructed or
 extracted. Encoding failure abandons the request and cannot restore input-bound
-authority. A public store transaction returns only `StoreAssertedCommit`; the
-sealed promotion facade must qualify its adapter/session/transaction/request/
-fingerprint/assurance/policy binding, then a private transition consumes the
-same finalized aggregate plus `QualifiedDurableCommit`. Only the result enters
-transport. After restart, the parallel private path consumes non-authority
-`ValidatedStoredRequest` plus qualified evidence bound to its exact record and
-fingerprint; it never recreates finalized live authority. Failure, ambiguity,
-cancellation, `badNonce`, invalidation, crash, or restore cannot advance/reuse
-partial state. Uncommitted recovery records `AbandonedProtocolRequest`; every
-retry is a wholly new signing operation.
+authority. Core persists a stable publication transaction/record identity and
+fence before the store effect. Composition mismatch detected before adapter
+entry leaves the aggregate unconsumed; adapter entry consumes it into
+`PublicationAttempt`, so no aggregate is returned after a possibly committing
+call. Store observations retain
+`DispatchKnowledge × OperationOutcome<StoreCommit> × ObservationStatus`.
+A present validated record plus qualified evidence becomes
+`OutboxCommittedRequest`; positive fenced absence becomes
+`DefinitelyNotCommitted`; lost/unavailable or post-entry mismatched evidence
+becomes `PublicationCommitUnknown`; contradiction or substitution becomes
+`PublicationQuarantined` and quarantines the store session. Unknown blocks a
+replacement until reconciliation proves commit or definite non-commit.
+Tombstone and outbox publication are mutually exclusive under the same record
+identity/fence. Recovery consumes non-authority `ValidatedStoredRequest` plus
+qualified evidence and never recreates finalized live authority. Only positive
+definite non-commit may authorize abandonment or policy-controlled fresh
+publication, and every permitted signing retry is wholly new.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
@@ -336,10 +347,15 @@ Only exact length, complete fill, and one-time fingerprint finalization consume
 `LocallyVerifiedRequest` into opaque unsplit `FinalizedProtocolRequest`; partial
 bytes/digest state have no authority and errors abandon the attempt. The encoder
 cannot target storage or transport. Publicly implementable store transactions
-receive a core-created read-only finalized-request view and return untrusted
-observations. Core-owned qualification, not the adapter, creates commit evidence.
-Rust types prevent accidental promotion/stitching; atomic visibility and
-physical durability remain explicit adapter assurance/TCB claims. Recovery
+receive a core-created read-only finalized-request view after core has persisted
+stable transaction/record/fence identity. Entering the adapter consumes the
+finalized aggregate into `PublicationAttempt`; returned values are untrusted
+observations, not a way to recover it. Core-owned qualification, not the adapter,
+creates committed or definitely-not-committed evidence. Unknown and
+contradictory outcomes retain reconciliation or quarantine rather than
+authorizing replacement. Rust types prevent accidental promotion/stitching;
+atomic visibility and physical durability remain explicit adapter assurance/TCB
+claims. Recovery
 recomputes URL parts, origin, header admission, length, and fingerprint into
 non-authority validated facts before qualified committed-state reconstruction.
 HTTP/1.1 formatting, HTTP/2/3 frames, compression/stream state, TLS records, and

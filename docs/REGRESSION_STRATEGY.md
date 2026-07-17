@@ -92,12 +92,18 @@ The release comparison gate covers:
   origin, sealed initially empty header registry/ownership projection, input-
   bound consumption into local verification, inert encoding into private unsplit
   finalized ID/image aggregate, encode-failure abandonment, malicious sink/
-  partial-digest refusal, public store assertions, sealed same-aggregate commit
-  qualification, explicit adapter TCB limits, single-copy body, non-authority
-  recovery recomputation, outbox-only admission,
+  partial-digest refusal, stable publication transaction/record/fence identity,
+  adapter-entry consumption into `PublicationAttempt`, public store assertions,
+  sealed present-record commit or fenced-absence qualification, orthogonal store
+  commit observations, commit-unknown replacement blocking, contradiction
+  quarantine, tombstone/outbox mutual exclusion, explicit adapter TCB limits,
+  single-copy body, non-authority recovery recomputation, outbox-only admission,
   physical HTTP/TLS/QUIC framing independence, observed-effective-
-  URL non-authority, middleware immutability, crash abandonment/tombstone
-  without old-identity re-sign/rebind, transient/partial-persistence rejection,
+  URL non-authority, middleware immutability, crash abandonment/tombstone only
+  before publication or after positive non-commit, store-commit/dropped-response,
+  second-worker record observation, wrong post-call assertion, unavailable
+  reconciliation and cross-fence tombstone/publication races without old-
+  identity re-sign/rebind, transient/partial-persistence rejection,
   request/effect substitution, and wholly new identity after `badNonce`,
   cancellation, restore, interruption, or rebuild;
 - canonical effective-policy snapshots and exact-effect single-use dispatch

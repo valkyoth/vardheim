@@ -263,14 +263,20 @@ sequence: `ReservedProtocolRequestId` ->
 `InputBoundRequestId<SigningInputFingerprint>` ->
 `LocallyVerifiedRequest` ->
 `FinalizedProtocolRequest<FinalRequestFingerprint>` ->
-`OutboxCommittedRequest`. Signer dispatch consumes input-bound state. Exact local
+`PublicationAttempt` -> committed/definitely-not-committed/commit-unknown/
+quarantined. Signer dispatch consumes input-bound state. Exact local
 verification creates the local-verified state owning signature/image inputs;
 successful inert encoding privately creates one unsplit finalized aggregate of
 verified ID and encoded image. Encoding failure abandons rather than restoring
-input-bound authority. Public store transactions return assertions; only sealed
-core qualification plus the same aggregate commits. Failure, ambiguity,
-cancellation, `badNonce`, invalidation, or restore never advances/reuses a
-predecessor. `0.10.30` tombstones interrupted work; retry is wholly new.
+input-bound authority. Core persists stable publication transaction/record/fence
+identity before adapter entry, which consumes the finalized aggregate into
+`PublicationAttempt`. Public stores return observations; present validated
+records plus sealed qualification commit, positive fenced absence proves
+non-commit, lost/unavailable/post-entry mismatched evidence remains unknown, and
+contradiction quarantines. Unknown blocks replacement until reconciliation.
+Cancellation, `badNonce`, invalidation, or restore never advances/reuses a
+predecessor. `0.10.30` permits tombstoning only before publication or after
+positive non-commit; every signing retry is wholly new.
 
 Every admitted effect binds an immutable canonical `PolicySnapshot`. Its
 identity includes policy schema/canonicalization version and digest algorithm;
@@ -327,15 +333,21 @@ recomputes URL ranges/origin, sealed-header admission, length, and fingerprint
 into bounded non-authority `ValidatedStoredRequest`; persisted derived values
 are absent or checked caches and cannot reconstruct live authority.
 
-`0.10.33` exposes publicly implementable general store transactions receiving
-a core-created read-only finalized-request view and returning untrusted
-`StoreAssertedCommit`. The `0.6.6` sealed promoter checks adapter/session,
-transaction, request/fingerprint, assurance, policy, and atomicity/durability
-profile before `QualifiedDurableCommit`; only it plus the same unsplit aggregate
-commits live work. Restart instead joins non-authority `ValidatedStoredRequest`
-with qualified evidence for its exact record/fingerprint and never recreates
-finalized authority. Built-in streaming is private. Third-party atomicity/pre-
-commit visibility/durability remain explicit TCB claims, never Rust guarantees.
+`0.10.33` exposes publicly implementable store transactions after core persists
+stable publication transaction/record identity and fence. Pre-entry composition
+failure leaves the unsplit aggregate untouched; adapter entry consumes it into
+`PublicationAttempt`. The store returns a bounded untrusted
+`DispatchKnowledge × OperationOutcome<StoreCommit> × ObservationStatus`.
+The `0.6.6` sealed promoter checks adapter/session, transaction/record/fence,
+request/fingerprint, assurance, policy, and atomicity/durability profile. A
+present validated record plus qualified evidence commits; positive fenced
+absence proves non-commit; may-have-committed, lost/unavailable, or post-entry
+mismatched evidence remains unknown; contradiction quarantines request and store
+session. Unknown blocks replacement until reconciliation, and tombstone/outbox
+are mutually exclusive under the same record/fence. Restart applies the same
+rules to non-authority `ValidatedStoredRequest` and never recreates finalized
+authority. Third-party atomicity/pre-commit visibility/durability remain
+explicit TCB claims, never Rust guarantees.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -417,7 +429,7 @@ EAB uses one consumed `EabAccountCreationAttempt` typestate:
 
 ```text
 Prepared -> InnerMacVerified -> OuterSignatureVerified
-         -> OutboxCommitted -> Dispatched -> Reconciled
+         -> PublicationAttempt -> OutboxCommitted -> Dispatched -> Reconciled
 ```
 
 It immutably joins account intent/contacts/ToS, directory and exact
@@ -425,11 +437,14 @@ It immutably joins account intent/contacts/ToS, directory and exact
 secret identity/version/algorithm, inner protected header/payload/positive MAC
 evidence, outer nonce/signing input/admission/verified signature,
 bootstrap/account/outbox identities, `LocallyVerifiedRequest`, unsplit
-`FinalizedProtocolRequest`, store assertion, and qualified durable commit. Each
+`FinalizedProtocolRequest`, stable publication transaction/record/fence,
+publication outcome observation, and qualified durable commit. Each
 transition consumes its predecessor. Only purpose-matching positive MAC
 evidence completes the inner JWS; only `VerifiedSignature` over the exact
 complete outer input completes the outer JWS; only a durable commit makes the
-effect executable. No field or evidence can be stitched across attempts.
+effect executable. Commit unknown blocks replacement and reconciliation alone
+may prove committed or definitely not committed. No field or evidence can be
+stitched across attempts.
 Authenticated `badNonce` consumes the whole attempt and rebuilds both layers
 with fresh nonce, bootstrap, MAC, admission, request, effect, and outbox
 identities.
