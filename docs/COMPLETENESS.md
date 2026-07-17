@@ -87,7 +87,8 @@ At `1.0.0`, all of these must work without placeholder success paths:
   dispatch, mandatory local verification of returned signatures, and external/
   HSM/KMS signing without private-key export;
 - provider-neutral digest/sign/verify/entropy/key-generation, public-key
-  validation, domain-separated security-sensitive identity issuance,
+  validation, domain-separated durable-versus-transient security-sensitive
+  identity issuance and current-policy dispatch permits,
   `UnverifiedSignature`/`ProviderAssertedSignature`/`AttestedSignature` strictly
   separated from exact cryptographic `VerifiedSignature`, transient
   `BoundSigner`, locally minted
@@ -134,9 +135,10 @@ At `1.0.0`, all of these must work without placeholder success paths:
   fencing, cleanup, deployment activation, health verification, rollback, and
   mandatory reconstruction rather than restored validation, signer-binding,
   admission, verification, or effect-authority capabilities;
-- whole-store rollback discontinuity with protected/detecting/unprotected
-  capability, an authenticated external witness over store/state head and
-  monotonic counter/journal, store/recovery epochs or operator declaration,
+- whole-store rollback discontinuity with exact protected, detecting-with-
+  maximum-window, or unprotected capability, an externally rooted authenticated
+  witness over store/state head and monotonic counter/journal, store/recovery
+  epochs or operator declaration,
   invalidated live authority/leases/fences/sessions, high-assurance startup
   refusal without evidence, and quarantine plus reconciliation of restored
   outbox, key, challenge, deployment, retirement, and trust state;
@@ -145,8 +147,9 @@ At `1.0.0`, all of these must work without placeholder success paths:
   partitioned connection/session/resolver state, and definite-versus-ambiguous
   transmission evidence;
 - local-only generic executors with no serializable live authority or generic
-  remote ticket, plus purpose-specific versioned mutually authenticated remote
-  signer/DNS/KMS/deployment/agent protocols returning observations only;
+  remote ticket, plus purpose-specific remote capability products that require
+  the full profile from controlled agents, expose fixed-API unsupported cells
+  and local compensation, and return observations only;
 - strict public-PKI HTTP framing, decompression/work budgets, media validation,
   complete-body enforcement, OCSP POST privacy, and tenant/purpose/policy cache
   isolation;
@@ -305,15 +308,18 @@ Planning audits through 2026-07-17 found and corrected these weaknesses:
   executor-mode, store-model, and DER/PKIX spikes;
   machine portable/native crate tiers; eight independent formal models;
   semantic module/configuration-bound-stack/reducer and executable
-  no-allocation gates; local-only generic executor confinement; early and
+  no-allocation gates; local-only generic executor confinement plus honest
+  controlled-agent/fixed-API remote capability products; early and
   final mutation programs; sealed external-evidence promotion; linear
   non-secret nonce authority with authenticated admission and `badNonce`
   reservation and local duplicate-window honesty; layered errors plus
   orthogonal effect observations; strict signature evidence and multi-axis
   verifier assurance including FIPS identity; security-sensitive identity
   issuance; optional native secret memory; method/specification/schema-aware
-  challenge registration and sealed receipts; whole-store rollback epochs plus
-  an external witness; an early real-boundary vertical slice; and explicit
+  challenge registration and sealed receipts; exact whole-store rollback
+  assurance levels plus an externally rooted witness and bounded detection
+  window; transactional durable identity allocation; an early real-boundary
+  vertical slice; and explicit
   compile/emulator/native/production platform evidence tiers;
 - recommendations to collapse planned releases, weaken adapter MSRV, or move
   current draft/provider/platform scope after `1.0.0` were reviewed but not

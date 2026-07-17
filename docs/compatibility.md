@@ -22,8 +22,9 @@ for durability/atomic replacement and symlink semantics, wall and monotonic
 clocks, entropy failure, mutable alias replacement, endian/width assumptions,
 and required atomics.
 
-Storage adapters additionally publish whether rollback is protected, detected,
-or unprotected, the external witness profile/detection window, and whether an
+Storage adapters additionally publish exactly `RollbackProtected`,
+`RollbackDetecting { maximum_window }`, or `RollbackUnprotected`, the external
+witness profile and externally rooted bootstrap identity, and whether an
 operator restore declaration or reduced-assurance selection is required.
 Nominal `no_alloc` profiles publish allocator-free link/run evidence, peak stack
 bound to exact target/compiler/optimization/features/linker, caller-scratch
@@ -31,6 +32,12 @@ behavior, and explicit `Send`/`Sync`, pinning, reentrancy, and scratch-lifetime
 guarantees. Optional native secret-memory profiles publish exact page-lock,
 dump/swap, guarded-allocation, copy-tracking, zeroization, privilege, and target
 limitations; portable targets remain explicitly unsupported where necessary.
+
+Cross-process adapters publish a `RemoteProtocolCapabilities` product rather
+than inheriting generic guarantees. Controlled agents can advertise the full
+authenticated protocol profile; fixed third-party APIs mark unsupported native
+binding, replay, acknowledgement, recovery, attestation, or reconciliation
+cells and separately document any sound local compensation.
 
 ## API And Protocol
 

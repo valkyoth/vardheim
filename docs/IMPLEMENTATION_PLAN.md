@@ -116,7 +116,9 @@ semantic module and mutation baselines, `0.4.24` proves the nominal
 no-allocation executor contract, and `0.4.25` records an evidence-backed
 DER/PKIX build-versus-adopt decision. `0.4.26` confines generic executors to the
 local process and reserves cross-process behavior for later purpose-specific
-authenticated protocols. The public boundary freezes only after
+authenticated protocols. `0.4.27` gives those protocols an explicit capability
+product so controlled agents and fixed third-party APIs cannot claim the same
+endpoint guarantees by implication. The public boundary freezes only after
 these empirical and formal checks. Implementation must not start a parser
 before its resource budget and source requirements are committed.
 
@@ -161,7 +163,8 @@ Versions `0.5.0` through `0.13.1` build the narrowest critical core:
 - base64url, JWK, JWA, thumbprints, JWS, EAB, and rollover use typed purpose-
   specific construction rather than arbitrary JSON values;
 - provider-neutral digest, signing, verification, entropy, key-generation,
-  security-sensitive identity issuance, public-key-validation,
+  security-sensitive transient/durable identity semantics, immutable policy
+  snapshots and current-policy dispatch permits, public-key-validation,
   domain-separated `BoundSigner`, and local
   exact-request admission, separate transactional asymmetric-key and symmetric-
   secret onboarding/content binding, narrow quarantined secret-binding
@@ -241,13 +244,24 @@ malformed, wrong-key, or failed verification sends nothing, consumes the
 admission, invalidates or quarantines authority by policy, and never selects an
 implicit signer or verifier fallback.
 
-Request, attempt, effect, admission, reconciliation, correlation, and provider
-idempotency identities come only from the `0.10.23` issuer. Stable internal IDs,
-ephemeral correlation values, and caller-supplied idempotency strings remain
-distinct. Entropy-backed or transactionally counted issuers domain-separate
-tenant, purpose, store, provider, node/process incarnation, and recovery epoch,
-detect bounded collision/exhaustion, survive fork/snapshot/restore safely, and
-durably allocate an identity before it reaches an outbox or external provider.
+Security-sensitive identities come only from the `0.10.23` typed issuer
+interfaces. `EffectId`, `AttemptId`, `ReconciliationId`, and
+`ProviderIdempotencyId` are durable before crossing a crash, process, or
+external-effect boundary. `AdmissionId` and `SessionId` are transient,
+non-serializable, and process/session-bound; `CorrelationId` is observational
+only; `CallerIdempotencyKey` is namespace-bound untrusted input. Each issuer
+states transactional uniqueness within a store/recovery epoch, cryptographic
+collision resistance, and bounded local duplicate detection independently.
+The early release supplies fake durable issuers and fully local no-store signing;
+the real store/outbox allocator arrives in `0.34.3`.
+
+Every admitted effect binds an immutable `PolicySnapshot`. Immediately before
+adapter dispatch, `0.10.24` requires a transient single-use
+`EffectDispatchPermit` proving the worker's policy, trust, and provider epoch is
+still current. Pre-dispatch changes block the effect; racing changes preserve
+`MayHaveDispatched`; a result observed after a change is recorded but cannot
+activate or deploy a now-forbidden artifact. Persisted policy decisions are
+facts, not authority, and old committed bytes are never rebuilt or re-signed.
 
 Invalidation has an explicit dispatch boundary. If observed before signer
 dispatch, the operation is prevented. If it races with or follows dispatch,
@@ -534,7 +548,9 @@ command/state/policy/event reducer, typed effects and positive evidence,
 snapshots, migrations, CAS revisions, outbox effects, leases, fencing, stores,
 durable peer-binding effect/reconciliation orchestration, transactional
 composed-EAB execution, system-wide restored-store recovery epochs,
-transactional deployment, public APIs, reusable adapter
+externally rooted rollback assurance, store-backed durable identity allocation,
+transactional deployment, current-policy dispatch authorization, public APIs,
+reusable adapter
 and composed-effect conformance, a deterministic hostile CA, a test-only
 loopback transport, a production wall/monotonic clock adapter, Pebble
 integration, historical differential replay, existing-certificate adoption,
@@ -552,8 +568,9 @@ automatically repeats a mutating peer effect. Durable `Active` is lifecycle
 eligibility only.
 
 A whole-store rollback is a discontinuity, not an ordinary restart. Stores
-publish rollback-protected, rollback-detecting, or rollback-unprotected
-capability; a changed `StoreEpoch`/`RecoveryEpoch`, detected restoration, or
+publish exact `RollbackProtected`, `RollbackDetecting { maximum_window }`, or
+`RollbackUnprotected` capability; a changed `StoreEpoch`/`RecoveryEpoch`,
+detected restoration, or
 operator declaration invalidates leases, fences, sessions, caches, and all live
 authority. Restored outbox work, key eligibility, challenge ownership,
 deployment generations, retirement, trust, and provider state remain
@@ -561,14 +578,17 @@ quarantined until operation-specific reconciliation and revalidation complete.
 Where monotonic secure state is unavailable, restoration must be declared by
 the operator or rollback detection remains explicitly unsupported.
 
-Automatic rollback detection requires an injected authenticated
-`RollbackWitness` outside the store failure domain. It binds store identity and
-state-head digest to a monotonic counter or journal and defines recovery for
-store-before-witness and witness-before-store crashes, batching windows,
-partitions, reset/clone/split-brain, loss, and key rotation. High-assurance
-startup rejects rollback-unprotected storage; a named operator-selected reduced
-profile is required to proceed. Declaring a known restore initiates recovery but
-does not protect against an unnoticed rollback.
+`RollbackProtected` prevents or detects rollback for every protected committed
+effect. `RollbackDetecting { maximum_window }` detects only rollback crossing
+the last witnessed head and exposes the bounded unwitnessed window.
+`RollbackUnprotected` makes no automatic claim. Automatic detection requires
+an injected authenticated `RollbackWitness` outside the store failure domain;
+its trust root, bootstrap identity, and replacement authority also live outside
+the restored store. It binds store identity and state-head digest to a monotonic
+counter or journal and defines recovery for store-before-witness and witness-
+before-store crashes, partitions, reset/clone/split-brain, loss, and key
+rotation. High-assurance startup rejects rollback-unprotected storage; a named
+operator-selected reduced profile is required to proceed.
 
 Audit records retain stable invalidation reasons so operators and future
 regression replay can distinguish trust removal, explicit distrust, policy
@@ -579,14 +599,16 @@ mutation.
 Every external side effect follows:
 
 1. validate it against current state and policy;
-2. persist intended effect and revision;
-3. execute with an idempotency/reconciliation classification;
-4. receive a bounded adapter observation with independent dispatch, outcome,
+2. bind an immutable policy snapshot and persist intended effect and revision;
+3. prove the policy/trust/provider epoch is still current and consume an
+   `EffectDispatchPermit` immediately before execution;
+4. execute with an idempotency/reconciliation classification;
+5. receive a bounded adapter observation with independent dispatch, outcome,
    and observation-status axes;
-5. structurally/contextually validate it and apply the configured assurance
-   policy before constructing sealed qualified evidence;
-6. persist the typed outcome;
-7. apply it once and record cleanup obligations.
+6. structurally/contextually validate it and apply current policy before
+   constructing sealed qualified evidence or activating/deploying the result;
+7. persist the typed outcome;
+8. apply it once and record cleanup obligations.
 
 `Unsupported`, operation rejection, observation corruption/unavailability, and
 dispatch knowledge are never flattened into one error. An adapter can be
@@ -601,10 +623,15 @@ Generic executors may be async, blocking, polling, or embedded, but remain in
 the local process and async never enters the reducer. Static dispatch remains
 available without allocation; object-safe executor collections require an
 explicit `alloc` feature. Live Rust capabilities are never serialized. Later
-remote signer, DNS, KMS, deployment, and agent protocols are purpose-specific,
-versioned, mutually authenticated adapter boundaries that return observations
-only and cannot mint local evidence. Backend features only expose constructors
-and never select an implementation.
+remote signer, DNS, KMS, deployment, and agent protocols are purpose-specific
+adapter boundaries that return observations only and cannot mint local
+evidence. Every boundary publishes `RemoteProtocolCapabilities` for endpoint
+authentication, native request-digest and purpose/context binding, provider
+idempotency, replay protection, dispatch acknowledgement, recovery-epoch
+binding, signed attestation, and reconciliation. Vardheim-controlled agents
+must meet the named full profile; fixed APIs such as AWS KMS, Azure Key Vault,
+and OpenBao expose unsupported cells and only explicit local compensation.
+Backend features only expose constructors and never select an implementation.
 
 ## Renewal And Challenge Ecosystem
 

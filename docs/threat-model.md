@@ -30,10 +30,12 @@ its returned bytes are still structurally and semantically verified.
   nonce from unauthenticated/wrong-origin/redirected/framing-invalid/unrelated
   responses; including losing the authenticated `badNonce` retry reservation
   or overclaiming global server nonce uniqueness from a bounded local window;
-- collision or reuse of request, attempt, effect, admission, reconciliation,
-  correlation, or provider-idempotency identity after entropy failure, counter
-  exhaustion, process fork, VM clone, database restore, recovery-epoch change,
-  multi-node race, caller-key substitution, or use before durable allocation;
+- collision or reuse of durable effect/attempt/reconciliation/provider-
+  idempotency identities after entropy failure, counter exhaustion, process
+  fork, VM clone, database restore, recovery-epoch change, multi-node race, or
+  use before durable allocation; persistence of transient admission/session
+  identity; or observational correlation and caller idempotency input being
+  upgraded into authority;
 - resource exhaustion through JSON, PEM, DER, headers, DNS, or error nesting;
 - parser/path confusion from noncanonical DER, illegal certificate-version
   fields, duplicate extensions, signature-algorithm mismatch, or structural
@@ -108,6 +110,10 @@ its returned bytes are still structurally and semantically verified.
 - signer invalidation racing with dispatch being classified as definitely
   failed and retried under the old request identity without positive provider
   evidence;
+- policy, trust, or provider configuration changing after effect commit but
+  before dispatch while a stale worker sends without a current single-use
+  permit; or an observed success being activated/deployed despite current
+  policy, rebuilt in place, or treated as proof that old policy remains valid;
 - issuance for an unintended identifier or with an unintended key;
 - leaked challenge, DNS, EAB, HSM, proxy, or deployment credentials;
 - duplicate orders or deployments after ambiguous network outcomes;
@@ -121,12 +127,15 @@ its returned bytes are still structurally and semantically verified.
   recovery-epoch discontinuity and complete reconciliation/revalidation;
 - relying on an epoch stored inside the rolled-back database; external rollback
   witness commit skew, loss, reset, clone, rollback, split-brain, state-head or
-  store-identity substitution, key-rotation failure, or silently starting a
-  high-assurance profile without witness evidence;
+  store-identity substitution, restored witness configuration/bootstrap trust,
+  key-rotation failure, rollback inside an unpublished detection window, or
+  silently starting a high-assurance profile without witness evidence;
 - serializing transient authority through a generic remote executor, or a
   purpose-specific remote endpoint replaying, reordering, duplicating,
   downgrading, cross-session substituting, or falsely acknowledging an effect
-  and then minting local qualified evidence;
+  and then minting local qualified evidence; or a fixed third-party API being
+  credited with authenticating local effect, policy, deadline, generation, or
+  recovery fields its real protocol never carried;
 - server-injected private keys or mismatched certificate chains;
 - stale/replayed verification records, forged or cross-version status/CT
   evidence, forged STH/inclusion/consistency or witness evidence, CT split view,

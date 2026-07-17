@@ -51,3 +51,7 @@ authority. Each admission records its exact platform/security semantics,
 protocol/version surface, recovery behavior, and typed unsupported cells; a
 dependency's claim of page locking, secure memory, delivery, or monotonic state
 is not accepted without Vardheim conformance evidence.
+For fixed third-party services, the adapter's `RemoteProtocolCapabilities`
+record is derived from the actual authenticated API surface. Local correlation,
+outbox state, or reconciliation may compensate for a missing native facility
+where sound, but never turns that facility into a provider-authenticated claim.

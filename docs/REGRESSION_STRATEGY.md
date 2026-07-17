@@ -83,7 +83,12 @@ The release comparison gate covers:
   and residual trusted-computing-base declarations;
 - security-sensitive identity issuance across entropy/counter sources, domain
   separation, collisions/exhaustion, durable ordering, fork/clone/restore and
-  multi-node concurrency, with caller idempotency keys kept non-authoritative;
+  multi-node concurrency, with durable effect identities separated from
+  no-store transient admissions/sessions and observational/caller values kept
+  non-authoritative;
+- immutable policy snapshots and single-use current-policy dispatch permits,
+  including multi-node stale workers, pre/racing/post-dispatch changes,
+  `MayHaveDispatched`, forbidden-result activation, and fresh-work rebuilding;
 - normalized ACME wire behavior and typed error/security decisions;
 - existing-account adoption ownership, URL/directory binding, provenance, and
   conflicting-local-account decisions;
@@ -175,14 +180,17 @@ The release comparison gate covers:
   upgraded, and reconstruction obligations survive;
 - whole-store rollback across outbox dispatch, leases/fences, key retirement,
   challenge ownership, deployment generations and trust/provider changes,
-  including store/recovery epochs, an external authenticated monotonic witness,
-  store/witness commit skew, reset/clone/split-brain/key rotation, operator
-  declaration, assurance-profile startup, quarantine, reconciliation,
-  revalidation, and honest unsupported detection;
+  including exact protected/detecting-with-maximum-window/unprotected claims,
+  store/recovery epochs, an externally rooted authenticated monotonic witness,
+  store/witness commit skew, restored bootstrap configuration, reset/clone/
+  split-brain/key rotation, operator declaration, assurance-profile startup,
+  quarantine, reconciliation, revalidation, and honest unsupported detection;
 - local-only generic executor behavior and each purpose-specific remote
-  protocol's canonical/versioned/authenticated/replay-protected request,
-  observation, dispatch-acknowledgement and recovery-epoch semantics, with no
-  serialized live authority or remote construction of local evidence;
+  protocol's exact endpoint-authentication, request/context binding,
+  idempotency, replay, observation, dispatch-acknowledgement, recovery,
+  attestation, and reconciliation capability cells, with full controlled-agent
+  profiles separated from fixed-API unsupported cells and local compensation,
+  and no serialized live authority or remote construction of local evidence;
 - provider observations without encoding undocumented quirks as standards;
 - issued-certificate trust snapshot/reload/distrust and Must-Staple refresh/
   deployment decisions, including typed unsupported platform constraints;
@@ -212,8 +220,9 @@ candidate sequence.
 ## Assigned Milestones
 
 The implementation is deliberately split across `0.3.8`, `0.3.9`, `0.4.1`,
-`0.4.3`, `0.4.4`, `0.4.14`-`0.4.26`, `0.33.3`, `0.33.4`, `0.33.5`,
-`0.33.6`, `0.33.7`, `0.33.8`, `0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
+`0.4.3`, `0.4.4`, `0.4.14`-`0.4.27`, `0.10.23`, `0.10.24`, `0.33.3`,
+`0.33.4`, `0.33.5`, `0.33.6`, `0.33.7`, `0.33.8`, `0.34.3`, `0.37.4`,
+`0.37.5`, `0.38.5`, `0.39.2`, `0.56.12`, `0.69.3`, `0.92.6`,
 `0.96.4`, `0.97.3`, `0.119.0`, and `0.119.1` in
 [the release plan](RELEASE_PLAN.md). Release binding itself is assigned to
 `0.3.3`. Each boundary receives its own complete test suite and mandatory

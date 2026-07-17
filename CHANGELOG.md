@@ -7,11 +7,24 @@ Keep a Changelog and the project follows Semantic Versioning.
 
 ### Changed
 
+- Split security-sensitive identity semantics into durable external-effect IDs,
+  transient no-store admission/session IDs, observational correlation, and
+  untrusted caller idempotency; assigned the real transactional allocator to
+  `v0.34.3` and retained a core-only local-signing regression.
+- Added `v0.10.24` immutable policy snapshots and single-use current-policy
+  dispatch permits, including stale-worker, dispatch-race, and post-result
+  activation rules.
+- Added `v0.4.27` `RemoteProtocolCapabilities` so controlled agents prove a
+  full protocol profile while fixed AWS KMS, Azure Key Vault, and OpenBao APIs
+  publish unsupported cells and honest local compensation.
+- Defined exact rollback assurance as protected, detecting with a maximum
+  window, or unprotected, and required witness bootstrap trust outside the
+  restored store.
 - Made `VerifiedSignature` an invariant exact-cryptographic-verification type,
   distinct from provider assertions and attestations, while retaining separate
   locality, trust-domain, implementation, validated-module, and binding axes.
 - Added provider-neutral security-sensitive identity issuance covering entropy/
-  counters, domain separation, durable allocation, collision/exhaustion,
+  counters, domain separation, guarantee-specific collision handling,
   fork/clone/restore, multi-node concurrency, and caller idempotency separation.
 - Confined generic executors to the local process and required later remote
   signer/DNS/KMS/deployment/agent integrations to use purpose-specific bounded,

@@ -77,9 +77,14 @@ executors remain local-process drivers. They may hold transient Rust authority
 but cannot serialize it, create a generic remote `EffectTicket`, or delegate the
 generic executor contract across a process boundary. Later remote signer, DNS,
 KMS, secret-manager, deployment, and agent integrations each define a narrow
-versioned mutually authenticated protocol, bind their purpose-specific request
-and recovery context, and return observations only. A remote endpoint never
-mints local qualified evidence.
+purpose-specific boundary and return observations only. Every one publishes a
+`RemoteProtocolCapabilities` product covering endpoint authentication, native
+request-digest and purpose/context binding, provider idempotency, replay
+protection, dispatch acknowledgement, recovery-epoch binding, signed
+attestation, and reconciliation. Controlled agents implement the named full
+profile; fixed third-party APIs publish unsupported cells and explicit local
+compensation. A remote endpoint never mints local qualified evidence or
+authenticates a field its protocol did not carry.
 
 ## PKIX Evidence Ownership
 
@@ -195,20 +200,37 @@ fallback signer or verifier.
 
 ## Security-Sensitive Identity Issuance
 
-Request, attempt, effect, admission, reconciliation, correlation, and provider
-idempotency identities are minted through one provider-neutral boundary.
-Stable internal identities, ephemeral correlation values, and caller-supplied
-idempotency strings are distinct. An admitted issuer uses injected entropy or a
-transactionally allocated counter, domain-separated by tenant, purpose, store,
-provider, node/process incarnation, and recovery epoch. Collision/exhaustion,
-fork/VM clone, rollback, restore, and multi-node concurrency are explicit. An
-identity is durably allocated before it reaches an outbox, evidence, admission,
-reconciliation record, or external provider.
+Security-sensitive identities use one provider-neutral family of typed issuer
+interfaces but have different guarantees. `EffectId`, `AttemptId`,
+`ReconciliationId`, and `ProviderIdempotencyId` are durably allocated before
+crossing a crash, process, or external-effect boundary. `AdmissionId` and
+`SessionId` are transient, non-serializable, process/session-bound, and invalid
+after restart. `CorrelationId` is observational only, while
+`CallerIdempotencyKey` is namespace-bound untrusted input and never an internal
+identity. Each issuer states transactional uniqueness within a store/recovery
+epoch, cryptographic collision resistance, and bounded local duplicate
+detection separately; entropy never promises absolute global collision
+detection. The core-only/no-store profile can mint transient admission and
+complete local signing. Durable counter/range or uniqueness-registry allocation
+is integrated with the store and outbox in `0.34.3`.
 
 Invalidation before dispatch prevents signing. Invalidation racing with or
 following dispatch makes the signing result ambiguous unless positive provider
 evidence proves otherwise; the admission remains consumed. Replacement uses a
 revalidated key, new `BoundSigner`, new request identity, and new admission.
+
+## Policy Epoch And Dispatch Authority
+
+Every admitted external effect binds an immutable `PolicySnapshot` containing
+the policy epoch and digest. Immediately before adapter dispatch, the local
+orchestrator proves its policy, trust, and provider epoch is current and mints a
+transient non-serializable single-use `EffectDispatchPermit`. A stale worker or
+pre-dispatch policy change receives no permit and operation semantics decide
+whether to cancel, quarantine, or build wholly fresh work. A change racing with
+dispatch preserves `MayHaveDispatched`. A result observed after a change is
+recorded, but current policy must separately authorize activation or deployment.
+Persisted old decisions are historical facts, not live authority, and committed
+bytes are never rebuilt or re-signed under their old identity.
 
 ## Handle-Backed MAC Evidence
 
@@ -384,9 +406,13 @@ leaves the secret eligible but unusable.
 
 ## Restore Discontinuity
 
-A whole-store rollback is not an ordinary restart. Stores publish
-`RollbackProtected`, `RollbackDetecting`, or `RollbackUnprotected` and bind
-durable state to a `StoreEpoch`/`RecoveryEpoch`. A detected change or explicit
+A whole-store rollback is not an ordinary restart. Stores publish exactly
+`RollbackProtected`, `RollbackDetecting { maximum_window }`, or
+`RollbackUnprotected` and bind durable state to a `StoreEpoch`/`RecoveryEpoch`.
+The first prevents or detects rollback for every protected committed effect;
+the second detects only rollback crossing the last witnessed head and exposes
+its maximum unwitnessed window; the third makes no automatic claim. A detected
+change or explicit
 operator `RestoreDeclared` input invalidates leases, fences, provider sessions,
 caches, and live authority; quarantines restored outbox work, key eligibility,
 challenge ownership, deployment generations, and retirement state; and requires
@@ -395,7 +421,9 @@ revalidation. Without monotonic secure storage, automatic detection is typed
 unsupported and operators must declare restoration.
 
 Automatic detection requires an authenticated `RollbackWitness` outside the
-store failure domain. The witness binds its implementation/identity/session,
+store failure domain. Its trust root, bootstrap identity, and replacement
+authority also live outside the restored store. The witness binds its
+implementation/identity/session,
 store identity and state-head digest to a monotonic counter or authenticated
 journal. Its protocol models store-before-witness and witness-before-store
 crashes, bounded batching windows, loss/reset/clone/rollback/split-brain,
@@ -660,10 +688,14 @@ receipts never convert merely because they share a family crate.
 - Verification capabilities cannot be serialized, replayed across contexts, or
   restored after restart as current proof.
 - A generic executor never crosses the process boundary or serializes live
-  authority; a purpose-specific remote endpoint returns observations and cannot
-  construct local qualified evidence.
+  authority; a purpose-specific remote endpoint returns observations, publishes
+  exact protocol capabilities, and cannot construct local qualified evidence.
+- External dispatch requires a fresh current-policy `EffectDispatchPermit`;
+  historical policy facts, stale workers, and observed success cannot bypass
+  current activation/deployment policy.
 - Rollback detection cannot be inferred from an epoch stored only inside the
-  rollback domain; high assurance requires admitted external witness evidence.
+  rollback domain; high assurance requires externally rooted witness evidence
+  whose exact maximum detection window is published.
 - Portable secret ownership/zeroization and optional native memory controls do
   not imply universal erasure or protection from privileged software.
 - Public PKI fetch results and unauthenticated DNS AD bits are never evidence.
